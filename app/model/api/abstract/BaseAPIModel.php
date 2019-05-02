@@ -9,8 +9,10 @@ use GuzzleHttp\Psr7\Response;
 abstract class BaseAPIModel implements IBaseAPIModel
 {
 
+	/** @var Client */
 	private $client;
 
+	/** @var string */
 	protected $baseURI;
 
 
@@ -22,8 +24,7 @@ abstract class BaseAPIModel implements IBaseAPIModel
 
 
 	/**
-	 * Assign request uri based on class name
-	 * @return string
+	 * {@inheritdoc}
 	 */
 	public function getMyURI(int $id = null): string
 	{
@@ -37,12 +38,18 @@ abstract class BaseAPIModel implements IBaseAPIModel
 	}
 
 
-	public function getURI(int $id = null)
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getURI(int $id = null): string
 	{
 		return $this->baseURI . $this->getMyURI($id);
 	}
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function request(string $method, int $id = null): ?array
 	{
 		$URI = $this->getURI($id);
@@ -58,11 +65,18 @@ abstract class BaseAPIModel implements IBaseAPIModel
 	}
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getOne(int $id): ?array
 	{
 		return $this->request('GET', $id);
 	}
 
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getCollection(): ?array
 	{
 		return $this->request('GET', null);

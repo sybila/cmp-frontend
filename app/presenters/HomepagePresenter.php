@@ -36,10 +36,8 @@ final class HomepagePresenter extends BasePresenter
 				$speciesModel->setParent($compartmentsModel, $compartment['id']);
 				$species = $speciesModel->getCollection();
 				dump('species', $species);
-				exit;
 			}
 		}
-		exit;
 	}
 
 }

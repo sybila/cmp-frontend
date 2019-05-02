@@ -6,6 +6,9 @@ class CompartmentsModel extends ParentedAPIModel
 {
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getAllowedParents(): array
 	{
 		return [
