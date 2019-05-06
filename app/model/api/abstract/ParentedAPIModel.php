@@ -19,9 +19,19 @@ abstract class ParentedAPIModel extends BaseAPIModel implements IParentedAPIMode
 
 
 	/**
-	 * {@inheritdoc}
+	 * Return array of allowed parents for respective object
+	 * Parent object in this context relates to API resource object hierarchy
+	 * @return array
 	 */
-	public function getParentURI(): string
+	abstract protected function getAllowedParents(): array;
+
+
+	/**
+	 * Return URI of parent object, compose recursively for nested parented objects up to unparented root
+	 * Parent object in this context relates to API resource object hierarchy
+	 * @return string	URI string
+	 */
+	protected function getParentURI(): string
 	{
 		return $this->parentObj->getURI($this->parentId);
 	}
@@ -30,7 +40,7 @@ abstract class ParentedAPIModel extends BaseAPIModel implements IParentedAPIMode
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getURI(int $id = null): string
+	protected function getURI(int $id = null): string
 	{
 		return $this->getParentURI() . $this->getMyUri($id);
 	}
