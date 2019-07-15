@@ -4,16 +4,13 @@ import { Dispatch, bindActionCreators } from "redux";
 
 import LoginForm from "./LoginForm";
 import { AppState } from "../../reducers/globalReducer";
-import { authentication } from "../../actions";
 
 interface Props {
   login: Function;
 }
 
 class LoginPage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.login();
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -27,9 +24,7 @@ class LoginPage extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  login: bindActionCreators(authentication, dispatch)
-});
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
 
 export default connect(
   mapStateToProps,
