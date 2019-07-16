@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import userService from "./userServices";
 import Config from "../config";
 const url = Config.apiDomain;
 
@@ -9,19 +10,64 @@ const dataService = axios.create({
 });
 
 /**
- * Interceptor which includes OAuth token in case it is stored in Local Storage
+ * Interceptor which includes access token to a request
  */
-dataService.interceptors.request.use(
-  (config: any) => {
-    const token = JSON.parse(localStorage.getItem("user") as string);
+const accessTokenInterceptor = (config: any) => {
+  const token = JSON.parse(localStorage.getItem("user") as string);
 
-    if (token !== null) {
-      config.headers.Authorization = `Bearer ${token}`;
+  if (token !== null) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+};
+
+/**
+ * Interceptor refreshing access token
+ */
+const refreshTokenInterceptor = (error: any) => {
+  const {
+    config,
+    response: { status }
+  } = error;
+  const origRequest = config;
+
+  if (status === 401) {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      userService.refreshAccessToken().then((newToken: any) => {
+        isRefreshing = false;
+        onRrefreshed(newToken);
+      });
     }
 
-    return config;
-  },
-  (error: any) => Promise.reject(error)
+    const retryOrigReq = new Promise((resolve, reject) => {
+      subscribeTokenRefresh((token: any) => {
+        // replace the expired token and retry
+        origRequest.headers["Authorization"] = "Bearer " + token;
+        resolve(axios(origRequest));
+      });
+    });
+    return retryOrigReq;
+  } else {
+    return Promise.reject(error);
+  }
+};
+
+let isRefreshing = false;
+let refreshSubscribers: Function[] = [];
+
+dataService.interceptors.request.use(
+  accessTokenInterceptor,
+  refreshTokenInterceptor
 );
+
+const subscribeTokenRefresh = (callback: Function) => {
+  refreshSubscribers.push(callback);
+};
+
+const onRrefreshed = (token: String) => {
+  refreshSubscribers.map(callback => callback(token));
+};
 
 export default dataService;
