@@ -1,6 +1,8 @@
 import axios from "axios";
 
 import userService from "./userServices";
+import
+
 import Config from "../config";
 const url = Config.apiDomain;
 
@@ -57,11 +59,6 @@ const refreshTokenInterceptor = (error: any) => {
 let isRefreshing = false;
 let refreshSubscribers: Function[] = [];
 
-dataService.interceptors.request.use(
-  accessTokenInterceptor,
-  refreshTokenInterceptor
-);
-
 const subscribeTokenRefresh = (callback: Function) => {
   refreshSubscribers.push(callback);
 };
@@ -69,5 +66,10 @@ const subscribeTokenRefresh = (callback: Function) => {
 const onRrefreshed = (token: String) => {
   refreshSubscribers.map(callback => callback(token));
 };
+
+dataService.interceptors.request.use(
+  accessTokenInterceptor,
+  refreshTokenInterceptor
+);
 
 export default dataService;
