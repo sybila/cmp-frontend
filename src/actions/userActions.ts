@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 
 import { ActionTypes as LoginActionTypes } from "../reducers/authenticationReducer";
 import userService from "../services/userServices";
+import { history } from "../Application";
 
 const { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } = LoginActionTypes;
 
@@ -13,6 +14,7 @@ export function login(username: String, password: String) {
     userService.login(username, password).then(
       (user: any) => {
         dispatch(success(user));
+        history.push("/");
         // TODO: Redirect user somewhere, '/' most likely
       },
       (error: any) => {
