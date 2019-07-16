@@ -1,8 +1,6 @@
 import axios from "axios";
 
 import userService from "./userServices";
-import
-
 import Config from "../config";
 const url = Config.apiDomain;
 
