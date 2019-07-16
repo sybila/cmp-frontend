@@ -1,7 +1,8 @@
-import { Action, AnyAction } from "redux";
+import { Action } from "redux";
 
 export interface LoginAction extends Action {
-  token: string;
+  user: Object;
+  error?: String;
 }
 
 export const ActionTypes = {
@@ -11,24 +12,24 @@ export const ActionTypes = {
   LOGOUT: "@@app/LOGOUT"
 };
 
-let user = JSON.parse(localStorage.getItem("user") as string);
+let token = JSON.parse(localStorage.getItem("user") as string);
 
-const initialState = user ? { loggedIn: true, user } : {};
+const initialState = {};
 
-const loginReducer = (state = initialState, action: LoginAction) => {
+const authenticationReducer = (state = initialState, action: LoginAction) => {
   switch (action.type) {
     case ActionTypes.LOGIN_REQUEST:
       return {
-        loggingIn: true,
-        user: action.token
+        loggingIn: true
       };
     case ActionTypes.LOGIN_SUCCESS:
       return {
-        loggedIn: true,
-        user: action.token
+        user: action.user
       };
     case ActionTypes.LOGIN_FAILURE:
-      return {};
+      return {
+        error: action.error
+      };
     case ActionTypes.LOGOUT:
       return {};
     default:
@@ -36,4 +37,4 @@ const loginReducer = (state = initialState, action: LoginAction) => {
   }
 };
 
-export default loginReducer;
+export default authenticationReducer;

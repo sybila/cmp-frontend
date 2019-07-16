@@ -1,52 +1,61 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
 
-const sleep = (ms: any) => new Promise(resolve => setTimeout(resolve, ms));
+export interface Values {
+  password: String;
+  username: String;
+}
 
-const onSubmit = (values: any) => {
-  sleep(300);
-  window.alert(JSON.stringify(values));
-};
+interface Props {
+  submitLogin: (payload: Values) => void;
+  error?: String;
+}
 
-const LoginForm = () => (
-  <Form
-    onSubmit={onSubmit}
-    render={({ handleSubmit, form, submitting, pristine, values }) => (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label>
-          <Field
-            name="username"
-            component="input"
-            type="text"
-            placeholder="Username"
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <Field
-            name="password"
-            component="input"
-            type="password"
-            placeholder="Password"
-          />
-        </div>
-        <div className="buttons">
-          <button type="submit" disabled={submitting || pristine}>
-            Submit
-          </button>
-          <button
-            type="button"
-            onClick={form.reset}
-            disabled={submitting || pristine}
-          >
-            Reset
-          </button>
-        </div>
-        <pre>{JSON.stringify(values)}</pre>
-      </form>
-    )}
-  />
+const LoginForm = (props: Props) => (
+  <div className={"col-md-6 offset-md-3"}>
+    <h3>Login</h3>
+    <Form
+      onSubmit={props.submitLogin}
+      render={({ handleSubmit, form, submitting, pristine, values }) => (
+        <form onSubmit={handleSubmit}>
+          <div className={"form-group"}>
+            <label htmlFor={"username"}>Username</label>
+            <Field
+              name="username"
+              component="input"
+              type="text"
+              placeholder="Username"
+              className="form-control"
+            />
+          </div>
+          <div className={"form-group"}>
+            <label htmlFor={"password"}>Password</label>
+            <Field
+              name="password"
+              component="input"
+              type="password"
+              placeholder="Password"
+              className="form-control"
+            />
+          </div>
+          <div className="buttons">
+            <button
+              type="submit"
+              disabled={submitting || pristine}
+              className={"btn btn-primary"}
+            >
+              Submit
+            </button>
+          </div>
+          {props.error && (
+            <div className="alert alert-danger user-alert" role="alert">
+              {props.error}
+            </div>
+          )}
+        </form>
+      )}
+    />
+  </div>
 );
 
 export default LoginForm;
