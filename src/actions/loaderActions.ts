@@ -1,9 +1,13 @@
 import { ActionTypes as LoaderActionTypes } from "../reducers/loaderReducer";
 
-const { SHOW_LOADER, HIDE_LOADER } = LoaderActionTypes;
+const { SHOW_LOADER, HIDE_LOADER, LOADER_NAME } = LoaderActionTypes;
 
-export const showLoader = (action: String) => ({
-  type: SHOW_LOADER,
+export const showLoader = () => ({
+  type: SHOW_LOADER
+});
+
+export const loaderActionName = (action: String) => ({
+  type: LOADER_NAME,
   action
 });
 

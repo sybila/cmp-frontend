@@ -2,7 +2,8 @@ import { AnyAction } from "redux";
 
 export const ActionTypes = {
   SHOW_LOADER: "@@loader/SHOW_LOADER",
-  HIDE_LOADER: "@@loader/HIDE_LOADER"
+  HIDE_LOADER: "@@loader/HIDE_LOADER",
+  LOADER_NAME: "@@loader/LOADER_NAME"
 };
 
 const initialState = {
@@ -14,14 +15,18 @@ const loaderReducer = (state = initialState, action: AnyAction) => {
     case ActionTypes.SHOW_LOADER:
       return {
         ...state,
-        show: true,
-        actionName: action.action
+        show: true
       };
     case ActionTypes.HIDE_LOADER:
       return {
         ...state,
         show: false,
-        action: null
+        actionName: null
+      };
+    case ActionTypes.LOADER_NAME:
+      return {
+        ...state,
+        actionName: action.action
       };
     default:
       return state;

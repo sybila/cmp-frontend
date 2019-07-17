@@ -25,7 +25,7 @@ const accessTokenInterceptor = (config: any) => {
     _.delay(() => {
       console.log("Delay intercept (api communication simulation)");
       resolve(true);
-    }, 500);
+    }, 700);
   });
 
   return delay.then(() => config);
