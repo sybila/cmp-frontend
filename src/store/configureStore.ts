@@ -8,7 +8,7 @@ import { showLoader, hideLoader } from "../actions/loaderActions";
  * Custom loader middleware, displays spinner for actionst widt:
  * '_REQUEST' ending, hides on '_SUCCESS' or '_FAILURE'
  */
-const loaderMiddleWare = (store: any) => (next: any) => (action: any) => {
+const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
   const { show, actionName } = store.getState().loader;
   if (show) {
     const name = action.type.split(actionName);
@@ -30,7 +30,7 @@ export default function configureStore(preloadedState = undefined) {
     globalReducer,
     preloadedState,
     compose(
-      applyMiddleware(thunkMiddleware, loaderMiddleWare),
+      applyMiddleware(thunkMiddleware, loaderMiddleware),
       (window as any).devToolsExtension
         ? (window as any).devToolsExtension()
         : (f: any) => f
