@@ -7,7 +7,7 @@ interface Props {
   showLoader: Boolean;
 }
 
-class Loader extends React.Component<Props> {
+class Loader extends React.PureComponent<Props> {
   render() {
     const { showLoader } = this.props;
     return (

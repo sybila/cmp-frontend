@@ -11,21 +11,16 @@ export function login(username: String, password: String) {
     dispatch(request({ username }));
 
     // REVIEW: Optional refactoring based on final responses
-    // TODO: Remove timeout async simulation
-    setTimeout(
-      () =>
-        userService.login(username, password).then(
-          (user: any) => {
-            dispatch(success(user));
-            history.push("/");
-            // TODO: Redirect user somewhere, '/' most likely
-          },
-          (error: any) => {
-            dispatch(failure("Error: Incorrect username or password."));
-            // TODO: Alert here or any other kind of handling
-          }
-        ),
-      500
+    userService.login(username, password).then(
+      (user: any) => {
+        dispatch(success(user));
+        history.push("/");
+        // TODO: Redirect user somewhere, '/' most likely
+      },
+      (error: any) => {
+        dispatch(failure("Error: Incorrect username or password."));
+        // TODO: Alert here or any other kind of handling
+      }
     );
   };
 

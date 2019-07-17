@@ -8,6 +8,7 @@ import { showLoader, hideLoader } from "../actions/loaderActions";
  * Custom loader middleware, displays spinner for actionst widt:
  * '_REQUEST' ending, hides on '_SUCCESS' or '_FAILURE'
  */
+// TODO: display after 200ms to prevent flicking
 const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
   const { show, actionName } = store.getState().loader;
   if (show) {
