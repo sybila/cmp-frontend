@@ -20,7 +20,7 @@ const accessTokenInterceptor = (config: any) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  // TODO: Remove api fetch simulation
+  // TEMP: Remove api fetch simulation
   const delay = new Promise((resolve, reject) => {
     _.delay(() => {
       console.log("Delay intercept (api communication simulation)");

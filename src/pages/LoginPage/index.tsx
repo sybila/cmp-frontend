@@ -10,7 +10,7 @@ import { getUser } from "../../selectors/userSelectors";
 interface Props {
   submitLogin: (payload: Values) => any;
   user: any;
-  // TODO: models for entities
+  // TODO: Models for entities
 }
 
 class LoginPage extends React.Component<Props> {

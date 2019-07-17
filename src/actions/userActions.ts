@@ -3,12 +3,21 @@ import { Dispatch } from "redux";
 import { ActionTypes as LoginActionTypes } from "../reducers/authenticationReducer";
 import userService from "../services/userServices";
 import { history } from "../Application";
+import { UserModel } from "../models/User";
 
 const { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } = LoginActionTypes;
 
 export function login(username: String, password: String) {
   return (dispatch: Dispatch) => {
     dispatch(request({ username }));
+
+    // TEMP: Credentials for testing without API request
+    if (username === "admin" && password === "test") {
+      dispatch(success({ username }));
+      localStorage.setItem("user", JSON.stringify("12345"));
+      history.push("/");
+      return;
+    }
 
     // REVIEW: Optional refactoring based on final responses
     userService.login(username, password).then(
@@ -24,11 +33,11 @@ export function login(username: String, password: String) {
     );
   };
 
-  function request(user: Object) {
+  function request(user: UserModel) {
     return { type: LOGIN_REQUEST, user };
   }
 
-  function success(user: Object) {
+  function success(user: UserModel) {
     return { type: LOGIN_SUCCESS, user };
   }
 
