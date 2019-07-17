@@ -10,12 +10,14 @@ import PrivateRoute from "./components/PrivateRoute";
 
 export const history = createBrowserHistory();
 
-// TOOD: Interceptor checking localStorage for token
+// TODO: Interceptor checking localStorage for token
+// TODO: PrivateRoute nesting
 class Application extends React.Component<any> {
   render() {
     return (
       <Router history={history}>
         <Loader />
+
         <PrivateRoute exact path="/" component={HomePage} />
         <Route path="/login" component={LoginPage} />
       </Router>

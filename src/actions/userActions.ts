@@ -5,7 +5,12 @@ import userService from "../services/userServices";
 import { history } from "../Application";
 import { UserModel } from "../models/User";
 
-const { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } = LoginActionTypes;
+const {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT
+} = LoginActionTypes;
 
 export function login(username: String, password: String) {
   return (dispatch: Dispatch) => {
@@ -44,4 +49,9 @@ export function login(username: String, password: String) {
   function failure(error: String) {
     return { type: LOGIN_FAILURE, error };
   }
+}
+
+export function logout() {
+  userService.logout();
+  return { type: LOGOUT };
 }

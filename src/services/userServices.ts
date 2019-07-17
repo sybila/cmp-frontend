@@ -2,7 +2,8 @@ import dataService from "./dataService";
 
 const userService = {
   login,
-  refreshAccessToken
+  refreshAccessToken,
+  logout
 };
 
 // TODO: Error handling
@@ -26,6 +27,10 @@ function refreshAccessToken(): Promise<any> {
     }
     return data;
   });
+}
+
+function logout() {
+  localStorage.removeItem("user");
 }
 
 export default userService;

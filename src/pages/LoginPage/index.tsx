@@ -1,19 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { Dispatch, bindActionCreators } from "redux";
 
 import LoginForm, { Values } from "./LoginForm";
 import { AppState } from "../../reducers/globalReducer";
-import { login } from "../../actions/userActions";
+import { login, logout } from "../../actions/userActions";
 import { getUser } from "../../selectors/userSelectors";
 
 interface Props {
   submitLogin: (payload: Values) => any;
+  logout: () => void;
   user: any;
   // TODO: Models for entities
 }
 
 class LoginPage extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.props.logout();
+  }
+
   componentDidMount() {}
 
   render() {
@@ -38,7 +44,8 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitLogin: (payload: { username: String; password: String }) =>
-    dispatch<any>(login(payload.username, payload.password))
+    dispatch<any>(login(payload.username, payload.password)),
+  logout: bindActionCreators(logout, dispatch)
 });
 
 export default connect(
