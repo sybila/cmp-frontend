@@ -36,8 +36,7 @@ export function login(username: String, password: String) {
       },
       (error: any) => {
         dispatch(failure("Error: Incorrect username or password."));
-        return error;
-        // TODO: Alert here or any other kind of handling
+        return Promise.reject(error);
       }
     );
   };

@@ -25,7 +25,7 @@ export const ActionTypes = {
 const initialState: UserState = {
   user: null,
   error: null,
-  loggingIn: null
+  loggingIn: false
 };
 
 const authenticationReducer = (
