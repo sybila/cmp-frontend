@@ -18,6 +18,8 @@ interface State {
 
 type Handler = (state: any, dispatch: Dispatch) => boolean | Promise<boolean>;
 
+// REVIEW: Consider removing this function
+
 /**
  * Creates inline interceptor component class.
  * @param enter Interceptor function
