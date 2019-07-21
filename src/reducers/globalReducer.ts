@@ -7,7 +7,7 @@ import loaderReducer from "./loaderReducer";
  * Main application state fingerprint
  */
 const globalReducer = combineReducers({
-  user: authenticationReducer,
+  authentication: authenticationReducer,
   loader: loaderReducer
 });
 

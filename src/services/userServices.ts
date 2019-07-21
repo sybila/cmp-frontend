@@ -3,7 +3,8 @@ import dataService from "./dataService";
 const userService = {
   login,
   refreshAccessToken,
-  logout
+  logout,
+  attemptLoginWithToken
 };
 
 // TODO: Error handling
@@ -34,3 +35,8 @@ function logout() {
 }
 
 export default userService;
+
+// TODO: Refactor token login
+function attemptLoginWithToken(token: String) {
+  return dataService.post("");
+}

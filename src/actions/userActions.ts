@@ -9,7 +9,10 @@ const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT
+  LOGOUT,
+  TOKEN_LOGIN_REQUEST,
+  TOKEN_LOGIN_SUCCESS,
+  TOKEN_LOGIN_FAILURE
 } = LoginActionTypes;
 
 export function login(username: String, password: String) {
@@ -25,14 +28,15 @@ export function login(username: String, password: String) {
     }
 
     // REVIEW: Optional refactoring based on final responses
-    userService.login(username, password).then(
+    return userService.login(username, password).then(
       (user: any) => {
         dispatch(success(user));
         history.push("/");
-        // TODO: Redirect user somewhere, '/' most likely
+        return user;
       },
       (error: any) => {
         dispatch(failure("Error: Incorrect username or password."));
+        return error;
         // TODO: Alert here or any other kind of handling
       }
     );
@@ -54,4 +58,35 @@ export function login(username: String, password: String) {
 export function logout() {
   userService.logout();
   return { type: LOGOUT };
+}
+
+export function tokenLogin(token: String) {
+  return (dispatch: Dispatch) => {
+    dispatch(request());
+
+    // REVIEW: Optional refactoring based on final responses
+    return userService.attemptLoginWithToken(token).then(
+      (user: any) => {
+        dispatch(success(user));
+        history.push("/");
+        return user;
+      },
+      (error: any) => {
+        dispatch(failure());
+        return Promise.reject(error);
+      }
+    );
+
+    function request() {
+      return { type: TOKEN_LOGIN_REQUEST };
+    }
+
+    function success(user: UserModel) {
+      return { type: TOKEN_LOGIN_SUCCESS, user };
+    }
+
+    function failure() {
+      return { type: TOKEN_LOGIN_FAILURE };
+    }
+  };
 }
