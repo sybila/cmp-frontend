@@ -29,11 +29,21 @@ class NotificationsProvider extends React.Component<Props> {
   }
 
   render() {
-    const { notifications } = this.props;
+    const { notifications, markAsSeen } = this.props;
 
-    const nodes = notifications.map(i => {
-      return <Notification message={i.message}></Notification>;
-    });
+    const nodes = notifications
+      .filter(i => !i.seen)
+      .map(i => {
+        return (
+          <Notification
+            id={i.id}
+            key={i.id}
+            message={i.message}
+            markAsSeen={markAsSeen}
+          ></Notification>
+        );
+      });
+
     return (
       <div className={"notifications-container"}>
         {/* TEMP: For notification testing purposes */}

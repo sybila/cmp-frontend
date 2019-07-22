@@ -51,9 +51,9 @@ const notificationReducer = (
       return {
         ...state,
         byId: {
-          ...this.state.byId,
+          ...state.byId,
           [action.id]: {
-            ...this.state.byId[action.id],
+            ...state.byId[action.id],
             seen: true
           }
         }
