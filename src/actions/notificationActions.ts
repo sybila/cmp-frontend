@@ -2,24 +2,43 @@ import { Dispatch } from "redux";
 
 import { ActionTypes as NotificationActionTypes } from "../reducers/notificationsReducer";
 import notificationService from "../services/notificationServices";
-import { NotificationModel } from "../models/Notification";
+import {
+  NotificationModel,
+  notificationsNormalize
+} from "../models/Notification";
 import Config from "../config";
 
 const {
   MERGE_NOTIFICATIONS_REQUEST,
   MERGE_NOTIFICATIONS_FAILURE,
-  MERGE_NOTIFICATIONS_SUCCESS
+  MERGE_NOTIFICATIONS_SUCCESS,
+  MARK_SEEN
 } = NotificationActionTypes;
 
 export function loadNotifications(id: number) {
   return (dispatch: Dispatch) => {
     dispatch(request());
 
+    // TEMP: Mock data, remove
+    if (id === 99) {
+      const test = [
+        {
+          id: Math.floor(Math.random() * 1000) + 1,
+          message: "New notification, hello there",
+          seen: false
+        }
+      ];
+      const normalized = notificationsNormalize(test);
+      return dispatch(success(normalized.byId, normalized.all));
+    }
+
     // REVIEW: Optional refactoring based on final responses
     return notificationService.load(id).then(
-      (notification: NotificationModel) => {
-        dispatch(success(notification));
-        return notification;
+      (notifications: any) => {
+        const normalized = notificationsNormalize(notifications);
+
+        dispatch(success(normalized.byId, normalized.all));
+        return normalized.byId;
       },
       (error: any) => {
         dispatch(failure());
@@ -32,12 +51,12 @@ export function loadNotifications(id: number) {
     return { type: MERGE_NOTIFICATIONS_REQUEST };
   }
 
-  function success(notification: NotificationModel) {
-    return { type: MERGE_NOTIFICATIONS_FAILURE, notification };
+  function success(byId: any, all: number[]) {
+    return { type: MERGE_NOTIFICATIONS_SUCCESS, byId, all };
   }
 
   function failure() {
-    return { type: MERGE_NOTIFICATIONS_SUCCESS };
+    return { type: MERGE_NOTIFICATIONS_FAILURE };
   }
 }
 
@@ -48,4 +67,9 @@ export function loadNotificationsSheluded(id: number) {
       dispatch<any>(loadNotifications(id));
     }, Config.notificationReload);
   };
+}
+
+export function markAsSeen(id: number) {
+  // TODO: Any additional API request
+  return { type: MARK_SEEN, id };
 }

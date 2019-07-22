@@ -1,5 +1,11 @@
 // TODO: Styles organisation
 
+#portal-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 // TEMP: Temporary solution for color unity
 body {
   background-color: #e9ecef;
@@ -7,6 +13,21 @@ body {
 
 .user-alert {
   margin-top: 1rem;
+}
+
+// Notification styles
+
+.notifications-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 2rem;
+
+  .notification-wrapper {
+    padding: 1rem 2rem;
+    background: rgb(255, 255, 255);
+    margin: 0.5rem 0;
+  }
 }
 
 // Spinner styles

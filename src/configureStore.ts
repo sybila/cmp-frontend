@@ -2,12 +2,12 @@ import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import _ from "lodash";
 
-import globalReducer from "../reducers/globalReducer";
+import globalReducer from "./reducers/globalReducer";
 import {
   showLoader,
   hideLoader,
   loaderActionName
-} from "../actions/loaderActions";
+} from "./actions/loaderActions";
 
 /**
  * Custom loader middleware, displays spinner (after 200ms) for actions width:

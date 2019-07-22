@@ -6,13 +6,14 @@ interface NotificationsState {
   byId: {
     [key: number]: NotificationModel;
   };
-  all: NotificationModel[];
+  all: number[];
 }
 
 export const ActionTypes = {
   MERGE_NOTIFICATIONS_REQUEST: "@@app/MERGE_NOTIFICATIONS_REQUEST",
   MERGE_NOTIFICATIONS_SUCCESS: "@@app/MERGE_NOTIFICATIONS_SUCCESS",
-  MERGE_NOTIFICATIONS_FAILURE: "@@app/MERGE_NOTIFICATIONS_FAILURE"
+  MERGE_NOTIFICATIONS_FAILURE: "@@app/MERGE_NOTIFICATIONS_FAILURE",
+  MARK_SEEN: "@@app/MARK_SEEN"
 };
 
 const initialState: NotificationsState = {
@@ -45,6 +46,17 @@ const notificationReducer = (
       return {
         ...state,
         loading: false
+      };
+    case ActionTypes.MARK_SEEN:
+      return {
+        ...state,
+        byId: {
+          ...this.state.byId,
+          [action.id]: {
+            ...this.state.byId[action.id],
+            seen: true
+          }
+        }
       };
     default:
       return state;
