@@ -3,8 +3,11 @@ import { Router, Route, Link, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import "./styles/general.scss";
+
 import LoginPage from "./scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
+import NotFoundPage from "./scenes/NotFoundPage/";
+
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
 import Portal from "./Portal";
@@ -25,8 +28,11 @@ class Application extends React.Component<any> {
 
         <Router history={history}>
           <TopMenu />
-          <Route exact path="/" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/login" component={LoginPage} />
+            <Route component={NotFoundPage} />
+          </Switch>
         </Router>
       </React.Fragment>
     );

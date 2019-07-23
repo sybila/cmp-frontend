@@ -12,13 +12,6 @@ class UserUtils extends React.Component<Props> {
     const { user } = this.props;
     return (
       <ul className={"user-utils justify-content-end nav"}>
-        {user && (
-          <li className={"nav-item"}>
-            <Link className={"nav-link"} to={"/profile"}>
-              {user.username}
-            </Link>
-          </li>
-        )}
         <li className={"nav-item"}>
           <Link className={"nav-link"} to={"/login"}>
             {user ? "Logout" : "Sign in"}

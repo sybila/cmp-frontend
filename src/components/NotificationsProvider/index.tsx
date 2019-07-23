@@ -47,9 +47,9 @@ class NotificationsProvider extends React.Component<Props> {
     return (
       <div className={"notifications-container"}>
         {/* TEMP: For notification testing purposes */}
-        <button onClick={() => this.props.loadNotifications(99)}>
+        {/*<button onClick={() => this.props.loadNotifications(99)}>
           Add notification
-        </button>
+        </button>*/}
         {nodes}
       </div>
     );
