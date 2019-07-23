@@ -15,6 +15,12 @@ body {
   margin-top: 1rem;
 }
 
+.icon {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 // Notification styles
 
 .notifications-container {
@@ -23,11 +29,28 @@ body {
   right: 0;
   padding: 2rem;
 
+  .icon {
+    color: #bbd8bb;
+    padding: 0 0.75rem;
+    font-size: 1.2rem;
+    &.close-icon {
+      cursor: pointer;
+      &:hover {
+        transition: 0.4s;
+        color: #9fb69f;
+      }
+    }
+  }
+
   .notification-wrapper {
     background: rgb(255, 255, 255);
     margin: 0.5rem 0;
+    display: flex;
+    flex-flow: row wrap;
+
     .message {
-      padding: 1rem 2rem;
+      padding: 1rem;
+      width: 15rem;
     }
   }
 

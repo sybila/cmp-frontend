@@ -7,7 +7,6 @@ interface Props {
 class TimeBar extends React.PureComponent<Props> {
   render() {
     const { timeRemaining } = this.props;
-    console.log(timeRemaining);
     return (
       <div className={"time-bar"}>
         <div
