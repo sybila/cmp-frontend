@@ -10,6 +10,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Portal from "./Portal";
 import NotificationsProvider from "./components/NotificationsProvider";
 
+import TopMenu from "./components/TopMenu";
+
 export const history = createBrowserHistory();
 
 class Application extends React.Component<any> {
@@ -22,7 +24,8 @@ class Application extends React.Component<any> {
         <Loader />
 
         <Router history={history}>
-          <PrivateRoute exact path="/" component={HomePage} />
+          <TopMenu />
+          <Route exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
         </Router>
       </React.Fragment>

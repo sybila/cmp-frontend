@@ -21,13 +21,21 @@ body {
   flex-direction: column;
 }
 
-// Notification styles
+// TopMenu styles
+header.top-menu {
+  background: #4e4e4e;
+  a {
+    color: #fff;
+  }
+}
 
+// Notification styles
 .notifications-container {
   position: fixed;
-  top: 0;
+  top: 3rem;
   right: 0;
-  padding: 2rem;
+  padding: 1rem 2rem;
+  width: 25rem;
 
   .icon {
     color: #bbd8bb;
@@ -47,6 +55,8 @@ body {
     margin: 0.5rem 0;
     display: flex;
     flex-flow: row wrap;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
 
     .message {
       padding: 1rem;
@@ -67,6 +77,7 @@ body {
       left: 0;
       // TODO: Add mixin
       animation-name: timeout;
+      animation-timing-function: linear;
       transform-origin: left top;
       will-change: transform;
     }

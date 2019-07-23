@@ -5,12 +5,13 @@ import { Dispatch, bindActionCreators } from "redux";
 import LoginForm, { Values } from "./LoginForm";
 import { AppState } from "../../reducers/globalReducer";
 import { login, logout } from "../../actions/userActions";
-import { getUser } from "../../selectors/userSelectors";
+import { getUser, getError } from "../../selectors/userSelectors";
 
 interface Props {
   submitLogin: (payload: Values) => any;
   logout: () => void;
   user: any;
+  error: string;
   // TODO: Models for entities
 }
 
@@ -23,8 +24,7 @@ class LoginPage extends React.Component<Props> {
   componentDidMount() {}
 
   render() {
-    const { submitLogin, user } = this.props;
-    const error = user ? user.error : undefined;
+    const { submitLogin, user, error } = this.props;
 
     return (
       <div className={"jumbotron"}>
@@ -39,7 +39,8 @@ class LoginPage extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
+  user: getUser(state),
+  error: getError(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

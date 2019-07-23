@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Link } from "react-router-dom";
 
 import { AppState } from "../../reducers/globalReducer";
 
@@ -12,12 +11,21 @@ class LoginPage extends React.Component<Props> {
 
   render() {
     return (
-      <div className={"jumbotron"}>
-        <div className={"container"}>
-          <Link to="/login">Logout</Link>
-          <div className="col-sm-8 offset-sm-2">
-            <h1>Home page</h1>
-          </div>
+      <div className={"container"}>
+        <div className={"jumbotron"}>
+          <h1 className={"display-4"}>Hello, world!</h1>
+          <p className={"lead"}>
+            This is a simple hero unit, a simple jumbotron-style component for
+            calling extra attention to featured content or information.
+          </p>
+          <hr className={"my-4"} />
+          <p>
+            It uses utility classes for typography and spacing to space content
+            out within the larger container.
+          </p>
+          <a className={"btn btn-primary btn-lg"} href="#" role="button">
+            Learn more
+          </a>
         </div>
       </div>
     );
