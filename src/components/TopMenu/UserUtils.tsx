@@ -1,18 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Dispatch, bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
+import { AppState } from "../../reducers/globalReducer";
 import Dropdown, { ItemType } from "../Dropdown";
+import { toggleInbox } from "../../actions/notificationActions";
 import NotificationsBell from "./NotificationsBell";
 
 interface Props {
   user?: UserModel;
+  toggleInbox?: () => void;
 }
 
 class UserUtils extends React.Component<Props> {
   render() {
-    const { user } = this.props;
+    const { user, toggleInbox } = this.props;
 
     const userDropdownItems = [
       {
@@ -43,7 +48,7 @@ class UserUtils extends React.Component<Props> {
     const userNavItems = user
       ? [
           <Dropdown text={user.username} items={userDropdownItems} />,
-          <NotificationsBell />
+          <NotificationsBell handleClick={toggleInbox} />
         ]
       : [];
 
@@ -65,4 +70,13 @@ class UserUtils extends React.Component<Props> {
   }
 }
 
-export default UserUtils;
+const mapStateToProps = (state: AppState) => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  toggleInbox: bindActionCreators(toggleInbox, dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserUtils);

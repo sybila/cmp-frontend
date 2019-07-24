@@ -12,7 +12,8 @@ const {
   MERGE_NOTIFICATIONS_REQUEST,
   MERGE_NOTIFICATIONS_FAILURE,
   MERGE_NOTIFICATIONS_SUCCESS,
-  MARK_SEEN
+  MARK_SEEN,
+  TOGGLE_INBOX
 } = NotificationActionTypes;
 
 export function loadNotifications(id: number) {
@@ -72,4 +73,8 @@ export function loadNotificationsSheluded(id: number) {
 export function markAsSeen(id: number) {
   // TODO: Any additional API request
   return { type: MARK_SEEN, id };
+}
+
+export function toggleInbox() {
+  return { type: TOGGLE_INBOX };
 }

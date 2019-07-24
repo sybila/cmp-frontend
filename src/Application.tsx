@@ -12,6 +12,7 @@ import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
 import Portal from "./Portal";
 import NotificationsProvider from "./components/NotificationsProvider";
+import Inbox from "./components/Inbox";
 
 import TopMenu from "./components/TopMenu";
 
@@ -22,6 +23,7 @@ class Application extends React.Component<any> {
     return (
       <React.Fragment>
         <Portal>
+          <Inbox />
           <NotificationsProvider />
         </Portal>
         <Loader />

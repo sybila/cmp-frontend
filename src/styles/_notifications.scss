@@ -6,6 +6,7 @@
   left: 0;
   padding: 1rem 2rem;
   width: 25rem;
+  z-index: 998;
 
   .icon {
     color: #bbd8bb;
@@ -54,7 +55,7 @@
   }
 }
 
-// Floating notification-wrapper animations
+// Floating notification-wrapper animations CSSTransition
 
 .notification-wrapper-enter {
   opacity: 0;

@@ -8,7 +8,7 @@ import {
   loadNotifications,
   markAsSeen
 } from "../../actions/notificationActions";
-import { getNotificationsById } from "../../selectors/notificationsSelectors";
+import { getNotifications } from "../../selectors/notificationsSelectors";
 import { getUser } from "../../selectors/userSelectors";
 import { NotificationModel } from "../../models/Notification";
 import { UserModel } from "../../models/User";
@@ -66,7 +66,7 @@ class NotificationsProvider extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  notifications: getNotificationsById(state),
+  notifications: getNotifications(state),
   user: getUser(state)
 });
 

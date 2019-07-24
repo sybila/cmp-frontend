@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { Dispatch, bindActionCreators } from "redux";
 
 import { AppState } from "../../reducers/globalReducer";
 import UserUtils from "./UserUtils";
