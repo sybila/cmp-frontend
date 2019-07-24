@@ -15,7 +15,7 @@ const {
   TOKEN_LOGIN_FAILURE
 } = LoginActionTypes;
 
-export function login(username: String, password: String) {
+export function login(username: string, password: string) {
   return (dispatch: Dispatch) => {
     dispatch(request({ username }));
 
@@ -49,7 +49,7 @@ export function login(username: String, password: String) {
     return { type: LOGIN_SUCCESS, user };
   }
 
-  function failure(error: String) {
+  function failure(error: string) {
     return { type: LOGIN_FAILURE, error };
   }
 }
@@ -59,7 +59,7 @@ export function logout() {
   return { type: LOGOUT };
 }
 
-export function tokenLogin(token: String) {
+export function tokenLogin(token: string) {
   return (dispatch: Dispatch) => {
     dispatch(request());
 

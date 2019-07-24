@@ -2,13 +2,13 @@ import React from "react";
 import { Form, Field } from "react-final-form";
 
 export interface Values {
-  password: String;
-  username: String;
+  password: string;
+  username: string;
 }
 
 interface Props {
   submitLogin: (payload: Values) => void;
-  error?: String;
+  error?: string;
 }
 
 const LoginForm = (props: Props) => (

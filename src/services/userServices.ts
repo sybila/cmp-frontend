@@ -8,7 +8,7 @@ const userService = {
 };
 
 // TODO: Error handling
-function login(username: String, password: String): Promise<any> {
+function login(username: string, password: string): Promise<any> {
   return dataService
     .post("/authorize", { grant_type: "password", username, password })
     .then((user: any) => {
@@ -37,6 +37,6 @@ function logout() {
 export default userService;
 
 // TODO: Refactor token login
-function attemptLoginWithToken(token: String) {
+function attemptLoginWithToken(token: string) {
   return dataService.post("");
 }

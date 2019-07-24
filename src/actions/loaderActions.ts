@@ -6,7 +6,7 @@ export const showLoader = () => ({
   type: SHOW_LOADER
 });
 
-export const loaderActionName = (action: String) => ({
+export const loaderActionName = (action: string) => ({
   type: LOADER_NAME,
   action
 });

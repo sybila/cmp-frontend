@@ -44,7 +44,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  submitLogin: (payload: { username: String; password: String }) =>
+  submitLogin: (payload: { username: string; password: string }) =>
     dispatch<any>(login(payload.username, payload.password)),
   logout: bindActionCreators(logout, dispatch)
 });

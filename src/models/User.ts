@@ -1,5 +1,5 @@
 export interface UserModel {
-  username: String;
+  username: string;
 }
 
 // TODO: normalizer for this model and others

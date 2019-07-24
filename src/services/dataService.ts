@@ -70,7 +70,7 @@ const subscribeTokenRefresh = (callback: Function) => {
   refreshSubscribers.push(callback);
 };
 
-const onRrefreshed = (token: String) => {
+const onRrefreshed = (token: string) => {
   refreshSubscribers.map(callback => callback(token));
 };
 

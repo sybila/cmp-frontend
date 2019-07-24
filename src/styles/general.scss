@@ -24,8 +24,20 @@ body {
 // TopMenu styles
 header.top-menu {
   background: #4e4e4e;
-  a {
+  a.nav-link {
     color: #fff;
+  }
+}
+
+// Dropdown
+.dropdown {
+  cursor: pointer;
+  // Needs mixins
+  user-select: none;
+  &.dropdown:hover {
+    .dropdown-toggle {
+      color: #fff;
+    }
   }
 }
 
