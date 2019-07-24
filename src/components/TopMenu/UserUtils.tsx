@@ -34,6 +34,9 @@ class UserUtils extends React.Component<Props> {
     const publicNavItems = [
       <Link className={"nav-link"} to={"/login"}>
         Sign in
+      </Link>,
+      <Link className={"nav-link"} to={"/register"}>
+        Sign up
       </Link>
     ];
 
@@ -47,8 +50,16 @@ class UserUtils extends React.Component<Props> {
     return (
       <ul className={"user-utils justify-content-start nav"}>
         {user
-          ? userNavItems.map(item => <li className={"nav-item"}>{item}</li>)
-          : publicNavItems.map(item => <li className={"nav-item"}>{item}</li>)}
+          ? userNavItems.map((item, i) => (
+              <li className={"nav-item"} key={`nav-item-${i}`}>
+                {item}
+              </li>
+            ))
+          : publicNavItems.map((item, i) => (
+              <li className={"nav-item"} key={`nav-item-${i}`}>
+                {item}
+              </li>
+            ))}
       </ul>
     );
   }

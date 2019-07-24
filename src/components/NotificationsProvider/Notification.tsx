@@ -13,6 +13,7 @@ interface Props {
 
 interface State {
   show: boolean;
+  timeout: any;
 }
 
 const notificationTimeout = 15000;
@@ -21,34 +22,49 @@ class Notification extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      timeout: null
     };
 
     this.hideNotification = this.hideNotification.bind(this);
   }
 
-  hideNotification(id) {
+  private showNotification = setTimeout(
+    () => this.setState({ show: true }),
+    400
+  );
+
+  componentDidMount() {
+    const { id } = this.props;
+    this.setState({
+      timeout: setTimeout(() => this.hideNotification(id), notificationTimeout)
+    });
+  }
+
+  componentWillUnmount() {
+    const { timeout } = this.state;
+    const { id, markAsSeen } = this.props;
+    clearTimeout(timeout);
+    clearTimeout(this.showNotification);
+    markAsSeen(id);
+  }
+
+  hideNotification(id: number) {
     this.setState({ show: !this.state.show });
-    setTimeout(() => this.props.markAsSeen(id), 500);
+    setTimeout(() => this.props.markAsSeen(id), 400);
   }
 
   render() {
     const { message, id } = this.props;
     const { show } = this.state;
 
-    const timeout = setTimeout(
-      () => this.hideNotification(id),
-      notificationTimeout
-    );
-
-    const timeoutShow = setTimeout(() => this.setState({ show: true }), 500);
-
     return (
       <CSSTransition
         in={show}
-        timeout={500}
+        timeout={400}
         classNames="notification-wrapper"
         unmountOnExit
+        onExited={() => this.props.markAsSeen(id)}
       >
         <div className={"notification-wrapper"}>
           <div className={"icon info-icon"}>

@@ -30,12 +30,13 @@ class NotificationsProvider extends React.Component<Props> {
   componentDidUpdate(prevProps, prevState) {
     // TODO: Valid ID
     const { user, loadNotifications } = this.props;
-    !_.isEqual(prevProps.user, user) &&
+    if (!_.isEqual(prevProps.user, user) && user) {
       setTimeout(() => loadNotifications(99), 5000);
+    }
   }
 
   render() {
-    const { notifications, markAsSeen } = this.props;
+    const { notifications, markAsSeen, user } = this.props;
 
     const nodes = notifications
       .filter(i => !i.seen)
@@ -58,7 +59,7 @@ class NotificationsProvider extends React.Component<Props> {
             Add notification
           </button>
         */}
-        {nodes}
+        {user && nodes}
       </div>
     );
   }

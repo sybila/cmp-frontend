@@ -50,6 +50,11 @@ class Dropdown extends React.Component<Props, State> {
     this.dropdown.addEventListener("focusout", this.handleBlurEvent);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("mouseup", this.handleMouseEvent);
+    this.dropdown.removeEventListener("focusout", this.handleBlurEvent);
+  }
+
   hasFocus(target: EventTarget) {
     // React ref callbacks pass `null` when a component unmounts, so guard against `this.dropdown` not existing
     if (!this.dropdown) {
@@ -120,7 +125,10 @@ class Dropdown extends React.Component<Props, State> {
           {items &&
             items.map((item, i) =>
               item.type === ItemType.divider ? (
-                <div className="dropdown-divider"></div>
+                <div
+                  key={`dropdown-${i}-${item.text}`}
+                  className="dropdown-divider"
+                ></div>
               ) : (
                 <Link
                   key={`dropdown-${i}-${item.text}`}
