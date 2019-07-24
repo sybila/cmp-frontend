@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
 import Dropdown, { ItemType } from "../Dropdown";
+import NotificationsBell from "./NotificationsBell";
 
 interface Props {
   user?: UserModel;
@@ -15,7 +17,8 @@ class UserUtils extends React.Component<Props> {
     const userDropdownItems = [
       {
         text: "Profile",
-        to: "/profile"
+        to: "/profile",
+        icon: faUserCircle
       },
       {
         text: "",
@@ -23,23 +26,29 @@ class UserUtils extends React.Component<Props> {
       },
       {
         text: "Logout",
-        to: "/login"
+        to: "/login",
+        icon: faSignOutAlt
       }
     ];
 
+    const publicNavItems = [
+      <Link className={"nav-link"} to={"/login"}>
+        Sign in
+      </Link>
+    ];
+
+    const userNavItems = user
+      ? [
+          <Dropdown text={user.username} items={userDropdownItems} />,
+          <NotificationsBell />
+        ]
+      : [];
+
     return (
-      <ul className={"user-utils justify-content-end nav"}>
-        {user ? (
-          <li className={"nav-item"}>
-            <Dropdown text={user.username} items={userDropdownItems} />
-          </li>
-        ) : (
-          <li className={"nav-item"}>
-            <Link className={"nav-link"} to={"/login"}>
-              Sign in
-            </Link>
-          </li>
-        )}
+      <ul className={"user-utils justify-content-start nav"}>
+        {user
+          ? userNavItems.map(item => <li className={"nav-item"}>{item}</li>)
+          : publicNavItems.map(item => <li className={"nav-item"}>{item}</li>)}
       </ul>
     );
   }

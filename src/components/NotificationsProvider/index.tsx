@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
+import _ from "lodash";
 
 import { AppState } from "../../reducers/globalReducer";
 import {
@@ -8,7 +9,9 @@ import {
   markAsSeen
 } from "../../actions/notificationActions";
 import { getNotificationsById } from "../../selectors/notificationsSelectors";
+import { getUser } from "../../selectors/userSelectors";
 import { NotificationModel } from "../../models/Notification";
+import { UserModel } from "../../models/User";
 
 import Notification from "./Notification";
 
@@ -16,6 +19,7 @@ interface Props {
   loadNotifications: (id: number) => any;
   markAsSeen: (id: number) => any;
   notifications: NotificationModel[];
+  user: UserModel;
 }
 
 class NotificationsProvider extends React.Component<Props> {
@@ -23,9 +27,11 @@ class NotificationsProvider extends React.Component<Props> {
     super(props);
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps, prevState) {
     // TODO: Valid ID
-    this.props.loadNotifications(99);
+    const { user, loadNotifications } = this.props;
+    !_.isEqual(prevProps.user, user) &&
+      setTimeout(() => loadNotifications(99), 5000);
   }
 
   render() {
@@ -47,9 +53,11 @@ class NotificationsProvider extends React.Component<Props> {
     return (
       <div className={"notifications-container"}>
         {/* TEMP: For notification testing purposes */}
-        {/*<button onClick={() => this.props.loadNotifications(99)}>
-          Add notification
-        </button>*/}
+        {/*
+          <button onClick={() => this.props.loadNotifications(99)}>
+            Add notification
+          </button>
+        */}
         {nodes}
       </div>
     );
@@ -57,7 +65,8 @@ class NotificationsProvider extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  notifications: getNotificationsById(state)
+  notifications: getNotificationsById(state),
+  user: getUser(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

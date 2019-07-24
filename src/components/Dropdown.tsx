@@ -1,5 +1,6 @@
 import React, { FocusEvent } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export enum ItemType {
   link = "link",
@@ -8,6 +9,7 @@ export enum ItemType {
 
 interface Item {
   text: string;
+  icon?: any;
   type?: ItemType;
   to?: string;
   onClick?: Function;
@@ -114,9 +116,7 @@ class Dropdown extends React.Component<Props, State> {
         >
           {text}
         </a>
-        <div
-          className={`dropdown-menu dropdown-menu-right ${show ? "show" : ""}`}
-        >
+        <div className={`dropdown-menu ${show ? "show" : ""}`}>
           {items &&
             items.map((item, i) =>
               item.type === ItemType.divider ? (
@@ -136,6 +136,7 @@ class Dropdown extends React.Component<Props, State> {
                     item.disabled ? "disabled" : ""
                   }`}
                 >
+                  {item.icon && <FontAwesomeIcon icon={item.icon} />}
                   {item.text}
                 </Link>
               )

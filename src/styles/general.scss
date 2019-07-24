@@ -1,5 +1,7 @@
 // TODO: Styles organisation
 
+@import "notifications";
+
 #portal-root {
   position: absolute;
   top: 0;
@@ -27,6 +29,45 @@ header.top-menu {
   a.nav-link {
     color: #fff;
   }
+  .user-utils {
+    padding: 0.25rem 2rem;
+    .nav-link {
+      padding: 0.5rem 0.9rem;
+      transition: 0.3s;
+      border-radius: 60px;
+      &:hover {
+        background: #333;
+      }
+    }
+  }
+
+  .notification {
+    font-size: 1rem;
+    color: #fff;
+    position: relative;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      background: #333;
+    }
+
+    &::after {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      width: 10.5px;
+      height: 10.5px;
+      padding: 0 0.25rem;
+      border-radius: 60px;
+      background: #05b446;
+      content: "";
+      font-size: 0.5rem;
+    }
+    &.warning::after {
+      background: #b40505;
+      content: "!";
+    }
+  }
 }
 
 // Dropdown
@@ -39,59 +80,9 @@ header.top-menu {
       color: #fff;
     }
   }
-}
-
-// Notification styles
-.notifications-container {
-  position: fixed;
-  top: 3rem;
-  right: 0;
-  padding: 1rem 2rem;
-  width: 25rem;
-
-  .icon {
-    color: #bbd8bb;
-    padding: 0 0.75rem;
-    font-size: 1.2rem;
-    &.close-icon {
-      cursor: pointer;
-      &:hover {
-        transition: 0.4s;
-        color: #9fb69f;
-      }
-    }
-  }
-
-  .notification-wrapper {
-    background: rgb(255, 255, 255);
-    margin: 0.5rem 0;
-    display: flex;
-    flex-flow: row wrap;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-
-    .message {
-      padding: 1rem;
-      width: 15rem;
-    }
-  }
-
-  .time-bar {
-    background: rgb(219, 219, 219);
-    position: relative;
-    width: 100%;
-    height: 0.3rem;
-    .time-remaining {
-      width: 100%;
-      height: 100%;
-      background: rgb(195, 195, 195);
-      position: absolute;
-      left: 0;
-      // TODO: Add mixin
-      animation-name: timeout;
-      animation-timing-function: linear;
-      transform-origin: left top;
-      will-change: transform;
+  .dropdown-item {
+    svg {
+      margin-right: 0.5rem;
     }
   }
 }

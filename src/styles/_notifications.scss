@@ -1,0 +1,76 @@
+// Floating notification-wrapper styles
+
+.notifications-container {
+  position: fixed;
+  top: 3rem;
+  left: 0;
+  padding: 1rem 2rem;
+  width: 25rem;
+
+  .icon {
+    color: #bbd8bb;
+    padding: 0 0.75rem;
+    font-size: 1.2rem;
+    &.close-icon {
+      cursor: pointer;
+      &:hover {
+        transition: 0.4s;
+        color: #9fb69f;
+      }
+    }
+  }
+
+  .notification-wrapper {
+    background: rgb(255, 255, 255);
+    margin: 0.5rem 0;
+    display: flex;
+    flex-flow: row wrap;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+
+    .message {
+      padding: 1rem;
+      width: 15rem;
+    }
+  }
+
+  .time-bar {
+    background: rgb(219, 219, 219);
+    position: relative;
+    width: 100%;
+    height: 0.3rem;
+    .time-remaining {
+      width: 100%;
+      height: 100%;
+      background: rgb(195, 195, 195);
+      position: absolute;
+      left: 0;
+      // TODO: Add mixin
+      animation-name: timeout;
+      animation-timing-function: linear;
+      transform-origin: left top;
+      will-change: transform;
+    }
+  }
+}
+
+// Floating notification-wrapper animations
+
+.notification-wrapper-enter {
+  opacity: 0;
+  transform: translateY(-50%);
+}
+.notification-wrapper-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 400ms;
+}
+.notification-wrapper-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.notification-wrapper-exit-active {
+  opacity: 0;
+  transition: all 400ms;
+  transform: translateY(-50%);
+}
