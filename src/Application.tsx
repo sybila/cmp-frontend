@@ -14,8 +14,39 @@ import PrivateRoute from "./components/PrivateRoute";
 import Portal from "./Portal";
 import NotificationsProvider from "./components/NotificationsProvider";
 import Inbox from "./components/Inbox";
+import { intercept } from "./interceptors/inlineInterceptor";
+import { getUser } from "./selectors/userSelectors";
+import { tokenLogin, login } from "./actions/userActions";
 
 import TopMenu from "./components/TopMenu";
+
+/**
+ * Intecrepts Access token a logs in user if the token is valid
+ */
+const InterceptLogin = intercept((state, dispatch) => {
+  // TEMP: User stays logged in (dev purposes)
+  dispatch<any>(login("admin", "test"));
+  return true;
+
+  if (getUser(state)) {
+    // Do something if user exists
+    return true;
+  }
+
+  const token = localStorage.getItem("user");
+  if (token) {
+    return dispatch<any>(tokenLogin(token))
+      .then(() => {
+        // TODO: Optional redirect to previous location
+        return true;
+      })
+      .catch(() => {
+        return () => history.push("/login");
+      });
+  }
+
+  return false;
+});
 
 export const history = createBrowserHistory();
 
@@ -23,6 +54,7 @@ class Application extends React.Component<any> {
   render() {
     return (
       <React.Fragment>
+        <InterceptLogin />
         <Portal>
           <Inbox />
           <NotificationsProvider />

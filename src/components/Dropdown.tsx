@@ -133,13 +133,10 @@ class Dropdown extends React.Component<Props, State> {
                 <Link
                   key={`dropdown-${i}-${item.text}`}
                   to={item.to || "#"}
-                  onClick={
-                    item.onClick &&
-                    (e => {
-                      e.preventDefault();
-                      item.onClick();
-                    })
-                  }
+                  onClick={e => {
+                    this.setState({ show: false });
+                    item.onClick && item.onClick();
+                  }}
                   className={`dropdown-item ${item.class ? item.class : ""}${
                     item.disabled ? "disabled" : ""
                   }`}
