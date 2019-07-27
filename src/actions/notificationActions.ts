@@ -25,7 +25,7 @@ export function loadNotifications(id: number) {
       const test = [
         {
           id: Math.floor(Math.random() * 1000) + 1,
-          message: "New notification, hello there, hello world",
+          message: "New notification, hello there, hello world, hello everyone",
           seen: false
         }
       ];

@@ -2,7 +2,7 @@ import { Action } from "redux";
 import { UserModel } from "../models/User";
 
 export interface LoginAction extends Action {
-  user: UserModel;
+  user?: UserModel;
   error?: string;
 }
 

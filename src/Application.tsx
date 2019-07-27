@@ -7,6 +7,7 @@ import "./styles/general.scss";
 import LoginPage from "./scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
 import NotFoundPage from "./scenes/NotFoundPage/";
+import UserProfilePage from "./scenes/UserProfilePage";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -33,6 +34,10 @@ class Application extends React.Component<any> {
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/login" component={LoginPage} />
+            <PrivateRoute
+              path="/profile/:subPage?"
+              component={UserProfilePage}
+            />
             <Route component={NotFoundPage} />
           </Switch>
         </Router>

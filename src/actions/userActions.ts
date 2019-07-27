@@ -17,11 +17,13 @@ const {
 
 export function login(username: string, password: string) {
   return (dispatch: Dispatch) => {
-    dispatch(request({ username }));
+    dispatch(request());
 
     // TEMP: Credentials for testing without API request
     if (username === "admin" && password === "test") {
-      dispatch(success({ username }));
+      dispatch(
+        success({ id: 0, username, permissions: 0, email: "admin@test.com" })
+      );
       localStorage.setItem("user", JSON.stringify("12345"));
       history.push("/");
       return;
@@ -41,8 +43,8 @@ export function login(username: string, password: string) {
     );
   };
 
-  function request(user: UserModel) {
-    return { type: LOGIN_REQUEST, user };
+  function request() {
+    return { type: LOGIN_REQUEST };
   }
 
   function success(user: UserModel) {
