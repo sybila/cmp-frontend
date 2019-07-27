@@ -2,7 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import { Link, NavLink } from "react-router-dom";
-import { faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faUserCircle,
+  faTools
+} from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
 import { AppState } from "../../reducers/globalReducer";
@@ -44,6 +48,11 @@ class UserUtils extends React.Component<Props> {
         text: "Profile",
         to: "/profile",
         icon: faUserCircle
+      },
+      {
+        text: "Settings",
+        to: "/admin/settings",
+        icon: faTools
       },
       {
         text: "",
