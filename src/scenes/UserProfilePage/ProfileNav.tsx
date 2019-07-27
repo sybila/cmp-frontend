@@ -19,6 +19,15 @@ const ProfileNav = (props: Props) => {
       </li>
       <li className="nav-item">
         <NavLink
+          to={`/profile/groups`}
+          activeClassName={activeClassName}
+          className="nav-link"
+        >
+          Groups
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink
           to={`/profile/edit`}
           activeClassName={activeClassName}
           className="nav-link"

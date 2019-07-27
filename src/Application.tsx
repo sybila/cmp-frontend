@@ -47,7 +47,6 @@ class MasterPage extends React.Component {
  */
 const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
-  dataService.get("/models/").then(payload => console.log(payload));
   dispatch<any>(login("admin", "test"));
   return true;
 

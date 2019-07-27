@@ -8,6 +8,7 @@ import { UserModel } from "../../models/User";
 import ProfileNav from "./ProfileNav";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
+import Groups from "./Groups";
 import Picture from "./Picture";
 
 interface Props {
@@ -23,6 +24,8 @@ class UserProfilePage extends React.Component<Props> {
       switch (match.params.subPage) {
         case "edit":
           return <EditProfile />;
+        case "groups":
+          return <Groups />;
         default:
           return <Profile user={user} />;
       }
