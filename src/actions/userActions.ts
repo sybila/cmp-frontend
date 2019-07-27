@@ -22,7 +22,13 @@ export function login(username: string, password: string) {
     // TEMP: Credentials for testing without API request
     if (username === "admin" && password === "test") {
       dispatch(
-        success({ id: 0, username, permissions: 0, email: "admin@test.com" })
+        success({
+          id: 0,
+          username,
+          permissions: 0,
+          email: "admin@test.com",
+          about: "I like cats, that's all"
+        })
       );
       localStorage.setItem("user", JSON.stringify("12345"));
       history.goBack();
@@ -33,7 +39,8 @@ export function login(username: string, password: string) {
     return userService.login(username, password).then(
       (user: any) => {
         dispatch(success(user));
-        history.push("/");
+        // TODO: Forward back to previous location
+        // history.push("/");
         return user;
       },
       (error: any) => {

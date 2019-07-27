@@ -3,6 +3,7 @@ export interface UserModel {
   username: string;
   permissions: number;
   email?: string;
+  about?: string;
 
   // TODO: Implement groups (Model...)
   /* groups: {} */

@@ -4,7 +4,7 @@ class EditProfile extends React.Component {
   render() {
     return (
       <div>
-        <h4 className="m-y-2">Edit Profile</h4>
+        <h2>Edit Profile</h2>
       </div>
     );
   }

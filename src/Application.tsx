@@ -34,7 +34,7 @@ class MasterPage extends React.Component {
       <div className="app-wrapper">
         <TopMenu />
         <div className="container-fluid grey-background">
-          <div className="container">{this.props.children}</div>
+          <div className="container mt-5">{this.props.children}</div>
         </div>
       </div>
     );
