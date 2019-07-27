@@ -17,6 +17,7 @@ import Inbox from "./components/Inbox";
 import { intercept } from "./interceptors/inlineInterceptor";
 import { getUser } from "./selectors/userSelectors";
 import { tokenLogin, login } from "./actions/userActions";
+import dataService from "./services/dataService";
 
 import TopMenu from "./components/TopMenu";
 
@@ -46,6 +47,7 @@ class MasterPage extends React.Component {
  */
 const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
+  dataService.get("/models/").then(payload => console.log(payload));
   dispatch<any>(login("admin", "test"));
   return true;
 
