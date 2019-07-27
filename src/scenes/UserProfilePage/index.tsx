@@ -25,10 +25,10 @@ class UserProfilePage extends React.Component<Props> {
     return (
       <div className="container">
         <div className="row m-y-2">
-          <div className="col-lg-3 pull-lg-8 text-xs-center">
+          <div className="col-lg-3 text-xs-center">
             <Picture />
           </div>
-          <div className="col-lg-9 push-lg-4">
+          <div className="col-lg-9">
             <ProfileNav />
             <div className="tab-content p-b-3">{page}</div>
           </div>

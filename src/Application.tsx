@@ -21,6 +21,27 @@ import { tokenLogin, login } from "./actions/userActions";
 import TopMenu from "./components/TopMenu";
 
 /**
+ * Master Page
+ *
+ * Application layout/logic component. Pages that
+ * doesn't inherit layout should be defined by
+ * themselves.
+ */
+
+class MasterPage extends React.Component {
+  render() {
+    return (
+      <div className="app-wrapper">
+        <TopMenu />
+        <div className="container-fluid grey-background">
+          <div className="container">{this.props.children}</div>
+        </div>
+      </div>
+    );
+  }
+}
+
+/**
  * Intecrepts Access token a logs in user if the token is valid
  */
 const InterceptLogin = intercept((state, dispatch) => {
@@ -28,7 +49,7 @@ const InterceptLogin = intercept((state, dispatch) => {
   dispatch<any>(login("admin", "test"));
   return true;
 
-  if (getUser(state)) {
+  /* if (getUser(state)) {
     // Do something if user exists
     return true;
   }
@@ -45,7 +66,7 @@ const InterceptLogin = intercept((state, dispatch) => {
       });
   }
 
-  return false;
+  return false; */
 });
 
 export const history = createBrowserHistory();
@@ -54,24 +75,34 @@ class Application extends React.Component<any> {
   render() {
     return (
       <React.Fragment>
+        {/* Interceptors */}
         <InterceptLogin />
+
+        {/* Portal block, for components with absolute positioning */}
         <Portal>
           <Inbox />
           <NotificationsProvider />
+          <Loader />
         </Portal>
-        <Loader />
 
+        {/* Application routing (with root master page defining basic layout)*/}
         <Router history={history}>
-          <TopMenu />
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/login" component={LoginPage} />
-            <PrivateRoute
-              path="/profile/:subPage?"
-              component={UserProfilePage}
-            />
-            <Route component={NotFoundPage} />
-          </Switch>
+          <Route
+            path="/"
+            render={({ match: { url } }) => (
+              <MasterPage>
+                <Switch>
+                  <Route exact path={`${url}`} component={HomePage} />
+                  <Route path={`${url}login`} component={LoginPage} />
+                  <PrivateRoute
+                    path={`${url}profile/:subPage?`}
+                    component={UserProfilePage}
+                  />
+                  <Route component={NotFoundPage} />
+                </Switch>
+              </MasterPage>
+            )}
+          />
         </Router>
       </React.Fragment>
     );
