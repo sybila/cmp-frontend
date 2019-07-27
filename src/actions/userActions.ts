@@ -25,7 +25,7 @@ export function login(username: string, password: string) {
         success({ id: 0, username, permissions: 0, email: "admin@test.com" })
       );
       localStorage.setItem("user", JSON.stringify("12345"));
-      history.push("/");
+      history.goBack();
       return;
     }
 
