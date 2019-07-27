@@ -11,6 +11,7 @@ interface Props {
   user: UserModel;
 }
 
+// TODO: Refactor - merge this component and UserUtils
 class TopMenu extends React.Component<Props> {
   render() {
     const { user } = this.props;

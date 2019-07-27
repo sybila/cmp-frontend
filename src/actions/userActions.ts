@@ -21,26 +21,22 @@ export function login(username: string, password: string) {
 
     // TEMP: Credentials for testing without API request
     if (username === "admin" && password === "test") {
-      dispatch(
-        success({
-          id: 0,
-          username,
-          permissions: 0,
-          email: "admin@test.com",
-          about: "I like cats, that's all"
-        })
-      );
+      const user = {
+        id: 0,
+        username,
+        permissions: 0,
+        email: "admin@test.com",
+        about: "I like cats, that's all"
+      };
+      dispatch(success(user));
       localStorage.setItem("user", JSON.stringify("12345"));
-      history.goBack();
-      return;
+      return Promise.resolve(user);
     }
 
     // REVIEW: Optional refactoring based on final responses
     return userService.login(username, password).then(
       (user: any) => {
         dispatch(success(user));
-        // TODO: Forward back to previous location
-        // history.push("/");
         return user;
       },
       (error: any) => {

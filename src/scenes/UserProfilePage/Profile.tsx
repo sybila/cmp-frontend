@@ -1,5 +1,6 @@
 import React from "react";
 import { UserModel } from "../../models/User";
+import Config from "../../config";
 
 interface Props {
   user: UserModel;
@@ -16,6 +17,9 @@ class Profile extends React.Component<Props> {
           <div className="col-md-6">
             <h6>Username: {user.username}</h6>
             <h6>E-mail: {user.email}</h6>
+            <h6>
+              User level: {Config.permissions[`${user.permissions}`].name}
+            </h6>
             {user.about && (
               <div className={"mt-4"}>
                 <h6>About</h6>
