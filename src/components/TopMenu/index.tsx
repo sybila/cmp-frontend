@@ -73,7 +73,7 @@ class UserUtils extends React.Component<Props> {
       : [];
 
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark user-utils top-menu">
+      <nav className="navbar navbar-expand-md user-utils top-menu">
         <div className="navbar-collapse collapse w-100 order-1 order-md-0">
           <ul className="navbar-nav mr-auto">
             {user

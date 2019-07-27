@@ -32,7 +32,7 @@ import TopMenu from "./components/TopMenu";
 class MasterPage extends React.Component {
   render() {
     return (
-      <div className="app-wrapper">
+      <div className="app-wrapper theme-default">
         <TopMenu />
         <div className="container-fluid grey-background">
           <div className="container mt-5">{this.props.children}</div>

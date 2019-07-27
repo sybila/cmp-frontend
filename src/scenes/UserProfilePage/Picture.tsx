@@ -14,7 +14,7 @@ class Picture extends React.Component {
         />
         <label
           htmlFor="fileUpload"
-          className="file-upload btn btn-success btn-block rounded-pill shadow mt-4"
+          className="file-upload btn btn-primary btn-block rounded-pill shadow mt-4"
         >
           <FontAwesomeIcon icon={faUpload} className={"mr-2"} />
           Upload a different photo

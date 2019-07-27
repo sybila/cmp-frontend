@@ -1,8 +1,35 @@
 // TODO: Styles organisation
 
+// Mixin for theming Application
+@mixin themify($themes: $themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value
+          )
+        ) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+// Function for applying template
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
 @import "notifications";
 @import "inbox";
 @import "profile";
+@import "themes.scss";
 
 #portal-root {
   position: absolute;
@@ -27,25 +54,40 @@ body {
 
 // TopMenu styles
 nav.top-menu {
-  background: #4e4e4e;
-  a.nav-link {
-    color: #fff;
+  @include themify($themes) {
+    background: themed("topMenuBg");
   }
+
+  a.nav-link,
+  .dropdown.dropdown:hover .dropdown-toggle {
+    @include themify($themes) {
+      color: themed("topMenuLinksColor");
+    }
+  }
+
   &.user-utils {
     padding: 0.25rem 2rem;
     .nav-link {
       padding: 0.5rem 0.9rem;
       transition: 0.3s;
       border-radius: 60px;
-      &:hover {
-        background: #333;
+
+      &:hover,
+      &.active {
+        @include themify($themes) {
+          color: themed("topMenuLinksHoverColor");
+          background: themed("topMenuLinksHoverBg");
+        }
       }
     }
   }
 
   .notification {
+    @include themify($themes) {
+      color: themed("topMenuLinksColor");
+    }
+
     font-size: 1rem;
-    color: #fff;
     position: relative;
     transition: 0.3s;
     cursor: pointer;

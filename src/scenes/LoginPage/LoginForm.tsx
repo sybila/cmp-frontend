@@ -42,7 +42,7 @@ const LoginForm = (props: Props) => (
             <button
               type="submit"
               disabled={submitting || pristine}
-              className={"btn btn-success"}
+              className={"btn btn-primary"}
             >
               Submit
             </button>

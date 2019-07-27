@@ -22,7 +22,7 @@ class LoginPage extends React.Component<Props> {
           It uses utility classes for typography and spacing to space content
           out within the larger container.
         </p>
-        <a className={"btn btn-success btn-lg"} href="#" role="button">
+        <a className={"btn btn-primary btn-lg"} href="#" role="button">
           Learn more
         </a>
       </div>
