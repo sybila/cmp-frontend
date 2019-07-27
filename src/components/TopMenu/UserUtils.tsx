@@ -7,17 +7,35 @@ import { faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { UserModel } from "../../models/User";
 import { AppState } from "../../reducers/globalReducer";
 import Dropdown, { ItemType } from "../Dropdown";
-import { toggleInbox } from "../../actions/notificationActions";
+import {
+  toggleInbox,
+  newNotifications
+} from "../../actions/notificationActions";
 import NotificationsBell from "./NotificationsBell";
+import { hasNews } from "../../selectors/notificationsSelectors";
 
 interface Props {
   user?: UserModel;
   toggleInbox?: () => void;
+  newNotifications: (news: boolean) => void;
+  news: boolean;
 }
 
 class UserUtils extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+
+    this.handleBellClick = this.handleBellClick.bind(this);
+  }
+
+  handleBellClick() {
+    const { newNotifications, toggleInbox } = this.props;
+    toggleInbox();
+    newNotifications(false);
+  }
+
   render() {
-    const { user, toggleInbox } = this.props;
+    const { user, toggleInbox, news } = this.props;
 
     const userDropdownItems = [
       {
@@ -48,7 +66,7 @@ class UserUtils extends React.Component<Props> {
     const userNavItems = user
       ? [
           <Dropdown text={user.username} items={userDropdownItems} />,
-          <NotificationsBell handleClick={toggleInbox} />
+          <NotificationsBell handleClick={this.handleBellClick} news={news} />
         ]
       : [];
 
@@ -70,10 +88,13 @@ class UserUtils extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: AppState) => ({});
+const mapStateToProps = (state: AppState) => ({
+  news: hasNews(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleInbox: bindActionCreators(toggleInbox, dispatch)
+  toggleInbox: bindActionCreators(toggleInbox, dispatch),
+  newNotifications: bindActionCreators(newNotifications, dispatch)
 });
 
 export default connect(

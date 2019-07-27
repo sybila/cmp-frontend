@@ -4,3 +4,4 @@ export const getNotifications = (state: AppState) =>
   state.notifications.all.map(i => state.notifications.byId[i]);
 
 export const inboxState = (state: AppState) => state.notifications.inbox;
+export const hasNews = (state: AppState) => state.notifications.news;

@@ -12,6 +12,7 @@ const {
   MERGE_NOTIFICATIONS_REQUEST,
   MERGE_NOTIFICATIONS_FAILURE,
   MERGE_NOTIFICATIONS_SUCCESS,
+  NEW_NOTIFICATIONS,
   MARK_SEEN,
   TOGGLE_INBOX
 } = NotificationActionTypes;
@@ -30,6 +31,7 @@ export function loadNotifications(id: number) {
         }
       ];
       const normalized = notificationsNormalize(test);
+      normalized.all.length > 0 && dispatch(newNotifications(true));
       return dispatch(success(normalized.byId, normalized.all));
     }
 
@@ -37,6 +39,7 @@ export function loadNotifications(id: number) {
     return notificationService.load(id).then(
       (notifications: any) => {
         const normalized = notificationsNormalize(notifications);
+        normalized.all.length > 0 && dispatch(newNotifications(true));
 
         dispatch(success(normalized.byId, normalized.all));
         return normalized.byId;
@@ -68,6 +71,10 @@ export function loadNotificationsSheluded(id: number) {
       dispatch<any>(loadNotifications(id));
     }, Config.notificationReload);
   };
+}
+
+export function newNotifications(news: boolean) {
+  return { type: NEW_NOTIFICATIONS, news };
 }
 
 export function markAsSeen(id: number) {

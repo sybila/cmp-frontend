@@ -53,7 +53,7 @@ header.top-menu {
       background: #333;
     }
 
-    &::after {
+    &.news::after {
       position: absolute;
       bottom: 0.5rem;
       right: 0.5rem;
@@ -65,7 +65,7 @@ header.top-menu {
       content: "";
       font-size: 0.5rem;
     }
-    &.warning::after {
+    &.news.warning::after {
       background: #b40505;
       content: "!";
     }
