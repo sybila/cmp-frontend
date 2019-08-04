@@ -17,7 +17,8 @@ const accessTokenInterceptor = (config: any) => {
   const token = JSON.parse(localStorage.getItem("user") as string);
 
   if (token !== null) {
-    config.headers.Authorization = `Bearer ${token}`;
+    // TEMP: Uncomment while the auth is fully functional
+    // config.headers.Authorization = `Bearer ${token}`;
   }
 
   // TEMP: Remove api fetch simulation

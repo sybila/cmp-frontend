@@ -47,10 +47,14 @@ class MasterPage extends React.Component {
  */
 const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
-  dispatch<any>(login("admin", "test"));
-  return true;
+  /*return dataService.get("/models").then(payload => {
+    console.log(payload);
+    dispatch<any>(login("admin", "test"));
 
-  /* if (getUser(state)) {
+    return true;
+  });*/
+
+  if (getUser(state)) {
     // Do something if user exists
     return true;
   }
@@ -67,7 +71,7 @@ const InterceptLogin = intercept((state, dispatch) => {
       });
   }
 
-  return false; */
+  return false;
 });
 
 export const history = createBrowserHistory();
