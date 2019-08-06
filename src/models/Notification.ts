@@ -25,5 +25,3 @@ export const notificationsNormalize = (notifications: any[]) => {
     all: normalized.result
   };
 };
-
-export const NotificationSchema = new schema.Entity("notifications");

@@ -1,28 +1,30 @@
 import { Action } from "redux";
 import { Model } from "../models/Model";
 
-export interface ModulesAction extends Action {
-  models?: Model[];
+import { asyncAction } from "../../../Helpers";
+
+export interface Models {
+  byId: {
+    [key: number]: Model;
+  };
+  all: number[];
 }
 
-interface ModulesState {
-  modules: {
-    byId: {
-      [key: number]: Model;
-    };
-    all: number[];
-  };
+export interface ModulesAction extends Action {
+  models?: Models;
+}
+
+interface ModulesState extends Models {
   isFetching: boolean;
 }
 
 export const ActionTypes = {
-  LOAD_MODULES_REQUEST: "@@app/LOAD_MODULES_REQUEST",
-  LOAD_MODULES_SUCCESS: "@@app/LOAD_MODULES_SUCCESS",
-  LOAD_MODULES_FAILURE: "@@app/LOAD_MODULES_FAILURE"
+  LOAD_MODULES: "LOAD_MODULES"
 };
 
 const initialState: ModulesState = {
-  modules: null,
+  byId: {},
+  all: [],
   isFetching: false
 };
 
@@ -31,12 +33,19 @@ const modulesReducer = (
   action: ModulesAction
 ): ModulesState => {
   switch (action.type) {
-    case ActionTypes.LOAD_MODULES_REQUEST:
+    case asyncAction.request(ActionTypes.LOAD_MODULES):
       return {
         ...state,
         isFetching: true
       };
-    case ActionTypes.LOAD_MODULES_SUCCESS:
+    case asyncAction.success(ActionTypes.LOAD_MODULES):
+      return {
+        ...state,
+        byId: action.models.byId,
+        all: action.models.all,
+        isFetching: false
+      };
+    case asyncAction.failure(ActionTypes.LOAD_MODULES):
     default:
       return state;
   }

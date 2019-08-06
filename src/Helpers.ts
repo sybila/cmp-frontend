@@ -38,3 +38,22 @@ export function timer(callback: Function, delay: number): void {
 
   this.start();
 }
+
+function generateActionType(name: string, prefix: string, type: string) {
+  if (!prefix) prefix = "app";
+  return "@@" + prefix + "/" + name + "_" + type.toUpperCase();
+}
+
+const defaultPrefix = "app";
+
+/**
+ * A way to generate async action types to reduce boilerplate
+ */
+export const asyncAction = {
+  request: (name: string, prefix = defaultPrefix) =>
+    generateActionType(name, prefix, "request"),
+  success: (name: string, prefix = defaultPrefix) =>
+    generateActionType(name, prefix, "success"),
+  failure: (name: string, prefix = defaultPrefix) =>
+    generateActionType(name, prefix, "failure")
+};

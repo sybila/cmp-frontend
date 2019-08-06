@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import ModelsList from "../../modules/modelsRepository/components/ModelsList";
 import { AppState } from "../../reducers/globalReducer";
 
 interface Props {}
@@ -12,6 +13,7 @@ class LoginPage extends React.Component<Props> {
   render() {
     return (
       <div className={"jumbotron"}>
+        <ModelsList />
         <h1 className={"display-4"}>Hello, world!</h1>
         <p className={"lead"}>
           This is a simple hero unit, a simple jumbotron-style component for

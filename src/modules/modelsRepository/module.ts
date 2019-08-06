@@ -1,3 +1,7 @@
 import { combineReducers } from "redux";
 
-export const Reducer = combineReducers({});
+import MainReducer from "./reducers/MainReducer";
+
+export const Reducer = combineReducers({
+  models: MainReducer
+});
