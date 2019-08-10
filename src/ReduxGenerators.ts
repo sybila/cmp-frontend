@@ -30,13 +30,7 @@ export const actionHandlerGenerator = (name: string, actionHandler) =>
 /**
  * reducerGenerator - generates reducer based on action handlers
  */
-export const reducerGenerator = (
-  name = "",
-  defaultActionHandler,
-  initialState
-) => {
-  const actionHandler = actionHandlerGenerator(name, defaultActionHandler);
-
+export const reducerGenerator = (name = "", actionHandler, initialState) => {
   return (state = initialState, action) =>
     actionHandler[action.type]
       ? actionHandler[action.type](state, action)
