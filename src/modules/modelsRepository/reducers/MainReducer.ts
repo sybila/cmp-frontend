@@ -1,7 +1,10 @@
 import { Action } from "redux";
-import { Model } from "../models/Model";
+import { ActionType } from "redux-promise-middleware";
 
-import { asyncAction } from "../../../Helpers";
+import { Model } from "../models/Model";
+import { typeGenerator, reducerGenerator } from "../../../ReduxGenerators";
+
+export const modulePrefix = "module_models";
 
 export interface Models {
   byId: {
@@ -11,15 +14,16 @@ export interface Models {
 }
 
 export interface ModulesAction extends Action {
-  models?: Models;
+  payload?: Models;
 }
 
 interface ModulesState extends Models {
   isFetching: boolean;
+  error?: boolean;
 }
 
 export const ActionTypes = {
-  LOAD_MODULES: "LOAD_MODULES"
+  LOAD_MODULES: typeGenerator(modulePrefix, "LOAD_MODULES")
 };
 
 const initialState: ModulesState = {
@@ -28,27 +32,28 @@ const initialState: ModulesState = {
   isFetching: false
 };
 
-const modulesReducer = (
-  state = initialState,
-  action: ModulesAction
-): ModulesState => {
-  switch (action.type) {
-    case asyncAction.request(ActionTypes.LOAD_MODULES):
-      return {
-        ...state,
-        isFetching: true
-      };
-    case asyncAction.success(ActionTypes.LOAD_MODULES):
-      return {
-        ...state,
-        byId: action.models.byId,
-        all: action.models.all,
-        isFetching: false
-      };
-    case asyncAction.failure(ActionTypes.LOAD_MODULES):
-    default:
-      return state;
-  }
+const actionHandler = {
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Pending}`]: state => ({
+    ...state,
+    isFetching: true
+  }),
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Fulfilled}`]: (state, action) => ({
+    ...state,
+    byId: action.payload.byId,
+    all: action.payload.all,
+    isFetching: false
+  }),
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Rejected}`]: state => ({
+    ...state,
+    isFetching: false,
+    error: true
+  })
 };
+
+const modulesReducer = reducerGenerator(
+  modulePrefix,
+  actionHandler,
+  initialState
+);
 
 export default modulesReducer;

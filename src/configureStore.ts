@@ -1,4 +1,5 @@
 import thunkMiddleware from "redux-thunk";
+import promise, { ActionType } from "redux-promise-middleware";
 import { createStore, applyMiddleware, compose } from "redux";
 import _ from "lodash";
 
@@ -11,7 +12,7 @@ import {
 
 /**
  * Custom loader middleware, displays spinner (after 200ms) for actions width:
- * '_REQUEST' ending, hides on '_SUCCESS' or '_FAILURE'
+ * '_PENDING' ending, hides on '_FULFILLED' or '_REJECTED' (from promise middleware)
  */
 const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
   const { show, actionName } = store.getState().loader;
@@ -20,7 +21,7 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
     !name[0] && store.dispatch(hideLoader());
   }
 
-  const request = "_REQUEST";
+  const request = `_${ActionType.Pending}`;
   if (action.type.indexOf(request) !== -1) {
     const name = action.type.split(request);
     if (!name[1]) {
@@ -41,7 +42,7 @@ export default function configureStore(preloadedState = undefined) {
     globalReducer,
     preloadedState,
     compose(
-      applyMiddleware(thunkMiddleware, loaderMiddleware),
+      applyMiddleware(thunkMiddleware, loaderMiddleware, promise),
       (window as any).devToolsExtension
         ? (window as any).devToolsExtension()
         : (f: any) => f

@@ -1,4 +1,6 @@
 import { AnyAction } from "redux";
+import { ActionType } from "redux-promise-middleware";
+
 import { NotificationModel } from "../models/Notification";
 
 interface NotificationsState {
@@ -12,9 +14,7 @@ interface NotificationsState {
 }
 
 export const ActionTypes = {
-  MERGE_NOTIFICATIONS_REQUEST: "@@app/MERGE_NOTIFICATIONS_REQUEST",
-  MERGE_NOTIFICATIONS_SUCCESS: "@@app/MERGE_NOTIFICATIONS_SUCCESS",
-  MERGE_NOTIFICATIONS_FAILURE: "@@app/MERGE_NOTIFICATIONS_FAILURE",
+  MERGE_NOTIFICATIONS: "@@app/MERGE_NOTIFICATIONS",
   NEW_NOTIFICATIONS: "@@app/NEW_NOTIFICATIONS",
   MARK_SEEN: "@@app/MARK_SEEN",
   TOGGLE_INBOX: "@@app/TOGGLE_INBOX"
@@ -33,12 +33,12 @@ const notificationReducer = (
   action: AnyAction
 ): NotificationsState => {
   switch (action.type) {
-    case ActionTypes.MERGE_NOTIFICATIONS_REQUEST:
+    case `${ActionTypes.MERGE_NOTIFICATIONS}_${ActionType.Pending}`:
       return {
         ...state,
         loading: true
       };
-    case ActionTypes.MERGE_NOTIFICATIONS_SUCCESS:
+    case `${ActionTypes.MERGE_NOTIFICATIONS}_${ActionType.Fulfilled}`:
       return {
         ...state,
         loading: false,
@@ -48,7 +48,7 @@ const notificationReducer = (
         },
         all: [...state.all, ...action.all]
       };
-    case ActionTypes.MERGE_NOTIFICATIONS_FAILURE:
+    case `${ActionTypes.MERGE_NOTIFICATIONS}_${ActionType.Rejected}`:
       return {
         ...state,
         loading: false

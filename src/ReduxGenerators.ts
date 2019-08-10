@@ -1,22 +1,21 @@
 /**
- *  Basic set of redux generators, easily extendable. It helps reducing redux
- *  boilerplate and helps reusability as well. Should be used throughout the app.
- */
-
-/**
  * typeGenerator - generates action types for redux flow
  */
 export const typeGenerator = (name: string, type: string) =>
-  `${name !== "" ? `${name}/` : ""}${type}`;
+  `${name !== "" ? `@@${name}/` : ""}${type}`;
 
 /**
  * actionCreatorGenerator - generates action creator based on provided object
  */
-export const actionCreatorGenerator = (name: string, actionCreators, params) =>
-  Object.keys(actionCreators).reduce((result, key) => {
-    result[key] = actionCreators[key](name, params);
-    return result;
-  }, {});
+export const actionCreatorGenerator = (type, ...argNames) => {
+  return function(...args) {
+    const action = { type };
+    argNames.forEach((arg, index) => {
+      action[argNames[index]] = args[index];
+    });
+    return action;
+  };
+};
 
 /**
  * actionHandlerGenerator - generates action handlers for reducer

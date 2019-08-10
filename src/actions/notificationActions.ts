@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { ActionType } from "redux-promise-middleware";
 
 import { ActionTypes as NotificationActionTypes } from "../reducers/notificationsReducer";
 import notificationService from "../services/notificationServices";
@@ -9,9 +10,7 @@ import {
 import Config from "../config";
 
 const {
-  MERGE_NOTIFICATIONS_REQUEST,
-  MERGE_NOTIFICATIONS_FAILURE,
-  MERGE_NOTIFICATIONS_SUCCESS,
+  MERGE_NOTIFICATIONS,
   NEW_NOTIFICATIONS,
   MARK_SEEN,
   TOGGLE_INBOX
@@ -52,15 +51,19 @@ export function loadNotifications(id: number) {
   };
 
   function request() {
-    return { type: MERGE_NOTIFICATIONS_REQUEST };
+    return { type: `${MERGE_NOTIFICATIONS}_${ActionType.Pending}` };
   }
 
   function success(byId: any, all: number[]) {
-    return { type: MERGE_NOTIFICATIONS_SUCCESS, byId, all };
+    return {
+      type: `${MERGE_NOTIFICATIONS}_${ActionType.Fulfilled}`,
+      byId,
+      all
+    };
   }
 
   function failure() {
-    return { type: MERGE_NOTIFICATIONS_FAILURE };
+    return { type: `${MERGE_NOTIFICATIONS}_${ActionType.Rejected}` };
   }
 }
 

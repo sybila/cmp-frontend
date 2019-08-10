@@ -1,19 +1,12 @@
 import { Dispatch } from "redux";
+import { ActionType } from "redux-promise-middleware";
 
 import { ActionTypes as LoginActionTypes } from "../reducers/authenticationReducer";
 import userService from "../services/userServices";
 import { history } from "../Application";
 import { UserModel } from "../models/User";
 
-const {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT,
-  TOKEN_LOGIN_REQUEST,
-  TOKEN_LOGIN_SUCCESS,
-  TOKEN_LOGIN_FAILURE
-} = LoginActionTypes;
+const { LOGIN, LOGOUT, TOKEN_LOGIN } = LoginActionTypes;
 
 export function login(username: string, password: string) {
   return (dispatch: Dispatch) => {
@@ -47,15 +40,15 @@ export function login(username: string, password: string) {
   };
 
   function request() {
-    return { type: LOGIN_REQUEST };
+    return { type: `${LOGIN}_${ActionType.Pending}` };
   }
 
   function success(user: UserModel) {
-    return { type: LOGIN_SUCCESS, user };
+    return { type: `${LOGIN}_${ActionType.Fulfilled}`, user };
   }
 
   function failure(error: string) {
-    return { type: LOGIN_FAILURE, error };
+    return { type: `${LOGIN}_${ActionType.Rejected}`, error };
   }
 }
 
@@ -82,15 +75,15 @@ export function tokenLogin(token: string) {
     );
 
     function request() {
-      return { type: TOKEN_LOGIN_REQUEST };
+      return { type: `${TOKEN_LOGIN}_${ActionType.Pending}` };
     }
 
     function success(user: UserModel) {
-      return { type: TOKEN_LOGIN_SUCCESS, user };
+      return { type: `${TOKEN_LOGIN}_${ActionType.Fulfilled}`, user };
     }
 
     function failure() {
-      return { type: TOKEN_LOGIN_FAILURE };
+      return { type: `${TOKEN_LOGIN}_${ActionType.Rejected}` };
     }
   };
 }
