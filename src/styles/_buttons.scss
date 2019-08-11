@@ -1,0 +1,21 @@
+.btn {
+  border-radius: 30px;
+  color: #fff;
+  border: none;
+
+  a {
+    color: #fff !important;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  @include themify($themes) {
+    background: themed("secondaryColor");
+  }
+}
+
+.btn-lg {
+  font-size: 1.5rem;
+  padding: 0.5rem 3rem;
+}

@@ -37,11 +37,9 @@ class LoginPage extends React.Component<Props> {
     const { error } = this.props;
 
     return (
-      <div className={"jumbotron"}>
-        <div className={"container"}>
-          <div className="col-sm-8 offset-sm-2">
-            <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
-          </div>
+      <div className="login-form">
+        <div className={"bg-box-white col-md-4 offset-md-4"}>
+          <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
         </div>
       </div>
     );

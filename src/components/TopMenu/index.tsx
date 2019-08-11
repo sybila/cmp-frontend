@@ -11,6 +11,7 @@ import {
 import { UserModel } from "../../models/User";
 import { AppState } from "../../reducers/globalReducer";
 import Dropdown, { ItemType } from "../Dropdown";
+import { ButtonLink } from "../Button";
 import {
   toggleInbox,
   newNotifications
@@ -43,6 +44,7 @@ class UserUtils extends React.Component<Props> {
     const { user, news } = this.props;
     const activeClassName = "active";
 
+    // TODO: Move to some kind of config
     const userDropdownItems = [
       {
         text: "Profile",
@@ -65,13 +67,45 @@ class UserUtils extends React.Component<Props> {
       }
     ];
 
+    const navItems = [
+      {
+        text: "Home",
+        to: "/",
+        exact: true
+      },
+      {
+        text: "Biochemical space",
+        to: "/bsc"
+      },
+      {
+        text: "Model repository",
+        to: "/models-repo"
+      },
+      {
+        text: "Experiments repository",
+        to: "/experiments-repo"
+      },
+      {
+        text: "CyanoNumbers",
+        to: "/numbers"
+      },
+      {
+        text: "Support",
+        to: "/support"
+      },
+      {
+        text: "About us",
+        to: "/about-us"
+      }
+    ];
+
     const publicNavItems = [
       <Link className={"nav-link"} to={"/login"}>
         Sign in
       </Link>,
-      <Link className={"nav-link"} to={"/register"}>
+      <ButtonLink class={"nav-link"} to={"/register"}>
         Sign up
-      </Link>
+      </ButtonLink>
     ];
 
     const userNavItems = user
@@ -83,8 +117,34 @@ class UserUtils extends React.Component<Props> {
 
     return (
       <nav className="navbar navbar-expand-md user-utils top-menu">
+        <div className="mx-auto order-0">
+          <Link className="navbar-brand" to="/">
+            CMP
+          </Link>
+          {/* TODO: Hamburger menu for mobiles */}
+          <button className="navbar-toggler" type="button">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </div>
         <div className="navbar-collapse collapse w-100 order-1 order-md-0">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav app-nav mr-auto">
+            {navItems.map((item, i) => (
+              <li className="nav-item">
+                <NavLink
+                  className={"nav-link"}
+                  to={item.to}
+                  exact={item.exact}
+                  activeClassName={activeClassName}
+                  key={`nav-item-${item.text}-${i}`}
+                >
+                  {item.text}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="navbar-collapse collapse w-25 order-3">
+          <ul className="navbar-nav ml-auto">
             {user
               ? userNavItems.map((item, i) => (
                   <li className={"nav-item"} key={`nav-item-${i}`}>
@@ -96,29 +156,6 @@ class UserUtils extends React.Component<Props> {
                     {item}
                   </li>
                 ))}
-          </ul>
-        </div>
-        <div className="mx-auto order-0">
-          <Link className="navbar-brand mx-auto" to="/">
-            CMP
-          </Link>
-          {/* TODO: Hamburger menu for mobiles */}
-          <button className="navbar-toggler" type="button">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div className="navbar-collapse collapse w-100 order-3">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <NavLink
-                className={"nav-link"}
-                to={"/"}
-                exact
-                activeClassName={activeClassName}
-              >
-                Home
-              </NavLink>
-            </li>
           </ul>
         </div>
       </nav>

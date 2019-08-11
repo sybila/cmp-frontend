@@ -12,22 +12,21 @@ class LoginPage extends React.Component<Props> {
 
   render() {
     return (
-      <div className={"jumbotron"}>
-        <ModelsList />
-        <h1 className={"display-4"}>Hello, world!</h1>
-        <p className={"lead"}>
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
-        </p>
-        <hr className={"my-4"} />
-        <p>
-          It uses utility classes for typography and spacing to space content
-          out within the larger container.
-        </p>
-        <a className={"btn btn-primary btn-lg"} href="#" role="button">
-          Learn more
-        </a>
-      </div>
+      <React.Fragment>
+        <div className={"landing-hero"}>
+          <h1>Lorem ipsum dolor sit</h1>
+          <p className={"lead"}>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent
+            id justo in neque elementum ultrices. Fusce dui leo, imperdiet in,
+            aliquam sit amet, feugiat eu, orci. Quis autem vel eum iure
+            reprehenderit qui in ea voluptate velit esse quam nihil molestiae
+            consequatur.
+          </p>
+          <a className={"btn btn-primary btn-lg"} href="#" role="button">
+            Learn more
+          </a>
+        </div>
+      </React.Fragment>
     );
   }
 }

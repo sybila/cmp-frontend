@@ -12,8 +12,8 @@ interface Props {
 }
 
 const LoginForm = (props: Props) => (
-  <div className={"col-md-6 offset-md-3"}>
-    <h3>Login</h3>
+  <div>
+    <h2>Login</h2>
     <Form
       onSubmit={props.submitLogin}
       render={({ handleSubmit, form, submitting, pristine, values }) => (
@@ -24,7 +24,7 @@ const LoginForm = (props: Props) => (
               name="username"
               component="input"
               type="text"
-              placeholder="Username"
+              placeholder="type here"
               className="form-control"
             />
           </div>
@@ -34,7 +34,7 @@ const LoginForm = (props: Props) => (
               name="password"
               component="input"
               type="password"
-              placeholder="Password"
+              placeholder="type here"
               className="form-control"
             />
           </div>

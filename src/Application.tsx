@@ -29,14 +29,30 @@ import TopMenu from "./components/TopMenu";
  * themselves.
  */
 
+const WrapperSwitch = (props: any) => {
+  return (
+    <Switch>
+      <Route
+        exact
+        path={`/`}
+        render={() => <div className="app-wrapper home">{props.children}</div>}
+      />
+      <Route
+        path={`/`}
+        render={() => <div className="app-wrapper">{props.children}</div>}
+      />
+    </Switch>
+  );
+};
+
 class MasterPage extends React.Component {
   render() {
     return (
-      <div className="app-wrapper theme-default">
-        <TopMenu />
-        <div className="container-fluid grey-background">
+      <div className="theme-default">
+        <WrapperSwitch>
+          <TopMenu />
           <div className="container mt-5">{this.props.children}</div>
-        </div>
+        </WrapperSwitch>
       </div>
     );
   }
