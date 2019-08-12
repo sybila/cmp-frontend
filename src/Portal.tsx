@@ -14,6 +14,7 @@ class Portal extends React.Component {
   el = document.createElement("div");
 
   componentDidMount() {
+    this.el.className = "theme-default";
     modalRoot.appendChild(this.el);
   }
 

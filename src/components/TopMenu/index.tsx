@@ -10,13 +10,14 @@ import {
 
 import { UserModel } from "../../models/User";
 import { AppState } from "../../reducers/globalReducer";
-import Dropdown, { ItemType } from "../Dropdown";
+import { ItemType } from "../Dropdown";
 import { ButtonLink } from "../Button";
 import {
   toggleInbox,
   newNotifications
 } from "../../actions/notificationActions";
 import NotificationsBell from "./NotificationsBell";
+import User from "./User";
 import { hasNews } from "../../selectors/notificationsSelectors";
 import { getUser } from "../../selectors/userSelectors";
 
@@ -110,7 +111,7 @@ class UserUtils extends React.Component<Props> {
 
     const userNavItems = user
       ? [
-          <Dropdown text={user.username} items={userDropdownItems} />,
+          <User userDropdownItems={userDropdownItems} user={user} />,
           <NotificationsBell handleClick={this.handleBellClick} news={news} />
         ]
       : [];

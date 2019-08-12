@@ -38,6 +38,7 @@
 @import "header";
 @import "buttons";
 @import "forms";
+@import "toolbar";
 
 #portal-root {
   position: absolute;
@@ -114,19 +115,25 @@ h2 {
       color: #fff;
     }
   }
+
+  .dropdown-menu {
+    transform: translateY(-100%);
+    transition: 0.4s;
+    will-change: transform;
+    display: block;
+
+    &.show {
+      transform: translateY(0);
+    }
+  }
+
   .dropdown-item {
+    @include themify($themes) {
+      color: themed("textColor");
+    }
     svg {
       margin-right: 0.5rem;
     }
-  }
-}
-
-@keyframes timeout {
-  from {
-    transform: scaleX(1);
-  }
-  to {
-    transform: scaleX(0);
   }
 }
 
@@ -205,12 +212,47 @@ h2 {
   border-radius: 0 50rem 50rem 0;
 }
 
+// TODO: make separate file for boxes
+
 .bg-box-white {
   background-color: #fff;
   border-radius: 30px;
   padding: 3rem;
 
   box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.05);
+}
+
+// TODO: make separate file for utils
+.arrow {
+  border: solid;
+
+  @include themify($themes) {
+    border-color: themed("secondaryColor");
+  }
+
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 0.4rem;
+
+  &.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  &.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+
+  &.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+
+  &.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
 }
 
 @media (min-width: 1440px) {

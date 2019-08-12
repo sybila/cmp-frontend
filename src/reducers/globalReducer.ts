@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import _ from "lodash";
-import authenticationReducer from "./authenticationReducer";
-import loaderReducer from "./loaderReducer";
-import notificationsReducer from "./notificationsReducer";
-import * as Modules from "../modules";
+import authenticationReducer from './authenticationReducer';
+import loaderReducer from './loaderReducer';
+import notificationsReducer from './notificationsReducer';
+import * as Modules from '../modules';
 
 /**
  * Main application state fingerprint

@@ -19,7 +19,9 @@ export function login(username: string, password: string) {
         username,
         permissions: 0,
         email: "admin@test.com",
-        about: "I like cats, that's all"
+        about: "I like cats, that's all",
+        firstName: "John",
+        lastName: "Doe"
       };
       dispatch(success(user));
       localStorage.setItem("user", JSON.stringify("12345"));

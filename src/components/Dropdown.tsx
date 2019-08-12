@@ -7,7 +7,7 @@ export enum ItemType {
   divider = "divider"
 }
 
-interface Item {
+export interface Item {
   text: string;
   icon?: any;
   type?: ItemType;
@@ -19,7 +19,7 @@ interface Item {
 }
 
 interface Props {
-  text: string;
+  children: any;
   items: Item[];
 }
 
@@ -105,23 +105,17 @@ class Dropdown extends React.Component<Props, State> {
 
   render() {
     const { show } = this.state;
-    const { text, items } = this.props;
+    const { children, items } = this.props;
 
     return (
       <div
-        className={`dropdown  ${show ? "show" : ""}`}
+        className={`dropdown${show ? " show" : ""}`}
         ref={dropdown => (this.dropdown = dropdown)}
       >
-        <a
-          className="dropdown-toggle nav-link"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded={show}
-          onClick={this.toggleDropdown}
-        >
-          {text}
-        </a>
-        <div className={`dropdown-menu ${show ? "show" : ""}`}>
+        <div className={"dropdown-button"} onClick={this.toggleDropdown}>
+          {children}
+        </div>
+        <div className={`dropdown-menu${show ? " show" : ""}`}>
           {items &&
             items.map((item, i) =>
               item.type === ItemType.divider ? (
@@ -137,9 +131,9 @@ class Dropdown extends React.Component<Props, State> {
                     this.setState({ show: false });
                     item.onClick && item.onClick();
                   }}
-                  className={`dropdown-item ${item.class ? item.class : ""}${
-                    item.disabled ? "disabled" : ""
-                  }`}
+                  className={`dropdown-item${
+                    item.class ? " " + item.class : ""
+                  }${item.disabled ? "disabled" : ""}`}
                 >
                   {item.icon && <FontAwesomeIcon icon={item.icon} />}
                   {item.text}

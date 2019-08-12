@@ -55,6 +55,15 @@
   }
 }
 
+@keyframes timeout {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
 // Floating notification-wrapper animations CSSTransition
 
 .notification-wrapper-enter {

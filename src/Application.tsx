@@ -11,8 +11,10 @@ import UserProfilePage from "./scenes/UserProfilePage";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateComponent from "./components/PrivateComponent";
 import Portal from "./Portal";
 import NotificationsProvider from "./components/NotificationsProvider";
+import Toolbar from "./components/Toolbar";
 import Inbox from "./components/Inbox";
 import { intercept } from "./interceptors/inlineInterceptor";
 import { getUser } from "./selectors/userSelectors";
@@ -101,8 +103,11 @@ class Application extends React.Component<any> {
 
         {/* Portal block, for components with absolute positioning */}
         <Portal>
-          <Inbox />
-          <NotificationsProvider />
+          <PrivateComponent>
+            <Inbox />
+            <NotificationsProvider />
+            <Toolbar />
+          </PrivateComponent>
           <Loader />
         </Portal>
 

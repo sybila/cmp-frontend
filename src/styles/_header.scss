@@ -1,6 +1,9 @@
 // TopMenu styles
+
+$top-menu-height: 60px;
+
 nav.top-menu {
-  height: 60px;
+  height: $top-menu-height;
   padding: 0 8rem;
   @include themify($themes) {
     background: themed("topMenuBg");
@@ -83,7 +86,7 @@ nav.top-menu {
 
   .notification {
     @include themify($themes) {
-      color: themed("topMenuLinksColor");
+      color: themed("mainColor");
     }
 
     font-size: 1rem;
@@ -109,6 +112,81 @@ nav.top-menu {
     &.news.warning::after {
       background: #b40505;
       content: "!";
+    }
+  }
+}
+
+.user-menu-item {
+  .dropdown-button {
+    height: $top-menu-height;
+    padding: 0 1.5rem;
+
+    background: #fff;
+    position: relative;
+    z-index: 1002;
+  }
+
+  .dropdown-button,
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include themify($themes) {
+    border-color: themed("secondaryColor");
+  }
+  border-style: solid;
+  border-width: 0px;
+  border-left-width: 2px;
+  border-right-width: 2px;
+
+  .info-column {
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .profile-picture {
+    float: left;
+    flex: 1;
+  }
+
+  .user-name,
+  .user-role {
+    margin-left: 1rem;
+  }
+
+  .user-name {
+    font-size: 1.125rem;
+  }
+
+  .user-role {
+    opacity: 0.4;
+    font-size: 1rem;
+  }
+
+  .arrow {
+    margin-left: 1.75rem;
+
+    &.down {
+      margin-top: -5px;
+    }
+    &.up {
+      margin-bottom: -15px;
+    }
+  }
+
+  .dropdown-menu {
+    border-radius: 0 0 0.75rem 0.75rem;
+    border: 0;
+    width: 100%;
+    box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.05);
+    margin-top: -1px;
+
+    .dropdown-item {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
     }
   }
 }

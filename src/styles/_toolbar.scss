@@ -1,0 +1,75 @@
+$scaleFactor: 0.3;
+
+.toolbar {
+  position: fixed;
+  width: 60px;
+  height: 100vh;
+  padding: 13.5px;
+
+  &:before {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100vh;
+
+    @include themify($themes) {
+      background-color: themed("mainColor");
+    }
+
+    will-change: transform;
+    transform-origin: 0 0;
+    transition: all 0.4s;
+  }
+
+  &.open:before {
+    transform: scaleX(3.33);
+  }
+}
+
+.hamburger-menu-btn {
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 7px;
+    position: relative;
+
+    background: #fff;
+    border-radius: 3px;
+
+    z-index: 1;
+
+    transform-origin: 4px 0px;
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+      background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+  }
+
+  span:first-child {
+    transform-origin: 0% 0%;
+  }
+
+  span:nth-last-child(1) {
+    transform-origin: 0% 100%;
+  }
+
+  &.open span {
+    opacity: 1;
+    transform: rotate(45deg);
+    background: #fff;
+  }
+
+  &.open span:nth-last-child(2) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+  }
+
+  &.open span:nth-last-child(1) {
+    transform: rotate(-45deg);
+  }
+}
