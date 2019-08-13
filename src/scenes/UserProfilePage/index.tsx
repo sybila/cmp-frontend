@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import { AppState } from "../../reducers/globalReducer";
 import { getUser } from "../../selectors/userSelectors";
@@ -33,6 +34,7 @@ class UserProfilePage extends React.Component<Props> {
 
     return (
       <div className={"profile-wrapper"}>
+        <BreadcrumbsItem to="/profile">Profile</BreadcrumbsItem>
         <div className="row m-y-2">
           <div className="col-lg-3 text-xs-center">
             <Picture />

@@ -107,6 +107,7 @@ class Dropdown extends React.Component<Props, State> {
     const { show } = this.state;
     const { children, items } = this.props;
 
+    // REVIEW: Not the best solution, needs a bit of DRYing
     return (
       <div
         className={`dropdown${show ? " show" : ""}`}

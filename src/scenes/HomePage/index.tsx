@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import ModelsList from "../../modules/modelsRepository/components/ModelsList";
 import { AppState } from "../../reducers/globalReducer";

@@ -1,6 +1,7 @@
 import React from "react";
-import { Router, Route, Link, Switch } from "react-router-dom";
+import { Router, Route, Link, NavLink, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 
 import "./styles/general.scss";
 
@@ -8,6 +9,8 @@ import LoginPage from "./scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
 import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
+
+import ModelsMainPage from "./modules/modelsRepository/scenes/MainPage";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -53,7 +56,10 @@ class MasterPage extends React.Component {
       <div className="theme-default">
         <WrapperSwitch>
           <TopMenu />
-          <div className="container mt-5">{this.props.children}</div>
+          <div className="container mt-5">
+            <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+            {this.props.children}
+          </div>
         </WrapperSwitch>
       </div>
     );
@@ -65,13 +71,14 @@ class MasterPage extends React.Component {
  */
 const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
-  /*return dataService.get("/models").then(payload => {
+  return dataService.get("/models").then(payload => {
     console.log(payload);
     dispatch<any>(login("admin", "test"));
 
     return true;
-  });*/
+  });
 
+  /*
   if (getUser(state)) {
     // Do something if user exists
     return true;
@@ -89,7 +96,7 @@ const InterceptLogin = intercept((state, dispatch) => {
       });
   }
 
-  return false;
+  return false;*/
 });
 
 export const history = createBrowserHistory();
@@ -106,30 +113,40 @@ class Application extends React.Component<any> {
           <PrivateComponent>
             <Inbox />
             <NotificationsProvider />
-            <Toolbar />
           </PrivateComponent>
           <Loader />
         </Portal>
 
         {/* Application routing (with root master page defining basic layout)*/}
-        <Router history={history}>
-          <Route
-            path="/"
-            render={({ match: { url } }) => (
-              <MasterPage>
-                <Switch>
-                  <Route exact path={`${url}`} component={HomePage} />
-                  <Route path={`${url}login`} component={LoginPage} />
-                  <PrivateRoute
-                    path={`${url}profile/:subPage?`}
-                    component={UserProfilePage}
-                  />
-                  <Route component={NotFoundPage} />
-                </Switch>
-              </MasterPage>
-            )}
-          />
-        </Router>
+        <BreadcrumbsProvider>
+          <Router history={history}>
+            {/* Portal block for components which need access to Router */}
+            <Portal>
+              <Toolbar />
+            </Portal>
+
+            <Route
+              path="/"
+              render={({ match: { url } }) => (
+                <MasterPage>
+                  <Switch>
+                    <Route exact path={`${url}`} component={HomePage} />
+                    <Route path={`${url}login`} component={LoginPage} />
+                    <Route
+                      path={`${url}models-repo`}
+                      component={ModelsMainPage}
+                    />
+                    <PrivateRoute
+                      path={`${url}profile/:subPage?`}
+                      component={UserProfilePage}
+                    />
+                    <Route component={NotFoundPage} />
+                  </Switch>
+                </MasterPage>
+              )}
+            />
+          </Router>
+        </BreadcrumbsProvider>
       </React.Fragment>
     );
   }
