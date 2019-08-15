@@ -1,60 +1,33 @@
 $scaleFactor: 3.33;
 $toolbarWidth: 60px;
 
+// TODO: Toolbar animation
+
 .toolbar {
   position: fixed;
-  width: $toolbarWidth;
+  width: 60px;
   height: 100vh;
-
-  &:before {
-    z-index: -1;
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: $toolbarWidth;
-    height: 100vh;
-
-    @include themify($themes) {
-      background-color: themed("mainColor");
-    }
-
-    will-change: transform;
-    transform-origin: 0 0;
-    transition: all 0.4s;
+  @include themify($themes) {
+    background-color: themed("mainColor");
   }
 
-  &.open:before {
-    transform: scaleX($scaleFactor);
-  }
-
-  &.open {
-    .toolbar-items .toolbar-item {
-      text-align: left;
-      a {
-        padding-left: 25px;
-        padding-right: 25px;
-        width: $toolbarWidth * $scaleFactor;
-        svg {
-          margin-right: 0.5rem;
-        }
-      }
-    }
-  }
+  will-change: width;
+  transition: width 0.3s;
 
   .toolbar-items {
     margin-top: 4rem;
 
     .toolbar-item {
-      text-align: center;
       font-size: 1.125rem;
+      overflow: hidden;
+      white-space: nowrap;
 
       a {
         display: inline-block;
-        width: $toolbarWidth;
+        width: 100%;
         color: #fff;
         padding: 0.625rem 0;
-        transition: all 0.4s;
+        padding-left: 1.25rem;
         will-change: width;
         text-decoration: none;
 
@@ -62,6 +35,20 @@ $toolbarWidth: 60px;
         &:hover {
           background: rgba(0, 0, 0, 0.2);
         }
+      }
+
+      .caption {
+        display: none;
+        margin-left: 0.35rem;
+      }
+    }
+  }
+
+  &.open {
+    width: 220px;
+    .toolbar-item {
+      .caption {
+        display: inline-block;
       }
     }
   }

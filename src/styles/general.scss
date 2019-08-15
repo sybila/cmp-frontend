@@ -73,7 +73,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-weight: bold;
 }
 h1 {
@@ -216,10 +217,34 @@ h2 {
 
 .bg-box-white {
   background-color: #fff;
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 3rem;
 
   box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.05);
+
+  &:nth-child(2) {
+    margin-left: 2.25rem;
+  }
+}
+
+.row {
+  margin: 0;
+}
+
+h2.module-heading {
+  margin-bottom: 2.5rem;
+}
+
+// TODO: accordion styles
+.accordion {
+  .card {
+  }
+
+  .card-header {
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
 }
 
 // TODO: make separate file for utils
@@ -253,6 +278,16 @@ h2 {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 @media (min-width: 1440px) {

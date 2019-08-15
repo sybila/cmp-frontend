@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter, NavLink } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 import { AppState } from "../../reducers/globalReducer";
 import { ToolbarItem as ToolbarItemType } from "../../reducers/toolbarReducer";
@@ -51,7 +51,6 @@ class Toolbar extends React.Component<Props, State> {
             to={"/" + name + item.to}
             icon={item.icon}
             text={item.text}
-            isText={isOpen}
           />
         ));
         break;
