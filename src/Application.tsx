@@ -2,6 +2,8 @@ import React from "react";
 import { Router, Route, Link, NavLink, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles/general.scss";
 
@@ -11,6 +13,7 @@ import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
 
 import ModelsMainPage from "./modules/modelsRepository/scenes/MainPage";
+import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -101,6 +104,9 @@ const InterceptLogin = intercept((state, dispatch) => {
 
 export const history = createBrowserHistory();
 
+// Library to reference icons
+library.add(fas);
+
 class Application extends React.Component<any> {
   render() {
     return (
@@ -133,7 +139,7 @@ class Application extends React.Component<any> {
                     <Route exact path={`${url}`} component={HomePage} />
                     <Route path={`${url}login`} component={LoginPage} />
                     <Route
-                      path={`${url}models-repo`}
+                      path={`${url + modelsNames.url}`}
                       component={ModelsMainPage}
                     />
                     <PrivateRoute

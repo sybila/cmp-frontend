@@ -4,7 +4,10 @@ import { ActionType } from "redux-promise-middleware";
 import { Model } from "../models/Model";
 import { typeGenerator, reducerGenerator } from "../../../ReduxGenerators";
 
-export const modulePrefix = "module_models";
+export const moduleNames = {
+  store: "module_models",
+  url: "models-repo"
+};
 
 export interface Models {
   byId: {
@@ -23,7 +26,7 @@ interface ModulesState extends Models {
 }
 
 export const ActionTypes = {
-  LOAD_MODULES: typeGenerator(modulePrefix, "LOAD_MODULES")
+  LOAD_MODULES: typeGenerator(moduleNames.store, "LOAD_MODULES")
 };
 
 const initialState: ModulesState = {
@@ -51,7 +54,7 @@ const actionHandler = {
 };
 
 const modulesReducer = reducerGenerator(
-  modulePrefix,
+  moduleNames.store,
   actionHandler,
   initialState
 );

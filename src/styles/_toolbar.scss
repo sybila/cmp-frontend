@@ -1,10 +1,10 @@
-$scaleFactor: 0.3;
+$scaleFactor: 3.33;
+$toolbarWidth: 60px;
 
 .toolbar {
   position: fixed;
-  width: 60px;
+  width: $toolbarWidth;
   height: 100vh;
-  padding: 13.5px;
 
   &:before {
     z-index: -1;
@@ -12,7 +12,7 @@ $scaleFactor: 0.3;
     position: absolute;
     left: 0;
     top: 0;
-    width: 60px;
+    width: $toolbarWidth;
     height: 100vh;
 
     @include themify($themes) {
@@ -25,12 +25,51 @@ $scaleFactor: 0.3;
   }
 
   &.open:before {
-    transform: scaleX(3.33);
+    transform: scaleX($scaleFactor);
+  }
+
+  &.open {
+    .toolbar-items .toolbar-item {
+      text-align: left;
+      a {
+        padding-left: 25px;
+        padding-right: 25px;
+        width: $toolbarWidth * $scaleFactor;
+        svg {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .toolbar-items {
+    margin-top: 4rem;
+
+    .toolbar-item {
+      text-align: center;
+      font-size: 1.125rem;
+
+      a {
+        display: inline-block;
+        width: $toolbarWidth;
+        color: #fff;
+        padding: 0.625rem 0;
+        transition: all 0.4s;
+        will-change: width;
+        text-decoration: none;
+
+        &.active,
+        &:hover {
+          background: rgba(0, 0, 0, 0.2);
+        }
+      }
+    }
   }
 }
 
 .hamburger-menu-btn {
   cursor: pointer;
+  padding: 13.5px;
 
   span {
     display: block;

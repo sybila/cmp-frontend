@@ -9,6 +9,7 @@ import {
   hideLoader,
   loaderActionName
 } from "./actions/loaderActions";
+import * as Modules from "./modules";
 
 /**
  * Custom loader middleware, displays spinner (after 200ms) for actions width:
@@ -49,3 +50,9 @@ export default function configureStore(preloadedState = undefined) {
     )
   );
 }
+
+export const ApplicationStore = configureStore();
+Modules.AfterStoreConfiguration(
+  ApplicationStore.dispatch,
+  ApplicationStore.getState
+);
