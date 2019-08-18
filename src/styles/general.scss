@@ -31,10 +31,11 @@
   @return map-get($theme-map, $key);
 }
 
+@import "themes.scss";
+
 @import "notifications";
 @import "inbox";
 @import "profile";
-@import "themes.scss";
 @import "header";
 @import "buttons";
 @import "forms";

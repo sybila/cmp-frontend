@@ -35,7 +35,7 @@ class MainPage extends React.Component<Props> {
         <BreadcrumbsItem to="/models-repo/published-models">
           Published Models
         </BreadcrumbsItem>
-        <h2 className={"module-heading"}>Model Repository</h2>
+        <h2 className={"module-heading"}>Published Models</h2>
         <div className={"row row-boxes"}>
           <div className={"bg-box-white col-4 box-scroll"}>
             <Accordion items={accordionItems} />
