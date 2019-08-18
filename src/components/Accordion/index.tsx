@@ -57,7 +57,7 @@ class Accordion extends React.PureComponent<Props, State> {
     const { items } = this.props;
 
     return (
-      <div className="accordion" id="accordionExample">
+      <div className="collapsible-accordion">
         {items.map((item: AccordionItemProps, i) => (
           <AccordionItem
             {...item}

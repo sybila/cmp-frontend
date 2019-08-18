@@ -12,7 +12,7 @@ import HomePage from "./scenes/HomePage/";
 import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
 
-import ModelsMainPage from "./modules/modelsRepository/scenes/MainPage";
+import ModelsModule from "./modules/modelsRepository/scenes/";
 import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
 
 import Loader from "./components/Loader";
@@ -128,7 +128,9 @@ class Application extends React.Component<any> {
           <Router history={history}>
             {/* Portal block for components which need access to Router */}
             <Portal>
-              <Toolbar />
+              <PrivateComponent>
+                <Toolbar />
+              </PrivateComponent>
             </Portal>
 
             <Route
@@ -140,7 +142,7 @@ class Application extends React.Component<any> {
                     <Route path={`${url}login`} component={LoginPage} />
                     <Route
                       path={`${url + modelsNames.url}`}
-                      component={ModelsMainPage}
+                      component={ModelsModule}
                     />
                     <PrivateRoute
                       path={`${url}profile/:subPage?`}

@@ -1,5 +1,7 @@
 import React from "react";
 
+import { truncate } from "../../Helpers";
+
 export interface Props {
   heading: string;
   body: any;
@@ -13,11 +15,14 @@ class AccordionItem extends React.PureComponent<Props> {
     const { heading, body, isOpen, onClick, index } = this.props;
 
     return (
-      <div className="card">
+      <div className={`card${isOpen ? " show" : ""}`}>
         <div className="card-header noselect" onClick={() => onClick(index)}>
-          <div className="mb-0">{heading}</div>
+          <div className="mb-0">
+            {truncate.apply(heading, [35, false])}
+            <div className={`arrow${isOpen ? " up" : " down"}`}></div>
+          </div>
         </div>
-        <div id="collapseOne" className={`collapse${isOpen ? " show" : ""}`}>
+        <div className={`collapse${isOpen ? " show" : ""}`}>
           <div className="card-body">{body}</div>
         </div>
       </div>
