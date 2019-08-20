@@ -1,12 +1,23 @@
 import { Dispatch } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { ActionTypes as LoginActionTypes } from "../reducers/authenticationReducer";
-import userService from "../services/userServices";
-import { history } from "../Application";
-import { UserModel } from "../models/User";
+import api from "services/api";
+import { history } from "./Application";
+import { UserModel } from "models/User";
+import { ActionTypes } from "ApplicationActionTypes";
 
-const { LOGIN, LOGOUT, TOKEN_LOGIN } = LoginActionTypes;
+export const showLoader = () => ({
+  type: ActionTypes.SHOW_LOADER
+});
+
+export const loaderActionName = (action: string) => ({
+  type: ActionTypes.LOADER_NAME,
+  action
+});
+
+export const hideLoader = () => ({
+  type: ActionTypes.HIDE_LOADER
+});
 
 export function login(username: string, password: string) {
   return (dispatch: Dispatch) => {
@@ -29,7 +40,7 @@ export function login(username: string, password: string) {
     }
 
     // REVIEW: Optional refactoring based on final responses
-    return userService.login(username, password).then(
+    return api.users.login(username, password).then(
       (user: any) => {
         dispatch(success(user));
         return user;
@@ -42,21 +53,21 @@ export function login(username: string, password: string) {
   };
 
   function request() {
-    return { type: `${LOGIN}_${ActionType.Pending}` };
+    return { type: `${ActionTypes.LOGIN}_${ActionType.Pending}` };
   }
 
   function success(user: UserModel) {
-    return { type: `${LOGIN}_${ActionType.Fulfilled}`, user };
+    return { type: `${ActionTypes.LOGIN}_${ActionType.Fulfilled}`, user };
   }
 
   function failure(error: string) {
-    return { type: `${LOGIN}_${ActionType.Rejected}`, error };
+    return { type: `${ActionTypes.LOGIN}_${ActionType.Rejected}`, error };
   }
 }
 
 export function logout() {
-  userService.logout();
-  return { type: LOGOUT };
+  api.users.logout();
+  return { type: ActionTypes.LOGOUT };
 }
 
 export function tokenLogin(token: string) {
@@ -64,7 +75,7 @@ export function tokenLogin(token: string) {
     dispatch(request());
 
     // REVIEW: Optional refactoring based on final responses
-    return userService.attemptLoginWithToken(token).then(
+    return api.users.attemptLoginWithToken(token).then(
       (user: any) => {
         dispatch(success(user));
         history.push("/");
@@ -77,15 +88,18 @@ export function tokenLogin(token: string) {
     );
 
     function request() {
-      return { type: `${TOKEN_LOGIN}_${ActionType.Pending}` };
+      return { type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Pending}` };
     }
 
     function success(user: UserModel) {
-      return { type: `${TOKEN_LOGIN}_${ActionType.Fulfilled}`, user };
+      return {
+        type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`,
+        user
+      };
     }
 
     function failure() {
-      return { type: `${TOKEN_LOGIN}_${ActionType.Rejected}` };
+      return { type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}` };
     }
   };
 }

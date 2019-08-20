@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 
-import { ApplicationStore } from "./configureStore";
-import * as serviceWorker from "./serviceWorker";
+import ApplicationStore from "./ApplicationStore";
+import * as serviceWorker from "utils/serviceWorker";
 
 import Application from "./Application";
 

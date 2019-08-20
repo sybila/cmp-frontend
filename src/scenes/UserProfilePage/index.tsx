@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
-import { AppState } from "../../reducers/globalReducer";
-import { getUser } from "../../selectors/userSelectors";
+import { AppState } from "reducers/GlobalReducer";
+import { getUser } from "ApplicationSelectors";
 import { UserModel } from "../../models/User";
 
 import ProfileNav from "./ProfileNav";

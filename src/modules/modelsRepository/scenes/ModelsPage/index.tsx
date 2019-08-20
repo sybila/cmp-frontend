@@ -5,7 +5,7 @@ import { Dispatch, bindActionCreators } from "redux";
 
 import { loadModels } from "../../actions";
 import { getAllModels } from "../../selectors";
-import { Model } from "../../models/Model";
+import { Model } from "models/Model";
 import Accordion from "../../../../components/Accordion";
 import placeholderImg from "../../../../assets/image-clark.png";
 

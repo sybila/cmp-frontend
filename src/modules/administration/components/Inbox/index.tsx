@@ -5,16 +5,10 @@ import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import { AppState } from "../../reducers/globalReducer";
-import {
-  inboxState,
-  getNotifications
-} from "../../selectors/notificationsSelectors";
-import { NotificationModel } from "../../models/Notification";
-import {
-  loadNotifications,
-  toggleInbox
-} from "../../actions/notificationActions";
+import { AppState } from "reducers/GlobalReducer";
+import { inboxState, getNotifications } from "../../selectors";
+import { NotificationModel } from "models/Notification";
+import { loadNotifications, toggleInbox } from "../../actions";
 import InboxItem from "./InboxItem";
 
 interface Props {

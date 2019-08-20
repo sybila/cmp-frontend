@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-import { AppState } from "../../reducers/globalReducer";
-import { ToolbarItem as ToolbarItemType } from "../../reducers/toolbarReducer";
+import { AppState } from "reducers/GlobalReducer";
+import { ToolbarItem as ToolbarItemType } from "modules/administration/reducers/ToolbarReducer";
 import MenuButton from "./MenuButton";
 import ToolbarItem from "./ToolbarItem";
 
@@ -69,7 +69,7 @@ class Toolbar extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  toolbarItems: state.toolbar
+  toolbarItems: state.module_administration.toolbar
 });
 
 export default withRouter(connect(mapStateToProps)(Toolbar));

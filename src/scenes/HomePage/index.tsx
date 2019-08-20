@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import ModelsList from "../../modules/modelsRepository/components/ModelsList";
-import { AppState } from "../../reducers/globalReducer";
+import { AppState } from "reducers/GlobalReducer";
 
 interface Props {}
 

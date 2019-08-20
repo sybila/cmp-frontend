@@ -1,16 +1,12 @@
 import { AnyAction } from "redux";
 
-export const ActionTypes = {
-  SHOW_LOADER: "@@loader/SHOW_LOADER",
-  HIDE_LOADER: "@@loader/HIDE_LOADER",
-  LOADER_NAME: "@@loader/LOADER_NAME"
-};
+import { ActionTypes } from "ApplicationActionTypes";
 
 const initialState = {
   show: false
 };
 
-const loaderReducer = (state = initialState, action: AnyAction) => {
+const LoaderReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case ActionTypes.SHOW_LOADER:
       return {
@@ -33,4 +29,4 @@ const loaderReducer = (state = initialState, action: AnyAction) => {
   }
 };
 
-export default loaderReducer;
+export default LoaderReducer;

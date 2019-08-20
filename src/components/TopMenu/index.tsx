@@ -9,17 +9,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
-import { AppState } from "../../reducers/globalReducer";
+import { AppState } from "reducers/GlobalReducer";
 import { ItemType } from "../Dropdown";
 import { ButtonLink } from "../Button";
-import {
-  toggleInbox,
-  newNotifications
-} from "../../actions/notificationActions";
+import { toggleInbox, newNotifications } from "modules/administration/actions";
 import NotificationsBell from "./NotificationsBell";
 import User from "./User";
-import { hasNews } from "../../selectors/notificationsSelectors";
-import { getUser } from "../../selectors/userSelectors";
+import { hasNews } from "modules/administration/selectors";
+import { getUser } from "ApplicationSelectors";
 
 interface Props {
   user: UserModel;

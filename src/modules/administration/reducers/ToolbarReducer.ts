@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { typeGenerator, reducerGenerator } from "../ReduxGenerators";
+import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const actionsPrefix = "toolbar";
 
@@ -42,10 +42,10 @@ const actionHandler = {
   })
 };
 
-const modulesReducer = reducerGenerator(
+const ToolbarReducer = reducerGenerator(
   actionsPrefix,
   actionHandler,
   initialState
 );
 
-export default modulesReducer;
+export default ToolbarReducer;

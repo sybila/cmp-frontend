@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 
 import service from "./services";
 import { ActionTypes as MainActionTypes, Models } from "./reducers/MainReducer";
-import { modelNormalize } from "./models/Model";
+import { modelNormalize } from "models/Model";
 
 export const loadModels = () => {
   return async (dispatch: Dispatch) =>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { truncate } from "../../Helpers";
+import { truncate } from "utils/helpers";
 
 export interface Props {
   heading: string;

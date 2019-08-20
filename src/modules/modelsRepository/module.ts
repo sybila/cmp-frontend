@@ -1,7 +1,7 @@
 import { combineReducers, Dispatch } from "redux";
 
 import MainReducer, { moduleNames } from "./reducers/MainReducer";
-import { addToolbarItems } from "../../actions/toolbarActions";
+import { addToolbarItems } from "../administration/actions";
 
 export const Reducer = combineReducers({
   models: MainReducer

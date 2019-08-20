@@ -2,6 +2,7 @@ import { Action } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
 import { UserModel } from "../models/User";
+import { ActionTypes } from "ApplicationActionTypes";
 
 export interface LoginAction extends Action {
   user?: UserModel;
@@ -14,19 +15,13 @@ interface UserState {
   loggingIn: boolean;
 }
 
-export const ActionTypes = {
-  LOGIN: "@@app/LOGIN",
-  LOGOUT: "@@app/LOGOUT",
-  TOKEN_LOGIN: "@@app/TOKEN_LOGIN"
-};
-
 const initialState: UserState = {
   user: null,
   error: null,
   loggingIn: false
 };
 
-const authenticationReducer = (
+const AuthenticationReducer = (
   state = initialState,
   action: LoginAction
 ): UserState => {
@@ -74,4 +69,4 @@ const authenticationReducer = (
   }
 };
 
-export default authenticationReducer;
+export default AuthenticationReducer;

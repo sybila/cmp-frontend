@@ -1,4 +1,4 @@
-import dataService from "./dataService";
+import dataService from "../dataService";
 
 const notificationService = {
   load

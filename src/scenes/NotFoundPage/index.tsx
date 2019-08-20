@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "react-router-dom";
 
-import { AppState } from "../../reducers/globalReducer";
+import { AppState } from "reducers/GlobalReducer";
 
 interface Props {}
 

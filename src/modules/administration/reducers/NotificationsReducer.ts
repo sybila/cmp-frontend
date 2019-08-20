@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { NotificationModel } from "../models/Notification";
+import { NotificationModel } from "models/Notification";
 
 interface NotificationsState {
   inbox: boolean;
@@ -28,7 +28,7 @@ const initialState: NotificationsState = {
   all: []
 };
 
-const notificationReducer = (
+const NotificationReducer = (
   state = initialState,
   action: AnyAction
 ): NotificationsState => {
@@ -79,4 +79,4 @@ const notificationReducer = (
   }
 };
 
-export default notificationReducer;
+export default NotificationReducer;

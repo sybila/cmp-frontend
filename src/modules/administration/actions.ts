@@ -1,13 +1,14 @@
 import { Dispatch } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { ActionTypes as NotificationActionTypes } from "../reducers/notificationsReducer";
-import notificationService from "../services/notificationServices";
 import {
-  NotificationModel,
-  notificationsNormalize
-} from "../models/Notification";
-import Config from "../config";
+  ActionTypes as MainActionTypes,
+  ToolbarItem
+} from "./reducers/ToolbarReducer";
+import { ActionTypes as NotificationActionTypes } from "./reducers/NotificationsReducer";
+import api from "services/api";
+import { NotificationModel, notificationsNormalize } from "models/Notification";
+import Config from "config";
 
 const {
   MERGE_NOTIFICATIONS,
@@ -35,7 +36,7 @@ export function loadNotifications(id: number) {
     }
 
     // REVIEW: Optional refactoring based on final responses
-    return notificationService.load(id).then(
+    return api.notifications.load(id).then(
       (notifications: any) => {
         const normalized = notificationsNormalize(notifications);
         normalized.all.length > 0 && dispatch(newNotifications(true));
@@ -88,3 +89,9 @@ export function markAsSeen(id: number) {
 export function toggleInbox() {
   return { type: TOGGLE_INBOX };
 }
+
+export const addToolbarItems = (id: string, items: ToolbarItem[]) => ({
+  type: MainActionTypes.MERGE_TOOLBAR_ITEMS,
+  id,
+  items
+});

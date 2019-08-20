@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 
-import { ToolbarItem as ToolbarItemProps } from "../../reducers/toolbarReducer";
+import { ToolbarItem as ToolbarItemProps } from "../../reducers/ToolbarReducer";
 
 interface Props extends ToolbarItemProps {
   isText?: boolean;

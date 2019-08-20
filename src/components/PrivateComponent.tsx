@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUser } from "../selectors/userSelectors";
-import { AppState } from "../reducers/globalReducer";
+import { getUser } from "ApplicationSelectors";
+import { AppState } from "reducers/GlobalReducer";
 
 class PrivateComponent extends React.Component<any> {
   render() {

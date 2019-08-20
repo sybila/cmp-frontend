@@ -1,7 +1,7 @@
 import axios from "axios";
 import _ from "lodash";
 
-import userService from "./userServices";
+import api from "./api";
 import Config from "../config";
 const url = Config.apiDomain;
 
@@ -45,7 +45,7 @@ const refreshTokenInterceptor = (error: any) => {
   if (status === 401) {
     if (!isRefreshing) {
       isRefreshing = true;
-      userService.refreshAccessToken().then((newToken: any) => {
+      api.users.refreshAccessToken().then((newToken: any) => {
         isRefreshing = false;
         onRrefreshed(newToken);
       });

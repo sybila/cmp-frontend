@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 
 import LoginForm, { Values } from "./LoginForm";
-import { AppState } from "../../reducers/globalReducer";
-import { login, logout } from "../../actions/userActions";
-import { getUser, getError } from "../../selectors/userSelectors";
+import { AppState } from "reducers/GlobalReducer";
+import { login, logout } from "ApplicationActions";
+import { getUser, getError } from "ApplicationSelectors";
 import { history } from "../../Application";
 
 interface Props {

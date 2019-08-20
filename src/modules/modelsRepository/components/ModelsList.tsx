@@ -4,8 +4,8 @@ import { Dispatch, bindActionCreators } from "redux";
 
 import { loadModels } from "../actions";
 import { getAllModels } from "../selectors";
-import { Model } from "../models/Model";
-import { AppState } from "../../../reducers/globalReducer";
+import { Model } from "models/Model";
+import { AppState } from "reducers/GlobalReducer";
 
 interface Props {
   loadModels: Function;

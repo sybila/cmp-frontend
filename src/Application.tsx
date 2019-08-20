@@ -7,7 +7,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles/general.scss";
 
-import LoginPage from "./scenes/LoginPage/";
+import LoginPage from "scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
 import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
@@ -18,14 +18,13 @@ import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateComponent from "./components/PrivateComponent";
-import Portal from "./Portal";
-import NotificationsProvider from "./components/NotificationsProvider";
-import Toolbar from "./components/Toolbar";
-import Inbox from "./components/Inbox";
-import { intercept } from "./interceptors/inlineInterceptor";
-import { getUser } from "./selectors/userSelectors";
-import { tokenLogin, login } from "./actions/userActions";
-import dataService from "./services/dataService";
+import Portal from "./components/Portal";
+import NotificationsProvider from "./modules/administration/components/NotificationsProvider";
+import Toolbar from "modules/administration/components/Toolbar";
+import Inbox from "./modules//administration/components/Inbox";
+import { intercept } from "utils/inlineInterceptor";
+import { getUser } from "./ApplicationSelectors";
+import { tokenLogin, login } from "ApplicationActions";
 
 import TopMenu from "./components/TopMenu";
 
@@ -74,12 +73,7 @@ class MasterPage extends React.Component {
  */
 const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
-  return dataService.get("/models").then(payload => {
-    console.log(payload);
-    dispatch<any>(login("admin", "test"));
-
-    return true;
-  });
+  return dispatch<any>(login("admin", "test"));
 
   /*
   if (getUser(state)) {

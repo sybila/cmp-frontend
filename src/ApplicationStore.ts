@@ -3,12 +3,8 @@ import promise, { ActionType } from "redux-promise-middleware";
 import { createStore, applyMiddleware, compose } from "redux";
 import _ from "lodash";
 
-import globalReducer from "./reducers/globalReducer";
-import {
-  showLoader,
-  hideLoader,
-  loaderActionName
-} from "./actions/loaderActions";
+import GlobalReducer from "reducers/GlobalReducer";
+import { showLoader, hideLoader, loaderActionName } from "ApplicationActions";
 import * as Modules from "./modules";
 
 /**
@@ -38,9 +34,9 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
   return next(action);
 };
 
-export default function configureStore(preloadedState = undefined) {
+export function configureStore(preloadedState = undefined) {
   return createStore(
-    globalReducer,
+    GlobalReducer,
     preloadedState,
     compose(
       applyMiddleware(thunkMiddleware, loaderMiddleware, promise),
@@ -51,8 +47,10 @@ export default function configureStore(preloadedState = undefined) {
   );
 }
 
-export const ApplicationStore = configureStore();
+const ApplicationStore = configureStore();
 Modules.AfterStoreConfiguration(
   ApplicationStore.dispatch,
   ApplicationStore.getState
 );
+
+export default ApplicationStore;

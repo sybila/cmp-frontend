@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser } from "../selectors/userSelectors";
-import { AppState } from "../reducers/globalReducer";
+import { getUser } from "ApplicationSelectors";
+import { AppState } from "reducers/GlobalReducer";
 
 // REVIEW: May cause problems when user is authenticated and refreshes page
 // because PrivateRoute is based on Redux state, which needs to by async. filled

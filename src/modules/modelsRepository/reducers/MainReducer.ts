@@ -1,8 +1,8 @@
 import { Action } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { Model } from "../models/Model";
-import { typeGenerator, reducerGenerator } from "../../../ReduxGenerators";
+import { Model } from "models/Model";
+import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const moduleNames = {
   store: "module_models",

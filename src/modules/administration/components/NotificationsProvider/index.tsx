@@ -3,15 +3,12 @@ import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 import _ from "lodash";
 
-import { AppState } from "../../reducers/globalReducer";
-import {
-  loadNotifications,
-  markAsSeen
-} from "../../actions/notificationActions";
-import { getNotifications } from "../../selectors/notificationsSelectors";
-import { getUser } from "../../selectors/userSelectors";
-import { NotificationModel } from "../../models/Notification";
-import { UserModel } from "../../models/User";
+import { AppState } from "reducers/GlobalReducer";
+import { loadNotifications, markAsSeen } from "../../actions";
+import { getNotifications } from "../../selectors";
+import { getUser } from "ApplicationSelectors";
+import { NotificationModel } from "models/Notification";
+import { UserModel } from "models/User";
 
 import Notification from "./Notification";
 

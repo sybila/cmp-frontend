@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import _ from "lodash";
-import { AppState } from "../../reducers/globalReducer";
+import { AppState } from "reducers/GlobalReducer";
 
 export const getModelsObject = (state: AppState) =>
   state.module_models.models.byId;
