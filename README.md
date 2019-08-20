@@ -27,4 +27,4 @@ The build is minified and the filenames include the hashes.<br>
 
 ## Project folder structure
 
-![Project folder structure](https://i.imgur.com/S6mCU1q.png)
+![Project folder structure](https://i.imgur.com/FtnxtsX.png)
