@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { moduleNames as modelsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
+import PrivateRoute from "components/PrivateRoute";
 import PublishedModelsPage from "./ModelsPage";
 import ModulesMainPage from "./MainPage";
 
@@ -13,7 +14,7 @@ class ModelScenes extends React.Component {
       <React.Fragment>
         <BreadcrumbsItem to="/models-repo">Models Repository</BreadcrumbsItem>
         <Switch>
-          <Route
+          <PrivateRoute
             path={`/${modelsNames.url}/published-models`}
             component={PublishedModelsPage}
           />

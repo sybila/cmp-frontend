@@ -26,7 +26,7 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
       _.delay(
         () =>
           store.getState().loader.actionName && store.dispatch(showLoader()),
-        200
+        100
       );
     }
   }

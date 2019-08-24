@@ -1,6 +1,7 @@
 // TODO: Styles organisation
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
 // TEMP: Raleway not necessary
 @import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
@@ -63,7 +64,7 @@ body {
   min-height: 100vh;
   width: 100vw;
 
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: "Open sans", Arial, sans-serif;
   @include themify($themes) {
     color: themed("textColor");
     background-color: themed("bgColor");
@@ -78,6 +79,7 @@ h1,
 h2,
 h3 {
   font-weight: bold;
+  font-family: "Roboto", Arial, sans-serif;
 }
 h1 {
   font-size: 4rem;
@@ -294,6 +296,10 @@ h2.module-heading {
     border-bottom: 2px solid #ccc;
     border-radius: 0;
     font-size: 1.125rem;
+
+    &:last-child {
+      border: 0;
+    }
   }
 
   .card-header {
