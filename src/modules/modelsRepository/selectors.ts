@@ -10,9 +10,7 @@ export const getAllModels = (state: AppState) =>
     (i: any) => state.module_models.models.byId[i]
   );
 
-export const getModelById = (id: number) => {
-  return createSelector(
-    getModelsObject,
-    (models: any) => models[id]
-  );
-};
+export const getModelById = createSelector(
+  getModelsObject,
+  (models: any) => _.memoize((id: number) => models[id])
+);

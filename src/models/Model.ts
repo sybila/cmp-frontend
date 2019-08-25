@@ -10,6 +10,7 @@ export interface Model {
   userId: number;
   approvedId: number;
   status: string;
+  description: string;
 }
 
 export const modelNormalize = (models: any[]) => {

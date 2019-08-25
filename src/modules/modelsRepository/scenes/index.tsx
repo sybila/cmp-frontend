@@ -7,6 +7,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import PrivateRoute from "components/PrivateRoute";
 import PublishedModelsPage from "./ModelsPage";
 import ModulesMainPage from "./MainPage";
+import ModelDetail from "./ModelDetail";
 
 class ModelScenes extends React.Component {
   render() {
@@ -17,6 +18,10 @@ class ModelScenes extends React.Component {
           <PrivateRoute
             path={`/${modelsNames.url}/published-models`}
             component={PublishedModelsPage}
+          />
+          <Route
+            path={`/${modelsNames.url}/model-detail/:modelId`}
+            component={ModelDetail}
           />
           <Route component={ModulesMainPage} />
         </Switch>

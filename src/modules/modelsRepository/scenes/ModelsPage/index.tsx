@@ -2,12 +2,14 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
 
 import { loadModels } from "../../actions";
 import { getAllModels } from "../../selectors";
 import { Model } from "models/Model";
 import Accordion from "../../../../components/Accordion";
 import placeholderImg from "../../../../assets/image-clark.png";
+import { truncate } from "utils/helpers";
 
 interface Props {
   loadModels: () => any;
@@ -26,8 +28,7 @@ class MainPage extends React.Component<Props> {
 
     const accordionItems = models.map((model: Model) => ({
       heading: model.name,
-      body:
-        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aliquam ante. Nullam faucibus mi quis velit."
+      body: model.description
     }));
 
     return (
@@ -56,9 +57,9 @@ class MainPage extends React.Component<Props> {
                 veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                 Vestibulum fermentum tortor id mi.
               </p>
-              <button type="button" className="btn btn-primary">
+              <Link className="btn btn-primary" to={`model-detail/20`}>
                 View model
-              </button>
+              </Link>
             </div>
           </div>
         </div>

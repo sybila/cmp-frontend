@@ -10,9 +10,18 @@ export const loadModels = () => {
       type: MainActionTypes.LOAD_MODULES,
       payload: new Promise((resolve, reject) =>
         service.load().then(models => {
-          console.log(modelNormalize(models));
           resolve(modelNormalize(models));
         })
+      )
+    });
+};
+
+export const loadModel = (id: number) => {
+  return async (dispatch: Dispatch) =>
+    dispatch({
+      type: MainActionTypes.LOAD_MODULE,
+      payload: new Promise((resolve, reject) =>
+        service.loadModel(id).then(model => resolve(model[0]))
       )
     });
 };

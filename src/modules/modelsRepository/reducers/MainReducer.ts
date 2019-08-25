@@ -17,7 +17,7 @@ export interface Models {
 }
 
 export interface ModulesAction extends Action {
-  payload?: Models;
+  payload?: Models | Model;
 }
 
 interface ModulesState extends Models {
@@ -26,7 +26,8 @@ interface ModulesState extends Models {
 }
 
 export const ActionTypes = {
-  LOAD_MODULES: typeGenerator(moduleNames.store, "LOAD_MODULES")
+  LOAD_MODULES: typeGenerator(moduleNames.store, "LOAD_MODULES"),
+  LOAD_MODULE: typeGenerator(moduleNames.store, "LOAD_MODULE")
 };
 
 const initialState: ModulesState = {
@@ -36,17 +37,49 @@ const initialState: ModulesState = {
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Pending}`]: state => ({
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Pending}`]: (
+    state: ModulesState
+  ) => ({
     ...state,
     isFetching: true
   }),
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Fulfilled}`]: (state, action) => ({
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Fulfilled}`]: (
+    state: ModulesState,
+    action: any
+  ) => ({
     ...state,
     byId: action.payload.byId,
     all: action.payload.all,
     isFetching: false
   }),
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Rejected}`]: state => ({
+  [`${ActionTypes.LOAD_MODULES}_${ActionType.Rejected}`]: (
+    state: ModulesState
+  ) => ({
+    ...state,
+    isFetching: false,
+    error: true
+  }),
+  [`${ActionTypes.LOAD_MODULE}_${ActionType.Pending}`]: (
+    state: ModulesState
+  ) => ({
+    ...state,
+    isFetching: true
+  }),
+  [`${ActionTypes.LOAD_MODULE}_${ActionType.Fulfilled}`]: (
+    state: ModulesState,
+    action: any
+  ) => ({
+    ...state,
+    byId: {
+      ...state.byId,
+      [action.payload.id]: action.payload
+    },
+    all: [...state.all, action.payload.id],
+    isFetching: false
+  }),
+  [`${ActionTypes.LOAD_MODULE}_${ActionType.Rejected}`]: (
+    state: ModulesState
+  ) => ({
     ...state,
     isFetching: false,
     error: true
