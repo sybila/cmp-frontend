@@ -57,7 +57,7 @@ class MainPage extends React.Component<Props> {
                 veritatis et quasi architecto beatae vitae dicta sunt explicabo.
                 Vestibulum fermentum tortor id mi.
               </p>
-              <Link className="btn btn-primary" to={`model-detail/20`}>
+              <Link className="btn btn-primary" to={`model-detail/20/model`}>
                 View model
               </Link>
             </div>

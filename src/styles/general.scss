@@ -339,6 +339,29 @@ h2.module-heading {
   }
 }
 
+.module-nav {
+  background-color: #43c6ac;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 80px;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  .nav-link {
+    padding: 0.6rem 2.5rem;
+    border-radius: 80px;
+    color: #fff;
+
+    &.active {
+      background: #fff;
+      @include themify($themes) {
+        color: themed("textColor");
+      }
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+      font-weight: 700;
+    }
+  }
+}
+
 // TODO: make separate file for utils
 .arrow {
   border: solid;

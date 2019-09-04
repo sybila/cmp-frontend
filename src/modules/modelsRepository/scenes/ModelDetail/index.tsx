@@ -2,16 +2,33 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Route, Switch, NavLink } from "react-router-dom";
+import { capitalize } from "utils/helpers";
 
 import { AppState } from "reducers/GlobalReducer";
 import { loadModel } from "../../actions";
 import { getModelById } from "../../selectors";
+import { Model as ModelType } from "models/Model";
+import { moduleNames as modelsNames } from "../../reducers/MainReducer";
+
+import Model from "./Model";
 
 interface Props extends RouteComponentProps {
   loadModel: typeof loadModel;
-  getModelById: (id: number) => any;
+  getModelById: (id: number) => ModelType;
 }
+
+const getRoutes = (id: number) => {
+  const base = `/${modelsNames.url}/model-detail/${id}`;
+  return {
+    model: `${base}/model`,
+    components: `${base}/components`,
+    reactions: `${base}/reactions`,
+    parameters: `${base}/parameters`,
+    simulation: `${base}/simulation`,
+    analysis: `${base}/analysis`
+  };
+};
 
 class ModelDetail extends React.Component<Props> {
   componentDidMount() {
@@ -23,15 +40,34 @@ class ModelDetail extends React.Component<Props> {
     const { match, getModelById } = this.props;
 
     const model = getModelById((match.params as any).modelId);
-    return (
+    const routes = model && getRoutes(model.id);
+    return model ? (
       <div>
         <BreadcrumbsItem to="/models-repo/published-models">
-          Miyoshi et al. 2007
+          {model.name}
         </BreadcrumbsItem>
-        <div>
-          <p>{model && model.description}</p>
+        <h2 className={"module-heading"}>{model.name}</h2>
+        <div className="nav module-nav">
+          {Object.keys(routes).map((name: string) => {
+            return (
+              <li className="nav-item" key={`model-nav-${name}`}>
+                <NavLink to={routes[name]} className="nav-link">
+                  {capitalize(name)}
+                </NavLink>
+              </li>
+            );
+          })}
         </div>
+        <Switch>
+          <Route path={routes.components} component={Model} />
+          <Route
+            path={routes.model}
+            render={() => <Model description={model.description} />}
+          />
+        </Switch>
       </div>
+    ) : (
+      <div></div>
     );
   }
 }
