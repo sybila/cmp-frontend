@@ -37,9 +37,9 @@ class MainPage extends React.Component<Props> {
           Published Models
         </BreadcrumbsItem>
         <h2 className={"module-heading"}>Published Models</h2>
-        <div className={"row row-boxes"}>
-          <div className={"bg-box-white col-4 box-scroll"}>
-            <Accordion items={accordionItems} />
+        <div className={"row row-boxes fluid-height"}>
+          <div className={"bg-box-white col-4 box-scroll-wrap"}>
+            <Accordion items={accordionItems} className={"box-scroll"} />
           </div>
           <div className="col-8">
             <div className={"bg-box-white"}>

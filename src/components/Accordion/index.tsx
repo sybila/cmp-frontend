@@ -7,6 +7,7 @@ interface Props {
     heading: string;
     body: any;
   }[];
+  className?: string;
 }
 
 interface State {
@@ -54,19 +55,25 @@ class Accordion extends React.PureComponent<Props, State> {
 
   render() {
     const { itemsState } = this.state;
-    const { items } = this.props;
+    const { items, className } = this.props;
 
     return (
-      <div className="collapsible-accordion">
-        {items.map((item: AccordionItemProps, i) => (
-          <AccordionItem
-            {...item}
-            isOpen={itemsState[i]}
-            onClick={this.toggleItemHandle}
-            key={`${item.heading}-${i}`}
-            index={i}
-          />
-        ))}
+      <div className={`collapsible-accordion ${className}`}>
+        {items.length > 0 ? (
+          items.map((item: AccordionItemProps, i) => (
+            <AccordionItem
+              {...item}
+              isOpen={itemsState[i]}
+              onClick={this.toggleItemHandle}
+              key={`${item.heading}-${i}`}
+              index={i}
+            />
+          ))
+        ) : (
+          <div className="card">
+            <div className="card-header noselect">Loading...</div>
+          </div>
+        )}
       </div>
     );
   }
