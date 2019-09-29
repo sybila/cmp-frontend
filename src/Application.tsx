@@ -58,9 +58,11 @@ class MasterPage extends React.Component {
       <div className="theme-default">
         <WrapperSwitch>
           <TopMenu />
-          <div className="container mt-5">
-            <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-            {this.props.children}
+          <div className="container">
+            <div className="mdc-layout-grid content">
+              <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+              {this.props.children}
+            </div>
           </div>
         </WrapperSwitch>
       </div>

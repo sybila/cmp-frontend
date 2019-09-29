@@ -6,6 +6,14 @@
 // TEMP: Raleway not necessary
 @import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
 
+$mdc-layout-grid-default-margin: (
+  desktop: 0px,
+  tablet: 16px,
+  phone: 16px
+);
+
+@import "~@material/layout-grid/mdc-layout-grid";
+
 // Mixin for theming Application
 @mixin themify($themes: $themes) {
   @each $theme, $map in $themes {
@@ -72,6 +80,12 @@ body {
 
   &.home {
     background-color: #fff;
+  }
+
+  .mdc-layout-grid {
+    &.content {
+      margin-top: 3rem;
+    }
   }
 }
 
@@ -253,7 +267,6 @@ h2 {
 .box-scroll-wrap {
   padding-right: 1.5rem;
   height: 72vh;
-  width: 33.333%;
 
   .box-scroll {
     overflow-y: scroll;
@@ -275,26 +288,6 @@ h2 {
   .box-scroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: rgb(232, 232, 232);
-  }
-}
-
-.row {
-  margin: 0 0 3rem;
-  display: flex;
-  &.fluid-height {
-    display: table;
-    & > div {
-      display: table-cell;
-    }
-  }
-}
-
-.row-boxes {
-  min-height: 72vh;
-
-  .col-8:nth-child(2) {
-    padding-right: 0;
-    padding-left: 2.25rem;
   }
 }
 

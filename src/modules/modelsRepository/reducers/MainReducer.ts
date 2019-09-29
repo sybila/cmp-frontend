@@ -74,7 +74,7 @@ const actionHandler = {
       ...state.byId,
       [action.payload.id]: action.payload
     },
-    all: [...state.all, action.payload.id],
+    all: Array.from(new Set([...state.all, action.payload.id])),
     isFetching: false
   }),
   [`${ActionTypes.LOAD_MODULE}_${ActionType.Rejected}`]: (

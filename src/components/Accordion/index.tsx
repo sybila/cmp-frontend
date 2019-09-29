@@ -4,10 +4,12 @@ import AccordionItem, { Props as AccordionItemProps } from "./AccordionItem";
 
 interface Props {
   items: {
+    id: number;
     heading: string;
     body: any;
   }[];
   className?: string;
+  onClick?: (id: number) => any;
 }
 
 interface State {
@@ -25,6 +27,10 @@ class Accordion extends React.PureComponent<Props, State> {
   }
 
   toggleItemHandle(index: number) {
+    const { onClick, items } = this.props;
+    const id = items[index] ? items[index].id : null;
+    onClick && onClick(id);
+
     this.setState(prev => ({
       itemsState: prev.itemsState.map((value, i) =>
         i === index ? !value : value
@@ -60,7 +66,7 @@ class Accordion extends React.PureComponent<Props, State> {
     return (
       <div className={`collapsible-accordion ${className}`}>
         {items.length > 0 ? (
-          items.map((item: AccordionItemProps, i) => (
+          items.map((item: any, i) => (
             <AccordionItem
               {...item}
               isOpen={itemsState[i]}

@@ -8,10 +8,12 @@ const Model = (props: Props) => {
   const { description } = props;
 
   return (
-    <div className={"row"}>
-      <div className={"bg-box-white col-12"}>
-        <p>{description}</p>
-      </div>
+    <div
+      className={
+        "bg-box-white mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      }
+    >
+      <p>{description}</p>
     </div>
   );
 };

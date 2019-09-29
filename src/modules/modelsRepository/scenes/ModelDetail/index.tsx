@@ -42,12 +42,18 @@ class ModelDetail extends React.Component<Props> {
     const model = getModelById((match.params as any).modelId);
     const routes = model && getRoutes(model.id);
     return model ? (
-      <div>
+      <div className="mdc-layout-grid__inner">
         <BreadcrumbsItem to="/models-repo/published-models">
           {model.name}
         </BreadcrumbsItem>
-        <h2 className={"module-heading"}>{model.name}</h2>
-        <div className="nav module-nav">
+        <h2
+          className={
+            "module-heading mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+          }
+        >
+          {model.name}
+        </h2>
+        <div className="nav module-nav mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           {Object.keys(routes).map((name: string) => {
             return (
               <li className="nav-item" key={`model-nav-${name}`}>
