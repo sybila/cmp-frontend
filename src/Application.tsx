@@ -77,8 +77,7 @@ const InterceptLogin = intercept((state, dispatch) => {
   // TEMP: User stays logged in (dev purposes)
   return dispatch<any>(login("admin", "test"));
 
-  /*
-  if (getUser(state)) {
+  /* if (getUser(state)) {
     // Do something if user exists
     return true;
   }

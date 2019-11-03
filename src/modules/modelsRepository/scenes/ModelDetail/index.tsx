@@ -32,8 +32,9 @@ const getRoutes = (id: number) => {
 
 class ModelDetail extends React.Component<Props> {
   componentDidMount() {
-    const { match, loadModel } = this.props;
-    loadModel((match.params as any).modelId);
+    const { match, loadModel, getModelById } = this.props;
+    if (!getModelById((match.params as any).description))
+      loadModel((match.params as any).modelId);
   }
 
   render() {

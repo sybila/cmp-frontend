@@ -48,7 +48,10 @@ const actionHandler = {
     action: any
   ) => ({
     ...state,
-    byId: action.payload.byId,
+    byId: {
+      ...action.payload.byId,
+      ...state.byId
+    },
     all: action.payload.all,
     isFetching: false
   }),
@@ -68,15 +71,25 @@ const actionHandler = {
   [`${ActionTypes.LOAD_MODULE}_${ActionType.Fulfilled}`]: (
     state: ModulesState,
     action: any
-  ) => ({
-    ...state,
-    byId: {
-      ...state.byId,
-      [action.payload.id]: action.payload
-    },
-    all: Array.from(new Set([...state.all, action.payload.id])),
-    isFetching: false
-  }),
+  ) => {
+    console.log({
+      ...state.byId[action.payload.id],
+      ...action.payload
+    });
+
+    return {
+      ...state,
+      byId: {
+        ...state.byId,
+        [action.payload.id]: {
+          ...state.byId[action.payload.id],
+          ...action.payload
+        }
+      },
+      all: Array.from(new Set([...state.all, action.payload.id])),
+      isFetching: false
+    };
+  },
   [`${ActionTypes.LOAD_MODULE}_${ActionType.Rejected}`]: (
     state: ModulesState
   ) => ({
