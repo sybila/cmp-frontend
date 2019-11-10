@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Route, Switch } from "react-router-dom";
-import { modelNames as modelsNames } from "../reducers/MainReducer";
+import { moduleNames as modelsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import PrivateRoute from "components/PrivateRoute";
@@ -13,7 +13,7 @@ class ModelScenes extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <BreadcrumbsItem to="/models-repo">Models Repository</BreadcrumbsItem>
+        <BreadcrumbsItem to={`/${modelsNames.url}`}>Models Repository</BreadcrumbsItem>
         <Switch>
           <PrivateRoute
             path={`/${modelsNames.url}/published-models`}

@@ -13,7 +13,10 @@ import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
 
 import ModelsModule from "./modules/modelsRepository/scenes/";
-import { modelNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
+import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
+
+import ExperimentsModule from "./modules/experimentsRepository/scenes/";
+import { moduleNames as experimentsNames } from "./modules/experimentsRepository/reducers/MainReducer";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -138,6 +141,11 @@ class Application extends React.Component<any> {
                       path={`${url + modelsNames.url}`}
                       component={ModelsModule}
                     />
+                    <Route 
+                      path={`${url + experimentsNames.url}`}
+                      component={ExperimentsModule}
+                    />
+
                     <PrivateRoute
                       path={`${url}profile/:subPage?`}
                       component={UserProfilePage}
