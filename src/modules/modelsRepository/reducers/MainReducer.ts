@@ -4,8 +4,8 @@ import { ActionType } from "redux-promise-middleware";
 import { Model } from "models/Model";
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
-export const moduleNames = {
-  store: "module_models",
+export const modelNames = {
+  store: "model_models",
   url: "models-repo"
 };
 
@@ -16,35 +16,35 @@ export interface Models {
   all: number[];
 }
 
-export interface ModulesAction extends Action {
+export interface ModelsAction extends Action {
   payload?: Models | Model;
 }
 
-interface ModulesState extends Models {
+interface ModelsState extends Models {
   isFetching: boolean;
   error?: boolean;
 }
 
 export const ActionTypes = {
-  LOAD_MODULES: typeGenerator(moduleNames.store, "LOAD_MODULES"),
-  LOAD_MODULE: typeGenerator(moduleNames.store, "LOAD_MODULE")
+  LOAD_MODELS: typeGenerator(modelNames.store, "LOAD_MODELS"),
+  LOAD_MODEL: typeGenerator(modelNames.store, "LOAD_MODEL")
 };
 
-const initialState: ModulesState = {
+const initialState: ModelsState = {
   byId: {},
   all: [],
   isFetching: false
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Pending}`]: (
-    state: ModulesState
+  [`${ActionTypes.LOAD_MODELS}_${ActionType.Pending}`]: (
+    state: ModelsState
   ) => ({
     ...state,
     isFetching: true
   }),
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Fulfilled}`]: (
-    state: ModulesState,
+  [`${ActionTypes.LOAD_MODELS}_${ActionType.Fulfilled}`]: (
+    state: ModelsState,
     action: any
   ) => ({
     ...state,
@@ -55,21 +55,21 @@ const actionHandler = {
     all: action.payload.all,
     isFetching: false
   }),
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Rejected}`]: (
-    state: ModulesState
+  [`${ActionTypes.LOAD_MODELS}_${ActionType.Rejected}`]: (
+    state: ModelsState
   ) => ({
     ...state,
     isFetching: false,
     error: true
   }),
-  [`${ActionTypes.LOAD_MODULE}_${ActionType.Pending}`]: (
-    state: ModulesState
+  [`${ActionTypes.LOAD_MODEL}_${ActionType.Pending}`]: (
+    state: ModelsState
   ) => ({
     ...state,
     isFetching: true
   }),
-  [`${ActionTypes.LOAD_MODULE}_${ActionType.Fulfilled}`]: (
-    state: ModulesState,
+  [`${ActionTypes.LOAD_MODEL}_${ActionType.Fulfilled}`]: (
+    state: ModelsState,
     action: any
   ) => {
     console.log({
@@ -90,8 +90,8 @@ const actionHandler = {
       isFetching: false
     };
   },
-  [`${ActionTypes.LOAD_MODULE}_${ActionType.Rejected}`]: (
-    state: ModulesState
+  [`${ActionTypes.LOAD_MODEL}_${ActionType.Rejected}`]: (
+    state: ModelsState
   ) => ({
     ...state,
     isFetching: false,
@@ -99,10 +99,10 @@ const actionHandler = {
   })
 };
 
-const modulesReducer = reducerGenerator(
-  moduleNames.store,
+const modelsReducer = reducerGenerator(
+  modelNames.store,
   actionHandler,
   initialState
 );
 
-export default modulesReducer;
+export default modelsReducer;

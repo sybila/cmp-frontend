@@ -54,8 +54,8 @@ class Inbox extends React.Component<Props, State> {
   render() {
     const { isOpen, notifications, toggleInbox } = this.props;
 
-    const nodes = notifications.map(item => {
-      return <InboxItem title={"Test"} text={item.message} />;
+    const nodes = notifications.map((item, i) => {
+      return <InboxItem title={"Test"} text={item.message} key={`inbox-item-${i}`}/>;
     });
 
     return (

@@ -1,5 +1,4 @@
 import { Action } from "redux";
-import { ActionType } from "redux-promise-middleware";
 
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 

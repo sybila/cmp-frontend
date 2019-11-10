@@ -7,7 +7,7 @@ import {
 } from "./reducers/ToolbarReducer";
 import { ActionTypes as NotificationActionTypes } from "./reducers/NotificationsReducer";
 import api from "services/api";
-import { NotificationModel, notificationsNormalize } from "models/Notification";
+import { notificationsNormalize } from "models/Notification";
 import Config from "config";
 
 const {

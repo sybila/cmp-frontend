@@ -7,10 +7,6 @@ const modalRoot = document.getElementById("portal-root");
  * Creates React Portal, appends elements to different node
  */
 class Portal extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
-
   el = document.createElement("div");
 
   componentDidMount() {

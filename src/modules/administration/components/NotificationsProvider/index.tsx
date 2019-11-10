@@ -20,10 +20,6 @@ interface Props {
 }
 
 class NotificationsProvider extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   componentDidUpdate(prevProps, prevState) {
     // TODO: Valid ID
     const { user, loadNotifications } = this.props;

@@ -127,7 +127,7 @@ class UserUtils extends React.Component<Props> {
         <div className="navbar-collapse collapse w-100 order-1 order-md-0">
           <ul className="navbar-nav app-nav mr-auto">
             {navItems.map((item, i) => (
-              <li className="nav-item">
+              <li className="nav-item" key={`topmenu-${i}`}>
                 <NavLink
                   className={"nav-link"}
                   to={item.to}

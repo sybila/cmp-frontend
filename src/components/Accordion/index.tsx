@@ -1,6 +1,6 @@
 import React from "react";
 
-import AccordionItem, { Props as AccordionItemProps } from "./AccordionItem";
+import AccordionItem from "./AccordionItem";
 
 interface Props {
   items: {

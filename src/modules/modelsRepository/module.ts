@@ -1,6 +1,6 @@
 import { combineReducers, Dispatch } from "redux";
 
-import MainReducer, { moduleNames } from "./reducers/MainReducer";
+import MainReducer, { modelNames } from "./reducers/MainReducer";
 import { addToolbarItems } from "../administration/actions";
 
 export const Reducer = combineReducers({
@@ -12,7 +12,7 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
     // TODO: Refactor
 
     /* Init module toolbar */
-    addToolbarItems(moduleNames.url, [
+    addToolbarItems(modelNames.url, [
       {
         text: "Published models",
         icon: "globe",

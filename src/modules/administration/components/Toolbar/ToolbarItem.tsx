@@ -11,7 +11,7 @@ interface Props extends ToolbarItemProps {
 
 class ToolbarItem extends React.Component<Props> {
   render() {
-    const { text, to, icon, isText } = this.props;
+    const { text, to, icon } = this.props;
 
     return (
       <div className={"toolbar-item"}>

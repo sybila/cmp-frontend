@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Route, Switch } from "react-router-dom";
-import { moduleNames as modelsNames } from "../reducers/MainReducer";
+import { modelNames as modelsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import PrivateRoute from "components/PrivateRoute";

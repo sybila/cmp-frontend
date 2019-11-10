@@ -25,7 +25,7 @@ class LoginPage extends React.Component<Props> {
           reprehenderit qui in ea voluptate velit esse quam nihil molestiae
           consequatur.
         </p>
-        <a className={"btn btn-primary btn-lg"} href="#" role="button">
+        <a className={"btn btn-primary btn-lg"} href="/" role="button">
           Learn more
         </a>
       </div>

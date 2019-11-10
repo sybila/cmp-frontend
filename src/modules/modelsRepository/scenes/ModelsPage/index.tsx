@@ -84,7 +84,7 @@ class MainPage extends React.Component<Props, State> {
             {displayModel && (
               <React.Fragment>
                 <h3>{displayModel.name}</h3>
-                <img className="model-image" src={placeholderImg} />
+                <img className="model-image" src={placeholderImg} alt={displayModel.name}/>
                 <p>
                   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                   Aliquam ante. Nullam faucibus mi quis velit. Phasellus enim

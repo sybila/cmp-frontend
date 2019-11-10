@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, Link, NavLink, Switch } from "react-router-dom";
+import { Router, Route, NavLink, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -13,7 +13,7 @@ import NotFoundPage from "./scenes/NotFoundPage/";
 import UserProfilePage from "./scenes/UserProfilePage";
 
 import ModelsModule from "./modules/modelsRepository/scenes/";
-import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
+import { modelNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -23,8 +23,7 @@ import NotificationsProvider from "./modules/administration/components/Notificat
 import Toolbar from "modules/administration/components/Toolbar";
 import Inbox from "./modules//administration/components/Inbox";
 import { intercept } from "utils/inlineInterceptor";
-import { getUser } from "./ApplicationSelectors";
-import { tokenLogin, login } from "ApplicationActions";
+import { login } from "ApplicationActions";
 
 import TopMenu from "./components/TopMenu";
 

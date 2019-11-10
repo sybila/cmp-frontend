@@ -9,7 +9,7 @@ import { AppState } from "reducers/GlobalReducer";
 import { loadModel } from "../../actions";
 import { getModelById } from "../../selectors";
 import { Model as ModelType } from "models/Model";
-import { moduleNames as modelsNames } from "../../reducers/MainReducer";
+import { modelNames as modelsNames } from "../../reducers/MainReducer";
 
 import Model from "./Model";
 

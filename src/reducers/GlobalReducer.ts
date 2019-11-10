@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import _ from "lodash";
 import AuthenticationReducer from "./AuthenticationReducer";
 import LoaderReducer from "./LoaderReducer";
 import * as Modules from "../modules";
