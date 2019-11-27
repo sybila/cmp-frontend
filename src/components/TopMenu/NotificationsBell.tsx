@@ -11,11 +11,13 @@ class NotificationsBell extends React.PureComponent<Props> {
   render() {
     const { news } = this.props;
     return (
-      <div
-        className={`notification nav-link ${news ? "news" : ""}`}
-        onClick={() => this.props.handleClick()}
-      >
-        <FontAwesomeIcon icon={faBell} />
+      <div className={`notification-bell-wrapper`}>
+        <div
+          className={`notification-bell nav-link ${news ? "news" : ""}`}
+          onClick={() => this.props.handleClick()}
+        >
+          <FontAwesomeIcon icon={faBell} />
+        </div>
       </div>
     );
   }

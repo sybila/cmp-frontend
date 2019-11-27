@@ -1,6 +1,7 @@
 import { Dispatch, Reducer } from "redux";
 
 import * as ModelsModule from "./modelsRepository/module";
+import * as ExperimentsModule from "./experimentsRepository/module";
 import * as AdministationModule from "./administration/module";
 
 /**
@@ -20,12 +21,14 @@ interface Module {
 
 export const RegisteredModules = {
   models: ModelsModule,
-  administration: AdministationModule
+  experiments: ExperimentsModule,
+  administration: AdministationModule,
 };
 
 export const RegisteredReducers = {
   module_models: ModelsModule.Reducer,
-  module_administration: AdministationModule.Reducer
+  module_administration: AdministationModule.Reducer,
+  module_experiments: ExperimentsModule.Reducer,
 };
 
 /**

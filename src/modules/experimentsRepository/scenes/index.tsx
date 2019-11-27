@@ -5,17 +5,19 @@ import { moduleNames as experimentsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import PrivateRoute from "components/PrivateRoute";
+import ExperimentsMainPage from "./MainPage";
 
-class ModelScenes extends React.Component {
+class ExperimentsScenes extends React.Component {
   render() {
     return (
       <React.Fragment>
         <BreadcrumbsItem to={`/${experimentsNames.url}`}>Experiments Repository</BreadcrumbsItem>
         <Switch>
+          <Route component={ExperimentsMainPage} />
         </Switch>
       </React.Fragment>
     );
   }
 }
 
-export default ModelScenes;
+export default ExperimentsScenes;

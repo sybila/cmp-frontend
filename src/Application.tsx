@@ -4,8 +4,11 @@ import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { Section, Container, Columns } from "react-bulma-components";
 
+import 'react-bulma-components/dist/react-bulma-components.min.css';
 import "./styles/general.scss";
+
 
 import LoginPage from "scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
@@ -38,35 +41,32 @@ import TopMenu from "./components/TopMenu";
  * themselves.
  */
 
-const WrapperSwitch = (props: any) => {
-  return (
-    <Switch>
-      <Route
-        exact
-        path={`/`}
-        render={() => <div className="app-wrapper home">{props.children}</div>}
-      />
-      <Route
-        path={`/`}
-        render={() => <div className="app-wrapper">{props.children}</div>}
-      />
-    </Switch>
-  );
-};
-
 class MasterPage extends React.Component {
   render() {
     return (
-      <div className="theme-default">
-        <WrapperSwitch>
-          <TopMenu />
-          <div className="container">
-            <div className="mdc-layout-grid content">
-              <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-              {this.props.children}
-            </div>
-          </div>
-        </WrapperSwitch>
+      <div className="theme-default app-wrapper">
+        <PrivateComponent>
+          <Inbox /> 
+        </PrivateComponent>
+
+        <Columns gapless breakpoint="mobile">
+          <Columns.Column narrow>
+            <PrivateComponent>
+              <Toolbar />
+            </PrivateComponent>
+          </Columns.Column>
+          <Columns.Column className="content-column">
+              <TopMenu />
+              <div className="content">
+                <Section>
+                  <Container>
+                    <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+                  </Container>
+                </Section>
+                {this.props.children}
+              </div>
+          </Columns.Column>
+        </Columns>
       </div>
     );
   }
@@ -114,7 +114,6 @@ class Application extends React.Component<any> {
         {/* Portal block, for components with absolute positioning */}
         <Portal>
           <PrivateComponent>
-            <Inbox />
             <NotificationsProvider />
           </PrivateComponent>
           <Loader />
@@ -124,11 +123,6 @@ class Application extends React.Component<any> {
         <BreadcrumbsProvider>
           <Router history={history}>
             {/* Portal block for components which need access to Router */}
-            <Portal>
-              <PrivateComponent>
-                <Toolbar />
-              </PrivateComponent>
-            </Portal>
 
             <Route
               path="/"

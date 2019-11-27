@@ -12,8 +12,6 @@ $mdc-layout-grid-default-margin: (
   phone: 16px
 );
 
-@import "~@material/layout-grid/mdc-layout-grid";
-
 // Mixin for theming Application
 @mixin themify($themes: $themes) {
   @each $theme, $map in $themes {
@@ -39,16 +37,16 @@ $mdc-layout-grid-default-margin: (
 @function themed($key) {
   @return map-get($theme-map, $key);
 }
-
 @import "themes.scss";
 
+@import "toolbar";
+@import "header";
+@import "utils";
 @import "notifications";
 @import "inbox";
 @import "profile";
-@import "header";
 @import "buttons";
 @import "forms";
-@import "toolbar";
 
 #portal-root {
   position: absolute;
@@ -66,27 +64,22 @@ body {
 }
 
 .app-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
   min-height: 100vh;
   width: 100vw;
-
   font-family: "Open sans", Arial, sans-serif;
-  @include themify($themes) {
-    color: themed("textColor");
-    background-color: themed("bgColor");
-  }
 
   &.home {
     background-color: #fff;
   }
+}
 
-  .mdc-layout-grid {
-    &.content {
-      margin-top: 3rem;
-    }
+
+.content-column {
+  @include themify($themes) {
+    color: themed("textColor");
+    background-color: themed("bgColor");
   }
+  
 }
 
 h1,
@@ -116,6 +109,10 @@ h2 {
 
 .user-alert {
   margin-top: 1rem;
+}
+
+.box {
+  box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.05);
 }
 
 .icon {
@@ -389,13 +386,12 @@ h2.module-heading {
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; 
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; 
 }
 
 @media (min-width: 1440px) {

@@ -8,9 +8,9 @@ export const Reducer = combineReducers({
 });
 
 export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
+  console.log(true);
   dispatch(
     // TODO: Refactor
-
     /* Init module toolbar */
     addToolbarItems(moduleNames.url, [
       {
