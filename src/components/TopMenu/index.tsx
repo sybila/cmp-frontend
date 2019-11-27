@@ -7,6 +7,7 @@ import {
   faUserCircle,
   faTools
 } from "@fortawesome/free-solid-svg-icons";
+import { Navbar } from "react-bulma-components";
 
 import { UserModel } from "../../models/User";
 import { AppState } from "reducers/GlobalReducer";
@@ -17,6 +18,7 @@ import NotificationsBell from "./NotificationsBell";
 import User from "./User";
 import { hasNews } from "modules/administration/selectors";
 import { getUser } from "ApplicationSelectors";
+import logo from "assets/logo.svg";
 
 interface Props {
   user: UserModel;
@@ -114,49 +116,47 @@ class UserUtils extends React.Component<Props> {
       : [];
 
     return (
-      <nav className="navbar navbar-expand-md user-utils top-menu">
-        <div className="mx-auto order-0">
-          <Link className="navbar-brand" to="/">
-            CMP
-          </Link>
-          {/* TODO: Hamburger menu for mobiles */}
-          <button className="navbar-toggler" type="button">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-        </div>
-        <div className="navbar-collapse collapse w-100 order-1 order-md-0">
-          <ul className="navbar-nav app-nav mr-auto">
-            {navItems.map((item, i) => (
-              <li className="nav-item" key={`topmenu-${i}`}>
-                <NavLink
-                  className={"nav-link"}
-                  to={item.to}
-                  exact={item.exact}
-                  activeClassName={activeClassName}
-                  key={`nav-item-${item.text}-${i}`}
-                >
-                  {item.text}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="navbar-collapse collapse w-25 order-3">
-          <ul className="navbar-nav ml-auto">
+      <Navbar color={"white"} className={"top-menu"}>
+          <Navbar.Brand>
+            <Navbar.Item renderAs="div">
+              <Link to="/">
+                <img alt="CMP" src={logo} />
+              </Link>
+            </Navbar.Item>
+          </Navbar.Brand>
+          <Navbar.Burger />
+
+        <Navbar.Menu>
+          <Navbar.Container>
+              {navItems.map((item, i) => (
+                <Navbar.Item key={`topmenu-${i}`} renderAs="a" hoverable>
+                  <NavLink
+                    className={"nav-link"}
+                    to={item.to}
+                    exact={item.exact}
+                    activeClassName={activeClassName}
+                    key={`nav-item-${item.text}-${i}`}
+                  >
+                    {item.text}
+                  </NavLink>
+                </Navbar.Item>
+              ))}
+          </Navbar.Container>
+          <Navbar.Container position="end">
             {user
-              ? userNavItems.map((item, i) => (
-                  <li className={"nav-item"} key={`nav-item-${i}`}>
-                    {item}
-                  </li>
-                ))
-              : publicNavItems.map((item, i) => (
-                  <li className={"nav-item"} key={`nav-item-${i}`}>
-                    {item}
-                  </li>
-                ))}
-          </ul>
-        </div>
-      </nav>
+                ? userNavItems.map((item, i) => (
+                    <div key={`nav-item-${i}`}>
+                      {item}
+                    </div>
+                  ))
+                : publicNavItems.map((item, i) => (
+                    <Navbar.Item renderAs="div" key={`nav-item-${i}`}>
+                      {item}
+                    </Navbar.Item>
+                  ))}
+          </Navbar.Container>
+        </Navbar.Menu>
+      </Navbar>
     );
   }
 }

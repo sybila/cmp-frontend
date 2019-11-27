@@ -36,10 +36,8 @@ class User extends React.PureComponent<Props, State> {
     return (
       <div className={"user-menu-item"} onClick={this.handleClick}>
         <Dropdown items={userDropdownItems}>
-          <a className="nav-link" href="/">
             <img
               src={user.picture ? user.picture : profilePlaceholder}
-              className="m-x-auto img-fluid rounded-circle profile-picture"
               alt="avatar"
             />
             <div className={"info-column"}>
@@ -52,7 +50,6 @@ class User extends React.PureComponent<Props, State> {
               </span>
             </div>
             <div className={`arrow ${isOpen ? "up" : "down"}`}></div>
-          </a>
         </Dropdown>
       </div>
     );

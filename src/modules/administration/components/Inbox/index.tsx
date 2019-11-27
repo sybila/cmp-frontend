@@ -10,6 +10,7 @@ import { inboxState, getNotifications } from "../../selectors";
 import { NotificationModel } from "models/Notification";
 import { loadNotifications, toggleInbox } from "../../actions";
 import InboxItem from "./InboxItem";
+import { Heading } from "react-bulma-components";
 
 interface Props {
   isOpen: boolean;
@@ -59,16 +60,16 @@ class Inbox extends React.Component<Props, State> {
     });
 
     return (
-      <div ref={this.setInboxRef}>
+      <div className="inbox-wrapper">
         <CSSTransition
           in={isOpen}
           timeout={300}
           classNames="inbox"
           unmountOnExit
         >
-          <div className={"inbox"}>
+          <div ref={this.setInboxRef} className={"inbox"}>
             <div className={"inbox-heading"}>
-              <h3>Notifications</h3>
+              <Heading size={4}>Notifications</Heading>
               <div
                 className={"inbox-close"}
                 onClick={() => isOpen && toggleInbox()}
@@ -76,7 +77,7 @@ class Inbox extends React.Component<Props, State> {
                 <FontAwesomeIcon icon={faTimes} />
               </div>
             </div>
-            <div className={"inbox-wrapper"}>{nodes}</div>
+            <div className={"inbox-messages"}>{nodes}</div>
           </div>
         </CSSTransition>
       </div>

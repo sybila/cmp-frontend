@@ -1,4 +1,5 @@
 import React from "react";
+import { Message, Button } from "react-bulma-components";
 
 interface Props {
   title: string;
@@ -9,10 +10,15 @@ class InboxItem extends React.PureComponent<Props> {
   render() {
     const { title, text } = this.props;
     return (
-      <div className={"inbox-item"}>
-        <div className={"title"}>{title}</div>
-        <div className={"text"}>{text}</div>
-      </div>
+      <Message>
+        <Message.Header>
+          {title}
+          <Button remove />
+        </Message.Header>
+        <Message.Body>
+          {text}
+        </Message.Body>
+      </Message>
     );
   }
 }
