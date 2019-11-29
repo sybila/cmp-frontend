@@ -8,11 +8,9 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  @include themify($themes) {
-    -webkit-text-fill-color: themed("textColor");
-  }
+  -webkit-text-fill-color: $text-color;
   background: none;
-  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  box-shadow: 0 0 0px 1000px #fff inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -37,24 +35,18 @@ input[type="password"] {
 
     &::placeholder {
       /* Chrome, Firefox, Opera, Safari 10.1+ */
-      @include themify($themes) {
-        color: themed("textColor");
-      }
+      color: $text-color;
       opacity: 1; /* Firefox */
     }
 
     &:-ms-input-placeholder {
       /* Internet Explorer 10-11 */
-      @include themify($themes) {
-        color: themed("textColor");
-      }
+      color: $text-color;
     }
 
     &::-ms-input-placeholder {
       /* Microsoft Edge */
-      @include themify($themes) {
-        color: themed("textColor");
-      }
+      color: $text-color;
     }
   }
 }

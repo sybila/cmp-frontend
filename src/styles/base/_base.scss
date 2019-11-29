@@ -1,52 +1,25 @@
-// TODO: Styles organisation
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  box-sizing: border-box;
+}
 
-// TEMP: Raleway not necessary
-@import url("https://fonts.googleapis.com/css?family=Raleway:700&display=swap");
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
 $mdc-layout-grid-default-margin: (
   desktop: 0px,
   tablet: 16px,
   phone: 16px
 );
-
-// Mixin for theming Application
-@mixin themify($themes: $themes) {
-  @each $theme, $map in $themes {
-    .theme-#{$theme} & {
-      $theme-map: () !global;
-      @each $key, $submap in $map {
-        $value: map-get(map-get($themes, $theme), "#{$key}");
-        $theme-map: map-merge(
-          $theme-map,
-          (
-            $key: $value
-          )
-        ) !global;
-      }
-
-      @content;
-      $theme-map: null !global;
-    }
-  }
-}
-
-// Function for applying template
-@function themed($key) {
-  @return map-get($theme-map, $key);
-}
-@import "themes.scss";
-
-@import "toolbar";
-@import "header";
-@import "utils";
-@import "notifications";
-@import "inbox";
-@import "profile";
-@import "buttons";
-@import "forms";
 
 #portal-root {
   position: absolute;
@@ -69,24 +42,21 @@ body {
   font-family: "Open sans", Arial, sans-serif;
 
   &.home {
-    background-color: #fff;
+    background-color: $white-color;
   }
 }
 
 
 .content-column {
-  @include themify($themes) {
-    color: themed("textColor");
-    background-color: themed("bgColor");
-  }
-  
+  color: $text-color;
+  background-color: $main-color;
 }
 
 h1,
 h2,
 h3 {
   font-weight: bold;
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: $heading-font-stack;
 }
 h1 {
   font-size: 4rem;
@@ -128,7 +98,7 @@ h2 {
   user-select: none;
   &.dropdown:hover {
     .dropdown-toggle {
-      color: #fff;
+      color: $white-color;
     }
   }
 
@@ -144,9 +114,7 @@ h2 {
   }
 
   .dropdown-item {
-    @include themify($themes) {
-      color: themed("textColor");
-    }
+    color: $text-color;
     svg {
       margin-right: 0.5rem;
     }
@@ -231,7 +199,7 @@ h2 {
 // TODO: make separate file for boxes
 
 .bg-box-white {
-  background-color: #fff;
+  background-color: $white-color;
   border-radius: 20px;
   padding: 3rem;
   box-sizing: border-box;
@@ -274,17 +242,17 @@ h2 {
 
   .box-scroll::-webkit-scrollbar-track {
     border-radius: 0 20px 20px 0;
-    background-color: #fff;
+    background-color: $white-color;
   }
 
   .box-scroll::-webkit-scrollbar {
     width: 8px;
-    background-color: #f5f5f5;
+    background-color: $light-grey;
   }
 
   .box-scroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgb(232, 232, 232);
+    background-color: $mid-grey;
   }
 }
 
@@ -296,7 +264,7 @@ h2.module-heading {
 .collapsible-accordion {
   .card {
     border: 0;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid $mid-grey;
     border-radius: 0;
     font-size: 1.125rem;
 
@@ -330,7 +298,7 @@ h2.module-heading {
 }
 
 .module-nav {
-  background-color: #43c6ac;
+  background-color: $green-color;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
   border-radius: 80px;
   padding: 0.5rem;
@@ -339,13 +307,11 @@ h2.module-heading {
   .nav-link {
     padding: 0.6rem 2.5rem;
     border-radius: 80px;
-    color: #fff;
+    color: $white-color;
 
     &.active {
-      background: #fff;
-      @include themify($themes) {
-        color: themed("textColor");
-      }
+      background: $white-color;
+      color: $text-color;
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
       font-weight: 700;
     }
@@ -356,9 +322,7 @@ h2.module-heading {
 .arrow {
   border: solid;
 
-  @include themify($themes) {
-    border-color: themed("secondaryColor");
-  }
+  border-color: $secondary-color;
 
   border-width: 0 2px 2px 0;
   display: inline-block;

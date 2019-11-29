@@ -7,7 +7,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { Section, Container, Columns } from "react-bulma-components";
 
 import 'react-bulma-components/dist/react-bulma-components.min.css';
-import "./styles/general.scss";
+import "./styles/main.scss";
 
 
 import LoginPage from "scenes/LoginPage/";

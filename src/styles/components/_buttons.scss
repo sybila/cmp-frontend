@@ -1,18 +1,16 @@
 .btn {
   border-radius: 30px;
-  color: #fff;
+  color: $white-color;
   border: none;
 
   a {
-    color: #fff !important;
+    color: $white-color !important;
     &:hover {
       text-decoration: none;
     }
   }
 
-  @include themify($themes) {
-    background: themed("secondaryColor");
-  }
+  background-color: $secondary-color;
 }
 
 .btn-lg {
