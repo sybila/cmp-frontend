@@ -4,7 +4,6 @@ import { Route, Switch } from "react-router-dom";
 import { moduleNames as experimentsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
-import PrivateRoute from "components/PrivateRoute";
 import ExperimentsMainPage from "./MainPage";
 import ExperimentsRepository from "./ExperimentsPage"
 

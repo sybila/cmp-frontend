@@ -4,11 +4,10 @@ import MainReducer, { moduleNames } from "./reducers/MainReducer";
 import { addToolbarItems } from "../administration/actions";
 
 export const Reducer = combineReducers({
-  models: MainReducer
+  experiments: MainReducer
 });
 
 export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
-  console.log(true);
   dispatch(
     // TODO: Refactor
     /* Init module toolbar */

@@ -1,7 +1,8 @@
 import { Action } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
-import { Model } from "models/Model";
+import { ExperimentPartial, Experiment } from "models/Experiment";
+import { NormalizedObject } from "models/GenericTypes";
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const moduleNames = {
@@ -9,39 +10,50 @@ export const moduleNames = {
   url: "experiments-repo"
 };
 
-export interface Models {
-  byId: {
-    [key: number]: Model;
-  };
-  all: number[];
+export interface ExperimentsAction extends Action {
+  payload?: NormalizedObject<ExperimentPartial> | Experiment;
 }
 
-export interface ModulesAction extends Action {
-  payload?: Models | Model;
-}
-
-interface ModulesState extends Models {
+interface State extends NormalizedObject<ExperimentPartial> {
   isFetching: boolean;
   error?: boolean;
 }
 
 export const ActionTypes = {
-  LOAD_MODULES: typeGenerator(moduleNames.store, "LOAD_MODULES"),
-  LOAD_MODULE: typeGenerator(moduleNames.store, "LOAD_MODULE")
+  LOAD_EXPERIMENTS: typeGenerator(moduleNames.store, "LOAD_EXPERIMENTS"),
 };
 
-const initialState: ModulesState = {
+const initialState: State = {
   byId: {},
   all: [],
   isFetching: false
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_MODULES}_${ActionType.Pending}`]: (
-    state: ModulesState
+  [`${ActionTypes.LOAD_EXPERIMENTS}_${ActionType.Pending}`]: (
+    state: State
   ) => ({
     ...state,
     isFetching: true
+  }),
+  [`${ActionTypes.LOAD_EXPERIMENTS}_${ActionType.Fulfilled}`]: (
+    state: State,
+    action: any
+  ) => ({
+    ...state,
+    byId: {
+      ...action.payload.byId,
+      ...state.byId
+    },
+    all: action.payload.all,
+    isFetching: false
+  }),
+  [`${ActionTypes.LOAD_EXPERIMENTS}_${ActionType.Rejected}`]: (
+    state: State
+  ) => ({
+    ...state,
+    isFetching: false,
+    error: true
   }),
 };
 
