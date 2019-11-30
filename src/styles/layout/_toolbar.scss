@@ -6,9 +6,7 @@ $toolbarWidth: 60px;
 .toolbar {
   width: 60px;
   height: 100vh;
-  @include themify($themes) {
-    background-color: themed("mainColor");
-  }
+  background-color: $main-color;
 
   will-change: width;
   transition: width 0.3s;
@@ -24,7 +22,7 @@ $toolbarWidth: 60px;
       a {
         display: inline-block;
         width: 100%;
-        color: #fff;
+        color: $white-color;
         padding: 0.625rem 0;
         padding-left: 1.25rem;
         will-change: width;
@@ -86,7 +84,7 @@ $toolbarWidth: 60px;
   &.open span {
     opacity: 1;
     transform: rotate(45deg);
-    background: #fff;
+    background: $white-color;
   }
 
   &.open span:nth-last-child(2) {

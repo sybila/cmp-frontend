@@ -2,10 +2,11 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
-import { Section, Container, Box, Heading, Panel, Columns, Form } from 'react-bulma-components';
 
 interface Props { }
 
@@ -24,39 +25,38 @@ class ExperimentsRepository extends React.Component<Props, State> {
                 <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
                     Experiments repository
                 </BreadcrumbsItem>
-                <Section>
-                    <Container>
-                        <Columns>
-                            <Columns.Column size={4}>
-                                <Box
-                                    paddingless={false}
-                                >
-                                    <Panel>
-                                        <Panel.Header>
+                <section className="section">
+                    <div className="container">
+                        <div className="columns">
+                            <div className="column is-4">
+                                <div className="box">
+                                    <nav className="panel">
+                                        <p className="panel-heading">
                                             Experiments
-                                        </Panel.Header>
-                                        <Panel.Block>
-                                            <Form.Control>
-                                                <Form.Input size="small" type="text" placeholder="search" />
-                                            </Form.Control>
-                                        </Panel.Block>
-                                        <Panel.Block renderAs="a" active>
+                                        </p>
+                                        <div className="panel-block">
+                                            <p className="control has-icons-left">
+                                                <input className="input" type="text" placeholder="Search" />
+                                                <span className="icon is-left">
+                                                    <FontAwesomeIcon icon={faSearch} />
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <a className="panel-block" href="/">
                                             bulma
-                                        </Panel.Block>
-                                    </Panel>
-                                </Box>
-                            </Columns.Column>
-                            <Columns.Column>
-                                <Box
-                                    paddingless={false}
-                                >
-                                    <Heading size={2}>Experiments repository</Heading>
+                                        </a>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <div className="box">
+                                    <h2 className="title is-2">Experiments repository</h2>
 
-                                </Box>
-                            </Columns.Column>
-                        </Columns>
-                    </Container>
-                </Section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </>
         );
     }

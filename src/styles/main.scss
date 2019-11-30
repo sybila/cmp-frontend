@@ -8,7 +8,8 @@
 
 // 2. Vendors
 @import
-  'vendors/normalize';
+  'vendors/normalize',
+  'vendors/bulma';
 
 // 3. Base stuff
 @import
@@ -20,7 +21,8 @@
 // 4. Layout-related sections
 @import
   'layout/header',
-  'layout/footer';
+  'layout/footer',
+  'layout/toolbar';
 
 // 5. Components
 @import

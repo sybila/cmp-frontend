@@ -4,9 +4,7 @@ import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { Section, Container, Columns } from "react-bulma-components";
 
-import 'react-bulma-components/dist/react-bulma-components.min.css';
 import "./styles/main.scss";
 
 
@@ -49,24 +47,24 @@ class MasterPage extends React.Component {
           <Inbox /> 
         </PrivateComponent>
 
-        <Columns gapless breakpoint="mobile">
-          <Columns.Column narrow>
+        <div className="columns is-mobile is-gapless">
+          <div className="column is-narrow is-narrow-mobile">
             <PrivateComponent>
               <Toolbar />
             </PrivateComponent>
-          </Columns.Column>
-          <Columns.Column className="content-column">
+          </div>
+          <div className="column content-column">
               <TopMenu />
               <div className="content">
-                <Section>
-                  <Container>
+                <section className="section">
+                  <div className="container">
                     <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-                  </Container>
-                </Section>
+                  </div>
+                </section>
                 {this.props.children}
               </div>
-          </Columns.Column>
-        </Columns>
+          </div>
+        </div>
       </div>
     );
   }
