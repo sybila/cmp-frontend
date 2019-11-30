@@ -2,24 +2,70 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import _ from "lodash";
 
 import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
+import { loadExperiments } from "modules/experimentsRepository/actions";
+import { getAllExperiments, getExperimentsObject } from "modules/experimentsRepository/selectors";
+import { ExperimentPartial } from "models/Experiment";
+import PanelBlock from "./PanelBlock";
+import ExperimentDetail from "./ExperimentDetail";
 
-interface Props { }
+interface Props {
+  experiments: ExperimentPartial[];
 
-interface State { }
+  experimentsById: (id: number) => ExperimentPartial;
+  loadExperiments: () => void;
+}
 
-class ExperimentsRepository extends React.Component<Props, State> {
+interface State {
+  activeId: number;
+  searchQuery: string;
+}
+
+class ExperimentsRepository extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {};
+    this.panelClickHandle = this.panelClickHandle.bind(this);
+    this.searchHandle = this.searchHandle.bind(this);
+
+    this.state = {
+      activeId: null,
+      searchQuery: "",
+    };
+  }
+
+  componentDidMount() {
+    const { loadExperiments } = this.props;
+    loadExperiments();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { experiments } = this.props;
+    if (prevProps.experiments !== experiments && experiments.length) {
+      this.setState({
+        activeId: experiments[0].id
+      });
+    }
+  }
+
+  panelClickHandle(id: number) {
+    this.setState({ activeId: id });
+  }
+
+  searchHandle(searchQuery: string) {
+    this.setState({ searchQuery });
+    console.log(true);
   }
 
   render() {
+    const { experiments, experimentsById } = this.props;
+    const { activeId, searchQuery } = this.state;
+
+    const experiment = experimentsById[activeId]
+    const filteredExperiments = experiments.filter((experiment) => experiment.name.includes(searchQuery))
     return (
       <>
         <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
@@ -28,29 +74,24 @@ class ExperimentsRepository extends React.Component<Props, State> {
         <section className="section">
           <div className="container">
             <div className="columns">
+              <div className="column is-12">
+                <h2 className="title is-2">Experiments repository</h2>
+              </div>
+            </div>
+            <div className="columns is-full-height">
               <div className="column is-4">
                 <div className="box">
-                  <nav className="panel">
-                    <p className="panel-heading">
-                      Experiments
-                    </p>
-                    <div className="panel-block">
-                      <p className="control has-icons-left">
-                        <input className="input" type="text" placeholder="Search" />
-                        <span className="icon is-left">
-                          <FontAwesomeIcon icon={faSearch} />
-                        </span>
-                      </p>
-                    </div>
-                    <label className="panel-block">
-                      bulma
-                    </label>
-                  </nav>
+                  <PanelBlock 
+                    experiments={filteredExperiments} 
+                    activeId={activeId}
+                    itemClick={this.panelClickHandle}
+                    search={_.debounce(this.searchHandle, 300)}
+                  />
                 </div>
               </div>
               <div className="column">
-                <div className="box">
-                  <h2 className="title is-2">Experiments repository</h2>
+                <div className="box is-full-height is-padding-extended">
+                  <ExperimentDetail experiment={experiment}/>
                 </div>
               </div>
             </div>
@@ -61,9 +102,14 @@ class ExperimentsRepository extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadExperiments: bindActionCreators(loadExperiments, dispatch),
+});
 
-const mapStateToProps = (state: AppState) => ({});
+const mapStateToProps = (state: AppState) => ({
+  experiments: getAllExperiments(state),
+  experimentsById: getExperimentsObject(state)
+});
 
 export default connect(
   mapStateToProps,

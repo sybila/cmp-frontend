@@ -51,6 +51,7 @@ class Toolbar extends React.Component<Props, State> {
             to={"/" + name + item.to}
             icon={item.icon}
             text={item.text}
+            key={`tool-bar-item-${item.text}`}
           />
         ));
         break;

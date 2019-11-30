@@ -129,7 +129,7 @@ class UserUtils extends React.Component<Props> {
         <Navbar.Menu>
           <Navbar.Container>
               {navItems.map((item, i) => (
-                <Navbar.Item key={`topmenu-${i}`} renderAs="a" hoverable>
+                <Navbar.Item key={`topmenu-${i}`} renderAs="div" hoverable>
                   <NavLink
                     className={"nav-link"}
                     to={item.to}

@@ -50,6 +50,16 @@ body {
 .content-column {
   color: $text-color;
   background-color: $light-grey;
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  .top-menu-container {
+    flex: 0 1 auto;
+  }
+  .content {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
 }
 
 h1,
@@ -358,9 +368,3 @@ h2.module-heading {
   user-select: none; 
 }
 
-@media (min-width: 1440px) {
-  .container {
-    max-width: 100%;
-    padding: 0 10.5rem 0 16rem;
-  }
-}

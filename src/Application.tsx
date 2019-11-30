@@ -54,7 +54,9 @@ class MasterPage extends React.Component {
             </PrivateComponent>
           </div>
           <div className="column content-column">
-              <TopMenu />
+              <div className="top-menu-container">
+                <TopMenu />
+              </div>
               <div className="content">
                 <section className="section p-b-0">
                   <div className="container">
