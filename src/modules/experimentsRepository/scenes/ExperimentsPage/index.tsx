@@ -2,7 +2,6 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import _ from "lodash";
 
 import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
@@ -11,11 +10,12 @@ import { getAllExperiments, getExperimentsObject } from "modules/experimentsRepo
 import { ExperimentPartial } from "models/Experiment";
 import PanelBlock from "./PanelBlock";
 import ExperimentDetail from "./ExperimentDetail";
+import { ByIdObject } from "models/GenericTypes";
 
 interface Props {
   experiments: ExperimentPartial[];
 
-  experimentsById: (id: number) => ExperimentPartial;
+  experimentsById: ByIdObject<ExperimentPartial>;
   loadExperiments: () => void;
 }
 
@@ -85,7 +85,8 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
                     experiments={filteredExperiments} 
                     activeId={activeId}
                     itemClick={this.panelClickHandle}
-                    search={_.debounce(this.searchHandle, 300)}
+                    search={this.searchHandle}
+                    searchQuery={searchQuery}
                   />
                 </div>
               </div>

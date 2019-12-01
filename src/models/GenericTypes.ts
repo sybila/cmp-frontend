@@ -4,3 +4,7 @@ export type NormalizedObject<T> = {
     };
     all: number[];
 }
+
+export type ByIdObject<T> = {
+    [key: number]: T;
+}

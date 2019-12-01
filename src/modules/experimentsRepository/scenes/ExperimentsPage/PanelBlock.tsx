@@ -8,10 +8,11 @@ interface Props {
   activeId?: number;
   itemClick?: (id: number) => void,
   search: (query: string) => void,
+  searchQuery: string;
 }
 
 const PanelBlock = (props: Props) => {
-  const { experiments, activeId, itemClick, search } = props;
+  const { experiments, activeId, itemClick, search, searchQuery } = props;
 
   return (
     <nav className="panel is-primary">
@@ -25,6 +26,7 @@ const PanelBlock = (props: Props) => {
             type="text" 
             placeholder="Search" 
             onChange={(e) => search(e.currentTarget.value)}
+            value={searchQuery}
           />
           <span className="icon is-left">
             <FontAwesomeIcon icon={faSearch} />
@@ -41,6 +43,14 @@ const PanelBlock = (props: Props) => {
             {experiment.name}
           </label>
         )}
+      </div>
+      <div className="panel-block">
+        <button 
+          className="button is-primary is-outlined is-fullwidth" 
+          onClick={() => search("")}
+        >
+          Reset search
+        </button>
       </div>
     </nav>
   );

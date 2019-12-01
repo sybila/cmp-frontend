@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
 import { ExperimentPartial } from "models/Experiment";
 import moment from "moment";
 
@@ -20,7 +23,12 @@ const ExperimentDetail = (props: Props) => {
         </tbody>
       </table>
       <p>{experiment.description}</p>
-      <button className="button is-primary m-t-20">View detail</button>
+      <Link 
+        to={`/${experimentsNames.url}/repository/detail/${experiment.id}`} 
+        className="button is-primary m-t-20"
+      >
+        View detail
+      </Link>
     </> : <>
     <h3 className="title is-3">Select an experiment please.</h3>
     </>
