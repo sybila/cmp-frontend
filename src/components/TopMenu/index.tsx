@@ -78,12 +78,12 @@ class UserUtils extends React.Component<Props> {
         to: "/bsc"
       },
       {
-        text: "Model repository",
-        to: "/models-repo"
+        text: "Model",
+        to: "/models"
       },
       {
-        text: "Experiments repository",
-        to: "/experiments-repo"
+        text: "Experiments",
+        to: "/experiments"
       },
       {
         text: "CyanoNumbers",

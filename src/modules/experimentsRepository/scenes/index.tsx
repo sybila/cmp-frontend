@@ -13,7 +13,7 @@ class ExperimentsScenes extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <BreadcrumbsItem to={`/${experimentsNames.url}`}>Experiments Repository</BreadcrumbsItem>
+        <BreadcrumbsItem to={`/${experimentsNames.url}`}>Experiments</BreadcrumbsItem>
         <Switch>
           <Route
               path={`/${experimentsNames.url}/repository/detail/:experimentId`}

@@ -58,7 +58,7 @@ class MasterPage extends React.Component {
                 <TopMenu />
               </div>
               <div className="content">
-                <section className="section p-b-0">
+                <section className="section bc-section p-b-0">
                   <div className="container">
                     <Breadcrumbs separator={<b> / </b>} item={NavLink} />
                   </div>

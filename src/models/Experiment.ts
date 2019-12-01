@@ -1,17 +1,19 @@
 import { schema, normalize } from "normalizr";
 
 export interface ExperimentPartial {
-    id: number,
-    name: string,
-    description: string,
-    protocol: string,
-    started: Date,
-    inserted: Date,
-    status: string
+  id: number,
+  name: string,
+  description: string,
+  protocol: string,
+  started: Date,
+  inserted: Date,
+  status: string
 }
 
 export interface Experiment extends ExperimentPartial {
-  
+  experimentRelation: any[],
+  experimentModels: any[],
+  bioQuantities: any[]
 }
 
 export const experimentNormalize = (experiments: any[]) => {

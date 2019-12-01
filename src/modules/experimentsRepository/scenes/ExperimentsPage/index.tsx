@@ -69,12 +69,12 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
     return (
       <>
         <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
-          Experiments repository
+          Repository
         </BreadcrumbsItem>
         <section className="section">
           <div className="container">
-            <div className="columns">
-              <div className="column is-12">
+            <div className="columns p-b-0">
+              <div className="column is-12 p-b-0">
                 <h2 className="title is-2">Experiments repository</h2>
               </div>
             </div>

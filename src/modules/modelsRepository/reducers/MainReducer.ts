@@ -6,7 +6,7 @@ import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const moduleNames = {
   store: "model_models",
-  url: "models-repo"
+  url: "models"
 };
 
 export interface Models {

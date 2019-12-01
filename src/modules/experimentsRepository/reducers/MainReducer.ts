@@ -7,7 +7,7 @@ import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const moduleNames = {
   store: "module_experiments",
-  url: "experiments-repo"
+  url: "experiments"
 };
 
 export interface ExperimentsAction extends AnyAction {

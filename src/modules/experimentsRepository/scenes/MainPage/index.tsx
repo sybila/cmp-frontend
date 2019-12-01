@@ -13,10 +13,10 @@ class MainPage extends React.Component<Props, State> {
         return (
             <Section>
                 <Container>
+                    <Heading size={2}>Experiments repository</Heading>
                     <Box
                         paddingless={false}
                     >
-                        <Heading size={2}>Experiments repository</Heading>
                         <p>
                             Model repository contains computational models of selected
                             biological processes relevant for cyanobacteria. Models
