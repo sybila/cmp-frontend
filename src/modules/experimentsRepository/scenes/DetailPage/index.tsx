@@ -13,6 +13,7 @@ import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
 import { loadExperiment } from "modules/experimentsRepository/actions";
 import ExperimentPropsPage from "../ExperimentPropsPage";
+import ExperimentNotesPage from "../ExperimentNotesPage";
 
 interface Props extends RouteComponentProps {
     experimentsById: ByIdObject<Experiment>;
@@ -39,7 +40,9 @@ class DetailPage extends React.PureComponent<Props, State> {
         const { experimentsById, match } = this.props;
         const currentExperiment = experimentsById[(match.params as any).experimentId];
 
-        const routeBase = `/${experimentsNames.url}/repository/detail/${currentExperiment ? currentExperiment.id : ""}`
+        const base = `/${experimentsNames.url}/repository/detail`;
+        const routeLinkBase = `${base}${currentExperiment ? `/${currentExperiment.id}` : ""}`;
+        const routeBase = `${base}/:experimentId`
         const routes = [
             {
                 caption: "Experiment",
@@ -55,6 +58,7 @@ class DetailPage extends React.PureComponent<Props, State> {
             {
                 caption: "Notes",
                 to: "/notes",
+                component: ExperimentNotesPage,
                 order: 1
             },
             {
@@ -74,6 +78,11 @@ class DetailPage extends React.PureComponent<Props, State> {
             },
         ];
 
+        console.log(_.sortBy(routes, [(route) => route.order]).map((route) => <Route
+        path={route.to}
+        component={route.component}
+    />));
+
         return (
             currentExperiment ? <>
             <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
@@ -82,12 +91,12 @@ class DetailPage extends React.PureComponent<Props, State> {
             <section className="section p-b-0">
                 <div className="container">
                     <h2 className="title is-2">{currentExperiment.name}</h2>
-                    <PageMenuPanel items={routes} basePath={routeBase} />
+                    <PageMenuPanel items={routes} basePath={routeLinkBase} />
                 </div>
             </section>
             <Switch>
                 {_.sortBy(routes, [(route) => route.order]).map((route) => <Route
-                    path={route.to}
+                    path={`${routeBase}${route.to}`}
                     component={route.component}
                 />)}
             </Switch>

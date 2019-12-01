@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 interface Props {
-    basePath: string;
+    basePath?: string;
     items: {
         caption: string;
         to: string;

@@ -11,9 +11,17 @@ export interface ExperimentPartial {
 }
 
 export interface Experiment extends ExperimentPartial {
-  experimentRelation: any[],
-  experimentModels: any[],
-  bioQuantities: any[]
+  experimentRelation: any[];
+  experimentModels: any[];
+  bioQuantities: any[];
+  notes: ExperimentNote[];
+}
+
+export interface ExperimentNote {
+  id: number;
+  time: number;
+  note: string;
+  imgLink: string;
 }
 
 export const experimentNormalize = (experiments: any[]) => {

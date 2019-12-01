@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 
 import service from "./services";
 import { ActionTypes as MainActionTypes } from "./reducers/MainReducer";
+import { ActionTypes as NotesActionTypes } from "./reducers/NotesReducer";
 import { experimentNormalize } from "models/Experiment";
 
 export const loadExperiments = () => {
@@ -27,3 +28,18 @@ export const loadExperiment = (id: number) => {
     )
   });
 };
+
+export const loadExperimentNotes = (id: number) => {
+  return async (dispatch: Dispatch) => 
+  dispatch({
+    type: NotesActionTypes.LOAD_NOTES,
+    payload: new Promise((resolve) =>
+      service.fetchExperimentNotes(id).then(notes => {
+        resolve({
+          experimentId: id,
+          data: experimentNormalize(notes),
+        });
+      })
+    )
+  });  
+}
