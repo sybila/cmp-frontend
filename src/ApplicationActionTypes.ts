@@ -5,5 +5,5 @@ export const ActionTypes = {
 
   SHOW_LOADER: "@@loader/SHOW_LOADER",
   HIDE_LOADER: "@@loader/HIDE_LOADER",
-  LOADER_NAME: "@@loader/LOADER_NAME"
+  ADD_REQUEST: "@@loader/ADD_REQUEST"
 };
