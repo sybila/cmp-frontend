@@ -11,7 +11,7 @@ nav.top-menu {
   }
 
   .notification-bell-wrapper {
-    min-width: 3rem;
+    min-width: 4rem;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -20,7 +20,7 @@ nav.top-menu {
     .notification-bell {
       width: 2.75rem;
       height: 2.75rem;
-      color: $main-color;
+      color: $dark-grey;
 
       font-size: 1rem;
       position: relative;

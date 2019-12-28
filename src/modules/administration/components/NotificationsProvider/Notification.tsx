@@ -66,17 +66,12 @@ class Notification extends React.PureComponent<Props, State> {
         unmountOnExit
         onExited={() => this.props.markAsSeen(id)}
       >
-        <div className={"notification-wrapper"}>
-          <div className={"icon info-icon"}>
-            <FontAwesomeIcon icon={faInfoCircle} size="lg" />
+        <div className={"notification-wrapper message is-dark"}>
+          <div className={"message-header"}>
+            <p>Notification</p>
+            <button className="delete" aria-label="delete" onClick={() => this.hideNotification(id)}></button>
           </div>
-          <div className={"message"}>{message}</div>
-          <div
-            className={"icon close-icon"}
-            onClick={() => this.hideNotification(id)}
-          >
-            <FontAwesomeIcon icon={faTimes} size="lg" />
-          </div>
+          <div className={"message-body"}>{message}</div>
           <TimeBar timeRemaining={Math.floor(notificationTimeout / 1000)} />
         </div>
       </CSSTransition>

@@ -2,7 +2,7 @@
 
 .notifications-container {
   position: fixed;
-  top: 4rem;
+  bottom: 1rem;
   right: 0;
   padding: 1rem 2rem;
   width: 25rem;
@@ -21,19 +21,9 @@
     }
   }
 
-  .notification-wrapper {
-    background: $white-color;
-    margin: 0.5rem 0;
-    display: flex;
-    flex-flow: row wrap;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-    box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.03);
-
-    .message {
-      padding: 1rem;
-      width: 15rem;
-    }
+  .message {
+    font-family: $text-font-stack;
+    box-shadow: 0px 4px 70px rgba(0, 0, 0, 0.1);
   }
 
   .time-bar {
