@@ -8,3 +8,7 @@ export type NormalizedObject<T> = {
 export type ByIdObject<T> = {
     [key: number]: T;
 }
+
+export type AsyncAction<T> = {
+    payload: T
+}

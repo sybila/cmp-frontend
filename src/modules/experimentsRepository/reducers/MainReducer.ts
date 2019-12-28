@@ -31,7 +31,8 @@ export const ActionTypes = {
 const initialState: State = {
   byId: {},
   all: [],
-  isFetching: false
+  isFetching: false,
+  error: null
 };
 
 const actionHandler = {

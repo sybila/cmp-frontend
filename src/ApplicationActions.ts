@@ -5,6 +5,7 @@ import api from "services/api";
 import { history } from "./Application";
 import { UserModel } from "models/User";
 import { ActionTypes } from "ApplicationActionTypes";
+import { userCookies } from "services/cookies";
 
 export const showLoader = () => ({
   type: ActionTypes.SHOW_LOADER
@@ -19,87 +20,68 @@ export const hideLoader = () => ({
   type: ActionTypes.HIDE_LOADER
 });
 
-export function login(username: string, password: string) {
+const mockUser = {
+  id: 0,
+  username: "admin",
+  permissions: 0,
+  email: "admin@test.com",
+  about: "I like cats, that's all",
+  firstName: "John",
+  lastName: "Doe"
+};
+
+export const login = (username: string, password: string) => {
   return (dispatch: Dispatch) => {
-    dispatch(request());
+    return dispatch({
+      type: ActionTypes.LOGIN,
+      payload: new Promise((resolve, reject) => {
+        // TEMP: Credentials for testing without API request
+        if (username === "admin" && password === "test") {
+          userCookies.setAuthToken("12345");
+          return resolve({ authToken: "12345" });
+        }
 
-    // TEMP: Credentials for testing without API request
-    if (username === "admin" && password === "test") {
-      const user = {
-        id: 0,
-        username,
-        permissions: 0,
-        email: "admin@test.com",
-        about: "I like cats, that's all",
-        firstName: "John",
-        lastName: "Doe"
-      };
-      dispatch(success(user));
-      localStorage.setItem("user", JSON.stringify("12345"));
-      return Promise.resolve(user);
-    }
-
-    // REVIEW: Optional refactoring based on final responses
-    return api.users.login(username, password).then(
-      (user: any) => {
-        dispatch(success(user));
-        return user;
-      },
-      (error: any) => {
-        dispatch(failure("Error: Incorrect username or password."));
-        return Promise.reject(error);
-      }
-    );
+        return api.users.login(username, password).then(
+          (payload: any) => resolve(payload),
+          (error: any) => {
+            return reject(error);
+          }
+        );
+      })
+    });
   };
+};
 
-  function request() {
-    return { type: `${ActionTypes.LOGIN}_${ActionType.Pending}` };
-  }
+export const setUser = () => {
+  return (dispatch: Dispatch) =>
+    dispatch({
+      type: ActionTypes.SET_USER,
+      payload: new Promise((resolve, reject) => {
+        //: TEMP: temporary
+        resolve(mockUser);
+      })
+    });
+};
 
-  function success(user: UserModel) {
-    return { type: `${ActionTypes.LOGIN}_${ActionType.Fulfilled}`, user };
-  }
-
-  function failure(error: string) {
-    return { type: `${ActionTypes.LOGIN}_${ActionType.Rejected}`, error };
-  }
-}
-
-export function logout() {
+export const logout = () => {
   api.users.logout();
   return { type: ActionTypes.LOGOUT };
-}
+};
 
-export function tokenLogin(token: string) {
-  return (dispatch: Dispatch) => {
-    dispatch(request());
-
-    // REVIEW: Optional refactoring based on final responses
-    return api.users.attemptLoginWithToken(token).then(
-      (user: any) => {
-        dispatch(success(user));
-        history.push("/");
-        return user;
-      },
-      (error: any) => {
-        dispatch(failure());
-        return Promise.reject(error);
-      }
-    );
-
-    function request() {
-      return { type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Pending}` };
-    }
-
-    function success(user: UserModel) {
-      return {
-        type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`,
-        user
-      };
-    }
-
-    function failure() {
-      return { type: `${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}` };
-    }
-  };
-}
+export const tokenLogin = (token: string) => {
+  return (dispatch: Dispatch) =>
+    dispatch({
+      type: ActionTypes.TOKEN_LOGIN,
+      payload: new Promise((resolve, reject) => {
+        if (token == "12345") {
+          return resolve({ user: mockUser});
+        }
+        api.users.attemptLoginWithToken(token).then(
+          (user: any) => {
+            return resolve(user);
+          },
+          (error: any) => reject(error)
+        );
+      })
+    });
+};

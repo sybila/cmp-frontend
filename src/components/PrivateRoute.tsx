@@ -4,10 +4,6 @@ import { connect } from "react-redux";
 import { getUser } from "ApplicationSelectors";
 import { AppState } from "reducers/GlobalReducer";
 
-// REVIEW: May cause problems when user is authenticated and refreshes page
-// because PrivateRoute is based on Redux state, which needs to by async. filled
-// after intercepting request with Access Token, it will probably redirect user
-// to login page even though he is authenticated
 class PrivateRoute extends React.Component<any> {
   render() {
     const { component, user, ...rest } = this.props;

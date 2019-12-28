@@ -69,11 +69,6 @@ class UserUtils extends React.Component<Props> {
 
     const navItems = [
       {
-        text: "Home",
-        to: "/",
-        exact: true
-      },
-      {
         text: "Biochemical space",
         to: "/bsc"
       },
@@ -133,7 +128,6 @@ class UserUtils extends React.Component<Props> {
                   <NavLink
                     className={"nav-link"}
                     to={item.to}
-                    exact={item.exact}
                     activeClassName={activeClassName}
                     key={`nav-item-${item.text}-${i}`}
                   >

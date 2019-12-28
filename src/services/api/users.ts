@@ -1,4 +1,5 @@
 import dataService from "../dataService";
+import { userCookies } from "../cookies";
 
 const userService = {
   login,
@@ -13,7 +14,7 @@ function login(username: string, password: string): Promise<any> {
     .post("/authorize", { grant_type: "password", username, password })
     .then((user: any) => {
       if (user.token) {
-        localStorage.setItem("user", JSON.stringify(user.token));
+        userCookies.setAuthToken(JSON.stringify(user.token));
       }
 
       return user;
@@ -24,14 +25,15 @@ function login(username: string, password: string): Promise<any> {
 function refreshAccessToken(): Promise<any> {
   return dataService.post("/refreshToken").then((data: any) => {
     if (data.token) {
-      localStorage.setItem("user", JSON.stringify(data.token));
+      userCookies.setAuthToken(JSON.stringify(data.token));
     }
     return data;
   });
 }
 
 function logout() {
-  localStorage.removeItem("user");
+  userCookies.deleteAuthToken();
+  userCookies.deleteRefreshToken();
 }
 
 export default userService;

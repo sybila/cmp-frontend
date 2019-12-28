@@ -7,7 +7,6 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles/main.scss";
 
-
 import LoginPage from "scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
 import NotFoundPage from "./scenes/NotFoundPage/";
@@ -26,8 +25,6 @@ import Portal from "./components/Portal";
 import NotificationsProvider from "./modules/administration/components/NotificationsProvider";
 import Toolbar from "modules/administration/components/Toolbar";
 import Inbox from "./modules//administration/components/Inbox";
-import { intercept } from "utils/inlineInterceptor";
-import { login } from "ApplicationActions";
 
 import TopMenu from "./components/TopMenu";
 
@@ -72,33 +69,6 @@ class MasterPage extends React.Component {
   }
 }
 
-/**
- * Intecrepts Access token a logs in user if the token is valid
- */
-const InterceptLogin = intercept((state, dispatch) => {
-  // TEMP: User stays logged in (dev purposes)
-  return dispatch<any>(login("admin", "test"));
-
-  /* if (getUser(state)) {
-    // Do something if user exists
-    return true;
-  }
-
-  const token = localStorage.getItem("user");
-  if (token) {
-    return dispatch<any>(tokenLogin(token))
-      .then(() => {
-        // TODO: Optional redirect to previous location
-        return true;
-      })
-      .catch(() => {
-        return () => history.push("/login");
-      });
-  }
-
-  return false;*/
-});
-
 export const history = createBrowserHistory();
 
 // Library to reference icons
@@ -108,8 +78,6 @@ class Application extends React.Component<any> {
   render() {
     return (
       <React.Fragment>
-        {/* Interceptors */}
-        <InterceptLogin />
 
         {/* Portal block, for components with absolute positioning */}
         <Portal>
@@ -127,26 +95,29 @@ class Application extends React.Component<any> {
             <Route
               path="/"
               render={({ match: { url } }) => (
-                <MasterPage>
                   <Switch>
-                    <Route exact path={`${url}`} component={HomePage} />
-                    <Route path={`${url}login`} component={LoginPage} />
-                    <Route
-                      path={`${url + modelsNames.url}`}
-                      component={ModelsModule}
-                    />
-                    <Route 
-                      path={`${url + experimentsNames.url}`}
-                      component={ExperimentsModule}
-                    />
+                    <Route exact path={`${url}login`} component={LoginPage} /> {/* TEMP: remove this when done */}                    
 
-                    <PrivateRoute
-                      path={`${url}profile/:subPage?`}
-                      component={UserProfilePage}
-                    />
-                    <Route component={NotFoundPage} />
+                    <MasterPage>
+                      <Switch>
+                      <PrivateRoute exact path={`${url}`} component={HomePage} />
+                      <PrivateRoute
+                        path={`${url + modelsNames.url}`}
+                        component={ModelsModule}
+                      />
+                      <PrivateRoute 
+                        path={`${url + experimentsNames.url}`}
+                        component={ExperimentsModule}
+                      />
+
+                      <PrivateRoute
+                        path={`${url}profile/:subPage?`}
+                        component={UserProfilePage}
+                      />
+                      <Route component={NotFoundPage} />
+                      </Switch>
+                    </MasterPage>
                   </Switch>
-                </MasterPage>
               )}
             />
           </Router>
