@@ -44,7 +44,7 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
             {notes && notes.map((item) => <div className="box">
               <div><strong>Time:</strong> {hhmmss(item.time)}</div>
               <p>{item.note}</p>
-              {item.imgLink && <img src={item.imgLink} alt={"Note image"}/>}
+              {item.imgLink && <img src={item.imgLink} alt={item.note}/>}
             </div>)}
           </div>
         </section>

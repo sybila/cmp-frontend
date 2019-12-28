@@ -4,16 +4,17 @@ import { Message, Button } from "react-bulma-components";
 interface Props {
   title: string;
   text: string;
+  onClose: () => void;
 }
 
 class InboxItem extends React.PureComponent<Props> {
   render() {
-    const { title, text } = this.props;
+    const { title, text, onClose } = this.props;
     return (
       <Message>
         <Message.Header>
           {title}
-          <Button remove />
+          <Button remove onClick={onClose}/>
         </Message.Header>
         <Message.Body>
           {text}

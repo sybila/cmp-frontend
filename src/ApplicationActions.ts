@@ -74,7 +74,7 @@ export const tokenLogin = (token: string) => {
     dispatch({
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {
-        if (token == "12345") {
+        if (token === "12345") {
           return resolve({ user: mockUser});
         }
         api.users.attemptLoginWithToken(token).then(

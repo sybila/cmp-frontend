@@ -14,7 +14,8 @@ const {
   MERGE_NOTIFICATIONS,
   NEW_NOTIFICATIONS,
   MARK_SEEN,
-  TOGGLE_INBOX
+  TOGGLE_INBOX,
+  MARK_DISPLAYED
 } = NotificationActionTypes;
 
 export function loadNotifications(id: number) {
@@ -84,6 +85,13 @@ export function newNotifications(news: boolean) {
 export function markAsSeen(id: number) {
   // TODO: Any additional API request
   return { type: MARK_SEEN, id };
+}
+
+export function markAsDisplayed(id: number) {
+  return {
+    type: MARK_DISPLAYED,
+    id
+  }
 }
 
 export function toggleInbox() {

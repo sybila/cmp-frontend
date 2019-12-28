@@ -4,7 +4,7 @@ import { Dispatch, bindActionCreators } from "redux";
 import _ from "lodash";
 
 import { AppState } from "reducers/GlobalReducer";
-import { loadNotifications, markAsSeen } from "../../actions";
+import { loadNotifications, markAsSeen, markAsDisplayed } from "../../actions";
 import { getNotifications } from "../../selectors";
 import { getUser } from "ApplicationSelectors";
 import { NotificationModel } from "models/Notification";
@@ -32,7 +32,6 @@ class NotificationsProvider extends React.Component<Props> {
     const { notifications, markAsSeen, user } = this.props;
 
     const nodes = notifications
-      .filter(i => !i.seen)
       .map(i => {
         return (
           <Notification
@@ -65,7 +64,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadNotifications: bindActionCreators(loadNotifications, dispatch),
-  markAsSeen: bindActionCreators(markAsSeen, dispatch)
+  markAsSeen: bindActionCreators(markAsDisplayed, dispatch)
 });
 
 export default connect(

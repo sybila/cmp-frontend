@@ -6,15 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { AppState } from "reducers/GlobalReducer";
-import { inboxState, getNotifications } from "../../selectors";
+import { inboxState, getNotifications, getInbox } from "../../selectors";
 import { NotificationModel } from "models/Notification";
-import { loadNotifications, toggleInbox } from "../../actions";
+import { loadNotifications, toggleInbox, markAsSeen } from "../../actions";
 import InboxItem from "./InboxItem";
 import { Heading } from "react-bulma-components";
 
 interface Props {
   isOpen: boolean;
   loadNotifications: (id: number) => any;
+  markAsSeen: typeof markAsSeen;
   toggleInbox: () => void;
   notifications: NotificationModel[];
 }
@@ -27,6 +28,7 @@ class Inbox extends React.Component<Props, State> {
 
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setInboxRef = this.setInboxRef.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
   componentDidMount() {
@@ -52,11 +54,22 @@ class Inbox extends React.Component<Props, State> {
       this.props.toggleInbox();
   }
 
+  handleRemoveItem(id: number) {
+    this.props.markAsSeen(id);
+  }
+
   render() {
     const { isOpen, notifications, toggleInbox } = this.props;
 
     const nodes = notifications.map((item, i) => {
-      return <InboxItem title={"Test"} text={item.message} key={`inbox-item-${i}`}/>;
+      return (
+        <InboxItem
+          title={"Test"}
+          text={item.message}
+          key={`inbox-item-${i}`}
+          onClose={() => this.handleRemoveItem(item.id)}
+        />
+      );
     });
 
     return (
@@ -87,15 +100,13 @@ class Inbox extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   isOpen: inboxState(state),
-  notifications: getNotifications(state)
+  notifications: getInbox(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadNotifications: bindActionCreators(loadNotifications, dispatch),
-  toggleInbox: bindActionCreators(toggleInbox, dispatch)
+  toggleInbox: bindActionCreators(toggleInbox, dispatch),
+  markAsSeen: bindActionCreators(markAsSeen, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Inbox);
+export default connect(mapStateToProps, mapDispatchToProps)(Inbox);
