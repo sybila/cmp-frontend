@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { AppState } from "reducers/GlobalReducer";
 
 interface Props {
-  showLoader: Boolean;
+  showLoader: number;
 }
 
 class Loader extends React.PureComponent<Props> {

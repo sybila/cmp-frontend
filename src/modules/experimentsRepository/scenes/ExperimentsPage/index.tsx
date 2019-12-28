@@ -57,7 +57,6 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 
   searchHandle(searchQuery: string) {
     this.setState({ searchQuery });
-    console.log(true);
   }
 
   render() {

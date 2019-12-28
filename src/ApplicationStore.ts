@@ -4,31 +4,33 @@ import { createStore, applyMiddleware, compose } from "redux";
 import _ from "lodash";
 
 import GlobalReducer from "reducers/GlobalReducer";
-import { showLoader, hideLoader, loaderActionName } from "ApplicationActions";
+import { showLoader, hideLoader, addRequest } from "ApplicationActions";
 import * as Modules from "./modules";
 
 /**
  * Custom loader middleware, displays spinner (after 200ms) for actions width:
  * '_PENDING' ending, hides on '_FULFILLED' or '_REJECTED' (from promise middleware)
  */
+
+// REVIEW: Review the implementation, I think it may cause issues in the future, also a lot of REDUX calls
+
 const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
-  const { show, actionName } = store.getState().loader;
-  if (show || actionName) {
-    const name = action.type.split(actionName);
-    !name[0] && store.dispatch(hideLoader());
+  const { show } = store.getState().loader;
+  const pending = `_${ActionType.Pending}`;
+  const fulfiled = `_${ActionType.Fulfilled}`;
+
+  if (action.type.indexOf(fulfiled) !== -1) {
+    const name = action.type.split(fulfiled);
+    store.dispatch(hideLoader(name[0]));
   }
 
-  const request = `_${ActionType.Pending}`;
-  if (action.type.indexOf(request) !== -1) {
-    const name = action.type.split(request);
-    if (!name[1]) {
-      store.dispatch(loaderActionName(name[0]));
-      _.delay(
-        () =>
-          store.getState().loader.actionName && store.dispatch(showLoader()),
-        100
-      );
-    }
+  if (action.type.indexOf(pending) !== -1) {
+    const name = action.type.split(pending);
+    store.dispatch(addRequest(name[0]));
+    _.delay(
+      () => store.getState().loader.pending[`${name[0]}`] && store.dispatch(showLoader()),
+      200
+    );
   }
 
   return next(action);

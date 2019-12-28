@@ -9,14 +9,26 @@ export const getAllExperiments = (state: AppState) =>
     (i: any) => state.module_experiments.experiments.byId[i]
   );
 
-export const getNotesForExperiment = (state: AppState, id: number) => 
-  state.module_experiments.notes[id];
+export const getAllNotesById = (state: AppState) => 
+  state.module_experiments.notes;
 
-export const makeNotesSelectorForExperiment = () => createSelector(
-  [getNotesForExperiment],
-  (notes, itemId) => {
-    if (notes && notes.byId) {
-      return notes.byId[itemId]
-    }
+const getExperimentId = (state: AppState, id: number) => id;
+
+export const getVariablesById = createSelector(
+  [getExperimentsObject, getExperimentsObject],
+  (experiments, id) => {
+    if (!experiments[id]) return;
+
+    return experiments[id].variables
   }
+);
+
+export const getNotesById = createSelector(
+  [getAllNotesById, getExperimentId],
+  (notes, id) => {
+    if (!notes[id]) return;
+
+    return notes[id].all.map(
+    (i: any) => notes[id].byId[i]
+  )}
 );

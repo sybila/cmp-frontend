@@ -7,17 +7,18 @@ import { UserModel } from "models/User";
 import { ActionTypes } from "ApplicationActionTypes";
 import { userCookies } from "services/cookies";
 
+export const addRequest = (requestName) => ({
+  type: ActionTypes.ADD_REQUEST,
+  requestName
+})
+
 export const showLoader = () => ({
   type: ActionTypes.SHOW_LOADER
 });
 
-export const loaderActionName = (action: string) => ({
-  type: ActionTypes.LOADER_NAME,
-  action
-});
-
-export const hideLoader = () => ({
-  type: ActionTypes.HIDE_LOADER
+export const hideLoader = (requestName = "") => ({
+  type: ActionTypes.HIDE_LOADER,
+  requestName
 });
 
 const mockUser = {

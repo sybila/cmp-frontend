@@ -12,4 +12,5 @@ export const ActionTypes = {
   SHOW_LOADER: typeGenerator(LOADER_NAMESPACE, "SHOW_LOADER"),
   HIDE_LOADER: typeGenerator(LOADER_NAMESPACE, "HIDE_LOADER"),
   LOADER_NAME: typeGenerator(LOADER_NAMESPACE, "LOADER_NAME"),
+  ADD_REQUEST: typeGenerator(LOADER_NAMESPACE, "ADD_REQUEST"),
 };

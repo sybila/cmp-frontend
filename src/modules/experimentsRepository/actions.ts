@@ -4,6 +4,7 @@ import service from "./services";
 import { ActionTypes as MainActionTypes } from "./reducers/MainReducer";
 import { ActionTypes as NotesActionTypes } from "./reducers/NotesReducer";
 import { experimentNormalize } from "models/Experiment";
+import { genericNormalize } from "models/GenericTypes";
 
 export const loadExperiments = () => {
   return async (dispatch: Dispatch) =>
@@ -23,7 +24,11 @@ export const loadExperiment = (id: number) => {
     type: MainActionTypes.LOAD_EXPERIMENT,
     payload: new Promise((resolve, reject) =>
       service.fetchExperiment(id).then(experiment => {
-        resolve(experiment);
+        
+        resolve({
+          ...experiment,
+          variables: genericNormalize(experiment.variables).byId
+        });
       })
     )
   });
@@ -37,7 +42,7 @@ export const loadExperimentNotes = (id: number) => {
       service.fetchExperimentNotes(id).then(notes => {
         resolve({
           experimentId: id,
-          data: experimentNormalize(notes),
+          data: genericNormalize(notes),
         });
       })
     )

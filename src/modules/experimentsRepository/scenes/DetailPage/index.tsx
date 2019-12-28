@@ -78,11 +78,6 @@ class DetailPage extends React.PureComponent<Props, State> {
             },
         ];
 
-        console.log(_.sortBy(routes, [(route) => route.order]).map((route) => <Route
-        path={route.to}
-        component={route.component}
-    />));
-
         return (
             currentExperiment ? <>
             <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
