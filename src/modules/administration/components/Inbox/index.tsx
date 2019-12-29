@@ -4,6 +4,7 @@ import { Dispatch, bindActionCreators } from "redux";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import onClickOutside from "react-onclickoutside";
 
 import { AppState } from "reducers/GlobalReducer";
 import { inboxState, getNotifications, getInbox } from "../../selectors";
@@ -27,31 +28,17 @@ class Inbox extends React.Component<Props, State> {
     super(props);
 
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.setInboxRef = this.setInboxRef.bind(this);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
   componentDidMount() {
     const { loadNotifications } = this.props;
     loadNotifications(99);
-
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  private inboxRef: any;
-
-  setInboxRef(node: any) {
-    this.inboxRef = node;
   }
 
   handleClickOutside(event: any) {
-    const { isOpen } = this.props;
-    if (this.inboxRef && !this.inboxRef.contains(event.target) && isOpen)
-      this.props.toggleInbox();
+    const { isOpen, toggleInbox } = this.props;
+    isOpen && toggleInbox();
   }
 
   handleRemoveItem(id: number) {
@@ -80,7 +67,7 @@ class Inbox extends React.Component<Props, State> {
           classNames="inbox"
           unmountOnExit
         >
-          <div ref={this.setInboxRef} className={"inbox"}>
+          <div className={"inbox"}>
             <div className={"inbox-heading"}>
               <Heading size={4}>Notifications</Heading>
               <div
@@ -109,4 +96,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   markAsSeen: bindActionCreators(markAsSeen, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Inbox);
+export default connect(mapStateToProps, mapDispatchToProps)(onClickOutside(Inbox));

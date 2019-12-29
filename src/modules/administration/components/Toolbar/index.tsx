@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import onClickOutside from "react-onclickoutside";
 
 import { AppState } from "reducers/GlobalReducer";
 import { ToolbarItem as ToolbarItemType } from "modules/administration/reducers/ToolbarReducer";
@@ -34,6 +35,10 @@ class Toolbar extends React.Component<Props, State> {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  handleClickOutside(event: any) {
+    this.state.isOpen && this.handleClick();
   }
 
   render() {
@@ -73,4 +78,4 @@ const mapStateToProps = (state: AppState) => ({
   toolbarItems: state.module_administration.toolbar
 });
 
-export default withRouter(connect(mapStateToProps)(Toolbar));
+export default withRouter(connect(mapStateToProps)(onClickOutside(Toolbar)));
