@@ -6,8 +6,18 @@ nav.top-menu {
   padding: 0 2rem;
   background: $white-color;
 
-  .navbar-brand img {
-    max-height: 3rem;
+  .navbar-brand {
+    padding: 0.5rem 0.75rem;
+    img {
+      max-height: 3rem;
+    } 
+  }
+
+  .navbar-item {
+    padding: 0;
+    a {
+      color: $text-color;
+    }
   }
 
   .notification-bell-wrapper {
@@ -113,7 +123,7 @@ nav.top-menu {
   }
 
   .dropdown-menu {
-    border-radius: 0 0 0.75rem 0.75rem;
+    border-radius: 0 0 6px 6px;
     border: 0;
     width: 100%;
     margin-top: -1px;

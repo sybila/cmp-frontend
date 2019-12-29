@@ -73,7 +73,7 @@ class UserUtils extends React.Component<Props> {
         to: "/bsc"
       },
       {
-        text: "Model",
+        text: "Models",
         to: "/models"
       },
       {

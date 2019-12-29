@@ -41,27 +41,27 @@ class MasterPage extends React.Component {
     return (
       <div className="theme-default app-wrapper">
         <PrivateComponent>
-          <Inbox /> 
+          <Inbox />
         </PrivateComponent>
+        <Portal>
+          <PrivateComponent>
+            <Toolbar />
+          </PrivateComponent>
+        </Portal>
 
         <div className="columns is-mobile is-gapless">
-          <div className="column is-narrow is-narrow-mobile">
-            <PrivateComponent>
-              <Toolbar />
-            </PrivateComponent>
-          </div>
           <div className="column content-column">
-              <div className="top-menu-container">
-                <TopMenu />
-              </div>
-              <div className="content">
-                <section className="section bc-section p-b-0">
-                  <div className="container">
-                    <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-                  </div>
-                </section>
-                {this.props.children}
-              </div>
+            <div className="top-menu-container">
+              <TopMenu />
+            </div>
+            <div className="content">
+              <section className="section bc-section p-b-0">
+                <div className="container">
+                  <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+                </div>
+              </section>
+              {this.props.children}
+            </div>
           </div>
         </div>
       </div>
@@ -78,7 +78,6 @@ class Application extends React.Component<any> {
   render() {
     return (
       <React.Fragment>
-
         {/* Portal block, for components with absolute positioning */}
         <Portal>
           <PrivateComponent>
@@ -95,17 +94,21 @@ class Application extends React.Component<any> {
             <Route
               path="/"
               render={({ match: { url } }) => (
-                  <Switch>
-                    <Route exact path={`${url}login`} component={LoginPage} /> {/* TEMP: remove this when done */}                    
-
-                    <MasterPage>
-                      <Switch>
-                      <PrivateRoute exact path={`${url}`} component={HomePage} />
+                <Switch>
+                  <Route exact path={`${url}login`} component={LoginPage} />{" "}
+                  {/* TEMP: remove this when done */}
+                  <MasterPage>
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path={`${url}`}
+                        component={HomePage}
+                      />
                       <PrivateRoute
                         path={`${url + modelsNames.url}`}
                         component={ModelsModule}
                       />
-                      <PrivateRoute 
+                      <PrivateRoute
                         path={`${url + experimentsNames.url}`}
                         component={ExperimentsModule}
                       />
@@ -115,9 +118,9 @@ class Application extends React.Component<any> {
                         component={UserProfilePage}
                       />
                       <Route component={NotFoundPage} />
-                      </Switch>
-                    </MasterPage>
-                  </Switch>
+                    </Switch>
+                  </MasterPage>
+                </Switch>
               )}
             />
           </Router>

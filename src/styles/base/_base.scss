@@ -22,6 +22,7 @@ $mdc-layout-grid-default-margin: (
 );
 
 #portal-root {
+  z-index: 9997;
   position: absolute;
   top: 0;
   left: 0;
@@ -50,15 +51,17 @@ body {
 .content-column {
   color: $text-color;
   background-color: $light-grey;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-flow: column;
+  margin-left: 60px !important;
+
   .top-menu-container {
+    z-index: 1;
     flex: 0 1 auto;
   }
   .content {
     flex: 1 1 auto;
-    overflow: hidden;
   }
 }
 
