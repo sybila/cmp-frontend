@@ -11,7 +11,6 @@ import { inboxState, getNotifications, getInbox } from "../../selectors";
 import { NotificationModel } from "models/Notification";
 import { loadNotifications, toggleInbox, markAsSeen } from "../../actions";
 import InboxItem from "./InboxItem";
-import { Heading } from "react-bulma-components";
 
 interface Props {
   isOpen: boolean;
@@ -69,7 +68,7 @@ class Inbox extends React.Component<Props, State> {
         >
           <div className={"inbox"}>
             <div className={"inbox-heading"}>
-              <Heading size={4}>Notifications</Heading>
+              <h4>Notifications</h4>
               <div
                 className={"inbox-close"}
                 onClick={() => isOpen && toggleInbox()}

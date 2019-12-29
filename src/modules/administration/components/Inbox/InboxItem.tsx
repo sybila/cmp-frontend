@@ -1,5 +1,4 @@
 import React from "react";
-import { Message, Button } from "react-bulma-components";
 
 interface Props {
   title: string;
@@ -11,15 +10,15 @@ class InboxItem extends React.PureComponent<Props> {
   render() {
     const { title, text, onClose } = this.props;
     return (
-      <Message>
-        <Message.Header>
-          {title}
-          <Button remove onClick={onClose}/>
-        </Message.Header>
-        <Message.Body>
-          {text}
-        </Message.Body>
-      </Message>
+      <article className="message">
+      <div className="message-header">
+        {title}
+        <button className="delete" aria-label="delete"></button>
+      </div>
+      <div className="message-body">
+        {text}
+      </div>
+    </article>
     );
   }
 }

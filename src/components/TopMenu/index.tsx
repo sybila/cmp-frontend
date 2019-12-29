@@ -7,7 +7,6 @@ import {
   faUserCircle,
   faTools
 } from "@fortawesome/free-solid-svg-icons";
-import { Navbar } from "react-bulma-components";
 
 import { UserModel } from "../../models/User";
 import { AppState } from "reducers/GlobalReducer";
@@ -111,20 +110,24 @@ class UserUtils extends React.Component<Props> {
       : [];
 
     return (
-      <Navbar color={"white"} className={"top-menu"}>
-          <Navbar.Brand>
-            <Navbar.Item renderAs="div">
+      <nav className={"top-menu navbar is-white"}>
+          <div className={"navbar-brand"}>
+            <div className={"navbar-item"}>
               <Link to="/">
                 <img alt="CMP" src={logo} />
               </Link>
-            </Navbar.Item>
-          </Navbar.Brand>
-          <Navbar.Burger />
+            </div>
+          </div>
+          <a role="button" className="navbar-burger burger" aria-label="menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
 
-        <Navbar.Menu>
-          <Navbar.Container>
+        <div className="navbar-menu">
+          <div className="navbar-start">
               {navItems.map((item, i) => (
-                <Navbar.Item key={`topmenu-${i}`} renderAs="div" hoverable>
+                <div className="navbar-item is-hoverable" key={`topmenu-${i}`}>
                   <NavLink
                     className={"nav-link"}
                     to={item.to}
@@ -133,10 +136,10 @@ class UserUtils extends React.Component<Props> {
                   >
                     {item.text}
                   </NavLink>
-                </Navbar.Item>
+                </div>
               ))}
-          </Navbar.Container>
-          <Navbar.Container position="end">
+          </div>
+          <div className="navbar-end">
             {user
                 ? userNavItems.map((item, i) => (
                     <div key={`nav-item-${i}`}>
@@ -144,13 +147,13 @@ class UserUtils extends React.Component<Props> {
                     </div>
                   ))
                 : publicNavItems.map((item, i) => (
-                    <Navbar.Item renderAs="div" key={`nav-item-${i}`}>
+                    <div className="navbar-item" key={`nav-item-${i}`}>
                       {item}
-                    </Navbar.Item>
+                    </div>
                   ))}
-          </Navbar.Container>
-        </Navbar.Menu>
-      </Navbar>
+          </div>
+        </div>
+      </nav>
     );
   }
 }
