@@ -2,7 +2,8 @@ import dataService from "services/dataService";
 const service = {
     fetchExperiments,
     fetchExperiment,
-    fetchExperimentNotes
+    fetchExperimentNotes,
+    fetchExperimentVars
 }
 
 function fetchExperiments(): Promise<any> {
@@ -15,6 +16,10 @@ function fetchExperiment(id: number): Promise<any> {
 
 function fetchExperimentNotes(id: number): Promise<any> {
     return dataService.get(`/experiments/${id}/notes`).then((notes: any) => notes.data.data);
+}
+
+function fetchExperimentVars(id: number): Promise<any> {
+    return dataService.get(`/experiments/${id}/variables`).then((vars: any) => vars.data.data)
 }
 
 export default service;

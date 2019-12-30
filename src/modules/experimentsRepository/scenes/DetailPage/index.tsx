@@ -11,13 +11,15 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getExperimentsObject } from "modules/experimentsRepository/selectors";
 import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
-import { loadExperiment } from "modules/experimentsRepository/actions";
+import { loadExperiment, loadExperiments } from "modules/experimentsRepository/actions";
 import ExperimentPropsPage from "../ExperimentPropsPage";
 import ExperimentNotesPage from "../ExperimentNotesPage";
+import ExperimentVarsPage from "../ExperimentVarsPage";
 
 interface Props extends RouteComponentProps {
     experimentsById: ByIdObject<Experiment>;
     loadExperiment: Function;
+    loadExperiments: Function;
 }
 
 interface State {
@@ -32,8 +34,13 @@ class DetailPage extends React.PureComponent<Props, State> {
     }
 
     componentDidMount() {
-        const { match, loadExperiment } = this.props;
-        loadExperiment((match.params as any).experimentId);
+        const { match, loadExperiment, loadExperiments, experimentsById } = this.props;
+        if (!experimentsById[(match.params as any).experimentId]) {
+            loadExperiment((match.params as any).experimentId)
+                .catch(() => {
+                    loadExperiments();
+                });
+        }
     }
 
     render() {
@@ -62,8 +69,9 @@ class DetailPage extends React.PureComponent<Props, State> {
                 order: 1
             },
             {
-                caption: "Vriables",
+                caption: "Variables",
                 to: "/variables",
+                component: ExperimentVarsPage,
                 order: 2
             },
             {
@@ -90,9 +98,10 @@ class DetailPage extends React.PureComponent<Props, State> {
                 </div>
             </section>
             <Switch>
-                {_.sortBy(routes, [(route) => route.order]).map((route) => <Route
+                {_.sortBy(routes, [(route) => route.order]).map((route, i) => <Route
                     path={`${routeBase}${route.to}`}
                     component={route.component}
+                    key={`experiment-detail-${i}`}
                 />)}
             </Switch>
             </> : <></>
@@ -106,6 +115,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     loadExperiment: bindActionCreators(loadExperiment, dispatch),
+    loadExperiments: bindActionCreators(loadExperiments, dispatch)
 });
   
   export default connect(

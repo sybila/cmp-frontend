@@ -68,7 +68,7 @@ class Inbox extends React.Component<Props, State> {
         >
           <div className={"inbox"}>
             <div className={"inbox-heading"}>
-              <h4>Notifications</h4>
+              <h4 className="title is-4">Notifications</h4>
               <div
                 className={"inbox-close"}
                 onClick={() => isOpen && toggleInbox()}

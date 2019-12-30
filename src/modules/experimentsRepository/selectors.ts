@@ -12,15 +12,19 @@ export const getAllExperiments = (state: AppState) =>
 export const getAllNotesById = (state: AppState) => 
   state.module_experiments.notes;
 
+export const getAllVarsById = (state: AppState) =>
+  state.module_experiments.variables;
+
 const getExperimentId = (state: AppState, id: number) => id;
 
-export const getVariablesById = createSelector(
-  [getExperimentsObject, getExperimentsObject],
-  (experiments, id) => {
-    if (!experiments[id]) return;
+export const getVarsById = createSelector(
+  [getAllVarsById, getExperimentId],
+  (vars, id) => {
+    if (!vars[id]) return;
 
-    return experiments[id].variables
-  }
+    return vars[id].all.map(
+    (i: any) => vars[id].byId[i]
+  )}
 );
 
 export const getNotesById = createSelector(

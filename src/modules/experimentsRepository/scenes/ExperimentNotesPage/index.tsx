@@ -41,7 +41,7 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
-            {notes && notes.map((item) => <div className="box">
+            {notes && notes.map((item, i) => <div className="box" key={`note-${i}`}>
               <div><strong>Time:</strong> {hhmmss(item.time)}</div>
               <p>{item.note}</p>
               {item.imgLink && <img src={item.imgLink} alt={item.note}/>}

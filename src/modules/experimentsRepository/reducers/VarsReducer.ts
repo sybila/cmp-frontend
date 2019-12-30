@@ -2,25 +2,25 @@ import { AnyAction } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
 import { moduleNames } from "./MainReducer";
-import { ExperimentNote } from "models/Experiment";
+import { ExperimentVariable } from "models/Experiment";
 import { NormalizedObject } from "models/GenericTypes";
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export interface NotesAction extends AnyAction {
   payload: {
     experimentId: number;
-    data: NormalizedObject<ExperimentNote>
+    data: NormalizedObject<ExperimentVariable>
   };
 }
 
 interface State {
-  [key: number]: NormalizedObject<ExperimentNote>;
+  [key: number]: NormalizedObject<ExperimentVariable>;
   isFetching: boolean;
   error?: boolean;
 }
 
 export const ActionTypes = {
-  LOAD_NOTES: typeGenerator(moduleNames.store, "LOAD_NOTES")
+  LOAD_VARIABLES: typeGenerator(moduleNames.store, "LOAD_VARIABLES")
 };
 
 const initialState: State = {
@@ -28,13 +28,13 @@ const initialState: State = {
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_NOTES}_${ActionType.Pending}`]: (
+  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Pending}`]: (
     state: State
   ) => ({
     ...state,
     isFetching: true
   }),
-  [`${ActionTypes.LOAD_NOTES}_${ActionType.Fulfilled}`]: (
+  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Fulfilled}`]: (
     state: State,
     action: NotesAction
   ) => ({
@@ -42,7 +42,7 @@ const actionHandler = {
     [action.payload.experimentId]: action.payload.data,
     isFetching: false
   }),
-  [`${ActionTypes.LOAD_NOTES}_${ActionType.Rejected}`]: (
+  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Rejected}`]: (
     state: State
   ) => ({
     ...state,
@@ -51,10 +51,10 @@ const actionHandler = {
   }),
 };
 
-const NotesReducer = reducerGenerator(
+const VarsReducer = reducerGenerator(
   moduleNames.store,
   actionHandler,
   initialState
 );
 
-export default NotesReducer;
+export default VarsReducer;

@@ -6,56 +6,65 @@ import { RouteComponentProps } from "react-router";
 import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import { ExperimentNote } from "models/Experiment";
+import { ExperimentVariable } from "models/Experiment";
+import { getVarsById } from "modules/experimentsRepository/selectors";
+import { loadExperimentVars } from "modules/experimentsRepository/actions";
 
 interface Props extends RouteComponentProps {
-  notes: ExperimentNote[];
-  loadNotes: Function;
+  variables: ExperimentVariable[];
+  loadVariables: Function;
 }
 
-interface State {
-}
+interface State {}
 
 class ExperimentVarsPage extends React.PureComponent<Props, State> {
   constructor(props) {
     super(props);
 
-    this.state = {
-    }
+    this.state = {};
   }
 
   componentDidMount() {
-    const { loadNotes, match, notes } = this.props;
-    !notes && loadNotes((match.params as any).experimentId);
+    const { loadVariables, match, variables } = this.props;
+    !variables && loadVariables((match.params as any).experimentId);
   }
 
   render() {
-    const { match, notes } = this.props;
+    const { match, variables } = this.props;
     return (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail/${(match.params as any).experimentId}/variables`}>
-          Experiment notes
+        <BreadcrumbsItem
+          to={`/${experimentsNames.url}/repository/detail/${
+            (match.params as any).experimentId
+          }/variables`}
+        >
+          Experiment variables
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
-            
+            {variables &&
+              variables.map((item, i) => (
+                <div className="box" key={`note-${i}`}>
+                  <span>
+                    <strong>{item.name}</strong> ({item.code}) | {item.type}
+                  </span>
+                </div>
+              ))}
           </div>
         </section>
-      </> 
+      </>
     );
   }
 }
 
 const mapStateToProps = (state: AppState, ownProps) => {
-
   return {
-  }
+    variables: getVarsById(state, ownProps.match.params.experimentId)
+  };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadVariables: bindActionCreators(loadExperimentVars, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ExperimentVarsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ExperimentVarsPage);
