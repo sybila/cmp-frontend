@@ -6,6 +6,7 @@ interface Props {
   items: {
     caption: string;
     to: string;
+    exact?: boolean;
   }[];
 }
 
@@ -18,7 +19,7 @@ const PageMenuPanel = (props: Props) => {
         <div className="navbar-start">
           {items.map((item, i) => (
             <NavLink
-              exact
+              exact={item.exact}
               to={`${basePath}${item.to}`}
               key={`page-menu-panel-${i}`}
               className="navbar-item"

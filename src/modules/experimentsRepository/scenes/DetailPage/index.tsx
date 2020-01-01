@@ -11,114 +11,124 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getExperimentsObject } from "modules/experimentsRepository/selectors";
 import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
-import { loadExperiment, loadExperiments } from "modules/experimentsRepository/actions";
+import {
+  loadExperiment,
+  loadExperiments
+} from "modules/experimentsRepository/actions";
 import ExperimentPropsPage from "../ExperimentPropsPage";
 import ExperimentNotesPage from "../ExperimentNotesPage";
 import ExperimentVarsPage from "../ExperimentVarsPage";
 
 interface Props extends RouteComponentProps {
-    experimentsById: ByIdObject<Experiment>;
-    loadExperiment: Function;
-    loadExperiments: Function;
+  experimentsById: ByIdObject<Experiment>;
+  loadExperiment: Function;
+  loadExperiments: Function;
 }
 
-interface State {
-}
+interface State {}
 
 class DetailPage extends React.PureComponent<Props, State> {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-        }
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const {
+      match,
+      loadExperiment,
+      loadExperiments,
+      experimentsById
+    } = this.props;
+    if (!experimentsById[(match.params as any).experimentId]) {
+      loadExperiment((match.params as any).experimentId).catch(() => {
+        loadExperiments();
+      });
     }
+  }
 
-    componentDidMount() {
-        const { match, loadExperiment, loadExperiments, experimentsById } = this.props;
-        if (!experimentsById[(match.params as any).experimentId]) {
-            loadExperiment((match.params as any).experimentId)
-                .catch(() => {
-                    loadExperiments();
-                });
-        }
-    }
+  render() {
+    const { experimentsById, match } = this.props;
+    const currentExperiment =
+      experimentsById[(match.params as any).experimentId];
 
-    render() {
-        const { experimentsById, match } = this.props;
-        const currentExperiment = experimentsById[(match.params as any).experimentId];
+    const base = `/${experimentsNames.url}/repository/detail`;
+    const routeLinkBase = `${base}${
+      currentExperiment ? `/${currentExperiment.id}` : ""
+    }`;
+    const routeBase = `${base}/:experimentId`;
+    const routes = [
+      {
+        caption: "Experiment",
+        to: "",
+        component: ExperimentPropsPage,
+        order: 5,
+        exact: true,
+      },
+      {
+        caption: "Protocol",
+        to: "/protocol",
+        order: 0
+      },
+      {
+        caption: "Notes",
+        to: "/notes",
+        component: ExperimentNotesPage,
+        order: 1
+      },
+      {
+        caption: "Variables",
+        to: "/variables",
+        component: ExperimentVarsPage,
+        order: 2
+      },
+      {
+        caption: "Values",
+        to: "/values",
+        order: 3
+      },
+      {
+        caption: "View char",
+        to: "/char",
+        order: 4
+      }
+    ];
 
-        const base = `/${experimentsNames.url}/repository/detail`;
-        const routeLinkBase = `${base}${currentExperiment ? `/${currentExperiment.id}` : ""}`;
-        const routeBase = `${base}/:experimentId`
-        const routes = [
-            {
-                caption: "Experiment",
-                to: "",
-                component: ExperimentPropsPage,
-                order: 5
-            },
-            {
-                caption: "Protocol",
-                to: "/protocol",
-                order: 0
-            },
-            {
-                caption: "Notes",
-                to: "/notes",
-                component: ExperimentNotesPage,
-                order: 1
-            },
-            {
-                caption: "Variables",
-                to: "/variables",
-                component: ExperimentVarsPage,
-                order: 2
-            },
-            {
-                caption: "Values",
-                to: "/values",
-                order: 3
-            },
-            {
-                caption: "View char",
-                to: "/char",
-                order: 4
-            },
-        ];
-
-        return (
-            currentExperiment ? <>
-            <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
-                {currentExperiment.name}
-            </BreadcrumbsItem>
-            <section className="section p-b-0">
-                <div className="container">
-                    <h2 className="title is-2">{currentExperiment.name}</h2>
-                    <PageMenuPanel items={routes} basePath={routeLinkBase} />
-                </div>
-            </section>
-            <Switch>
-                {_.sortBy(routes, [(route) => route.order]).map((route, i) => <Route
-                    path={`${routeBase}${route.to}`}
-                    component={route.component}
-                    key={`experiment-detail-${i}`}
-                />)}
-            </Switch>
-            </> : <></>
-        );
-    }
+    return currentExperiment ? (
+      <>
+        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
+          {currentExperiment.name}
+        </BreadcrumbsItem>
+        <section className="section p-b-0">
+          <div className="container">
+            <h2 className="title is-2">{currentExperiment.name}</h2>
+            <PageMenuPanel items={routes} basePath={routeLinkBase} />
+          </div>
+        </section>
+        <Switch>
+          {_.sortBy(routes, [route => route.order]).map((route, i) => (
+            <Route
+              path={`${routeBase}${route.to}`}
+              component={route.component}
+              key={`experiment-detail-${i}`}
+            />
+          ))}
+        </Switch>
+      </>
+    ) : (
+      <></>
+    );
+  }
 }
 
 const mapStateToProps = (state: AppState) => ({
-    experimentsById: getExperimentsObject(state),
+  experimentsById: getExperimentsObject(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-    loadExperiment: bindActionCreators(loadExperiment, dispatch),
-    loadExperiments: bindActionCreators(loadExperiments, dispatch)
+  loadExperiment: bindActionCreators(loadExperiment, dispatch),
+  loadExperiments: bindActionCreators(loadExperiments, dispatch)
 });
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(DetailPage);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailPage);

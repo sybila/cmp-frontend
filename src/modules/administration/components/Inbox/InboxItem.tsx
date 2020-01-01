@@ -13,7 +13,7 @@ class InboxItem extends React.PureComponent<Props> {
       <article className="message">
       <div className="message-header">
         {title}
-        <button className="delete" aria-label="delete"></button>
+        <button className="delete" aria-label="delete" onClick={onClose}></button>
       </div>
       <div className="message-body">
         {text}

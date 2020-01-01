@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
 
-    button.is-primary {
+    button.is-primary, a.button.is-primary {
         margin-left: auto;
     }
 }

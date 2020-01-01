@@ -29,7 +29,6 @@ class Pager extends React.PureComponent<Props, State> {
 
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.children, this.props.children)) {
-      console.log(true);
       this.setPaginationNumbers();
     }
   }
