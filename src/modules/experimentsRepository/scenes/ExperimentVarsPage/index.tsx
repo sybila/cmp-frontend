@@ -9,6 +9,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { ExperimentVariable } from "models/Experiment";
 import { getVarsById } from "modules/experimentsRepository/selectors";
 import { loadExperimentVars } from "modules/experimentsRepository/actions";
+import Pager from "components/Pager";
 
 interface Props extends RouteComponentProps {
   variables: ExperimentVariable[];
@@ -42,14 +43,17 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
-            {variables &&
-              variables.map((item, i) => (
-                <div className="box" key={`note-${i}`}>
-                  <span>
-                    <strong>{item.name}</strong> ({item.code}) | {item.type}
-                  </span>
-                </div>
-              ))}
+            <Pager countOnPage={5}>
+              {variables &&
+                variables.map((item, i) => (
+                  <div className="box variable-item" key={`note-${i}`}>
+                    <strong>{item.name}</strong>
+                    <span>({item.code})</span>
+                    <span> | {item.type}</span>
+                    <button className="button is-primary">View data</button>
+                  </div>
+                ))}
+            </Pager>
           </div>
         </section>
       </>
