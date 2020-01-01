@@ -6,7 +6,7 @@ import { ExperimentVariable } from "models/Experiment";
 import { NormalizedObject } from "models/GenericTypes";
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
-export interface NotesAction extends AnyAction {
+export interface VarsAction extends AnyAction {
   payload: {
     experimentId: number;
     data: NormalizedObject<ExperimentVariable>
@@ -36,7 +36,7 @@ const actionHandler = {
   }),
   [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Fulfilled}`]: (
     state: State,
-    action: NotesAction
+    action: VarsAction
   ) => ({
     ...state,
     [action.payload.experimentId]: action.payload.data,

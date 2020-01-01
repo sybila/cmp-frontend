@@ -34,17 +34,35 @@ class DetailPage extends React.PureComponent<Props, State> {
     this.state = {};
   }
 
-  componentDidMount() {
+  fetchExperiment() {
     const {
       match,
       loadExperiment,
       loadExperiments,
       experimentsById
     } = this.props;
-    if (!experimentsById[(match.params as any).experimentId]) {
+
+    const experiment = experimentsById[(match.params as any).experimentId];
+    if (!experiment || Object.keys(experiment).length <= 7) {
       loadExperiment((match.params as any).experimentId).catch(() => {
         loadExperiments();
       });
+    }
+  }
+
+  componentDidMount() {
+    this.fetchExperiment();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { match } = this.props;
+    if (
+      !_.isEqual(
+        (match.params as any).experimentId,
+        (prevProps.match.params as any).experimentId
+      )
+    ) {
+      this.fetchExperiment();
     }
   }
 
@@ -64,7 +82,7 @@ class DetailPage extends React.PureComponent<Props, State> {
         to: "",
         component: ExperimentPropsPage,
         order: 5,
-        exact: true,
+        exact: true
       },
       {
         caption: "Protocol",

@@ -1,10 +1,11 @@
 import { Dispatch } from "redux";
+import { ActionType } from "redux-promise-middleware";
 
 import service from "./services";
 import { ActionTypes as MainActionTypes } from "./reducers/MainReducer";
 import { ActionTypes as NotesActionTypes } from "./reducers/NotesReducer";
 import { ActionTypes as VarsActionTypes } from "./reducers/VarsReducer";
-import { experimentNormalize } from "models/Experiment";
+import { experimentNormalize, ExperimentNote, ExperimentVariable } from "models/Experiment";
 import { genericNormalize } from "models/GenericTypes";
 
 export const loadExperiments = () => {
@@ -30,11 +31,12 @@ export const loadExperiment = (id: number) => {
       type: MainActionTypes.LOAD_EXPERIMENT,
       payload: new Promise((resolve, reject) =>
         service.fetchExperiment(id).then(
-          (experiment) => {
-            resolve({
-              ...experiment,
-              variables: genericNormalize(experiment.variables).byId
-            });
+          experiment => {
+            dispatch(mergeExperimentVars(experiment.variables, experiment.id));
+            delete experiment.notes;
+            delete experiment.variables;
+
+            resolve(experiment);
           },
           (error: any) => {
             return reject(error);
@@ -43,6 +45,17 @@ export const loadExperiment = (id: number) => {
       )
     });
 };
+
+export const mergeExperimentNotes = (
+  notes: ExperimentNote[],
+  experimentId: number
+) => ({
+  type: `${NotesActionTypes.LOAD_NOTES}_${ActionType.Fulfilled}`,
+  payload: {
+    experimentId,
+    data: genericNormalize(notes)
+  }
+});
 
 export const loadExperimentNotes = (id: number) => {
   return async (dispatch: Dispatch) =>
@@ -58,6 +71,17 @@ export const loadExperimentNotes = (id: number) => {
       )
     });
 };
+
+export const mergeExperimentVars = (
+  vars: ExperimentVariable[],
+  experimentId: number
+) => ({
+  type: `${VarsActionTypes.LOAD_VARIABLES}_${ActionType.Fulfilled}`,
+  payload: {
+    experimentId,
+    data: genericNormalize(vars)
+  }
+});
 
 export const loadExperimentVars = (id: number) => {
   return async (dispatch: Dispatch) =>

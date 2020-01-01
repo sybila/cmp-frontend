@@ -11,11 +11,12 @@ export interface ExperimentPartial {
 }
 
 export interface Experiment extends ExperimentPartial {
-  experimentRelation: any[];
-  experimentModels: any[];
-  bioQuantities: any[];
-  notes: ExperimentNote[];
-  variables: ExperimentVariable[];
+  userId: number;
+  experimentsInRelation: any[];
+  models: any[];
+  bioquantities: any[];
+  organism: any[];
+  devices: any[];
 }
 
 export interface ExperimentNote {

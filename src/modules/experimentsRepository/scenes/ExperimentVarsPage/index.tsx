@@ -35,6 +35,32 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
 
   render() {
     const { match, variables } = this.props;
+
+    const variablesRender = (
+      <section className="section p-b-0">
+        <div className="container">
+          <Pager countOnPage={5}>
+            {variables &&
+              variables.map((item, i) => (
+                <div className="box variable-item" key={`note-${i}`}>
+                  <strong>{item.name}</strong>
+                  <span>({item.code})</span>
+                  <span> | {item.type}</span>
+                  <Link
+                    className="button is-primary"
+                    to={`/${experimentsNames.url}/repository/detail/${
+                      (match.params as any).experimentId
+                    }/variables/${item.id}/data`}
+                  >
+                    View data
+                  </Link>
+                </div>
+              ))}
+          </Pager>
+        </div>
+      </section>
+    );
+
     return (
       <>
         <BreadcrumbsItem
@@ -50,32 +76,7 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
             component={VarDataPage}
           />
 
-          <Route
-            render={() => (
-              <section className="section p-b-0">
-                <div className="container">
-                  <Pager countOnPage={5}>
-                    {variables &&
-                      variables.map((item, i) => (
-                        <div className="box variable-item" key={`note-${i}`}>
-                          <strong>{item.name}</strong>
-                          <span>({item.code})</span>
-                          <span> | {item.type}</span>
-                          <Link
-                            className="button is-primary"
-                            to={`/${experimentsNames.url}/repository/detail/${
-                              (match.params as any).experimentId
-                            }/variables/${item.id}/data`}
-                          >
-                            View data
-                          </Link>
-                        </div>
-                      ))}
-                  </Pager>
-                </div>
-              </section>
-            )}
-          />
+          <Route render={() => variablesRender} />
         </Switch>
       </>
     );
