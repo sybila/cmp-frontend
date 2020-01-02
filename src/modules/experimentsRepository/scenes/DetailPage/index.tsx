@@ -20,6 +20,7 @@ import ExperimentNotesPage from "../ExperimentNotesPage";
 import ExperimentVarsPage from "../ExperimentVarsPage";
 import { ExperimentComponentProps } from "..";
 import ExperimentValuesPage from "../ExperimentValuesPage";
+import ExperimentProtocolPage from "../ExperimentProtocolPage";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
@@ -85,6 +86,7 @@ class DetailPage extends React.PureComponent<Props, State> {
       {
         caption: "Protocol",
         to: "/protocol",
+        component: ExperimentProtocolPage,
         order: 0
       },
       {
@@ -107,7 +109,7 @@ class DetailPage extends React.PureComponent<Props, State> {
       },
       {
         caption: "View chart",
-        to: "/char",
+        to: "/chart",
         order: 4
       }
     ];

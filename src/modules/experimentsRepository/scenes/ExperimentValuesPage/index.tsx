@@ -71,7 +71,7 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
           <div className="container">
             <div className="box">
               <div className="box-heading m-b-20">
-                <h2 className="title is-4 m-b-10">All values</h2>
+                <h4 className="title is-4 m-b-10">All values</h4>
               </div>
               <div className="m-b-10">Displayed variables</div>
               <div className="tags are-small variables-tags">

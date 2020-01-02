@@ -28,15 +28,14 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
 
   render() {
     const { experimentsById, match } = this.props;
-    const currentExperiment =
-      experimentsById[match.params.experimentId];
+    const currentExperiment = experimentsById[match.params.experimentId];
 
     return currentExperiment ? (
       <>
         <BreadcrumbsItem
           to={`/${experimentsNames.url}/repository/detail/${currentExperiment.id}`}
         >
-          Experiment properties
+          Properties
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
@@ -80,7 +79,10 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
                       <div className="tags are-medium">
                         {currentExperiment.experimentsInRelation.map(
                           (experiment, index) => (
-                            <span className="tag" key={`${index}-exp-in-relation`}>
+                            <span
+                              className="tag"
+                              key={`${index}-exp-in-relation`}
+                            >
                               <Link
                                 to={`/${experimentsNames.url}/repository/detail/${experiment.id}`}
                               >
