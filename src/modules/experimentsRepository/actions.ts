@@ -120,3 +120,18 @@ export const loadExperimentVariable = (
       })
     });
 };
+
+export const loadExperimentVariablesValues = (id: number | string) => {
+  return async (dispatch: Dispatch) =>
+    dispatch({
+      type: VarsActionTypes.LOAD_VARIABLES_DETAILS,
+      payload: new Promise(resolve =>
+        service.fetchExperimentVariableDetailed(id).then(vars => {
+          resolve({
+            experimentId: id,
+            data: genericNormalize(vars)
+          });
+        })
+      )
+    });
+};

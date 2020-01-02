@@ -19,6 +19,7 @@ import ExperimentPropsPage from "../ExperimentPropsPage";
 import ExperimentNotesPage from "../ExperimentNotesPage";
 import ExperimentVarsPage from "../ExperimentVarsPage";
 import { ExperimentComponentProps } from "..";
+import ExperimentValuesPage from "../ExperimentValuesPage";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
@@ -58,10 +59,7 @@ class DetailPage extends React.PureComponent<Props, State> {
   componentDidUpdate(prevProps) {
     const { match } = this.props;
     if (
-      !_.isEqual(
-        match.params.experimentId,
-        prevProps.match.params.experimentId
-      )
+      !_.isEqual(match.params.experimentId, prevProps.match.params.experimentId)
     ) {
       this.fetchExperiment();
     }
@@ -69,8 +67,7 @@ class DetailPage extends React.PureComponent<Props, State> {
 
   render() {
     const { experimentsById, match } = this.props;
-    const currentExperiment =
-      experimentsById[match.params.experimentId];
+    const currentExperiment = experimentsById[match.params.experimentId];
 
     const base = `/${experimentsNames.url}/repository/detail`;
     const routeLinkBase = `${base}${
@@ -105,10 +102,11 @@ class DetailPage extends React.PureComponent<Props, State> {
       {
         caption: "Values",
         to: "/values",
+        component: ExperimentValuesPage,
         order: 3
       },
       {
-        caption: "View char",
+        caption: "View chart",
         to: "/char",
         order: 4
       }

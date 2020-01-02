@@ -14,18 +14,16 @@ import { ExperimentComponentProps } from "..";
 
 interface Props extends ExperimentComponentProps {
   notes: ExperimentNote[];
-  loadNotes: Function
+  loadNotes: Function;
 }
 
-interface State {
-}
+interface State {}
 
 class ExperimentNotesPage extends React.PureComponent<Props, State> {
   constructor(props) {
     super(props);
 
-    this.state = {
-    }
+    this.state = {};
   }
 
   componentDidMount() {
@@ -37,28 +35,34 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
     const { match, notes } = this.props;
     return (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/notes`}>
-          Experiment notes
+        <BreadcrumbsItem
+          to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/notes`}
+        >
+          Notes
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
-            {notes && notes.map((item, i) => <div className="box" key={`note-${i}`}>
-              <div><strong>Time:</strong> {hhmmss(item.time)}</div>
-              <p>{item.note}</p>
-              {item.imgLink && <img src={item.imgLink} alt={item.note}/>}
-            </div>)}
+            {notes &&
+              notes.map((item, i) => (
+                <div className="box" key={`note-${i}`}>
+                  <div>
+                    <strong>Time:</strong> {hhmmss(item.time)}
+                  </div>
+                  <p>{item.note}</p>
+                  {item.imgLink && <img src={item.imgLink} alt={item.note} />}
+                </div>
+              ))}
           </div>
         </section>
-      </> 
+      </>
     );
   }
 }
 
 const mapStateToProps = (state: AppState, ownProps) => {
-
   return {
     notes: getNotesById(state, ownProps.match.params.experimentId)
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

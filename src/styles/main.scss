@@ -1,45 +1,24 @@
 @charset 'UTF-8';
 
 // 1. Configuration and helpers
-@import
-  'abstracts/variables',
-  'abstracts/functions',
-  'abstracts/mixins';
+@import "abstracts/variables", "abstracts/functions", "abstracts/mixins";
 
 // 2. Vendors
-@import
-  'vendors/normalize',
-  'vendors/bulma';
+@import "vendors/normalize", "vendors/bulma";
 
 // 3. Base stuff
-@import
-  'base/base',
-  'base/fonts',
-  'base/typography',
-  'base/helpers';
+@import "base/base", "base/fonts", "base/typography", "base/helpers";
 
 // 4. Layout-related sections
-@import
-  'layout/header',
-  'layout/footer',
-  'layout/toolbar';
+@import "layout/header", "layout/footer", "layout/toolbar";
 
 // 5. Components
-@import
-  'components/buttons',
-  'components/forms',
-  'components/inbox',
-  'components/notifications',
-  'components/utils',
-  'components/panel',
-  'components/box',
-  'components/pagination';
+@import "components/buttons", "components/forms", "components/inbox",
+  "components/notifications", "components/utils", "components/panel",
+  "components/box", "components/pagination";
 
 // 6. Page-specific styles
-@import
-  'pages/home',
-  'pages/profile';
+@import "pages/home", "pages/profile", "pages/experiment-detail";
 
 // 7. Themes
-@import
-  'themes/default';
+@import "themes/default";

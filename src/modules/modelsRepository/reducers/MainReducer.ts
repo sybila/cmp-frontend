@@ -72,11 +72,6 @@ const actionHandler = {
     state: ModelsState,
     action: any
   ) => {
-    console.log({
-      ...state.byId[action.payload.id],
-      ...action.payload
-    });
-
     return {
       ...state,
       byId: {

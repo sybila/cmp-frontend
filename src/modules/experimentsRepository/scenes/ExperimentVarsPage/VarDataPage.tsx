@@ -35,7 +35,7 @@ class VarDataPage extends React.PureComponent<Props> {
   render() {
     const { variables, match } = this.props;
 
-    const currentVar = variables[match.params.variableId];
+    const currentVar: ExperimentVariable = variables[match.params.variableId];
     return (
       <>
         <BreadcrumbsItem
@@ -46,6 +46,11 @@ class VarDataPage extends React.PureComponent<Props> {
         <section className="section">
           <div className="container">
             <div className="box">
+              <div className="box-heading m-b-30">
+                <h4 className="title is-4 m-b-10">{currentVar.name}</h4>
+                <span>type: {currentVar.type} | </span>
+                <span>code: {currentVar.code}</span>
+              </div>
               <Sheet vars={[currentVar]} />
             </div>
           </div>

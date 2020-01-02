@@ -4,7 +4,8 @@ const service = {
   fetchExperiment,
   fetchExperimentNotes,
   fetchExperimentVars,
-  fetchExperimentVariable
+  fetchExperimentVariable,
+  fetchExperimentVariableDetailed
 };
 
 function fetchExperiments(): Promise<any> {
@@ -38,6 +39,12 @@ function fetchExperimentVariable(
   return dataService
     .get(`/experiments/${id}/variables/${varId}`)
     .then((variable: any) => variable.data.data[0]);
+}
+
+function fetchExperimentVariableDetailed(id: number | string): Promise<any> {
+  return dataService.get(`/experimentvalues/${id}`).then(({ data }) => {
+    return data.data[0].variables;
+  });
 }
 
 export default service;

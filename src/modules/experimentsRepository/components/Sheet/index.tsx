@@ -94,13 +94,18 @@ class Sheet extends React.PureComponent<Props, State> {
       <Column
         key="time-column"
         name="Time"
-        cellRenderer={index => <Cell>{hhmmss(times[index])}</Cell>}
+        cellRenderer={index => (
+          <Cell>
+            <>
+              <strong>{hhmmss(times[index])}</strong>
+            </>
+          </Cell>
+        )}
       />
     );
 
-    console.log(times);
     return (
-      <div style={{ height: "30rem" }}>
+      <div style={{ height: "20rem" }}>
         <Table numRows={times.length}>{columns}</Table>
       </div>
     );
