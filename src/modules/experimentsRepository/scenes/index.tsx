@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, RouteComponentProps } from "react-router-dom";
 import { moduleNames as experimentsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
@@ -8,6 +8,11 @@ import ExperimentsMainPage from "./MainPage";
 import ExperimentsRepository from "./ExperimentsPage";
 import DetailPage from "./DetailPage";
 
+type RouteParams = {
+  experimentId?: string;
+}
+
+export interface ExperimentComponentProps extends RouteComponentProps<RouteParams> {};
 
 class ExperimentsScenes extends React.Component {
   render() {

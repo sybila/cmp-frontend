@@ -9,7 +9,8 @@ import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 export interface VarsAction extends AnyAction {
   payload: {
     experimentId: number;
-    data: NormalizedObject<ExperimentVariable>
+    variable?: ExperimentVariable;
+    data: NormalizedObject<ExperimentVariable>;
   };
 }
 
@@ -20,7 +21,8 @@ interface State {
 }
 
 export const ActionTypes = {
-  LOAD_VARIABLES: typeGenerator(moduleNames.store, "LOAD_VARIABLES")
+  LOAD_VARIABLES: typeGenerator(moduleNames.store, "LOAD_VARIABLES"),
+  LOAD_VARIABLE: typeGenerator(moduleNames.store, "LOAD_VARIABLE")
 };
 
 const initialState: State = {
@@ -28,9 +30,7 @@ const initialState: State = {
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Pending}`]: (
-    state: State
-  ) => ({
+  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Pending}`]: (state: State) => ({
     ...state,
     isFetching: true
   }),
@@ -42,13 +42,46 @@ const actionHandler = {
     [action.payload.experimentId]: action.payload.data,
     isFetching: false
   }),
-  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Rejected}`]: (
-    state: State
-  ) => ({
+  [`${ActionTypes.LOAD_VARIABLES}_${ActionType.Rejected}`]: (state: State) => ({
     ...state,
     isFetching: false,
     error: true
   }),
+  [`${ActionTypes.LOAD_VARIABLE}_${ActionType.Pending}`]: (state: State) => ({
+    ...state,
+    isFetching: true
+  }),
+  [`${ActionTypes.LOAD_VARIABLE}_${ActionType.Fulfilled}`]: (
+    state: State,
+    action: VarsAction
+  ) => {
+    const experiment = state[action.payload.experimentId];
+    const { id } = action.payload.variable;
+    const all = new Set(experiment.all);
+    all.add(id);
+
+    const byId = {
+      ...experiment.byId,
+      [id]: {
+        ...experiment.byId[id],
+        ...action.payload.variable
+      }
+    };
+
+    return {
+      ...state,
+      [action.payload.experimentId]: {
+        byId,
+        all: Array.from(all)
+      },
+      isFetching: false
+    };
+  },
+  [`${ActionTypes.LOAD_VARIABLE}_${ActionType.Rejected}`]: (state: State) => ({
+    ...state,
+    isFetching: false,
+    error: true
+  })
 };
 
 const VarsReducer = reducerGenerator(

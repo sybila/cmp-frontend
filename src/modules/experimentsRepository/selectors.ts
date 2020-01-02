@@ -9,7 +9,7 @@ export const getAllExperiments = (state: AppState) =>
     (i: any) => state.module_experiments.experiments.byId[i]
   );
 
-export const getAllNotesById = (state: AppState) => 
+export const getAllNotesById = (state: AppState) =>
   state.module_experiments.notes;
 
 export const getAllVarsById = (state: AppState) =>
@@ -22,9 +22,17 @@ export const getVarsById = createSelector(
   (vars, id) => {
     if (!vars[id]) return;
 
-    return vars[id].all.map(
-    (i: any) => vars[id].byId[i]
-  )}
+    return vars[id].all.map((i: any) => vars[id].byId[i]);
+  }
+);
+
+export const getVarsByIdObject = createSelector(
+  [getAllVarsById, getExperimentId],
+  (vars, id) => {
+    if (!vars[id]) return;
+
+    return vars[id].byId;
+  }
 );
 
 export const getNotesById = createSelector(
@@ -32,7 +40,6 @@ export const getNotesById = createSelector(
   (notes, id) => {
     if (!notes[id]) return;
 
-    return notes[id].all.map(
-    (i: any) => notes[id].byId[i]
-  )}
+    return notes[id].all.map((i: any) => notes[id].byId[i]);
+  }
 );

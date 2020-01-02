@@ -10,8 +10,9 @@ import { getNotesById } from "modules/experimentsRepository/selectors";
 import { ExperimentNote } from "models/Experiment";
 import { loadExperimentNotes } from "modules/experimentsRepository/actions";
 import { hhmmss } from "utils/helpers";
+import { ExperimentComponentProps } from "..";
 
-interface Props extends RouteComponentProps {
+interface Props extends ExperimentComponentProps {
   notes: ExperimentNote[];
   loadNotes: Function
 }
@@ -29,14 +30,14 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     const { loadNotes, match, notes } = this.props;
-    !notes && loadNotes((match.params as any).experimentId);
+    !notes && loadNotes(match.params.experimentId);
   }
 
   render() {
     const { match, notes } = this.props;
     return (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail/${(match.params as any).experimentId}/notes`}>
+        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/notes`}>
           Experiment notes
         </BreadcrumbsItem>
         <section className="section p-b-0">

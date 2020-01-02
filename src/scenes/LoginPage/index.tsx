@@ -33,7 +33,6 @@ class LoginPage extends React.Component<Props> {
     if (!this.props.user && token) {
       const { location, attemptLoginWithToken } = this.props;
       const from = location.state ? location.state.from.pathname : "/";
-      console.log(location);
       await attemptLoginWithToken(token);
       history.push(from);
     }
@@ -76,7 +75,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: bindActionCreators(logout, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

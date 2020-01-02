@@ -11,8 +11,9 @@ import { getExperimentsObject } from "modules/experimentsRepository/selectors";
 import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
 import { Link } from "react-router-dom";
+import { ExperimentComponentProps } from "..";
 
-interface Props extends RouteComponentProps {
+interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
 }
 
@@ -28,7 +29,7 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
   render() {
     const { experimentsById, match } = this.props;
     const currentExperiment =
-      experimentsById[(match.params as any).experimentId];
+      experimentsById[match.params.experimentId];
 
     return currentExperiment ? (
       <>

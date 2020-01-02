@@ -5,8 +5,13 @@ import service from "./services";
 import { ActionTypes as MainActionTypes } from "./reducers/MainReducer";
 import { ActionTypes as NotesActionTypes } from "./reducers/NotesReducer";
 import { ActionTypes as VarsActionTypes } from "./reducers/VarsReducer";
-import { experimentNormalize, ExperimentNote, ExperimentVariable } from "models/Experiment";
+import {
+  experimentNormalize,
+  ExperimentNote,
+  ExperimentVariable
+} from "models/Experiment";
 import { genericNormalize } from "models/GenericTypes";
+import { resolve } from "dns";
 
 export const loadExperiments = () => {
   return async (dispatch: Dispatch) =>
@@ -95,5 +100,23 @@ export const loadExperimentVars = (id: number) => {
           });
         })
       )
+    });
+};
+
+export const loadExperimentVariable = (
+  expId: number | string,
+  varId: number | string
+) => {
+  return async (dispatch: Dispatch) =>
+    dispatch({
+      type: VarsActionTypes.LOAD_VARIABLE,
+      payload: new Promise((resolve, reject) => {
+        service.fetchExperimentVariable(expId, varId).then(variable => {
+          resolve({
+            experimentId: expId,
+            variable
+          });
+        });
+      })
     });
 };

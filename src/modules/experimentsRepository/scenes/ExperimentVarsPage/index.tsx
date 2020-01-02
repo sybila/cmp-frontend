@@ -13,8 +13,9 @@ import Pager from "components/Pager";
 import { history } from "Application";
 import { Link } from "react-router-dom";
 import VarDataPage from "./VarDataPage";
+import { ExperimentComponentProps } from "..";
 
-interface Props extends RouteComponentProps {
+interface Props extends ExperimentComponentProps {
   variables: ExperimentVariable[];
   loadVariables: Function;
 }
@@ -30,7 +31,7 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     const { loadVariables, match, variables } = this.props;
-    !variables && loadVariables((match.params as any).experimentId);
+    !variables && loadVariables(match.params.experimentId);
   }
 
   render() {
@@ -49,7 +50,7 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
                   <Link
                     className="button is-primary"
                     to={`/${experimentsNames.url}/repository/detail/${
-                      (match.params as any).experimentId
+                      match.params.experimentId
                     }/variables/${item.id}/data`}
                   >
                     View data
@@ -65,7 +66,7 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
       <>
         <BreadcrumbsItem
           to={`/${experimentsNames.url}/repository/detail/${
-            (match.params as any).experimentId
+            match.params.experimentId
           }/variables`}
         >
           Experiment variables

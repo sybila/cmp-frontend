@@ -18,8 +18,9 @@ import {
 import ExperimentPropsPage from "../ExperimentPropsPage";
 import ExperimentNotesPage from "../ExperimentNotesPage";
 import ExperimentVarsPage from "../ExperimentVarsPage";
+import { ExperimentComponentProps } from "..";
 
-interface Props extends RouteComponentProps {
+interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
   loadExperiment: Function;
   loadExperiments: Function;
@@ -42,9 +43,9 @@ class DetailPage extends React.PureComponent<Props, State> {
       experimentsById
     } = this.props;
 
-    const experiment = experimentsById[(match.params as any).experimentId];
+    const experiment = experimentsById[match.params.experimentId];
     if (!experiment || Object.keys(experiment).length <= 7) {
-      loadExperiment((match.params as any).experimentId).catch(() => {
+      loadExperiment(match.params.experimentId).catch(() => {
         loadExperiments();
       });
     }
@@ -58,8 +59,8 @@ class DetailPage extends React.PureComponent<Props, State> {
     const { match } = this.props;
     if (
       !_.isEqual(
-        (match.params as any).experimentId,
-        (prevProps.match.params as any).experimentId
+        match.params.experimentId,
+        prevProps.match.params.experimentId
       )
     ) {
       this.fetchExperiment();
@@ -69,7 +70,7 @@ class DetailPage extends React.PureComponent<Props, State> {
   render() {
     const { experimentsById, match } = this.props;
     const currentExperiment =
-      experimentsById[(match.params as any).experimentId];
+      experimentsById[match.params.experimentId];
 
     const base = `/${experimentsNames.url}/repository/detail`;
     const routeLinkBase = `${base}${
