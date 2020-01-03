@@ -11,6 +11,7 @@ import { ExperimentNote } from "models/Experiment";
 import { loadExperimentNotes } from "modules/experimentsRepository/actions";
 import { hhmmss } from "utils/helpers";
 import { ExperimentComponentProps } from "..";
+import SelectableTimeline from "components/SelectableTimeline";
 
 interface Props extends ExperimentComponentProps {
   notes: ExperimentNote[];
@@ -42,6 +43,9 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
         </BreadcrumbsItem>
         <section className="section p-b-0">
           <div className="container">
+            <div className="box">
+              <SelectableTimeline />
+            </div>
             {notes &&
               notes.map((item, i) => (
                 <div className="box" key={`note-${i}`}>

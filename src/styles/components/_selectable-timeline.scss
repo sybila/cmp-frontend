@@ -1,0 +1,32 @@
+$line-height: 20px;
+
+.selectable-timeline {
+  .st-line {
+    position: relative;
+    width: 100%;
+    height: $line-height;
+    background-color: $light-grey;
+    border-radius: $line-height;
+  }
+
+  .st-point {
+    position: absolute;
+    display: inline-block;
+    width: $line-height;
+    height: $line-height;
+    border-radius: $line-height;
+    background-color: $dark-grey;
+    cursor: pointer;
+  }
+
+  .st-range {
+    .st-range-background {
+      left: $line-height / 2;
+      position: absolute;
+      transform-origin: left;
+      width: 1px;
+      height: $line-height;
+      background-color: $mid-grey;
+    }
+  }
+}

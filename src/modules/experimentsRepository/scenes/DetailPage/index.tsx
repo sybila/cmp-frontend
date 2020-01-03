@@ -1,7 +1,7 @@
 import React from "react";
 import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { RouteComponentProps, Switch, Route } from "react-router";
+import { Switch, Route } from "react-router";
 import _ from "lodash";
 
 import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
