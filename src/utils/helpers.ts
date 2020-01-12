@@ -1,3 +1,5 @@
+import moment from "moment";
+
 /**
  * timer - setTimeout adaptation with option of getting remaining time
  *
@@ -57,14 +59,14 @@ export function capitalize(s: string) {
 }
 
 export function pad(num) {
-  return ("0"+num).slice(-2);
+  if (num > 99) return num;
+  return ("0" + num).slice(-2);
 }
 
 export function hhmmss(secs) {
-var minutes = Math.floor(secs / 60);
-secs = secs%60;
-var hours = Math.floor(minutes/60)
-minutes = minutes%60;
-return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
-// return pad(hours)+":"+pad(minutes)+":"+pad(secs); for old browsers
+  let minutes = Math.floor(secs / 60);
+  secs = secs % 60;
+  let hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+  return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 }

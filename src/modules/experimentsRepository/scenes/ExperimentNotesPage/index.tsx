@@ -18,22 +18,46 @@ interface Props extends ExperimentComponentProps {
   loadNotes: Function;
 }
 
-interface State {}
+interface State {
+  minTime: number;
+  maxTime: number;
+}
 
 class ExperimentNotesPage extends React.PureComponent<Props, State> {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      minTime: 0,
+      maxTime: 0
+    };
+
+    this.handleRangeUpdate = this.handleRangeUpdate.bind(this);
   }
 
   componentDidMount() {
     const { loadNotes, match, notes } = this.props;
-    !notes && loadNotes(match.params.experimentId);
+    !notes &&
+      loadNotes(match.params.experimentId).then(data => {
+        const { byId, all } = data.value.data;
+        if (all.length > 0) {
+          const lastIndex = all[all.length - 1];
+          this.setState({
+            maxTime: byId[lastIndex].time
+          });
+        }
+      });
+  }
+
+  public handleRangeUpdate(ranges) {
+    this.setState({ minTime: ranges[0].left, maxTime: ranges[0].right });
   }
 
   render() {
     const { match, notes } = this.props;
+    const { minTime, maxTime } = this.state;
+
+    const last = notes ? notes[notes.length - 1].time : 0;
     return (
       <>
         <BreadcrumbsItem
@@ -44,18 +68,24 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
         <section className="section p-b-0">
           <div className="container">
             <div className="box">
-              <SelectableTimeline />
+              <h4 className="title is-4 m-b-10">Timeline</h4>
+              <SelectableTimeline
+                lastTimeStamp={last}
+                onChange={this.handleRangeUpdate}
+              />
             </div>
             {notes &&
-              notes.map((item, i) => (
-                <div className="box" key={`note-${i}`}>
-                  <div>
-                    <strong>Time:</strong> {hhmmss(item.time)}
+              notes
+                .filter(item => item.time >= minTime && item.time <= maxTime)
+                .map((item, i) => (
+                  <div className="box" key={`note-${i}`}>
+                    <div>
+                      <strong>Time:</strong> {hhmmss(item.time)}
+                    </div>
+                    <p>{item.note}</p>
+                    {item.imgLink && <img src={item.imgLink} alt={item.note} />}
                   </div>
-                  <p>{item.note}</p>
-                  {item.imgLink && <img src={item.imgLink} alt={item.note} />}
-                </div>
-              ))}
+                ))}
           </div>
         </section>
       </>

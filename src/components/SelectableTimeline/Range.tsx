@@ -7,6 +7,7 @@ interface RangeProps {
   onChange?: (range: RangeType) => void;
   defaultLeft?: number;
   defaultRight?: number;
+  formatter?: (x: number) => string;
 }
 
 const Range = (props: RangeProps) => {
@@ -20,7 +21,19 @@ const Range = (props: RangeProps) => {
 
   const [range, setRange] = useState(defaultSize);
 
-  useEffect(() => {}, [range]);
+  useEffect(() => {
+    setRange({
+      ...range,
+      left: defaultLeft
+    });
+  }, [defaultLeft]);
+
+  useEffect(() => {
+    setRange({
+      ...range,
+      right: defaultRight
+    });
+  }, [defaultRight]);
 
   const handleLeftDrag = (e: any, data: DraggableData) => {
     setRange({ ...range, left: data.x });
@@ -50,19 +63,29 @@ const Range = (props: RangeProps) => {
         axis="x"
         bounds="#selectable-timeline-line"
         onDrag={handleLeftDrag}
-        defaultPosition={{ x: defaultLeft, y: 0 }}
+        position={{ x: defaultLeft, y: 0 }}
         onStop={handleChange}
       >
-        <div className="st-point"></div>
+        <div className="st-point">
+          <div className="st-point__inner"></div>
+          <div className="st-point__popover">
+            {props.formatter ? props.formatter(range.left) : range.left}
+          </div>
+        </div>
       </Draggable>
       <Draggable
         axis="x"
         bounds="#selectable-timeline-line"
         onDrag={handleRightDrag}
         onStop={handleChange}
-        defaultPosition={{ x: defaultRight, y: 0 }}
+        position={{ x: defaultRight, y: 0 }}
       >
-        <div className="st-point"></div>
+        <div className="st-point">
+          <div className="st-point__inner"></div>
+          <div className="st-point__popover">
+            {props.formatter ? props.formatter(range.right) : range.right}
+          </div>
+        </div>
       </Draggable>
     </div>
   );

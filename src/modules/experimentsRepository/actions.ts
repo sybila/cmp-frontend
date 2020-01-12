@@ -11,7 +11,7 @@ import {
   ExperimentVariable
 } from "models/Experiment";
 import { genericNormalize } from "models/GenericTypes";
-import { resolve } from "dns";
+import _ from "lodash";
 
 export const loadExperiments = () => {
   return async (dispatch: Dispatch) =>
@@ -68,9 +68,11 @@ export const loadExperimentNotes = (id: number) => {
       type: NotesActionTypes.LOAD_NOTES,
       payload: new Promise(resolve =>
         service.fetchExperimentNotes(id).then(notes => {
+          const data = genericNormalize(_.sortBy(notes, ["time"]));
+
           resolve({
             experimentId: id,
-            data: genericNormalize(notes)
+            data
           });
         })
       )

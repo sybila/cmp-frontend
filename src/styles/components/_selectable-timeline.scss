@@ -14,9 +14,47 @@ $line-height: 20px;
     display: inline-block;
     width: $line-height;
     height: $line-height;
-    border-radius: $line-height;
-    background-color: $dark-grey;
-    cursor: pointer;
+    cursor: grab;
+
+    .st-point__popover {
+      position: absolute;
+      top: $line-height * (-2);
+      background: $text-color;
+      color: $white-color;
+      border-radius: 5px;
+      padding: 5px;
+      opacity: 0;
+      transition: 0.1s;
+      will-change: opacity;
+      transform: translateX(-35%);
+
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none;
+    }
+
+    &.react-draggable-dragging,
+    &:hover {
+      .st-point__popover {
+        opacity: 1;
+      }
+    }
+
+    .st-point__inner {
+      width: $line-height;
+      height: $line-height;
+      border-radius: $line-height;
+      background-color: $dark-grey;
+      transition: 0.1s;
+      will-change: transform;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 
   .st-range {
@@ -25,7 +63,8 @@ $line-height: 20px;
       position: absolute;
       transform-origin: left;
       width: 1px;
-      height: $line-height;
+      top: $line-height / 3;
+      height: $line-height / 3;
       background-color: $mid-grey;
     }
   }
