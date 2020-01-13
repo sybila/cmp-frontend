@@ -37,7 +37,14 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     const { loadNotes, match, notes } = this.props;
-    !notes &&
+
+    if (notes) {
+      const length = notes.length;
+      length > 0 &&
+        this.setState({
+          maxTime: notes[length - 1].time
+        });
+    } else {
       loadNotes(match.params.experimentId).then(data => {
         const { byId, all } = data.value.data;
         if (all.length > 0) {
@@ -47,6 +54,7 @@ class ExperimentNotesPage extends React.PureComponent<Props, State> {
           });
         }
       });
+    }
   }
 
   public handleRangeUpdate(ranges) {

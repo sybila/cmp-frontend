@@ -44,9 +44,9 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
             {variables &&
               variables.map((item, i) => (
                 <div className="box variable-item" key={`note-${i}`}>
-                  <strong>{item.name}</strong>
-                  <span>({item.code})</span>
-                  <span> | {item.type}</span>
+                  <strong className="m-r-5">{item.name}</strong>
+                  <span className="m-r-5">({item.code})</span>
+                  <span>| {item.type}</span>
                   <Link
                     className="button is-primary"
                     to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/variables/${item.id}/data`}

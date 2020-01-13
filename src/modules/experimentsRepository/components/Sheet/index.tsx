@@ -8,6 +8,7 @@ import { hhmmss } from "utils/helpers";
 
 interface Props {
   vars: ExperimentVariable[];
+  times?: number[];
 }
 
 interface State {
@@ -29,11 +30,17 @@ class Sheet extends React.PureComponent<Props, State> {
   }
 
   get getTimes() {
-    return this.props.vars
-      .filter(variable => variable.values)
-      .flatMap(variable =>
-        variable.values ? variable.values.map(value => value.time) : []
-      );
+    return this.props.times
+      ? this.props.times
+      : this.props.vars
+          .filter(variable => variable.values)
+          .flatMap(variable =>
+            variable.values ? variable.values.map(value => value.time) : []
+          )
+          .sort((a, b) => a - b)
+          .filter((item, pos, ary) => {
+            return !pos || item != ary[pos - 1];
+          });
   }
 
   get getMappedValues() {
@@ -60,8 +67,13 @@ class Sheet extends React.PureComponent<Props, State> {
   componentDidUpdate(prevProps) {
     if (!_.isEqual(prevProps.vars, this.props.vars)) {
       this.setState({
-        times: this.getTimes,
         mappedValues: this.getMappedValues
+      });
+    }
+
+    if (!_.isEqual(prevProps.times, this.props.times)) {
+      this.setState({
+        times: this.getTimes
       });
     }
   }
@@ -106,7 +118,9 @@ class Sheet extends React.PureComponent<Props, State> {
 
     return (
       <div style={{ height: "20rem" }}>
-        <Table numRows={times.length}>{columns}</Table>
+        <Table numRows={times.length} enableRowHeader={false}>
+          {columns}
+        </Table>
       </div>
     );
   }
