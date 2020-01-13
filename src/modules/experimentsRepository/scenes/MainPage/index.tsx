@@ -11,7 +11,7 @@ class MainPage extends React.Component<Props, State> {
     return (
       <div className="section">
         <div className="container">
-          <h2 className="title is-2">Experiments repository</h2>
+          <h2 className="title is-2">Experiments</h2>
           <div className="box">
             <p>
               Model repository contains computational models of selected

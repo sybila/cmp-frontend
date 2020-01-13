@@ -3,14 +3,14 @@ import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getNotesById } from "modules/experimentsRepository/selectors";
 import { ExperimentNote } from "models/Experiment";
 import { loadExperimentNotes } from "modules/experimentsRepository/actions";
 import { hhmmss } from "utils/helpers";
-import { ExperimentComponentProps } from "..";
+import { ExperimentComponentProps } from "../..";
 import SelectableTimeline from "components/SelectableTimeline";
 
 interface Props extends ExperimentComponentProps {

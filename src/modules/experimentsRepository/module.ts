@@ -8,20 +8,29 @@ import { addToolbarItems } from "../administration/actions";
 export const Reducer = combineReducers({
   experiments: MainReducer,
   notes: NotesReducer,
-  variables: VarsReducer,
+  variables: VarsReducer
 });
 
 export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
-  console.log(true);
   dispatch(
     // TODO: Refactor
     /* Init module toolbar */
     addToolbarItems(moduleNames.url, [
       {
+        text: "Experiments homepage",
+        icon: "home",
+        to: "/"
+      },
+      {
         text: "Experiments repository",
-        icon: "globe",
+        icon: "book",
         to: "/repository"
       },
+      {
+        text: "Add new experiment",
+        icon: "plus",
+        to: "/new"
+      }
     ])
   );
 };

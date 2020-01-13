@@ -3,7 +3,7 @@ import { Dispatch, bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { RouteComponentProps, Route, Switch } from "react-router";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { ExperimentVariable } from "models/Experiment";
@@ -13,7 +13,7 @@ import Pager from "components/Pager";
 import { history } from "Application";
 import { Link } from "react-router-dom";
 import VarDataPage from "./VarDataPage";
-import { ExperimentComponentProps } from "..";
+import { ExperimentComponentProps } from "../..";
 
 interface Props extends ExperimentComponentProps {
   variables: ExperimentVariable[];

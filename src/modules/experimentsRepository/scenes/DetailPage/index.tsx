@@ -15,12 +15,12 @@ import {
   loadExperiment,
   loadExperiments
 } from "modules/experimentsRepository/actions";
-import ExperimentPropsPage from "../ExperimentPropsPage";
-import ExperimentNotesPage from "../ExperimentNotesPage";
-import ExperimentVarsPage from "../ExperimentVarsPage";
+import ExperimentPropsPage from "./ExperimentPropsPage";
+import ExperimentNotesPage from "./ExperimentNotesPage";
+import ExperimentVarsPage from "./ExperimentVarsPage";
 import { ExperimentComponentProps } from "..";
-import ExperimentValuesPage from "../ExperimentValuesPage";
-import ExperimentProtocolPage from "../ExperimentProtocolPage";
+import ExperimentValuesPage from "./ExperimentValuesPage";
+import ExperimentProtocolPage from "./ExperimentProtocolPage";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
@@ -120,8 +120,15 @@ class DetailPage extends React.PureComponent<Props, State> {
           {currentExperiment.name}
         </BreadcrumbsItem>
         <section className="section p-b-0">
+          <div className="container is-clearfix">
+            <h2 className="title is-2 is-pulled-left">
+              {currentExperiment.name}
+            </h2>
+            <button className="button is-rounded is-pulled-right">
+              Edit experiment
+            </button>
+          </div>
           <div className="container">
-            <h2 className="title is-2">{currentExperiment.name}</h2>
             <PageMenuPanel items={routes} basePath={routeLinkBase} />
           </div>
         </section>

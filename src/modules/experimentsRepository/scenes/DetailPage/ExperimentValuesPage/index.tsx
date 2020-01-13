@@ -1,5 +1,5 @@
 import React from "react";
-import Sheet from "../../components/Sheet";
+import Sheet from "../../../components/Sheet";
 import { AppState } from "reducers/GlobalReducer";
 import { ExperimentVariable } from "models/Experiment";
 import { getVarsById } from "modules/experimentsRepository/selectors";
@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import _ from "lodash";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { Dispatch, bindActionCreators } from "redux";
 import { loadExperimentVariablesValues } from "modules/experimentsRepository/actions";
-import { ExperimentComponentProps } from "..";
+import { ExperimentComponentProps } from "../..";
 import { Link } from "react-router-dom";
 import SelectableTimeline from "components/SelectableTimeline";
 

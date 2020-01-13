@@ -1,12 +1,12 @@
 import React from "react";
-import Sheet from "../../components/Sheet";
+import Sheet from "../../../components/Sheet";
 import { AppState } from "reducers/GlobalReducer";
 import { ExperimentVariable } from "models/Experiment";
 import { getVarsByIdObject } from "modules/experimentsRepository/selectors";
 import { connect } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { RouteComponentProps } from "react-router-dom";
 import { Dispatch, bindActionCreators } from "redux";
 import { loadExperimentVariable } from "modules/experimentsRepository/actions";

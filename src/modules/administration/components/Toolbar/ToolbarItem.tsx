@@ -15,7 +15,7 @@ class ToolbarItem extends React.Component<Props> {
 
     return (
       <div className={"toolbar-item"}>
-        <NavLink to={to}>
+        <NavLink to={to} exact>
           <FontAwesomeIcon icon={icon as IconName} />
           <span className="caption">{text}</span>
         </NavLink>

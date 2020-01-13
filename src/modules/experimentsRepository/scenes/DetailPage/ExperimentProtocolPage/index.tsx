@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import moment from "moment";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getExperimentsObject } from "modules/experimentsRepository/selectors";
 import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
 import { Link } from "react-router-dom";
-import { ExperimentComponentProps } from "..";
+import { ExperimentComponentProps } from "../..";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;

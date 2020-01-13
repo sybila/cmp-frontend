@@ -5,8 +5,9 @@ import { moduleNames as experimentsNames } from "../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import ExperimentsMainPage from "./MainPage";
-import ExperimentsRepository from "./ExperimentsPage";
+import ExperimentsRepository from "./DetailPage/ExperimentsPage";
 import DetailPage from "./DetailPage";
+import AddExperiment from "./AddExperiment";
 
 type RouteParams = {
   experimentId?: string;
@@ -30,6 +31,10 @@ class ExperimentsScenes extends React.Component {
           <Route
             path={`/${experimentsNames.url}/repository`}
             component={ExperimentsRepository}
+          />
+          <Route
+            path={`/${experimentsNames.url}/new`}
+            component={AddExperiment}
           />
           <Route component={ExperimentsMainPage} />
         </Switch>

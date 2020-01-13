@@ -3,10 +3,13 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
 
-import { moduleNames as experimentsNames } from "../../reducers/MainReducer";
+import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { AppState } from "reducers/GlobalReducer";
 import { loadExperiments } from "modules/experimentsRepository/actions";
-import { getAllExperiments, getExperimentsObject } from "modules/experimentsRepository/selectors";
+import {
+  getAllExperiments,
+  getExperimentsObject
+} from "modules/experimentsRepository/selectors";
 import { ExperimentPartial } from "models/Experiment";
 import PanelBlock from "./PanelBlock";
 import ExperimentDetail from "./ExperimentDetail";
@@ -33,7 +36,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 
     this.state = {
       activeId: null,
-      searchQuery: "",
+      searchQuery: ""
     };
   }
 
@@ -63,8 +66,10 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
     const { experiments, experimentsById } = this.props;
     const { activeId, searchQuery } = this.state;
 
-    const experiment = experimentsById[activeId]
-    const filteredExperiments = experiments.filter((experiment) => experiment.name.includes(searchQuery))
+    const experiment = experimentsById[activeId];
+    const filteredExperiments = experiments.filter(experiment =>
+      experiment.name.includes(searchQuery)
+    );
     return (
       <>
         <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
@@ -80,8 +85,8 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
             <div className="columns is-full-height">
               <div className="column is-4">
                 <div className="box">
-                  <PanelBlock 
-                    experiments={filteredExperiments} 
+                  <PanelBlock
+                    experiments={filteredExperiments}
                     activeId={activeId}
                     itemClick={this.panelClickHandle}
                     search={this.searchHandle}
@@ -91,7 +96,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
               </div>
               <div className="column">
                 <div className="box is-full-height is-padding-extended">
-                  <ExperimentDetail experiment={experiment}/>
+                  <ExperimentDetail experiment={experiment} />
                 </div>
               </div>
             </div>
@@ -103,7 +108,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadExperiments: bindActionCreators(loadExperiments, dispatch),
+  loadExperiments: bindActionCreators(loadExperiments, dispatch)
 });
 
 const mapStateToProps = (state: AppState) => ({
