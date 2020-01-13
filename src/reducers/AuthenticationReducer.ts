@@ -1,72 +1,75 @@
-import { Action } from "redux";
+import { AnyAction } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
 import { UserModel } from "../models/User";
 import { ActionTypes } from "ApplicationActionTypes";
+import { reducerGenerator } from "utils/reduxGenerators";
+import { AsyncAction } from "models/GenericTypes";
 
-export interface LoginAction extends Action {
+export interface LoginAction extends AnyAction {
+  authToken?: string;
+  refreshToken?: string;
+  error?: string;
+}
+
+export interface UserAction extends AnyAction {
   user?: UserModel;
   error?: string;
 }
 
 interface UserState {
   user: UserModel;
+  authToken: string;
+  refreshToken: string;
   error: string;
-  loggingIn: boolean;
 }
 
 const initialState: UserState = {
   user: null,
   error: null,
-  loggingIn: false
+  authToken: null,
+  refreshToken: null,
 };
 
-const AuthenticationReducer = (
-  state = initialState,
-  action: LoginAction
-): UserState => {
-  switch (action.type) {
-    case `${ActionTypes.LOGIN}_${ActionType.Pending}`:
-      return {
-        ...state,
-        loggingIn: true
-      };
-    case `${ActionTypes.LOGIN}_${ActionType.Fulfilled}`:
-      return {
-        ...state,
-        user: action.user,
-        loggingIn: false
-      };
-    case `${ActionTypes.LOGIN}_${ActionType.Rejected}`:
-      return {
-        ...state,
-        error: action.error,
-        loggingIn: false
-      };
-    case `${ActionTypes.TOKEN_LOGIN}_${ActionType.Pending}`:
-      return {
-        ...state,
-        loggingIn: true
-      };
-    case `${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`:
-      return {
-        ...state,
-        user: action.user,
-        loggingIn: false
-      };
-    case `${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}`:
-      return {
-        ...state,
-        loggingIn: false
-      };
-    case ActionTypes.LOGOUT:
-      return {
-        ...state,
-        user: null
-      };
-    default:
-      return state;
-  }
-};
+const actionHandler = {
+  [`${ActionTypes.LOGIN}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+    ...state,
+    authToken: action.payload.authToken,
+    refreshToken: action.payload.refreshToken
+  }),
+  [`${ActionTypes.LOGIN}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+    ...state,
+    error: action.payload.error
+  }),
+  [`${ActionTypes.SET_USER}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+    ...state,
+    user: action.payload.user
+  }),
+  [`${ActionTypes.SET_USER}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+    ...state,
+    error: action.payload.error
+  }),
+  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+    ...state,
+    user: action.payload.user
+  }),
+  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+    ...state,
+    error: action.payload.error
+  }),
+  [`${ActionTypes.LOGOUT}`]: (state: UserState) => ({
+    ...state,
+    user: {},
+    error: null,
+    authToken: null,
+    refreshToken: null,
+  })
+}
+
+const AuthenticationReducer = reducerGenerator(
+  "app",
+  actionHandler,
+  initialState
+)
 
 export default AuthenticationReducer;

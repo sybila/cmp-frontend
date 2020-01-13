@@ -4,11 +4,8 @@ import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { Section, Container, Columns } from "react-bulma-components";
 
-import 'react-bulma-components/dist/react-bulma-components.min.css';
-import "./styles/general.scss";
-
+import "./styles/main.scss";
 
 import LoginPage from "scenes/LoginPage/";
 import HomePage from "./scenes/HomePage/";
@@ -28,8 +25,6 @@ import Portal from "./components/Portal";
 import NotificationsProvider from "./modules/administration/components/NotificationsProvider";
 import Toolbar from "modules/administration/components/Toolbar";
 import Inbox from "./modules//administration/components/Inbox";
-import { intercept } from "utils/inlineInterceptor";
-import { login } from "ApplicationActions";
 
 import TopMenu from "./components/TopMenu";
 
@@ -46,58 +41,33 @@ class MasterPage extends React.Component {
     return (
       <div className="theme-default app-wrapper">
         <PrivateComponent>
-          <Inbox /> 
+          <Inbox />
         </PrivateComponent>
+        <Portal>
+          <PrivateComponent>
+            <Toolbar />
+          </PrivateComponent>
+        </Portal>
 
-        <Columns gapless breakpoint="mobile">
-          <Columns.Column narrow>
-            <PrivateComponent>
-              <Toolbar />
-            </PrivateComponent>
-          </Columns.Column>
-          <Columns.Column className="content-column">
+        <div className="columns is-mobile is-gapless">
+          <div className="column content-column">
+            <div className="top-menu-container">
               <TopMenu />
-              <div className="content">
-                <Section>
-                  <Container>
-                    <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-                  </Container>
-                </Section>
-                {this.props.children}
-              </div>
-          </Columns.Column>
-        </Columns>
+            </div>
+            <div className="content">
+              <section className="section bc-section p-b-0">
+                <div className="container">
+                  <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+                </div>
+              </section>
+              {this.props.children}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
-
-/**
- * Intecrepts Access token a logs in user if the token is valid
- */
-const InterceptLogin = intercept((state, dispatch) => {
-  // TEMP: User stays logged in (dev purposes)
-  return dispatch<any>(login("admin", "test"));
-
-  /* if (getUser(state)) {
-    // Do something if user exists
-    return true;
-  }
-
-  const token = localStorage.getItem("user");
-  if (token) {
-    return dispatch<any>(tokenLogin(token))
-      .then(() => {
-        // TODO: Optional redirect to previous location
-        return true;
-      })
-      .catch(() => {
-        return () => history.push("/login");
-      });
-  }
-
-  return false;*/
-});
 
 export const history = createBrowserHistory();
 
@@ -108,9 +78,6 @@ class Application extends React.Component<any> {
   render() {
     return (
       <React.Fragment>
-        {/* Interceptors */}
-        <InterceptLogin />
-
         {/* Portal block, for components with absolute positioning */}
         <Portal>
           <PrivateComponent>
@@ -127,26 +94,33 @@ class Application extends React.Component<any> {
             <Route
               path="/"
               render={({ match: { url } }) => (
-                <MasterPage>
-                  <Switch>
-                    <Route exact path={`${url}`} component={HomePage} />
-                    <Route path={`${url}login`} component={LoginPage} />
-                    <Route
-                      path={`${url + modelsNames.url}`}
-                      component={ModelsModule}
-                    />
-                    <Route 
-                      path={`${url + experimentsNames.url}`}
-                      component={ExperimentsModule}
-                    />
+                <Switch>
+                  <Route exact path={`${url}login`} component={LoginPage} />{" "}
+                  {/* TEMP: remove this when done */}
+                  <MasterPage>
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path={`${url}`}
+                        component={HomePage}
+                      />
+                      <PrivateRoute
+                        path={`${url + modelsNames.url}`}
+                        component={ModelsModule}
+                      />
+                      <PrivateRoute
+                        path={`${url + experimentsNames.url}`}
+                        component={ExperimentsModule}
+                      />
 
-                    <PrivateRoute
-                      path={`${url}profile/:subPage?`}
-                      component={UserProfilePage}
-                    />
-                    <Route component={NotFoundPage} />
-                  </Switch>
-                </MasterPage>
+                      <PrivateRoute
+                        path={`${url}profile/:subPage?`}
+                        component={UserProfilePage}
+                      />
+                      <Route component={NotFoundPage} />
+                    </Switch>
+                  </MasterPage>
+                </Switch>
               )}
             />
           </Router>

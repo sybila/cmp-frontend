@@ -4,28 +4,39 @@ import { Dispatch, bindActionCreators } from "redux";
 
 import LoginForm, { Values } from "./LoginForm";
 import { AppState } from "reducers/GlobalReducer";
-import { login, logout } from "ApplicationActions";
-import { getUser, getError } from "ApplicationSelectors";
+import { login, logout, tokenLogin } from "ApplicationActions";
+import { getAuthToken, getAuthError, getUser } from "ApplicationSelectors";
 import { history } from "../../Application";
+import { userCookies } from "services/cookies";
+import { UserModel } from "models/User";
 
 interface Props {
   submitLogin: (payload: Values) => any;
   logout: () => void;
-  user: any;
+  user: UserModel;
   error: string;
   location?: any;
+  attemptLoginWithToken: typeof tokenLogin;
   // TODO: Models for entities
 }
 
 class LoginPage extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.props.logout();
 
     this.handleSubmitLogin = this.handleSubmitLogin.bind(this);
   }
 
-  componentDidMount() {}
+  async componentDidMount() {
+    const token = userCookies.getAuthToken();
+
+    if (!this.props.user && token) {
+      const { location, attemptLoginWithToken } = this.props;
+      const from = location.state ? location.state.from.pathname : "/";
+      await attemptLoginWithToken(token);
+      history.push(from);
+    }
+  }
 
   handleSubmitLogin(payload: { username: string; password: string }) {
     const { location, submitLogin } = this.props;
@@ -37,9 +48,15 @@ class LoginPage extends React.Component<Props> {
     const { error } = this.props;
 
     return (
-      <div className="login-form">
-        <div className={"bg-box-white col-md-4 offset-md-4"}>
-          <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
+      <div className="login-form section">
+        <div className="container">
+          <div className="columns">
+            <div className="column is-half is-offset-one-quarter">
+              <div className={"box "}>
+                <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -48,16 +65,14 @@ class LoginPage extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   user: getUser(state),
-  error: getError(state)
+  error: getAuthError(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitLogin: (payload: { username: string; password: string }) =>
     dispatch<any>(login(payload.username, payload.password)),
+  attemptLoginWithToken: bindActionCreators(tokenLogin, dispatch),
   logout: bindActionCreators(logout, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

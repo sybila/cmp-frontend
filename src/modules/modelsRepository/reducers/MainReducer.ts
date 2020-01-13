@@ -6,7 +6,7 @@ import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export const moduleNames = {
   store: "model_models",
-  url: "models-repo"
+  url: "models"
 };
 
 export interface Models {
@@ -72,11 +72,6 @@ const actionHandler = {
     state: ModelsState,
     action: any
   ) => {
-    console.log({
-      ...state.byId[action.payload.id],
-      ...action.payload
-    });
-
     return {
       ...state,
       byId: {

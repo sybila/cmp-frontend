@@ -7,7 +7,6 @@ import {
   faUserCircle,
   faTools
 } from "@fortawesome/free-solid-svg-icons";
-import { Navbar } from "react-bulma-components";
 
 import { UserModel } from "../../models/User";
 import { AppState } from "reducers/GlobalReducer";
@@ -69,21 +68,16 @@ class UserUtils extends React.Component<Props> {
 
     const navItems = [
       {
-        text: "Home",
-        to: "/",
-        exact: true
-      },
-      {
         text: "Biochemical space",
         to: "/bsc"
       },
       {
-        text: "Model repository",
-        to: "/models-repo"
+        text: "Models",
+        to: "/models"
       },
       {
-        text: "Experiments repository",
-        to: "/experiments-repo"
+        text: "Experiments",
+        to: "/experiments"
       },
       {
         text: "CyanoNumbers",
@@ -116,47 +110,48 @@ class UserUtils extends React.Component<Props> {
       : [];
 
     return (
-      <Navbar color={"white"} className={"top-menu"}>
-          <Navbar.Brand>
-            <Navbar.Item renderAs="div">
-              <Link to="/">
-                <img alt="CMP" src={logo} />
-              </Link>
-            </Navbar.Item>
-          </Navbar.Brand>
-          <Navbar.Burger />
+      <nav className={"top-menu navbar is-white"}>
+        <div className={"navbar-brand"}>
+          <div className={"navbar-item"}>
+            <Link to="/">
+              <img alt="CMP" src={logo} />
+            </Link>
+          </div>
+        </div>
+        <a role="button" className="navbar-burger burger" aria-label="menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
 
-        <Navbar.Menu>
-          <Navbar.Container>
-              {navItems.map((item, i) => (
-                <Navbar.Item key={`topmenu-${i}`} renderAs="a" hoverable>
-                  <NavLink
-                    className={"nav-link"}
-                    to={item.to}
-                    exact={item.exact}
-                    activeClassName={activeClassName}
-                    key={`nav-item-${item.text}-${i}`}
-                  >
-                    {item.text}
-                  </NavLink>
-                </Navbar.Item>
-              ))}
-          </Navbar.Container>
-          <Navbar.Container position="end">
+        <div className="navbar-menu">
+          <div className="navbar-start">
+            {navItems.map((item, i) => (
+              <div className="navbar-item is-hoverable" key={`topmenu-${i}`}>
+                <NavLink
+                  className={"nav-link"}
+                  to={item.to}
+                  activeClassName={activeClassName}
+                  key={`nav-item-${item.text}-${i}`}
+                >
+                  {item.text}
+                </NavLink>
+              </div>
+            ))}
+          </div>
+          <div className="navbar-end">
             {user
-                ? userNavItems.map((item, i) => (
-                    <div key={`nav-item-${i}`}>
-                      {item}
-                    </div>
-                  ))
-                : publicNavItems.map((item, i) => (
-                    <Navbar.Item renderAs="div" key={`nav-item-${i}`}>
-                      {item}
-                    </Navbar.Item>
-                  ))}
-          </Navbar.Container>
-        </Navbar.Menu>
-      </Navbar>
+              ? userNavItems.map((item, i) => (
+                  <div key={`nav-item-${i}`}>{item}</div>
+                ))
+              : publicNavItems.map((item, i) => (
+                  <div className="navbar-item" key={`nav-item-${i}`}>
+                    {item}
+                  </div>
+                ))}
+          </div>
+        </div>
+      </nav>
     );
   }
 }
@@ -171,7 +166,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   newNotifications: bindActionCreators(newNotifications, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserUtils);
+export default connect(mapStateToProps, mapDispatchToProps)(UserUtils);

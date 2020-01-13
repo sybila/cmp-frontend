@@ -4,17 +4,18 @@ import { Dispatch, bindActionCreators } from "redux";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import onClickOutside from "react-onclickoutside";
 
 import { AppState } from "reducers/GlobalReducer";
-import { inboxState, getNotifications } from "../../selectors";
+import { inboxState, getNotifications, getInbox } from "../../selectors";
 import { NotificationModel } from "models/Notification";
-import { loadNotifications, toggleInbox } from "../../actions";
+import { loadNotifications, toggleInbox, markAsSeen } from "../../actions";
 import InboxItem from "./InboxItem";
-import { Heading } from "react-bulma-components";
 
 interface Props {
   isOpen: boolean;
   loadNotifications: (id: number) => any;
+  markAsSeen: typeof markAsSeen;
   toggleInbox: () => void;
   notifications: NotificationModel[];
 }
@@ -26,37 +27,35 @@ class Inbox extends React.Component<Props, State> {
     super(props);
 
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.setInboxRef = this.setInboxRef.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
   componentDidMount() {
     const { loadNotifications } = this.props;
     loadNotifications(99);
-
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  private inboxRef: any;
-
-  setInboxRef(node: any) {
-    this.inboxRef = node;
   }
 
   handleClickOutside(event: any) {
-    const { isOpen } = this.props;
-    if (this.inboxRef && !this.inboxRef.contains(event.target) && isOpen)
-      this.props.toggleInbox();
+    const { isOpen, toggleInbox } = this.props;
+    isOpen && toggleInbox();
+  }
+
+  handleRemoveItem(id: number) {
+    this.props.markAsSeen(id);
   }
 
   render() {
     const { isOpen, notifications, toggleInbox } = this.props;
 
     const nodes = notifications.map((item, i) => {
-      return <InboxItem title={"Test"} text={item.message} key={`inbox-item-${i}`}/>;
+      return (
+        <InboxItem
+          title={"Test"}
+          text={item.message}
+          key={`inbox-item-${i}`}
+          onClose={() => this.handleRemoveItem(item.id)}
+        />
+      );
     });
 
     return (
@@ -67,9 +66,9 @@ class Inbox extends React.Component<Props, State> {
           classNames="inbox"
           unmountOnExit
         >
-          <div ref={this.setInboxRef} className={"inbox"}>
+          <div className={"inbox"}>
             <div className={"inbox-heading"}>
-              <Heading size={4}>Notifications</Heading>
+              <h4 className="title is-4">Notifications</h4>
               <div
                 className={"inbox-close"}
                 onClick={() => isOpen && toggleInbox()}
@@ -87,15 +86,16 @@ class Inbox extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   isOpen: inboxState(state),
-  notifications: getNotifications(state)
+  notifications: getInbox(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadNotifications: bindActionCreators(loadNotifications, dispatch),
-  toggleInbox: bindActionCreators(toggleInbox, dispatch)
+  toggleInbox: bindActionCreators(toggleInbox, dispatch),
+  markAsSeen: bindActionCreators(markAsSeen, dispatch)
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Inbox);
+)(onClickOutside(Inbox));

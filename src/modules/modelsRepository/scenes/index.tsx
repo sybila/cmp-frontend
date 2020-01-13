@@ -15,14 +15,14 @@ class ModelScenes extends React.Component {
       <React.Fragment>
         <BreadcrumbsItem to={`/${modelsNames.url}`}>Models Repository</BreadcrumbsItem>
         <Switch>
-          <PrivateRoute
+          {/*<PrivateRoute
             path={`/${modelsNames.url}/published-models`}
             component={PublishedModelsPage}
           />
           <Route
             path={`/${modelsNames.url}/model-detail/:modelId`}
             component={ModelDetail}
-          />
+          />*/}
           <Route component={ModulesMainPage} />
         </Switch>
       </React.Fragment>

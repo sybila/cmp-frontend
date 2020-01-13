@@ -1,0 +1,23 @@
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 32px !default;
+
+$desktop: 1092px + (2 * $gap) !default;
+$widescreen: 1284px + (2 * $gap) !default;
+$fullhd: 1476px + (2 * $gap) !default;
+
+@import '../../node_modules/bulma/bulma.sass';
+
+.columns {
+    &.is-full-height {
+        align-items: stretch;
+    }
+}
+
+.box {
+    &.is-full-height {
+        height: 100%;
+    }
+    &.is-padding-extended {
+        padding: 3.25rem
+    }
+}

@@ -1,10 +1,14 @@
 import { combineReducers, Dispatch } from "redux";
 
 import MainReducer, { moduleNames } from "./reducers/MainReducer";
+import NotesReducer from "./reducers/NotesReducer";
+import VarsReducer from "./reducers/VarsReducer";
 import { addToolbarItems } from "../administration/actions";
 
 export const Reducer = combineReducers({
-  models: MainReducer
+  experiments: MainReducer,
+  notes: NotesReducer,
+  variables: VarsReducer,
 });
 
 export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
@@ -14,25 +18,10 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
     /* Init module toolbar */
     addToolbarItems(moduleNames.url, [
       {
-        text: "Published models",
+        text: "Experiments repository",
         icon: "globe",
-        to: "/published-models"
+        to: "/repository"
       },
-      {
-        text: "Unpublished models",
-        icon: "lock",
-        to: "/unpublished-models"
-      },
-      {
-        text: "Your models",
-        icon: "user",
-        to: "/your-models"
-      },
-      {
-        text: "Group models",
-        icon: "user-friends",
-        to: "/group-models"
-      }
     ])
   );
 };

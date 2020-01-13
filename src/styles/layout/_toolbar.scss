@@ -6,12 +6,11 @@ $toolbarWidth: 60px;
 .toolbar {
   width: 60px;
   height: 100vh;
-  @include themify($themes) {
-    background-color: themed("mainColor");
-  }
+  position: fixed;
+  background-color: $green-color;
 
-  will-change: width;
-  transition: width 0.3s;
+  will-change: width, box-shadow;
+  transition: width 0.3s, box-shadow 0.3s;
 
   .toolbar-items {
     margin-top: 4rem;
@@ -24,7 +23,7 @@ $toolbarWidth: 60px;
       a {
         display: inline-block;
         width: 100%;
-        color: #fff;
+        color: $white-color;
         padding: 0.625rem 0;
         padding-left: 1.25rem;
         will-change: width;
@@ -44,7 +43,9 @@ $toolbarWidth: 60px;
   }
 
   &.open {
-    width: 240px;
+    width: 280px;
+    box-shadow: 10px 0px 13px 0px rgba(0, 0, 0, 0.08);
+
     .toolbar-item {
       .caption {
         display: inline-block;
@@ -86,7 +87,7 @@ $toolbarWidth: 60px;
   &.open span {
     opacity: 1;
     transform: rotate(45deg);
-    background: #fff;
+    background: $white-color;
   }
 
   &.open span:nth-last-child(2) {
