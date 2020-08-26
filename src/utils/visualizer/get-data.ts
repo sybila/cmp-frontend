@@ -47,6 +47,9 @@ export class DataSource {
   constructor(source) {
     this._source = source;
     this.fetchData();
+
+    this.getModel = this.getModel.bind(this);
+    this.getExperiment = this.getExperiment.bind(this);
   } 
 
   public async fetchData() {

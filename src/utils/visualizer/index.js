@@ -85,6 +85,9 @@ export default class Visualizer extends React.Component {
   constructor(...rest) {
     super(...rest);
 
+    this.Data = new DataSource(this.props.dataSource);
+    console.log(this.Data);
+
     if (this.props.models.length > 2) this.props.models.length = 2;
 
     // Load models/experiments
@@ -139,8 +142,6 @@ export default class Visualizer extends React.Component {
       setExport: this.setExport.bind(this),
       exportData: this.exportData.bind(this),
     };
-
-    this.Data = new DataSource(this.props.dataSource);
   }
 
   // Changes visibility of one trace in the graph.
@@ -338,6 +339,7 @@ export default class Visualizer extends React.Component {
   }
 
   render() {
+    if (!this.Data) return React.createElement("div");
     return React.createElement(
       "div",
       {
