@@ -1,0 +1,45 @@
+.vis-button + .vis-button {
+  margin-left: 4px;
+}
+
+.vis-datasets-p {
+  margin-bottom: 0.4em;
+}
+
+.vis-graphsets-p {
+  margin-top: 0.4em;
+  margin-bottom: 1em;
+}
+
+.vis-root {
+  position: relative;
+  padding-top: 0.05px;
+}
+
+.vis-dialog {
+  position: absolute;
+  width: 100%;
+  background-color: #0007;
+}
+
+.vis-add-model,
+.vis-export {
+  border: 2px gray solid;
+  border-radius: 4px;
+  background-color: white;
+  width: 90%;
+  margin: 5%;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+.vis-graph {
+  position: relative;
+  z-index: -1;
+}
+
+.vis-model-options {
+  margin-left: 0.4em;
+  border-left: 2px gray solid;
+  padding-left: 0.4em;
+}
