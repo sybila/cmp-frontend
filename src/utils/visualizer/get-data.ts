@@ -35,75 +35,105 @@
  * ```
 **/
 
-/**
- * Find all models related to an experiment.
- *
- * Expected output: Promise of array of `{ id: model ID, name: model name }`.
- * 
- * If the function 'getExperiment' returns data that already contains the related
- * models, this function won't have to be implemented.
- */
-export async function findModels(experimentId) {
-  // TODO actual implementation
-  
-  return [];
-}
+import dataService from "../../services/dataService";
 
-/**
- * Find all experiments related to a model.
- *
- * Expected output: Promise of array of
- * `{ id: experiment ID, name: experiment name}`.
- * 
- * If the function 'getModel' returns data that already contains the related
- * experiments, this function won't have to be implemented.
- */
-export async function findExperiments(modelId) {
-  // TODO actual implementation
-  
-  return [];
-}
+export class DataSource {
+  private _source: string;
+  private _data: any; // TODO: Needs interface
 
-/**
- * Given a 'modelId', download and return all data from model with id 'modelId'.
- * 
- * Currently, this function returns mockup data defined at the end of this file.
- */
-export async function getModel(modelId) {
-  // TODO actual implementation
-  
-  await new Promise(f => setTimeout(f, 400 + Math.random() * 400));
-  
-  return data[modelId];
-}
+  public isLoading = false;
+  public error: any; // TODO: specify exact type
 
-/**
- * Given an 'experimentId', download and return all data from experiment with id
- * 'experimentId'.
- * 
- * Currently, this function returns mockup data defined at the end of this file.
- */
-export async function getExperiment(experimentId) {
-  // TODO actual implementation
-  
-  await new Promise(f => setTimeout(f, 400 + Math.random() * 400));
-  
-  return data[experimentId];
-}
+  constructor(source) {
+    this._source = source;
+    this.fetchData();
+  } 
 
-/**
- * Calls server API that causes download of model/experiment data in 'format'
- * ("csv"|"json").
- * 
- * Params:
- * format String: expected file extension of the downloaded data (without the dot).
- * dataArr []{ model: Bool, id: String }: array of model/experiment IDs whose
- *   data to download.
- */
-export async function doExport(format, dataArr) {
-  // TODO implementation
-  
-  console.log("Function doExport called with arguments: ", format, dataArr);
+  public async fetchData() {
+    this.isLoading = true;
+    try {
+      // const data = await dataService.get(this._source);
+      // // TODO: Process data
+      // this._data = data;
+
+      this._data = data;
+    } catch(e) {
+      this.error = e;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+    /**
+   * Find all models related to an experiment.
+   *
+   * Expected output: Promise of array of `{ id: model ID, name: model name }`.
+   * 
+   * If the function 'getExperiment' returns data that already contains the related
+   * models, this function won't have to be implemented.
+   */
+  public async findModels(experimentId) {
+    // TODO actual implementation
+    
+    return [];
+  }
+
+    /**
+   * Find all experiments related to a model.
+   *
+   * Expected output: Promise of array of
+   * `{ id: experiment ID, name: experiment name}`.
+   * 
+   * If the function 'getModel' returns data that already contains the related
+   * experiments, this function won't have to be implemented.
+   */
+  public async findExperiments(modelId) {
+    // TODO actual implementation
+    
+    return [];
+  }
+
+  /**
+   * Given a 'modelId', download and return all data from model with id 'modelId'.
+   * 
+   * Currently, this function returns mockup data defined at the end of this file.
+   */
+  public async getModel(modelId) {
+    // TODO actual implementation
+    
+    await new Promise(f => setTimeout(f, 400 + Math.random() * 400));
+    
+    return this._data[modelId];
+  }
+
+  /**
+   * Given an 'experimentId', download and return all data from experiment with id
+   * 'experimentId'.
+   * 
+   * Currently, this function returns mockup data defined at the end of this file.
+   */
+  public async getExperiment(experimentId) {
+    // TODO actual implementation
+    
+    await new Promise(f => setTimeout(f, 400 + Math.random() * 400));
+    
+    return this._data[experimentId];
+  }
+
+  /**
+   * Calls server API that causes download of model/experiment data in 'format'
+   * ("csv"|"json").
+   * 
+   * Params:
+   * format String: expected file extension of the downloaded data (without the dot).
+   * dataArr []{ model: Bool, id: String }: array of model/experiment IDs whose
+   *   data to download.
+   */
+  public async doExport(format, dataArr) {
+    // TODO implementation
+    
+    console.log("Function doExport called with arguments: ", format, dataArr);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

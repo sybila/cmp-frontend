@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import Visualizer from "../../../../utils/visualizer";
+
 interface Props {}
 
 interface State {}
@@ -35,6 +37,6 @@ class MainPage extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({});
 
-const mapStateToProps = state => ({});
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
