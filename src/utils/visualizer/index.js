@@ -2,9 +2,14 @@
  * Contains main React element.
  **/
 
-import { tinycolor } from "./tinycolor.js";
+import React from "react";
 
-import { DataSource } from "./get-data.js";
+import { tinycolor } from "tinycolor2";
+import Plotly from "plotly.js";
+import Immutable from "immutable";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+import { DataSource } from "./get-data.ts";
 
 const Plot = createPlotlyComponent(Plotly);
 

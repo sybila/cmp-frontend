@@ -12,6 +12,11 @@ class MainPage extends React.Component<Props, State> {
   render() {
     return (
       <div className="section">
+        <Visualizer
+          models={[{ model: true, id: "anotherModel" }]}
+          width="50%"
+        />
+
         <div className="container">
           <h2 className="title is-2">Experiments</h2>
           <div className="box">
