@@ -9,16 +9,16 @@ import { userCookies } from "services/cookies";
 
 export const addRequest = (requestName) => ({
   type: ActionTypes.ADD_REQUEST,
-  requestName
-})
+  requestName,
+});
 
 export const showLoader = () => ({
-  type: ActionTypes.SHOW_LOADER
+  type: ActionTypes.SHOW_LOADER,
 });
 
 export const hideLoader = (requestName = "") => ({
   type: ActionTypes.HIDE_LOADER,
-  requestName
+  requestName,
 });
 
 const mockUser = {
@@ -28,7 +28,7 @@ const mockUser = {
   email: "admin@test.com",
   about: "I like cats, that's all",
   firstName: "John",
-  lastName: "Doe"
+  lastName: "Doe",
 };
 
 export const login = (username: string, password: string) => {
@@ -36,19 +36,19 @@ export const login = (username: string, password: string) => {
     return dispatch({
       type: ActionTypes.LOGIN,
       payload: new Promise((resolve, reject) => {
-        // TEMP: Credentials for testing without API request
-        if (username === "admin" && password === "test") {
-          userCookies.setAuthToken("12345");
-          return resolve({ authToken: "12345" });
-        }
-
         return api.users.login(username, password).then(
-          (payload: any) => resolve(payload),
-          (error: any) => {
+          ({ data }) => {
+            userCookies.setAuthToken(data.access_token);
+            resolve({
+              authToken: data.access_token,
+              refreshToken: data.refresh_token,
+            });
+          },
+          (error) => {
             return reject(error);
           }
         );
-      })
+      }),
     });
   };
 };
@@ -60,7 +60,7 @@ export const setUser = () => {
       payload: new Promise((resolve, reject) => {
         //: TEMP: temporary
         resolve(mockUser);
-      })
+      }),
     });
 };
 
@@ -75,7 +75,7 @@ export const tokenLogin = (token: string) => {
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {
         if (token === "12345") {
-          return resolve({ user: mockUser});
+          return resolve({ user: mockUser });
         }
         api.users.attemptLoginWithToken(token).then(
           (user: any) => {
@@ -83,6 +83,6 @@ export const tokenLogin = (token: string) => {
           },
           (error: any) => reject(error)
         );
-      })
+      }),
     });
 };
