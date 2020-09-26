@@ -16,7 +16,7 @@ const dataService = axios.create({
 const accessTokenInterceptor = (config: any) => {
   const token = userCookies.getAuthToken() as string;
 
-  if (token !== null) {
+  if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 

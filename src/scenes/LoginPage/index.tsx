@@ -40,7 +40,10 @@ class LoginPage extends React.Component<Props> {
 
   handleSubmitLogin(payload: { username: string; password: string }) {
     const { location, submitLogin } = this.props;
-    const from = location.state ? location.state.from.pathname : "/";
+    const from =
+      location.state && location.state.from
+        ? location.state.from.pathname
+        : "/";
     submitLogin(payload).then(() => history.push(from));
   }
 
@@ -65,14 +68,14 @@ class LoginPage extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   user: getUser(state),
-  error: getAuthError(state)
+  error: getAuthError(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitLogin: (payload: { username: string; password: string }) =>
     dispatch<any>(login(payload.username, payload.password)),
   attemptLoginWithToken: bindActionCreators(tokenLogin, dispatch),
-  logout: bindActionCreators(logout, dispatch)
+  logout: bindActionCreators(logout, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -2,6 +2,7 @@ import dataService from "../dataService";
 import { userCookies } from "../cookies";
 import { LoginResponse } from "models/User";
 import { AxiosResponse, AxiosPromise } from "axios";
+import Config from "../../config";
 
 const userService = {
   login,
@@ -17,7 +18,7 @@ function login(
 ): AxiosPromise<LoginResponse> {
   return dataService
     .post("/authorize", {
-      client_id: "frontend",
+      client_id: Config.authorization.clientName,
       grant_type: "password",
       username,
       password,
@@ -33,12 +34,21 @@ function login(
 
 // TODO: Refresh access token refactor when endpoint is known
 function refreshAccessToken(): Promise<any> {
-  return dataService.post("/refreshToken").then((data: any) => {
-    if (data.token) {
-      userCookies.setAuthToken(JSON.stringify(data.token));
-    }
-    return data;
-  });
+  const refreshToken = userCookies.getRefreshToken();
+  return dataService
+    .post("/authorize", {
+      client_id: Config.authorization.clientName,
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+    })
+    .then(({ data }: AxiosResponse<LoginResponse>) => {
+      if (data.access_token) {
+        const { access_token, refresh_token } = data;
+        userCookies.setAuthToken(JSON.stringify(access_token));
+        userCookies.setRefreshToken(JSON.stringify(refresh_token));
+      }
+      return data;
+    });
 }
 
 function logout() {
