@@ -5,9 +5,12 @@
 
 module.exports = {
   notificationReload: 30,
+  authorization: {
+    clientName: "frontend",
+  },
   permissions: {
     0: {
-      name: "admin"
-    }
-  }
+      name: "admin",
+    },
+  },
 };

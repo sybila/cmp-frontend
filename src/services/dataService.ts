@@ -1,24 +1,23 @@
 import axios from "axios";
-import _ from "lodash";
 
 import api from "./api";
 import Config from "../config";
+import { userCookies } from "./cookies";
 const url = Config.apiDomain;
 
 const dataService = axios.create({
   baseURL: url,
-  timeout: 10000
+  timeout: 10000,
 });
 
 /**
  * Interceptor which includes access token to a request
  */
 const accessTokenInterceptor = (config: any) => {
-  const token = JSON.parse(localStorage.getItem("user") as string);
+  const token = userCookies.getAuthToken() as string;
 
-  if (token !== null) {
-    // TEMP: Uncomment while the auth is fully functional
-    // config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
@@ -30,7 +29,7 @@ const accessTokenInterceptor = (config: any) => {
 const refreshTokenInterceptor = (error: any) => {
   const {
     config,
-    response: { status }
+    response: { status },
   } = error;
   const origRequest = config;
 
@@ -64,7 +63,7 @@ const subscribeTokenRefresh = (callback: Function) => {
 };
 
 const onRrefreshed = (token: string) => {
-  refreshSubscribers.map(callback => callback(token));
+  refreshSubscribers.map((callback) => callback(token));
 };
 
 dataService.interceptors.request.use(

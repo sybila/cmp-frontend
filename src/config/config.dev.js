@@ -1,3 +1,3 @@
 module.exports = {
-  apiDomain: "http://localhost:8888"
+  apiDomain: "https://api.e-cyanobacterium.org",
 };
