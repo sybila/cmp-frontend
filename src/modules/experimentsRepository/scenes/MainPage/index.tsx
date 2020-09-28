@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import Visualizer from "../../../../utils/visualizer";
-
 interface Props {}
 
 interface State {}
@@ -12,11 +10,6 @@ class MainPage extends React.Component<Props, State> {
   render() {
     return (
       <div className="section">
-        <Visualizer
-          models={[{ model: true, id: "anotherModel" }]}
-          width="50%"
-        />
-
         <div className="container">
           <h2 className="title is-2">Experiments</h2>
           <div className="box">

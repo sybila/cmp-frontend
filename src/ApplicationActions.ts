@@ -69,8 +69,25 @@ export const setUser = (user: UserModel) => {
     });
 };
 
+export const setTokens = (tokens: {
+  access_token: string;
+  refresh_token: string;
+}) => {
+  return (dispatch) =>
+    dispatch({
+      type: ActionTypes.LOGIN,
+      payload: new Promise((resolve, reject) => {
+        return resolve({
+          authToken: tokens.access_token,
+          refreshToken: tokens.refresh_token,
+        });
+      }),
+    });
+};
+
 export const logout = () => {
-  api.users.logout();
+  userCookies.deleteAuthToken();
+  userCookies.deleteRefreshToken();
   return { type: ActionTypes.LOGOUT };
 };
 
