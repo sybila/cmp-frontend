@@ -75,10 +75,11 @@ export const tokenLogin = (token: string) => {
     dispatch({
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {
+        // TEMP: Remove when /user endpoint finished
+        // TEMP: Add refresh token logic
         return resolve({ user: mockUser });
         // return api.users.attemptLoginWithToken(token).then(
         //   (user: any) => {
-        //     // TEMP: Remove when /user endpoint finished
         //     return resolve(user);
         //   },
         //   (error: any) => reject(error)
