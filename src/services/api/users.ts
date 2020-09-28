@@ -60,5 +60,5 @@ export default userService;
 
 // TODO: Refactor token login
 function attemptLoginWithToken(token: string) {
-  return dataService.post("");
+  return dataService.post("/user");
 }

@@ -44,8 +44,7 @@ export const login = (username: string, password: string) => {
               authToken: data.access_token,
               refreshToken: data.refresh_token,
             });
-            console.log(setUser);
-            dispatch(setUser());
+            dispatch(setUser(mockUser));
           },
           (error) => {
             return reject(error);
@@ -56,13 +55,12 @@ export const login = (username: string, password: string) => {
   };
 };
 
-export const setUser = () => {
+export const setUser = (user: UserModel) => {
   return (dispatch) =>
     dispatch({
       type: ActionTypes.SET_USER,
       payload: new Promise((resolve, reject) => {
-        //: TEMP: temporary
-        return resolve(mockUser);
+        return resolve({ user });
       }),
     });
 };
@@ -77,12 +75,14 @@ export const tokenLogin = (token: string) => {
     dispatch({
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {
-        api.users.attemptLoginWithToken(token).then(
-          (user: any) => {
-            return resolve(user);
-          },
-          (error: any) => reject(error)
-        );
+        return resolve({ user: mockUser });
+        // return api.users.attemptLoginWithToken(token).then(
+        //   (user: any) => {
+        //     // TEMP: Remove when /user endpoint finished
+        //     return resolve(user);
+        //   },
+        //   (error: any) => reject(error)
+        // );
       }),
     });
 };

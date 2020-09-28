@@ -33,8 +33,12 @@ class LoginPage extends React.Component<Props> {
     if (!this.props.user && token) {
       const { location, attemptLoginWithToken } = this.props;
       const from = location.state ? location.state.from.pathname : "/";
-      await attemptLoginWithToken(token);
-      history.push(from);
+      try {
+        await attemptLoginWithToken(token);
+        history.push(from);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
