@@ -24,7 +24,11 @@ export const hideLoader = (requestName = "") => ({
 const mockUser = {
   id: 0,
   username: "admin",
-  permissions: 0,
+  permissions: {
+    id: 1,
+    tier: "2",
+    name: "Administrator",
+  },
   email: "admin@test.com",
   about: "I like cats, that's all",
   firstName: "John",

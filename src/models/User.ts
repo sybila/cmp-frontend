@@ -5,12 +5,18 @@ export interface LoginResponse {
   refresh_token: string;
 }
 
+type UserTier = {
+  id: number;
+  tier: string;
+  name: string;
+};
+
 export interface UserModel {
   id: number;
   firstName: string;
   lastName: string;
   username: string;
-  permissions: number;
+  permissions: UserTier;
   email?: string;
   about?: string;
   picture?: string;
