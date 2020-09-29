@@ -13,7 +13,7 @@ import { ByIdObject } from "models/GenericTypes";
 import { Experiment } from "models/Experiment";
 import {
   loadExperiment,
-  loadExperiments
+  loadExperiments,
 } from "modules/experimentsRepository/actions";
 import ExperimentPropsPage from "./ExperimentPropsPage";
 import ExperimentNotesPage from "./ExperimentNotesPage";
@@ -21,6 +21,7 @@ import ExperimentVarsPage from "./ExperimentVarsPage";
 import { ExperimentComponentProps } from "..";
 import ExperimentValuesPage from "./ExperimentValuesPage";
 import ExperimentProtocolPage from "./ExperimentProtocolPage";
+import ExperimentChartPage from "./ExperimentChartPage";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
@@ -42,7 +43,7 @@ class DetailPage extends React.PureComponent<Props, State> {
       match,
       loadExperiment,
       loadExperiments,
-      experimentsById
+      experimentsById,
     } = this.props;
 
     const experiment = experimentsById[match.params.experimentId];
@@ -81,37 +82,38 @@ class DetailPage extends React.PureComponent<Props, State> {
         to: "",
         component: ExperimentPropsPage,
         order: 5,
-        exact: true
+        exact: true,
       },
       {
         caption: "Protocol",
         to: "/protocol",
         component: ExperimentProtocolPage,
-        order: 0
+        order: 0,
       },
       {
         caption: "Notes",
         to: "/notes",
         component: ExperimentNotesPage,
-        order: 1
+        order: 1,
       },
       {
         caption: "Variables",
         to: "/variables",
         component: ExperimentVarsPage,
-        order: 2
+        order: 2,
       },
       {
         caption: "Values",
         to: "/values",
         component: ExperimentValuesPage,
-        order: 3
+        order: 3,
       },
       {
         caption: "View chart",
         to: "/chart",
-        order: 4
-      }
+        component: ExperimentChartPage,
+        order: 4,
+      },
     ];
 
     return currentExperiment ? (
@@ -133,7 +135,7 @@ class DetailPage extends React.PureComponent<Props, State> {
           </div>
         </section>
         <Switch>
-          {_.sortBy(routes, [route => route.order]).map((route, i) => (
+          {_.sortBy(routes, [(route) => route.order]).map((route, i) => (
             <Route
               path={`${routeBase}${route.to}`}
               component={route.component}
@@ -149,12 +151,12 @@ class DetailPage extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  experimentsById: getExperimentsObject(state)
+  experimentsById: getExperimentsObject(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadExperiment: bindActionCreators(loadExperiment, dispatch),
-  loadExperiments: bindActionCreators(loadExperiments, dispatch)
+  loadExperiments: bindActionCreators(loadExperiments, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPage);

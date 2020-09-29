@@ -5,6 +5,7 @@ import { UserModel } from "../models/User";
 import { ActionTypes } from "ApplicationActionTypes";
 import { reducerGenerator } from "utils/reduxGenerators";
 import { AsyncAction } from "models/GenericTypes";
+import { userCookies } from "services/cookies";
 
 export interface LoginAction extends AnyAction {
   authToken?: string;
@@ -24,52 +25,73 @@ interface UserState {
   error: string;
 }
 
+const accessToken = userCookies.getAuthToken();
+const refreshToken = userCookies.getRefreshToken();
+
 const initialState: UserState = {
   user: null,
   error: null,
-  authToken: null,
-  refreshToken: null,
+  authToken: accessToken ? accessToken : null,
+  refreshToken: refreshToken ? refreshToken : null,
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOGIN}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+  [`${ActionTypes.LOGIN}_${ActionType.Fulfilled}`]: (
+    state: UserState,
+    action: AsyncAction<LoginAction>
+  ) => ({
     ...state,
     authToken: action.payload.authToken,
-    refreshToken: action.payload.refreshToken
+    refreshToken: action.payload.refreshToken,
   }),
-  [`${ActionTypes.LOGIN}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+  [`${ActionTypes.LOGIN}_${ActionType.Rejected}`]: (
+    state: UserState,
+    action: AsyncAction<LoginAction>
+  ) => ({
     ...state,
-    error: action.payload.error
+    error: action.payload.error,
   }),
-  [`${ActionTypes.SET_USER}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+  [`${ActionTypes.SET_USER}_${ActionType.Fulfilled}`]: (
+    state: UserState,
+    action: AsyncAction<UserAction>
+  ) => ({
     ...state,
-    user: action.payload.user
+    user: action.payload.user,
   }),
-  [`${ActionTypes.SET_USER}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+  [`${ActionTypes.SET_USER}_${ActionType.Rejected}`]: (
+    state: UserState,
+    action: AsyncAction<UserAction>
+  ) => ({
     ...state,
-    error: action.payload.error
+    error: action.payload.error,
   }),
-  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`]: (state: UserState, action: AsyncAction<UserAction>) => ({
+  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Fulfilled}`]: (
+    state: UserState,
+    action: AsyncAction<UserAction>
+  ) => ({
     ...state,
-    user: action.payload.user
+    user: action.payload.user,
   }),
-  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}`]: (state: UserState, action: AsyncAction<LoginAction>) => ({
+  [`${ActionTypes.TOKEN_LOGIN}_${ActionType.Rejected}`]: (
+    state: UserState,
+    action: AsyncAction<LoginAction>
+  ) => ({
     ...state,
-    error: action.payload.error
+    error: action.payload.error,
   }),
   [`${ActionTypes.LOGOUT}`]: (state: UserState) => ({
     ...state,
-    user: {},
+    user: null,
     error: null,
     authToken: null,
     refreshToken: null,
-  })
-}
+  }),
+};
 
 const AuthenticationReducer = reducerGenerator(
   "app",
   actionHandler,
   initialState
-)
+);
 
 export default AuthenticationReducer;

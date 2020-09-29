@@ -3,6 +3,9 @@ import axios from "axios";
 import api from "./api";
 import Config from "../config";
 import { userCookies } from "./cookies";
+import ApplicationStore from "../ApplicationStore";
+import { logout, setTokens } from "ApplicationActions";
+
 const url = Config.apiDomain;
 
 const dataService = axios.create({
@@ -29,17 +32,26 @@ const accessTokenInterceptor = (config: any) => {
 const refreshTokenInterceptor = (error: any) => {
   const {
     config,
-    response: { status },
+    response: { data },
   } = error;
   const origRequest = config;
 
-  if (status === 401) {
+  if (data.code === 401) {
     if (!isRefreshing) {
       isRefreshing = true;
-      api.users.refreshAccessToken().then((newToken: any) => {
-        isRefreshing = false;
-        onRrefreshed(newToken);
-      });
+      api.users.refreshAccessToken().then(
+        (data) => {
+          const { dispatch } = ApplicationStore;
+          const { access_token } = data;
+          isRefreshing = false;
+          dispatch(setTokens(data) as any);
+          onRrefreshed(access_token);
+        },
+        (error: any) => {
+          const { dispatch } = ApplicationStore;
+          dispatch(logout());
+        }
+      );
     }
 
     const retryOrigReq = new Promise((resolve, reject) => {
@@ -66,9 +78,7 @@ const onRrefreshed = (token: string) => {
   refreshSubscribers.map((callback) => callback(token));
 };
 
-dataService.interceptors.request.use(
-  accessTokenInterceptor,
-  refreshTokenInterceptor
-);
+dataService.interceptors.request.use(accessTokenInterceptor);
+dataService.interceptors.response.use(null, refreshTokenInterceptor);
 
 export default dataService;

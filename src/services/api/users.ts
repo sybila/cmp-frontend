@@ -7,11 +7,9 @@ import Config from "../../config";
 const userService = {
   login,
   refreshAccessToken,
-  logout,
   attemptLoginWithToken,
 };
 
-// TODO: Error handling
 function login(
   username: string,
   password: string
@@ -25,14 +23,13 @@ function login(
     })
     .then((user: AxiosResponse<LoginResponse>) => {
       if (user.data.access_token) {
-        userCookies.setAuthToken(JSON.stringify(user.data.access_token));
+        userCookies.setAuthToken(user.data.access_token);
       }
 
       return user;
     });
 }
 
-// TODO: Refresh access token refactor when endpoint is known
 function refreshAccessToken(): Promise<any> {
   const refreshToken = userCookies.getRefreshToken();
   return dataService
@@ -44,21 +41,16 @@ function refreshAccessToken(): Promise<any> {
     .then(({ data }: AxiosResponse<LoginResponse>) => {
       if (data.access_token) {
         const { access_token, refresh_token } = data;
-        userCookies.setAuthToken(JSON.stringify(access_token));
-        userCookies.setRefreshToken(JSON.stringify(refresh_token));
+        userCookies.setAuthToken(access_token);
+        userCookies.setRefreshToken(refresh_token);
       }
       return data;
     });
-}
-
-function logout() {
-  userCookies.deleteAuthToken();
-  userCookies.deleteRefreshToken();
 }
 
 export default userService;
 
 // TODO: Refactor token login
 function attemptLoginWithToken(token: string) {
-  return dataService.post("");
+  return dataService.post("/user");
 }

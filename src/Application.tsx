@@ -74,60 +74,54 @@ export const history = createBrowserHistory();
 // Library to reference icons
 library.add(fas);
 
-class Application extends React.Component<any> {
-  render() {
-    return (
-      <React.Fragment>
-        {/* Portal block, for components with absolute positioning */}
-        <Portal>
-          <PrivateComponent>
-            <NotificationsProvider />
-          </PrivateComponent>
-          <Loader />
-        </Portal>
+const Application = () => {
+  return (
+    <React.Fragment>
+      {/* Portal block, for components with absolute positioning */}
+      <Portal>
+        <PrivateComponent>
+          <NotificationsProvider />
+        </PrivateComponent>
+        <Loader />
+      </Portal>
 
-        {/* Application routing (with root master page defining basic layout)*/}
-        <BreadcrumbsProvider>
-          <Router history={history}>
-            {/* Portal block for components which need access to Router */}
+      {/* Application routing (with root master page defining basic layout)*/}
+      <BreadcrumbsProvider>
+        <Router history={history}>
+          {/* Portal block for components which need access to Router */}
 
-            <Route
-              path="/"
-              render={({ match: { url } }) => (
-                <Switch>
-                  <Route exact path={`${url}login`} component={LoginPage} />{" "}
-                  {/* TEMP: remove this when done */}
-                  <MasterPage>
-                    <Switch>
-                      <PrivateRoute
-                        exact
-                        path={`${url}`}
-                        component={HomePage}
-                      />
-                      <PrivateRoute
-                        path={`${url + modelsNames.url}`}
-                        component={ModelsModule}
-                      />
-                      <PrivateRoute
-                        path={`${url + experimentsNames.url}`}
-                        component={ExperimentsModule}
-                      />
+          <Route
+            path="/"
+            render={({ match: { url } }) => (
+              <Switch>
+                <Route exact path={`${url}login`} component={LoginPage} />{" "}
+                {/* TEMP: remove this when done */}
+                <MasterPage>
+                  <Switch>
+                    <PrivateRoute exact path={`${url}`} component={HomePage} />
+                    <PrivateRoute
+                      path={`${url + modelsNames.url}`}
+                      component={ModelsModule}
+                    />
+                    <PrivateRoute
+                      path={`${url + experimentsNames.url}`}
+                      component={ExperimentsModule}
+                    />
 
-                      <PrivateRoute
-                        path={`${url}profile/:subPage?`}
-                        component={UserProfilePage}
-                      />
-                      <Route component={NotFoundPage} />
-                    </Switch>
-                  </MasterPage>
-                </Switch>
-              )}
-            />
-          </Router>
-        </BreadcrumbsProvider>
-      </React.Fragment>
-    );
-  }
-}
+                    <PrivateRoute
+                      path={`${url}profile/:subPage?`}
+                      component={UserProfilePage}
+                    />
+                    <Route component={NotFoundPage} />
+                  </Switch>
+                </MasterPage>
+              </Switch>
+            )}
+          />
+        </Router>
+      </BreadcrumbsProvider>
+    </React.Fragment>
+  );
+};
 
 export default Application;

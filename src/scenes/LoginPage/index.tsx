@@ -30,11 +30,19 @@ class LoginPage extends React.Component<Props> {
   async componentDidMount() {
     const token = userCookies.getAuthToken();
 
-    if (!this.props.user && token) {
-      const { location, attemptLoginWithToken } = this.props;
-      const from = location.state ? location.state.from.pathname : "/";
-      await attemptLoginWithToken(token);
-      history.push(from);
+    if (token) {
+      if (!this.props.user) {
+        const { location, attemptLoginWithToken } = this.props;
+        const from = location.state ? location.state.from.pathname : "/";
+        try {
+          await attemptLoginWithToken(token);
+          history.push(from);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        this.props.logout();
+      }
     }
   }
 
