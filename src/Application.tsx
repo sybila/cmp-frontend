@@ -29,6 +29,7 @@ import Inbox from "./modules//administration/components/Inbox";
 
 import TopMenu from "./components/TopMenu";
 import EmailConfirm from "scenes/EmailConfirm";
+import { useTokenLogin } from "hooks/useTokenLogin";
 
 /**
  * Master Page
@@ -77,6 +78,8 @@ export const history = createBrowserHistory();
 library.add(fas);
 
 const Application = () => {
+  useTokenLogin("/");
+
   return (
     <React.Fragment>
       {/* Portal block, for components with absolute positioning */}
