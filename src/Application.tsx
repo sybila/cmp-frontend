@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { isEqual } from "lodash";
 
 import "./styles/main.scss";
 
@@ -30,6 +31,8 @@ import Inbox from "./modules//administration/components/Inbox";
 import TopMenu from "./components/TopMenu";
 import EmailConfirm from "scenes/EmailConfirm";
 import { useTokenLogin } from "hooks/useTokenLogin";
+import { useSelector } from "react-redux";
+import { getUser } from "ApplicationSelectors";
 
 /**
  * Master Page
@@ -39,38 +42,38 @@ import { useTokenLogin } from "hooks/useTokenLogin";
  * themselves.
  */
 
-class MasterPage extends React.Component {
-  render() {
-    return (
-      <div className="theme-default app-wrapper">
-        <PrivateComponent>
-          <Inbox />
-        </PrivateComponent>
-        <Portal>
-          <PrivateComponent>
-            <Toolbar />
-          </PrivateComponent>
-        </Portal>
+const MasterPage = (props: any) => {
+  const user = useSelector(getUser, isEqual);
 
-        <div className="columns is-mobile is-gapless">
-          <div className="column content-column">
-            <div className="top-menu-container">
-              <TopMenu />
-            </div>
-            <div className="content">
-              <section className="section bc-section p-b-0">
-                <div className="container">
-                  <Breadcrumbs separator={<b> / </b>} item={NavLink} />
-                </div>
-              </section>
-              {this.props.children}
-            </div>
+  return (
+    <div className={`theme-default app-wrapper${user ? " logged-in" : ""}`}>
+      <PrivateComponent>
+        <Inbox />
+      </PrivateComponent>
+      <Portal>
+        <PrivateComponent>
+          <Toolbar />
+        </PrivateComponent>
+      </Portal>
+
+      <div className="columns is-mobile is-gapless">
+        <div className="column content-column">
+          <div className="top-menu-container">
+            <TopMenu />
+          </div>
+          <div className="content">
+            <section className="section bc-section p-b-0">
+              <div className="container">
+                <Breadcrumbs separator={<b> / </b>} item={NavLink} />
+              </div>
+            </section>
+            {props.children}
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export const history = createBrowserHistory();
 
