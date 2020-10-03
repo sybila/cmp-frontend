@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export enum ItemType {
   link = "link",
-  divider = "divider"
+  divider = "divider",
 }
 
 export interface Item {
@@ -37,7 +37,7 @@ class Dropdown extends React.Component<Props, State> {
     this.hasFocus = this.hasFocus.bind(this);
 
     this.state = {
-      show: false
+      show: false,
     };
   }
 
@@ -82,7 +82,7 @@ class Dropdown extends React.Component<Props, State> {
 
     if (!dropdownHasFocus) {
       this.setState({
-        show: false
+        show: false,
       });
     }
   }
@@ -92,14 +92,14 @@ class Dropdown extends React.Component<Props, State> {
 
     if (!dropdownHasFocus) {
       this.setState({
-        show: false
+        show: false,
       });
     }
   }
 
   toggleDropdown() {
     this.setState({
-      show: !this.state.show
+      show: !this.state.show,
     });
   }
 
@@ -111,7 +111,7 @@ class Dropdown extends React.Component<Props, State> {
     return (
       <div
         className={`dropdown${show ? " show" : ""}`}
-        ref={dropdown => (this.dropdown = dropdown)}
+        ref={(dropdown) => (this.dropdown = dropdown)}
       >
         <div className={"dropdown-button"} onClick={this.toggleDropdown}>
           {children}
@@ -128,7 +128,7 @@ class Dropdown extends React.Component<Props, State> {
                 <Link
                   key={`dropdown-${i}-${item.text}`}
                   to={item.to || "#"}
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({ show: false });
                     item.onClick && item.onClick();
                   }}
