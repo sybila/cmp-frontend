@@ -28,6 +28,7 @@ import Toolbar from "modules/administration/components/Toolbar";
 import Inbox from "./modules//administration/components/Inbox";
 
 import TopMenu from "./components/TopMenu";
+import EmailConfirm from "scenes/EmailConfirm";
 
 /**
  * Master Page
@@ -99,6 +100,11 @@ const Application = () => {
                   <Switch>
                     <Route exact path={`${url}`} component={HomePage} />
                     <Route exact path={`${url}login`} component={LoginPage} />
+                    <Route
+                      exact
+                      path={`${url}email-confirm/:email/:id`}
+                      component={EmailConfirm}
+                    />
                     <Route
                       exact
                       path={`${url}register`}

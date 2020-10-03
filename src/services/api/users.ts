@@ -9,6 +9,7 @@ const userService = {
   refreshAccessToken,
   attemptLoginWithToken,
   register,
+  confirmEmail,
 };
 
 function login(
@@ -62,4 +63,8 @@ function register(values: RegisterPayload) {
   parsed.isPublic = values.isPublic ? 1 : 0;
   parsed.name = values.firstname;
   return dataService.post("/users", parsed);
+}
+
+function confirmEmail(email: string, id: string) {
+  return dataService.get(`/users/${email}/${id}`);
 }

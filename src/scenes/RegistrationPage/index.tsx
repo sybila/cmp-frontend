@@ -24,8 +24,12 @@ const RegistrationPage = (props: Props) => {
       () => {
         setSuccess(payload.email);
       },
-      () => {
-        setError("Submission error has occured.");
+      ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        setError(message ? message : "Submission error has occured.");
       }
     );
   };
