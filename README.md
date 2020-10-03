@@ -1,6 +1,12 @@
+# CMP Frontend
+
+[Comprehensive Modelling Platform](https://github.com/sybila/cmp)<br>
+This repository is a part of CMP and serves as the client application. <br>
+
 # Installation
 
-You need to have NPM installed to properly build this project.
+You need to have NPM installed to properly build this project.<br>
+If you do have NPM, run `npm install`.
 
 ## Available Scripts
 
