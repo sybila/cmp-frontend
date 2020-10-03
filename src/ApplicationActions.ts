@@ -6,6 +6,7 @@ import { history } from "./Application";
 import { UserModel } from "models/User";
 import { ActionTypes } from "ApplicationActionTypes";
 import { userCookies } from "services/cookies";
+import { AxiosPromise } from "axios";
 
 export const addRequest = (requestName) => ({
   type: ActionTypes.ADD_REQUEST,
@@ -36,7 +37,7 @@ const mockUser = {
 };
 
 export const login = (username: string, password: string) => {
-  return (dispatch) => {
+  return (dispatch): AxiosPromise => {
     return dispatch({
       type: ActionTypes.LOGIN,
       payload: new Promise((resolve, reject) => {

@@ -1,89 +1,51 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch, bindActionCreators } from "redux";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import LoginForm, { Values } from "./LoginForm";
-import { AppState } from "reducers/GlobalReducer";
-import { login, logout, tokenLogin } from "ApplicationActions";
-import { getAuthError, getUser } from "ApplicationSelectors";
+import { login } from "ApplicationActions";
+import { getAuthError } from "ApplicationSelectors";
 import { history } from "../../Application";
-import { userCookies } from "services/cookies";
-import { UserModel } from "models/User";
+import { useLocation } from "react-router-dom";
+import { useTokenLogin } from "hooks/useTokenLogin";
 
-interface Props {
-  submitLogin: (payload: Values) => any;
-  logout: () => void;
-  user: UserModel;
-  error: string;
-  location?: any;
-  attemptLoginWithToken: typeof tokenLogin;
-  // TODO: Models for entities
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
 }
 
-class LoginPage extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
+const LoginPage = () => {
+  const location = useLocation<LocationState>();
+  const error = useSelector(getAuthError);
+  const dispatch = useDispatch();
+  useTokenLogin(location);
 
-    this.handleSubmitLogin = this.handleSubmitLogin.bind(this);
-  }
+  const handleSubmitLogin = useCallback(
+    async (payload: { username: string; password: string }) => {
+      const from =
+        location.state && location.state.from
+          ? location.state.from.pathname
+          : "/";
 
-  async componentDidMount() {
-    const token = userCookies.getAuthToken();
+      await dispatch(login(payload.username, payload.password));
+      history.push(from);
+    },
+    [location, dispatch]
+  );
 
-    if (token) {
-      if (!this.props.user) {
-        const { location, attemptLoginWithToken } = this.props;
-        const from = location.state ? location.state.from.pathname : "/";
-        try {
-          await attemptLoginWithToken(token);
-          history.push(from);
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        this.props.logout();
-      }
-    }
-  }
-
-  handleSubmitLogin(payload: { username: string; password: string }) {
-    const { location, submitLogin } = this.props;
-    const from =
-      location.state && location.state.from
-        ? location.state.from.pathname
-        : "/";
-    submitLogin(payload).then(() => history.push(from));
-  }
-
-  render() {
-    const { error } = this.props;
-
-    return (
-      <div className="login-form section">
-        <div className="container">
-          <div className="columns">
-            <div className="column is-half is-offset-one-quarter">
-              <div className={"box"}>
-                <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
-              </div>
+  return (
+    <div className="login-form section">
+      <div className="container">
+        <div className="columns">
+          <div className="column is-half is-offset-one-quarter">
+            <div className={"box"}>
+              <LoginForm submitLogin={handleSubmitLogin} error={error} />
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-const mapStateToProps = (state: AppState) => ({
-  user: getUser(state),
-  error: getAuthError(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  submitLogin: (payload: { username: string; password: string }) =>
-    dispatch<any>(login(payload.username, payload.password)),
-  attemptLoginWithToken: bindActionCreators(tokenLogin, dispatch),
-  logout: bindActionCreators(logout, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;
