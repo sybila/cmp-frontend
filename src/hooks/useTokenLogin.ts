@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEqual } from "lodash";
 
 import { getUser } from "ApplicationSelectors";
-import { tokenLogin, logout } from "ApplicationActions";
+import { tokenLogin } from "ApplicationActions";
 import { history } from "Application";
 import { userCookies } from "services/cookies";
 import { useEffect } from "react";
@@ -23,13 +23,9 @@ export const useTokenLogin = (location: any) => {
       }
     };
 
-    if (token) {
-      if (!user) {
-        const from = location.state ? location.state.from.pathname : "/";
-        attemptTokenLogin(from);
-      } else {
-        dispatch(logout());
-      }
+    if (token && !user) {
+      const from = location.state ? location.state.from.pathname : "/";
+      attemptTokenLogin(from);
     }
   }, [user, location]);
 };

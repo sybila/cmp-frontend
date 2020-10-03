@@ -18,11 +18,13 @@ import User from "./User";
 import { hasNews } from "modules/administration/selectors";
 import { getUser } from "ApplicationSelectors";
 import logo from "assets/logo.svg";
+import { logout } from "ApplicationActions";
 
 interface Props {
   user: UserModel;
   toggleInbox?: () => void;
   newNotifications: (news: boolean) => void;
+  logout: typeof logout;
   news: boolean;
 }
 
@@ -61,7 +63,7 @@ class UserUtils extends React.Component<Props> {
       },
       {
         text: "Logout",
-        to: "/login",
+        onClick: this.props.logout,
         icon: faSignOutAlt,
       },
     ];
@@ -164,6 +166,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleInbox: bindActionCreators(toggleInbox, dispatch),
   newNotifications: bindActionCreators(newNotifications, dispatch),
+  logout: bindActionCreators(logout, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserUtils);
