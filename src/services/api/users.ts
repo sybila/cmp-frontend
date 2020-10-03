@@ -1,6 +1,6 @@
 import dataService from "../dataService";
 import { userCookies } from "../cookies";
-import { LoginResponse } from "models/User";
+import { LoginResponse, RegisterPayload } from "models/User";
 import { AxiosResponse, AxiosPromise } from "axios";
 import Config from "../../config";
 
@@ -8,6 +8,7 @@ const userService = {
   login,
   refreshAccessToken,
   attemptLoginWithToken,
+  register,
 };
 
 function login(
@@ -53,4 +54,12 @@ export default userService;
 // TODO: Refactor token login
 function attemptLoginWithToken(token: string) {
   return dataService.post("/user");
+}
+
+function register(values: RegisterPayload) {
+  let parsed: any = { ...values };
+  delete parsed.firstname;
+  parsed.isPublic = values.isPublic ? 1 : 0;
+  parsed.name = values.firstname;
+  return dataService.post("/users", parsed);
 }

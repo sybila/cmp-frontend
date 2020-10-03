@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import {
   faSignOutAlt,
   faUserCircle,
-  faTools
+  faTools,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
@@ -48,49 +48,49 @@ class UserUtils extends React.Component<Props> {
       {
         text: "Profile",
         to: "/profile",
-        icon: faUserCircle
+        icon: faUserCircle,
       },
       {
         text: "Settings",
         to: "/admin/settings",
-        icon: faTools
+        icon: faTools,
       },
       {
         text: "",
-        type: ItemType.divider
+        type: ItemType.divider,
       },
       {
         text: "Logout",
         to: "/login",
-        icon: faSignOutAlt
-      }
+        icon: faSignOutAlt,
+      },
     ];
 
     const navItems = [
-      {
-        text: "Biochemical space",
-        to: "/bsc"
-      },
+      // {
+      //   text: "Biochemical space",
+      //   to: "/bsc"
+      // },
       {
         text: "Models",
-        to: "/models"
+        to: "/models",
       },
       {
         text: "Experiments",
-        to: "/experiments"
+        to: "/experiments",
       },
       {
-        text: "CyanoNumbers",
-        to: "/numbers"
+        text: "BioQuantities",
+        to: "/numbers",
       },
       {
         text: "Support",
-        to: "/support"
+        to: "/support",
       },
       {
         text: "About us",
-        to: "/about-us"
-      }
+        to: "/about-us",
+      },
     ];
 
     const publicNavItems = [
@@ -99,13 +99,13 @@ class UserUtils extends React.Component<Props> {
       </Link>,
       <ButtonLink class={"nav-link"} to={"/register"}>
         Sign up
-      </ButtonLink>
+      </ButtonLink>,
     ];
 
     const userNavItems = user
       ? [
           <User userDropdownItems={userDropdownItems} user={user} />,
-          <NotificationsBell handleClick={this.handleBellClick} news={news} />
+          <NotificationsBell handleClick={this.handleBellClick} news={news} />,
         ]
       : [];
 
@@ -158,12 +158,12 @@ class UserUtils extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   news: hasNews(state),
-  user: getUser(state)
+  user: getUser(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleInbox: bindActionCreators(toggleInbox, dispatch),
-  newNotifications: bindActionCreators(newNotifications, dispatch)
+  newNotifications: bindActionCreators(newNotifications, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserUtils);

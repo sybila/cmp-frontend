@@ -18,7 +18,7 @@ html {
 $mdc-layout-grid-default-margin: (
   desktop: 0px,
   tablet: 16px,
-  phone: 16px
+  phone: 16px,
 );
 
 #portal-root {
@@ -53,7 +53,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-flow: column;
-  margin-left: 60px !important;
 
   .top-menu-container {
     z-index: 1;

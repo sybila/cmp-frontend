@@ -16,18 +16,20 @@ class LoginPage extends React.Component<Props> {
 
   render() {
     return !this.props.user ? (
-      <div className={"landing-hero"}>
-        <h1>Lorem ipsum dolor sit</h1>
-        <p className={"lead"}>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent id
-          justo in neque elementum ultrices. Fusce dui leo, imperdiet in,
-          aliquam sit amet, feugiat eu, orci. Quis autem vel eum iure
-          reprehenderit qui in ea voluptate velit esse quam nihil molestiae
-          consequatur.
-        </p>
-        <a className={"btn btn-primary btn-lg"} href="/" role="button">
-          Learn more
-        </a>
+      <div className={"landing-hero section"}>
+        <div className="container">
+          <h1>Lorem ipsum dolor sit</h1>
+          <p className={"lead"}>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent
+            id justo in neque elementum ultrices. Fusce dui leo, imperdiet in,
+            aliquam sit amet, feugiat eu, orci. Quis autem vel eum iure
+            reprehenderit qui in ea voluptate velit esse quam nihil molestiae
+            consequatur.
+          </p>
+          <a className={"btn btn-primary btn-lg"} href="/" role="button">
+            Learn more
+          </a>
+        </div>
       </div>
     ) : (
       <Dashboard />
@@ -36,12 +38,9 @@ class LoginPage extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
+  user: getUser(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

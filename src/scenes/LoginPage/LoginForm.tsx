@@ -13,7 +13,7 @@ interface Props {
 
 const LoginForm = (props: Props) => (
   <div>
-    <h2 className="mb-4">Login</h2>
+    <h2 className="mb-4">Sign in</h2>
     <Form
       onSubmit={props.submitLogin}
       render={({ handleSubmit, form, submitting, pristine, values }) => (

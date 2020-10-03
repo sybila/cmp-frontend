@@ -26,7 +26,7 @@ class MainPage extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      displayId: null
+      displayId: null,
     };
     this.handleModelClick = this.handleModelClick.bind(this);
   }
@@ -51,7 +51,7 @@ class MainPage extends React.Component<Props, State> {
     const accordionItems = models.map((model: Model) => ({
       id: model.id,
       heading: model.name,
-      body: model.description
+      body: model.description,
     }));
 
     return (
@@ -84,7 +84,11 @@ class MainPage extends React.Component<Props, State> {
             {displayModel && (
               <React.Fragment>
                 <h3>{displayModel.name}</h3>
-                <img className="model-image" src={placeholderImg} alt={displayModel.name}/>
+                <img
+                  className="model-image"
+                  src={placeholderImg}
+                  alt={displayModel.name}
+                />
                 <p>
                   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                   Aliquam ante. Nullam faucibus mi quis velit. Phasellus enim
@@ -111,15 +115,12 @@ class MainPage extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadModels: bindActionCreators(loadModels, dispatch)
+  loadModels: bindActionCreators(loadModels, dispatch),
 });
 
 const mapStateToProps = (state: AppState) => ({
   models: getAllModels(state),
-  getModelById: getModelById(state)
+  getModelById: getModelById(state),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

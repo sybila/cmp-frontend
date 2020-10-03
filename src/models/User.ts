@@ -5,6 +5,16 @@ export interface LoginResponse {
   refresh_token: string;
 }
 
+export interface RegisterPayload {
+  email: string;
+  firstname: string;
+  surname: string;
+  username: string;
+  password: string;
+  isPublic: boolean;
+  termsAndConditions: boolean;
+}
+
 type UserTier = {
   id: number;
   tier: string;
