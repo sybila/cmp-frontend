@@ -17,7 +17,7 @@ interface LinkProps extends Props {
 }
 
 export const ButtonLink = (props: LinkProps) => (
-  <Link className={`btn ${props.class}`} to={props.to}>
+  <Link className={`button ${props.class} is-primary`} to={props.to}>
     {props.children}
   </Link>
 );

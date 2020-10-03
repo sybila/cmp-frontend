@@ -8,9 +8,10 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import "./styles/main.scss";
 
 import LoginPage from "scenes/LoginPage/";
-import HomePage from "./scenes/HomePage/";
-import NotFoundPage from "./scenes/NotFoundPage/";
-import UserProfilePage from "./scenes/UserProfilePage";
+import RegistrationPage from "scenes/RegistrationPage";
+import HomePage from "scenes/HomePage/";
+import NotFoundPage from "scenes/NotFoundPage/";
+import UserProfilePage from "scenes/UserProfilePage";
 
 import ModelsModule from "./modules/modelsRepository/scenes/";
 import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
@@ -94,11 +95,16 @@ const Application = () => {
             path="/"
             render={({ match: { url } }) => (
               <Switch>
-                <Route exact path={`${url}login`} component={LoginPage} />{" "}
-                {/* TEMP: remove this when done */}
                 <MasterPage>
                   <Switch>
-                    <PrivateRoute exact path={`${url}`} component={HomePage} />
+                    <Route exact path={`${url}`} component={HomePage} />
+                    <Route exact path={`${url}login`} component={LoginPage} />
+                    <Route
+                      exact
+                      path={`${url}register`}
+                      component={RegistrationPage}
+                    />
+
                     <PrivateRoute
                       path={`${url + modelsNames.url}`}
                       component={ModelsModule}

@@ -5,7 +5,7 @@ import { Dispatch, bindActionCreators } from "redux";
 import LoginForm, { Values } from "./LoginForm";
 import { AppState } from "reducers/GlobalReducer";
 import { login, logout, tokenLogin } from "ApplicationActions";
-import { getAuthToken, getAuthError, getUser } from "ApplicationSelectors";
+import { getAuthError, getUser } from "ApplicationSelectors";
 import { history } from "../../Application";
 import { userCookies } from "services/cookies";
 import { UserModel } from "models/User";
@@ -63,7 +63,7 @@ class LoginPage extends React.Component<Props> {
         <div className="container">
           <div className="columns">
             <div className="column is-half is-offset-one-quarter">
-              <div className={"box "}>
+              <div className={"box"}>
                 <LoginForm submitLogin={this.handleSubmitLogin} error={error} />
               </div>
             </div>
