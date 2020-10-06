@@ -5,10 +5,7 @@ import _ from "lodash";
 
 import GlobalReducer from "reducers/GlobalReducer";
 import { showLoader, hideLoader, addRequest } from "ApplicationActions";
-import {
-  registerObservers,
-  constructInitialStore,
-} from "./services/storageCache";
+import { registerObservers } from "./services/storageCache";
 import * as Modules from "./modules";
 
 /**
@@ -43,6 +40,7 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
 };
 
 export function configureStore(preloadedState = undefined) {
+  console.log(preloadedState);
   return createStore(
     GlobalReducer,
     preloadedState,
@@ -62,7 +60,6 @@ Modules.AfterStoreConfiguration(
   ApplicationStore.getState
 );
 
-constructInitialStore(ApplicationStore);
 registerObservers(ApplicationStore);
 
 export default ApplicationStore;
