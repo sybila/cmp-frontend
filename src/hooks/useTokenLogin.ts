@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEqual } from "lodash";
 
 import { getUser } from "ApplicationSelectors";
-import { tokenLogin } from "ApplicationActions";
+import { fetchCurrentUser } from "ApplicationActions";
 import { history } from "Application";
 import { userCookies } from "services/cookies";
 import { useEffect } from "react";
@@ -16,7 +16,7 @@ export const useTokenLogin = (location: any) => {
   useEffect(() => {
     const attemptTokenLogin = async (from: string) => {
       try {
-        await dispatch(tokenLogin(token));
+        await dispatch(fetchCurrentUser());
         history.push(from);
       } catch (e) {
         console.error(e);

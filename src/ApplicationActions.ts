@@ -22,20 +22,6 @@ export const hideLoader = (requestName = "") => ({
   requestName,
 });
 
-const mockUser = {
-  id: 0,
-  username: "admin",
-  permissions: {
-    id: 1,
-    tier: "2",
-    name: "Administrator",
-  },
-  email: "admin@test.com",
-  about: "I like cats, that's all",
-  firstName: "John",
-  lastName: "Doe",
-};
-
 export const login = (username: string, password: string) => {
   return (dispatch): AxiosPromise => {
     return dispatch({
@@ -49,7 +35,6 @@ export const login = (username: string, password: string) => {
               authToken: data.access_token,
               refreshToken: data.refresh_token,
             });
-            dispatch(setUser(mockUser));
           },
           (error) => {
             return reject(error);
@@ -92,20 +77,21 @@ export const logout = () => {
   return { type: ActionTypes.LOGOUT };
 };
 
-export const tokenLogin = (token: string) => {
+export const fetchCurrentUser = () => {
   return (dispatch: Dispatch) =>
     dispatch({
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {
-        // TEMP: Remove when /user endpoint finished
-        // TEMP: Add refresh token logic
-        return resolve({ user: mockUser });
-        // return api.users.attemptLoginWithToken(token).then(
-        //   (user: any) => {
-        //     return resolve(user);
-        //   },
-        //   (error: any) => reject(error)
-        // );
+        return api.users.getCurrentUser().then(
+          ({ data: { data } }) => {
+            return resolve({ user: data });
+          },
+          (error: any) => {
+            userCookies.deleteAuthToken();
+            userCookies.deleteRefreshToken();
+            reject(error);
+          }
+        );
       }),
     });
 };
