@@ -8,7 +8,7 @@ import { ActionTypes as VarsActionTypes } from "./reducers/VarsReducer";
 import {
   experimentNormalize,
   ExperimentNote,
-  ExperimentVariable
+  ExperimentVariable,
 } from "models/Experiment";
 import { genericNormalize } from "models/GenericTypes";
 import _ from "lodash";
@@ -19,14 +19,14 @@ export const loadExperiments = () => {
       type: MainActionTypes.LOAD_EXPERIMENTS,
       payload: new Promise((resolve, reject) =>
         service.fetchExperiments().then(
-          experiments => {
+          (experiments) => {
             resolve(experimentNormalize(experiments));
           },
           (error: any) => {
             return reject(error);
           }
         )
-      )
+      ),
     });
 };
 
@@ -36,7 +36,7 @@ export const loadExperiment = (id: number) => {
       type: MainActionTypes.LOAD_EXPERIMENT,
       payload: new Promise((resolve, reject) =>
         service.fetchExperiment(id).then(
-          experiment => {
+          (experiment) => {
             dispatch(mergeExperimentVars(experiment.variables, experiment.id));
             delete experiment.notes;
             delete experiment.variables;
@@ -47,7 +47,7 @@ export const loadExperiment = (id: number) => {
             return reject(error);
           }
         )
-      )
+      ),
     });
 };
 
@@ -58,24 +58,32 @@ export const mergeExperimentNotes = (
   type: `${NotesActionTypes.LOAD_NOTES}_${ActionType.Fulfilled}`,
   payload: {
     experimentId,
-    data: genericNormalize(notes)
-  }
+    data: genericNormalize(notes),
+  },
 });
 
-export const loadExperimentNotes = (id: number) => {
+export const loadExperimentNotes = (id: number | string) => {
   return async (dispatch: Dispatch) =>
     dispatch({
       type: NotesActionTypes.LOAD_NOTES,
-      payload: new Promise(resolve =>
-        service.fetchExperimentNotes(id).then(notes => {
-          const data = genericNormalize(_.sortBy(notes, ["time"]));
+      payload: new Promise((resolve, reject) =>
+        service.fetchExperimentNotes(id).then(
+          (notes) => {
+            const data = genericNormalize(_.sortBy(notes, ["time"]));
 
-          resolve({
-            experimentId: id,
-            data
-          });
-        })
-      )
+            resolve({
+              experimentId: id,
+              data,
+            });
+          },
+          (error) => {
+            const {
+              response: { data },
+            } = error;
+            reject({ experimentId: id, error: data });
+          }
+        )
+      ),
     });
 };
 
@@ -86,22 +94,22 @@ export const mergeExperimentVars = (
   type: `${VarsActionTypes.LOAD_VARIABLES}_${ActionType.Fulfilled}`,
   payload: {
     experimentId,
-    data: genericNormalize(vars)
-  }
+    data: genericNormalize(vars),
+  },
 });
 
 export const loadExperimentVars = (id: number) => {
   return async (dispatch: Dispatch) =>
     dispatch({
       type: VarsActionTypes.LOAD_VARIABLES,
-      payload: new Promise(resolve =>
-        service.fetchExperimentVars(id).then(vars => {
+      payload: new Promise((resolve) =>
+        service.fetchExperimentVars(id).then((vars) => {
           resolve({
             experimentId: id,
-            data: genericNormalize(vars)
+            data: genericNormalize(vars),
           });
         })
-      )
+      ),
     });
 };
 
@@ -113,13 +121,13 @@ export const loadExperimentVariable = (
     dispatch({
       type: VarsActionTypes.LOAD_VARIABLE,
       payload: new Promise((resolve, reject) => {
-        service.fetchExperimentVariable(expId, varId).then(variable => {
+        service.fetchExperimentVariable(expId, varId).then((variable) => {
           resolve({
             experimentId: expId,
-            variable
+            variable,
           });
         });
-      })
+      }),
     });
 };
 
@@ -127,13 +135,13 @@ export const loadExperimentVariablesValues = (id: number | string) => {
   return async (dispatch: Dispatch) =>
     dispatch({
       type: VarsActionTypes.LOAD_VARIABLES_DETAILS,
-      payload: new Promise(resolve =>
-        service.fetchExperimentVariableDetailed(id).then(vars => {
+      payload: new Promise((resolve) =>
+        service.fetchExperimentVariableDetailed(id).then((vars) => {
           resolve({
             experimentId: id,
-            data: genericNormalize(vars)
+            data: genericNormalize(vars),
           });
         })
-      )
+      ),
     });
 };

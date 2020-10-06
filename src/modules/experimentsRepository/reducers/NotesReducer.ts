@@ -3,36 +3,44 @@ import { ActionType } from "redux-promise-middleware";
 
 import { moduleNames } from "./MainReducer";
 import { ExperimentNote } from "models/Experiment";
-import { NormalizedObject } from "models/GenericTypes";
+import {
+  ByIdObject,
+  NormalizedObject,
+  ResponseError,
+} from "models/GenericTypes";
 import { typeGenerator, reducerGenerator } from "utils/reduxGenerators";
 
 export interface NotesAction extends AnyAction {
   payload: {
     experimentId: number;
-    data: NormalizedObject<ExperimentNote>
+    data?: NormalizedObject<ExperimentNote>;
+    error: ResponseError;
   };
 }
 
+interface ExperimentNoteExtended extends ExperimentNote {
+  errorMsg?: string;
+}
+
 interface State {
-  [key: number]: NormalizedObject<ExperimentNote>;
+  [key: number]: NormalizedObject<ExperimentNoteExtended>;
   isFetching: boolean;
-  error?: boolean;
+  errors: ByIdObject<ResponseError>;
 }
 
 export const ActionTypes = {
-  LOAD_NOTES: typeGenerator(moduleNames.store, "LOAD_NOTES")
+  LOAD_NOTES: typeGenerator(moduleNames.store, "LOAD_NOTES"),
 };
 
 const initialState: State = {
-  isFetching: false
+  isFetching: false,
+  errors: {},
 };
 
 const actionHandler = {
-  [`${ActionTypes.LOAD_NOTES}_${ActionType.Pending}`]: (
-    state: State
-  ) => ({
+  [`${ActionTypes.LOAD_NOTES}_${ActionType.Pending}`]: (state: State) => ({
     ...state,
-    isFetching: true
+    isFetching: true,
   }),
   [`${ActionTypes.LOAD_NOTES}_${ActionType.Fulfilled}`]: (
     state: State,
@@ -40,14 +48,18 @@ const actionHandler = {
   ) => ({
     ...state,
     [action.payload.experimentId]: action.payload.data,
-    isFetching: false
+    isFetching: false,
   }),
   [`${ActionTypes.LOAD_NOTES}_${ActionType.Rejected}`]: (
-    state: State
+    state: State,
+    action: NotesAction
   ) => ({
     ...state,
+    errors: {
+      ...state.errors,
+      [action.payload.experimentId]: action.payload.error,
+    },
     isFetching: false,
-    error: true
   }),
 };
 

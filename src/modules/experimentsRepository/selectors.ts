@@ -15,7 +15,7 @@ export const getAllNotesById = (state: AppState) =>
 export const getAllVarsById = (state: AppState) =>
   state.module_experiments.variables;
 
-const getExperimentId = (state: AppState, id: number) => id;
+const getExperimentId = (state: AppState, id: number | string) => id;
 
 export const getVarsById = createSelector(
   [getAllVarsById, getExperimentId],
@@ -38,8 +38,13 @@ export const getVarsByIdObject = createSelector(
 export const getNotesById = createSelector(
   [getAllNotesById, getExperimentId],
   (notes, id) => {
-    if (!notes[id]) return;
+    if (!notes[id] || !notes[id].all) return;
 
     return notes[id].all.map((i: any) => notes[id].byId[i]);
   }
+);
+
+export const getNoteError = createSelector(
+  [(state) => state.module_experiments.notes.errors, getExperimentId],
+  (errors, id) => errors[id]
 );
