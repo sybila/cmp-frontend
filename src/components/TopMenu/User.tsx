@@ -17,7 +17,7 @@ class User extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -25,7 +25,7 @@ class User extends React.PureComponent<Props, State> {
 
   handleClick() {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
   }
 
@@ -36,20 +36,17 @@ class User extends React.PureComponent<Props, State> {
     return (
       <div className={"user-menu-item"} onClick={this.handleClick}>
         <Dropdown items={userDropdownItems}>
-            <img
-              src={user.picture ? user.picture : profilePlaceholder}
-              alt="avatar"
-            />
-            <div className={"info-column"}>
-              <span className={"user-name"}>
-                {user.firstName} {user.lastName}
-              </span>
-              <span className={"user-role"}>
-                {/* TODO: Change when permissions are resolved */}
-                Administrator
-              </span>
-            </div>
-            <div className={`arrow ${isOpen ? "up" : "down"}`}></div>
+          <img
+            src={user.picture ? user.picture : profilePlaceholder}
+            alt="avatar"
+          />
+          <div className={"info-column"}>
+            <span className={"user-name"}>
+              {user.name} {user.surname}
+            </span>
+            <span className={"user-role"}>{/* TODO: Permissions */}</span>
+          </div>
+          <div className={`arrow ${isOpen ? "up" : "down"}`}></div>
         </Dropdown>
       </div>
     );

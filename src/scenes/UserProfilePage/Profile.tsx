@@ -19,7 +19,7 @@ class Profile extends React.Component<Props> {
             <h6>Username: {user.username}</h6>
             <h6>E-mail: {user.email}</h6>
             <h6>
-              User level: {Config.permissions[`${user.permissions}`].name}
+              {/* User level: {Config.permissions[`${user.permissions}`].name} */}
             </h6>
             {user.about && (
               <div className={"mt-4"}>
