@@ -40,7 +40,6 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
 };
 
 export function configureStore(preloadedState = undefined) {
-  console.log(preloadedState);
   return createStore(
     GlobalReducer,
     preloadedState,

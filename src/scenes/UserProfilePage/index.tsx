@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import { AppState } from "reducers/GlobalReducer";
@@ -12,45 +12,29 @@ import EditProfile from "./EditProfile";
 import Groups from "./Groups";
 import Picture from "./Picture";
 
-interface Props {
-  match: any;
-  user: UserModel;
-}
+import { Tabs, Tab } from "components/Tabs";
+import { useParams } from "react-router-dom";
 
-class UserProfilePage extends React.Component<Props> {
-  render() {
-    const { match, user } = this.props;
+const UserProfilePage = () => {
+  const params = useParams<{ subPage: string }>();
+  const user = useSelector(getUser);
 
-    const page = (() => {
-      switch (match.params.subPage) {
-        case "edit":
-          return <EditProfile />;
-        case "groups":
-          return <Groups />;
-        default:
-          return <Profile user={user} />;
-      }
-    })();
+  return (
+    <div className={"profile-wrapper"}>
+      <BreadcrumbsItem to="/profile">Profile</BreadcrumbsItem>
+      <Tabs defaultTab={params.subPage}>
+        <Tab name="" caption="Profile">
+          <Profile user={user} />
+        </Tab>
+        <Tab name="edit" caption="Edit Profile">
+          <EditProfile />
+        </Tab>
+        <Tab name="groups" caption="Groups">
+          <Groups />
+        </Tab>
+      </Tabs>
+    </div>
+  );
+};
 
-    return (
-      <div className={"profile-wrapper"}>
-        <BreadcrumbsItem to="/profile">Profile</BreadcrumbsItem>
-        <div className="row m-y-2">
-          <div className="col-lg-3 text-xs-center">
-            <Picture />
-          </div>
-          <div className="col-lg-9">
-            <ProfileNav />
-            <div className="tab-content profile-section">{page}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
-});
-
-export default connect(mapStateToProps)(UserProfilePage);
+export default UserProfilePage;
