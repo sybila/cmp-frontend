@@ -29,10 +29,7 @@ class Profile extends React.Component<Props> {
             )}
           </div>
           <div className="col-md-12">
-            <h4 className="m-t-2">
-              <span className="fa fa-clock-o ion-clock pull-xs-right"></span>{" "}
-              Recent Activity
-            </h4>
+            <h4>Recent Activity</h4>
             <table className="table table-hover table-striped">
               <tbody>
                 <tr>
