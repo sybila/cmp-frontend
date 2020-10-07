@@ -7,6 +7,7 @@ import { UserModel } from "models/User";
 import { ActionTypes } from "ApplicationActionTypes";
 import { userCookies } from "services/cookies";
 import { AxiosPromise } from "axios";
+import { userCache } from "services/storageCache";
 
 export const addRequest = (requestName) => ({
   type: ActionTypes.ADD_REQUEST,
@@ -35,9 +36,10 @@ export const login = (username: string, password: string) => {
               authToken: data.access_token,
               refreshToken: data.refresh_token,
             });
+            dispatch(fetchCurrentUser());
           },
-          (error) => {
-            return reject(error);
+          ({ response: { data } }) => {
+            return reject({ error: data.message });
           }
         );
       }),
@@ -74,6 +76,7 @@ export const setTokens = (tokens: {
 export const logout = () => {
   userCookies.deleteAuthToken();
   userCookies.deleteRefreshToken();
+  userCache.user.remove();
   return { type: ActionTypes.LOGOUT };
 };
 
@@ -87,8 +90,7 @@ export const fetchCurrentUser = () => {
             return resolve({ user: data });
           },
           (error: any) => {
-            userCookies.deleteAuthToken();
-            userCookies.deleteRefreshToken();
+            dispatch(logout());
             reject(error);
           }
         );
