@@ -6,6 +6,7 @@ import { ActionTypes } from "ApplicationActionTypes";
 import { reducerGenerator } from "utils/reduxGenerators";
 import { AsyncAction } from "models/GenericTypes";
 import { userCookies } from "services/cookies";
+import { userCache } from "services/storageCache";
 
 export interface LoginAction extends AnyAction {
   authToken?: string;
@@ -28,8 +29,10 @@ interface UserState {
 const accessToken = userCookies.getAuthToken();
 const refreshToken = userCookies.getRefreshToken();
 
+const preloadedUser = userCache.user.get();
+
 const initialState: UserState = {
-  user: null,
+  user: preloadedUser ? preloadedUser : null,
   error: null,
   authToken: accessToken ? accessToken : null,
   refreshToken: refreshToken ? refreshToken : null,

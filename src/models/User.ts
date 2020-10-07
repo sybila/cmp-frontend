@@ -23,16 +23,20 @@ type UserTier = {
 
 export interface UserModel {
   id: number;
-  firstName: string;
-  lastName: string;
+  name: string;
+  surname: string;
   username: string;
-  permissions: UserTier;
-  email?: string;
+  type: UserTier;
+  email: string;
   about?: string;
   picture?: string;
+  groups: GroupModel[];
+}
 
-  // TODO: Implement groups (Model...)
-  /* groups: {} */
+export interface GroupModel {
+  id: number;
+  name: string;
+  role: number;
 }
 
 // TODO: normalizer for this model and others

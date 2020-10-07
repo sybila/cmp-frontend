@@ -19,7 +19,7 @@ class Profile extends React.Component<Props> {
             <h6>Username: {user.username}</h6>
             <h6>E-mail: {user.email}</h6>
             <h6>
-              User level: {Config.permissions[`${user.permissions}`].name}
+              {/* User level: {Config.permissions[`${user.permissions}`].name} */}
             </h6>
             {user.about && (
               <div className={"mt-4"}>
@@ -29,10 +29,7 @@ class Profile extends React.Component<Props> {
             )}
           </div>
           <div className="col-md-12">
-            <h4 className="m-t-2">
-              <span className="fa fa-clock-o ion-clock pull-xs-right"></span>{" "}
-              Recent Activity
-            </h4>
+            <h4>Recent Activity</h4>
             <table className="table table-hover table-striped">
               <tbody>
                 <tr>

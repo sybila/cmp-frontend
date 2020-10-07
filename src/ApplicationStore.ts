@@ -5,6 +5,7 @@ import _ from "lodash";
 
 import GlobalReducer from "reducers/GlobalReducer";
 import { showLoader, hideLoader, addRequest } from "ApplicationActions";
+import { registerObservers } from "./services/storageCache";
 import * as Modules from "./modules";
 
 /**
@@ -28,7 +29,9 @@ const loaderMiddleware = (store: any) => (next: any) => (action: any) => {
     const name = action.type.split(pending);
     store.dispatch(addRequest(name[0]));
     _.delay(
-      () => store.getState().loader.pending[`${name[0]}`] && store.dispatch(showLoader()),
+      () =>
+        store.getState().loader.pending[`${name[0]}`] &&
+        store.dispatch(showLoader()),
       200
     );
   }
@@ -50,9 +53,12 @@ export function configureStore(preloadedState = undefined) {
 }
 
 const ApplicationStore = configureStore();
+
 Modules.AfterStoreConfiguration(
   ApplicationStore.dispatch,
   ApplicationStore.getState
 );
+
+registerObservers(ApplicationStore);
 
 export default ApplicationStore;

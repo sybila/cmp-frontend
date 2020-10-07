@@ -1,56 +1,36 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
-import { AppState } from "reducers/GlobalReducer";
 import { getUser } from "ApplicationSelectors";
-import { UserModel } from "../../models/User";
+import { faUsers, faIdCard, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-import ProfileNav from "./ProfileNav";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import Groups from "./Groups";
-import Picture from "./Picture";
+import { Tabs, Tab } from "components/Tabs";
 
-interface Props {
-  match: any;
-  user: UserModel;
-}
+const UserProfilePage = () => {
+  const params = useParams<{ subPage: string }>();
+  const user = useSelector(getUser);
 
-class UserProfilePage extends React.Component<Props> {
-  render() {
-    const { match, user } = this.props;
+  return (
+    <div className={"profile-wrapper"}>
+      <BreadcrumbsItem to="/profile">Profile</BreadcrumbsItem>
+      <Tabs defaultTab={params.subPage}>
+        <Tab name="" caption="Profile" icon={faIdCard}>
+          <Profile user={user} />
+        </Tab>
+        <Tab name="groups" caption="Groups" icon={faUsers}>
+          <Groups />
+        </Tab>
+        <Tab name="edit" caption="Edit Profile" icon={faEdit}>
+          <EditProfile />
+        </Tab>
+      </Tabs>
+    </div>
+  );
+};
 
-    const page = (() => {
-      switch (match.params.subPage) {
-        case "edit":
-          return <EditProfile />;
-        case "groups":
-          return <Groups />;
-        default:
-          return <Profile user={user} />;
-      }
-    })();
-
-    return (
-      <div className={"profile-wrapper"}>
-        <BreadcrumbsItem to="/profile">Profile</BreadcrumbsItem>
-        <div className="row m-y-2">
-          <div className="col-lg-3 text-xs-center">
-            <Picture />
-          </div>
-          <div className="col-lg-9">
-            <ProfileNav />
-            <div className="tab-content profile-section">{page}</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state: AppState) => ({
-  user: getUser(state)
-});
-
-export default connect(mapStateToProps)(UserProfilePage);
+export default UserProfilePage;
