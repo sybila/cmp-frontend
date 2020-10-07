@@ -69,7 +69,6 @@ function register(values: RegisterPayload) {
 function confirmEmail(email: string, id: string) {
   return dataService.get(`/users/${email}/${id}`);
 }
-
 function getCurrentUser() {
   return dataService.get("/user");
 }
