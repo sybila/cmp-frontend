@@ -33,6 +33,7 @@ import EmailConfirm from "scenes/EmailConfirm";
 import { useTokenLogin } from "hooks/useTokenLogin";
 import { useSelector } from "react-redux";
 import { getUser } from "ApplicationSelectors";
+import GlobalNotice from "components/GlobalNotice";
 
 /**
  * Master Page
@@ -61,6 +62,8 @@ const MasterPage = (props: any) => {
           <div className="top-menu-container">
             <TopMenu />
           </div>
+
+          <GlobalNotice />
           <div className="content">
             <section className="section bc-section p-b-0">
               <div className="container">

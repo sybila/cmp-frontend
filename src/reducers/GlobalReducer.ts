@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import AuthenticationReducer from "./AuthenticationReducer";
 import LoaderReducer from "./LoaderReducer";
+import GlobalNoticeReducer from "./GlobalNoticeReducer";
 import * as Modules from "../modules";
 
 /**
@@ -9,7 +10,8 @@ import * as Modules from "../modules";
 const GlobalReducer = combineReducers({
   authentication: AuthenticationReducer,
   loader: LoaderReducer,
-  ...Modules.RegisteredReducers
+  notices: GlobalNoticeReducer,
+  ...Modules.RegisteredReducers,
 });
 
 export type AppState = ReturnType<typeof GlobalReducer>;
