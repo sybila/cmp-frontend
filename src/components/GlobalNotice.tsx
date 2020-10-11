@@ -18,6 +18,20 @@ const GlobalNotice = () => {
           <Message key={`notice-${i}`} type={notice.type}>
             <h3>{notice.heading}</h3>
             <p>{notice.message}</p>
+            <div className="actions">
+              {notice.actions &&
+                notice.actions.map((action, j) => {
+                  return (
+                    <button
+                      key={`notice-${i}-action-${j}`}
+                      className="button is-text"
+                      onClick={action.onClick}
+                    >
+                      {action.caption}
+                    </button>
+                  );
+                })}
+            </div>
           </Message>
         ))}
       </div>
