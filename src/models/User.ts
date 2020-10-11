@@ -17,7 +17,7 @@ export interface RegisterPayload {
 
 type UserTier = {
   id: number;
-  tier: string;
+  tier: number;
   name: string;
 };
 
