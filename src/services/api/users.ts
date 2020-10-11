@@ -1,13 +1,12 @@
 import dataService from "../dataService";
 import { userCookies } from "../cookies";
-import { LoginResponse, RegisterPayload } from "models/User";
+import { LoginResponse, RegisterPayload, UserModel } from "models/User";
 import { AxiosResponse, AxiosPromise } from "axios";
 import Config from "../../config";
 
 const userService = {
   login,
   refreshAccessToken,
-  attemptLoginWithToken,
   register,
   confirmEmail,
   getCurrentUser,
@@ -53,11 +52,6 @@ function refreshAccessToken(): Promise<any> {
 
 export default userService;
 
-// TODO: Refactor token login
-function attemptLoginWithToken(token: string) {
-  return dataService.post("/user");
-}
-
 function register(values: RegisterPayload) {
   let parsed: any = { ...values };
   delete parsed.firstname;
@@ -69,6 +63,6 @@ function register(values: RegisterPayload) {
 function confirmEmail(email: string, id: string) {
   return dataService.get(`/users/${email}/${id}`);
 }
-function getCurrentUser() {
+function getCurrentUser(): AxiosPromise<AxiosResponse<UserModel>> {
   return dataService.get("/user");
 }

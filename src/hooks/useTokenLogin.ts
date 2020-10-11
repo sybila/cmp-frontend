@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEqual } from "lodash";
 
 import { getUser } from "ApplicationSelectors";
-import { fetchCurrentUser } from "ApplicationActions";
+import { checkUserConfirmation, fetchCurrentUser } from "ApplicationActions";
 import { history } from "Application";
 import { userCookies } from "services/cookies";
 import { useEffect } from "react";
@@ -27,5 +27,7 @@ export const useTokenLogin = (location: any) => {
       const from = location.state ? location.state.from.pathname : "/";
       attemptTokenLogin(from);
     }
+
+    checkUserConfirmation(dispatch, user);
   }, [user, location]);
 };

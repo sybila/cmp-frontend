@@ -2,13 +2,15 @@ import { Dispatch } from "redux";
 import { ActionType } from "redux-promise-middleware";
 
 import api from "services/api";
-import { history } from "./Application";
+import config from "config";
 import { UserModel } from "models/User";
 import { ActionTypes } from "ApplicationActionTypes";
 import { userCookies } from "services/cookies";
 import { AxiosPromise } from "axios";
 import { userCache } from "services/storageCache";
 import { GlobalNoticeInterface } from "reducers/GlobalNoticeReducer";
+
+const NOT_VERIFIED_ID = "not-verified";
 
 export const addRequest = (requestName) => ({
   type: ActionTypes.ADD_REQUEST,
@@ -78,11 +80,30 @@ export const logout = () => {
   userCookies.deleteAuthToken();
   userCookies.deleteRefreshToken();
   userCache.user.remove();
+
   return { type: ActionTypes.LOGOUT };
 };
 
+export const checkUserConfirmation = (dispatch, user) => {
+  if (user) {
+    if (!user.type || user.type.tier === config.permissions.UNVERIFIED) {
+      dispatch(
+        addGlobalNotice({
+          id: NOT_VERIFIED_ID,
+          message:
+            "Your account has to be verified to take full advantage of registration. Please confirm your email.",
+          heading: "Account is not verified",
+          type: "danger",
+        })
+      );
+    }
+  } else {
+    dispatch(removeGlobalNotice(NOT_VERIFIED_ID));
+  }
+};
+
 export const fetchCurrentUser = () => {
-  return (dispatch: Dispatch) =>
+  return (dispatch) =>
     dispatch({
       type: ActionTypes.TOKEN_LOGIN,
       payload: new Promise((resolve, reject) => {

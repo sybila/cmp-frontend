@@ -9,8 +9,9 @@ module.exports = {
     clientName: "frontend",
   },
   permissions: {
-    0: {
-      name: "admin",
-    },
+    UNVERIFIED: 4,
+    REGISTERED: 3,
+    POWERUSER: 2,
+    ADMINISTRATOR: 1,
   },
 };
