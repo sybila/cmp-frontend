@@ -10,6 +10,7 @@ const userService = {
   register,
   confirmEmail,
   getCurrentUser,
+  resendConfirmationMail,
 };
 
 function login(
@@ -65,4 +66,8 @@ function confirmEmail(email: string, id: string) {
 }
 function getCurrentUser(): AxiosPromise<AxiosResponse<UserModel>> {
   return dataService.get("/user");
+}
+
+function resendConfirmationMail() {
+  return dataService.put("/user/resendConfirmation");
 }
