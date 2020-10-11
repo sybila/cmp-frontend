@@ -8,6 +8,10 @@ export interface GlobalNoticeInterface {
   message: string;
   heading: string;
   type: MessageType;
+  actions?: {
+    onClick: () => void;
+    caption: string;
+  }[];
 }
 
 interface State {
