@@ -94,6 +94,12 @@ export const checkUserConfirmation = (dispatch, user) => {
             "Your account has to be verified to take full advantage of registration. Please confirm your email.",
           heading: "Account is not verified",
           type: "danger",
+          actions: [
+            {
+              caption: "Resend confirmation mail",
+              onClick: api.users.resendConfirmationMail,
+            },
+          ],
         })
       );
     }
