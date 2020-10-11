@@ -8,6 +8,7 @@ import { ActionTypes } from "ApplicationActionTypes";
 import { userCookies } from "services/cookies";
 import { AxiosPromise } from "axios";
 import { userCache } from "services/storageCache";
+import { GlobalNoticeInterface } from "reducers/GlobalNoticeReducer";
 
 export const addRequest = (requestName) => ({
   type: ActionTypes.ADD_REQUEST,
@@ -96,4 +97,18 @@ export const fetchCurrentUser = () => {
         );
       }),
     });
+};
+
+export const addGlobalNotice = (notice: GlobalNoticeInterface) => {
+  return {
+    type: ActionTypes.ADD_GLOBAL_NOTICE,
+    payload: notice,
+  };
+};
+
+export const removeGlobalNotice = (id: string | number) => {
+  return {
+    type: ActionTypes.REMOVE_GLOBAL_NOTICE,
+    payload: { id },
+  };
 };
