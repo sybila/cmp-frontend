@@ -38,3 +38,4 @@ The build is minified and the filenames include the hashes.<br>
 ## Figma design
 
 Graphic design [prototype](https://www.figma.com/file/qNEpKK1mx1CBDs5kplhR32/Comprehensive-modeling-platform?node-id=0%3A1)
+Test hook
