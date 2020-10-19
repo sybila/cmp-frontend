@@ -1,6 +1,3 @@
-import { Dispatch } from "redux";
-import { ActionType } from "redux-promise-middleware";
-
 import api from "services/api";
 import config from "config";
 import { UserModel } from "models/User";
@@ -98,6 +95,8 @@ export const checkUserConfirmation = (dispatch, user) => {
             {
               caption: "Resend confirmation mail",
               onClick: api.users.resendConfirmationMail,
+              success: "Verification email was sent",
+              error: "Error: Please try again",
             },
           ],
         })

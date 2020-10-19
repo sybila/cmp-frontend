@@ -11,6 +11,8 @@ export interface GlobalNoticeInterface {
   actions?: {
     onClick: () => void;
     caption: string;
+    success?: string;
+    error?: string;
   }[];
 }
 
