@@ -2,7 +2,6 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
-import Visualizer from "../../../../../utils/visualizer";
 
 const ExperimentChartPage = () => {
   return (
@@ -14,12 +13,7 @@ const ExperimentChartPage = () => {
         <div className="container">
           <div className="columns is-full-height">
             <div className="column">
-              <div className="box is-full-height is-padding-extended">
-                <Visualizer
-                  models={[{ model: true, id: "anotherModel" }]}
-                  width="50%"
-                />
-              </div>
+              <div className="box is-full-height is-padding-extended"></div>
             </div>
           </div>
         </div>
