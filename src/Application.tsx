@@ -13,6 +13,7 @@ import RegistrationPage from "scenes/RegistrationPage";
 import HomePage from "scenes/HomePage/";
 import NotFoundPage from "scenes/NotFoundPage/";
 import UserProfilePage from "scenes/UserProfilePage";
+import Pages from "scenes/Pages";
 
 import ModelsModule from "./modules/modelsRepository/scenes/";
 import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
@@ -119,6 +120,7 @@ const Application = () => {
                       path={`${url}register`}
                       component={RegistrationPage}
                     />
+                    <Route path={`${url}page`} component={Pages} />
 
                     <PrivateRoute
                       path={`${url + modelsNames.url}`}

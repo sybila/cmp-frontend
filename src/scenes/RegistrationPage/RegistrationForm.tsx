@@ -5,6 +5,7 @@ import { faEnvelope, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 import { RegisterPayload } from "models/User";
 import validation from "utils/formValidators";
+import { Link } from "react-router-dom";
 
 interface Props {
   submit: (payload: RegisterPayload) => void;
@@ -176,8 +177,30 @@ const RegistrationForm = (props: Props) => (
               <div className="field">
                 <div className="control">
                   <label className="checkbox">
-                    <input {...input} /> I agree to the{" "}
-                    <a href="#">terms and conditions</a>
+                    <input {...input} /> I agree with provided{" "}
+                    <Link to="/page/terms-and-conditions">
+                      terms and conditions
+                    </Link>
+                  </label>
+                  {meta.error && meta.touched && (
+                    <p className="help is-danger">{meta.error}</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </Field>
+
+          <Field
+            name="dataUsePolicy"
+            type="checkbox"
+            validate={validation.basic.required}
+          >
+            {({ input, meta }) => (
+              <div className="field">
+                <div className="control">
+                  <label className="checkbox">
+                    <input {...input} /> I agree with{" "}
+                    <Link to="/page/data-use-policy">data use policy</Link>
                   </label>
                   {meta.error && meta.touched && (
                     <p className="help is-danger">{meta.error}</p>

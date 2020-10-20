@@ -1,8 +1,9 @@
 .box.variable-item {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    button.is-primary, a.button.is-primary {
-        margin-left: auto;
-    }
+  button.is-primary,
+  a.button.is-primary {
+    margin-left: auto;
+  }
 }
