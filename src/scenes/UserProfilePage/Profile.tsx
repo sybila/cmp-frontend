@@ -5,6 +5,8 @@ import { UserModel } from "models/User";
 import Modal from "components/Modal";
 import validation from "utils/formValidators";
 import api from "services/api";
+import { useDispatch } from "react-redux";
+import { setUser } from "ApplicationActions";
 
 interface Props {
   user: UserModel;
@@ -14,12 +16,14 @@ interface Props {
 const Profile = (props: Props) => {
   const [changeEmail, setChangeEmail] = useState(false);
   const [apiError, setApiError] = useState("");
+  const dispatch = useDispatch();
   const { user, isTemporary } = props;
 
   const handleSubmitClick = (payload) => {
     return api.users.changeMail(payload).then(
       () => {
         setChangeEmail(false);
+        dispatch(setUser({ ...user, email: payload.email }));
       },
       (error) => {
         if (error.response) {
