@@ -1,0 +1,15 @@
+.profile-details {
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+
+  &__name {
+    margin-right: 0.25rem;
+  }
+
+  span {
+    margin-right: 1rem;
+  }
+}

@@ -19,7 +19,8 @@
   "components/visualizer", "components/pages";
 
 // 6. Page-specific styles
-@import "pages/home", "pages/profile", "pages/experiment-detail";
+@import "pages/home", "pages/profile", "pages/experiment-detail",
+  "pages/profile-page";
 
 // 7. Themes
 @import "themes/default";

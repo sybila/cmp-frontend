@@ -42,7 +42,7 @@ const GlobalNotice = () => {
                   return (
                     <React.Fragment key={`notice-${i}-action-${j}`}>
                       <button
-                        className={`button is-text is-primary${
+                        className={`button is-primary${
                           loading[j] ? " is-loading" : ""
                         }`}
                         onClick={(e) =>

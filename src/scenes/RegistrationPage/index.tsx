@@ -7,15 +7,7 @@ import { AppState } from "reducers/GlobalReducer";
 import { RegisterPayload } from "models/User";
 import api from "services/api";
 
-interface ComponentStateProps {}
-
-interface ComponentDispatchProps {}
-
-interface ComponentOwnProps {}
-
-type Props = ComponentDispatchProps & ComponentStateProps & ComponentOwnProps;
-
-const RegistrationPage = (props: Props) => {
+const RegistrationPage = () => {
   const [successEmail, setSuccess] = useState("");
   const [error, setError] = useState("");
 
@@ -53,15 +45,4 @@ const RegistrationPage = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: AppState) => ({});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
-
-export default connect<
-  ComponentStateProps,
-  ComponentDispatchProps,
-  ComponentOwnProps
->(
-  mapStateToProps,
-  mapDispatchToProps
-)(RegistrationPage);
+export default RegistrationPage;
