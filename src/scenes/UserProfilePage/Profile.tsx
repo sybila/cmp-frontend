@@ -8,12 +8,13 @@ import api from "services/api";
 
 interface Props {
   user: UserModel;
+  isTemporary: boolean;
 }
 
-const Profile = (props) => {
+const Profile = (props: Props) => {
   const [changeEmail, setChangeEmail] = useState(false);
   const [apiError, setApiError] = useState("");
-  const { user } = props;
+  const { user, isTemporary } = props;
 
   const handleSubmitClick = (payload) => {
     return api.users.changeMail(payload).then(
@@ -51,12 +52,14 @@ const Profile = (props) => {
           <p className="detail-row">
             <strong className="detail-row__name">E-mail:</strong>
             <span>{user.email} </span>
-            <button
-              onClick={() => setChangeEmail(true)}
-              className="button is-small"
-            >
-              Change
-            </button>
+            {isTemporary && (
+              <button
+                onClick={() => setChangeEmail(true)}
+                className="button is-small"
+              >
+                Change
+              </button>
+            )}
           </p>
           <p className="detail-row">
             <strong className="detail-row__name">User level:</strong>{" "}
@@ -109,14 +112,6 @@ const Profile = (props) => {
                   </div>
                 )}
               </Field>
-
-              {props.error && (
-                <article className="message is-danger mt-4">
-                  <div className="message-body" role="alert">
-                    {props.error}
-                  </div>
-                </article>
-              )}
 
               {apiError && (
                 <article className="message is-danger mt-4">

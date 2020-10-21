@@ -20,25 +20,26 @@ interface Props {
 
 const Tabs = (props: Props) => {
   const [active, setActive] = useState(0);
-
-  const tabs = props.children.map((tab: Tab, index: number) => {
-    return (
-      <li
-        className={index === active ? "is-active" : ""}
-        onClick={() => handleClick(index)}
-        key={`tab-${tab.props.name}-${index}`}
-      >
-        <a>
-          {tab.props.icon && (
-            <span className="icon is-small">
-              <FontAwesomeIcon icon={tab.props.icon} />
-            </span>
-          )}
-          <span>{tab.props.caption}</span>
-        </a>
-      </li>
-    );
-  });
+  const tabs = props.children
+    .filter((tab) => tab.props)
+    .map((tab: Tab, index: number) => {
+      return (
+        <li
+          className={index === active ? "is-active" : ""}
+          onClick={() => handleClick(index)}
+          key={`tab-${tab.props.name}-${index}`}
+        >
+          <a>
+            {tab.props.icon && (
+              <span className="icon is-small">
+                <FontAwesomeIcon icon={tab.props.icon} />
+              </span>
+            )}
+            <span>{tab.props.caption}</span>
+          </a>
+        </li>
+      );
+    });
 
   useEffect(() => {
     if (props.defaultTab) {
