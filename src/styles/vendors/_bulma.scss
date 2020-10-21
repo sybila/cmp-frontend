@@ -5,19 +5,27 @@ $desktop: 1092px + (2 * $gap) !default;
 $widescreen: 1284px + (2 * $gap) !default;
 $fullhd: 1476px + (2 * $gap) !default;
 
-@import '../../node_modules/bulma/bulma.sass';
+@import "../../node_modules/bulma/bulma.sass";
 
 .columns {
-    &.is-full-height {
-        align-items: stretch;
-    }
+  &.is-full-height {
+    align-items: stretch;
+  }
 }
 
 .box {
-    &.is-full-height {
-        height: 100%;
-    }
-    &.is-padding-extended {
-        padding: 3.25rem
-    }
+  &.is-full-height {
+    height: 100%;
+  }
+  &.is-padding-extended {
+    padding: 3.25rem;
+  }
+}
+
+.modal {
+  z-index: 9999;
+}
+
+.content p.modal-card-title {
+  margin-bottom: 0;
 }
