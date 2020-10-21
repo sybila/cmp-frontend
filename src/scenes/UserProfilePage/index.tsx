@@ -29,7 +29,7 @@ const UserProfilePage = () => {
           <Profile user={user} isTemporary={isTemporary} />
         </Tab>
         <Tab name="groups" caption="Groups" icon={faUsers}>
-          <Groups />
+          <Groups user={user} />
         </Tab>
         {!isTemporary && (
           <Tab name="edit" caption="Edit Profile" icon={faEdit}>
