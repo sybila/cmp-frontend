@@ -96,7 +96,13 @@ const Profile = (props: Props) => {
             close={() => setChangeEmail(false)}
           >
             <form>
-              <Field name="email" validate={validation.basic.required}>
+              <Field
+                name="email"
+                validate={validation.composeValidators(
+                  validation.basic.required,
+                  validation.basic.email
+                )}
+              >
                 {({ input, meta }) => (
                   <div className="field">
                     <label className="label">E-mail</label>
