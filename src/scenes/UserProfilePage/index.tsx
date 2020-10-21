@@ -17,9 +17,7 @@ const UserProfilePage = () => {
   const params = useParams<{ subPage: string }>();
   const user = useSelector(getUser);
 
-  const isTemporary = useSelector((state: AppState) =>
-    hasPermission(state, config.permissions.UNVERIFIED)
-  );
+  const isTemporary = user.type.tier === config.permissions.UNVERIFIED;
 
   return (
     <div className={"profile-wrapper"}>
