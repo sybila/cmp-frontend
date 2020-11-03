@@ -50,7 +50,7 @@ const ExperimentNotesPage = (props: Props) => {
       if (all.length > 0) {
         const lastIndex = all[all.length - 1];
         setTime({
-          maxTime: byId[lastIndex].time,
+          maxTime: byId[lastIndex] ? byId[lastIndex].time : 0,
           ...time,
         });
       }
@@ -65,11 +65,19 @@ const ExperimentNotesPage = (props: Props) => {
       const length = notes.length;
       length > 0 &&
         setTime({
-          maxTime: notes[length - 1].time,
+          maxTime: notes[length - 1] ? notes[length - 1].time : 0,
           ...time,
         });
     } else loadNotes(params.experimentId);
   }, []);
+
+  useEffect(() => {
+    setTime({
+      ...time,
+      maxTime:
+        notes && notes[notes.length - 1] ? notes[notes.length - 1].time : 0,
+    });
+  }, [notes]);
 
   const handleRangeUpdate = useCallback(
     (ranges) => {
@@ -80,7 +88,8 @@ const ExperimentNotesPage = (props: Props) => {
 
   const { minTime, maxTime } = time;
 
-  const last = notes ? notes[notes.length - 1].time : 0;
+  const last =
+    notes && notes[notes.length - 1] ? notes[notes.length - 1].time : 0;
   return (
     <>
       <BreadcrumbsItem
