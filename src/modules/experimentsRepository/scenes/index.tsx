@@ -8,6 +8,7 @@ import ExperimentsMainPage from "./MainPage";
 import ExperimentsRepository from "./DetailPage/ExperimentsPage";
 import DetailPage from "./DetailPage";
 import AddExperiment from "./AddExperiment";
+import PublicRoute from "components/PublicRoute";
 
 type RouteParams = {
   experimentId?: string;
@@ -36,7 +37,10 @@ class ExperimentsScenes extends React.Component {
             path={`/${experimentsNames.url}/new`}
             component={AddExperiment}
           />
-          <Route component={ExperimentsMainPage} />
+          <PublicRoute
+            component={ExperimentsMainPage}
+            fallback={`/${experimentsNames.url}/repository`}
+          />
         </Switch>
       </React.Fragment>
     );

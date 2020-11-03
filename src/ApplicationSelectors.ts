@@ -4,7 +4,7 @@ import { AppState } from "reducers/GlobalReducer";
 
 export const hasPermission = (state: AppState, permissionLevel: number) => {
   const user: UserModel = getUser(state);
-  return user.type.tier <= permissionLevel;
+  return user ? user.type.tier <= permissionLevel : false;
 };
 
 export const getUser = (state: AppState): UserModel =>

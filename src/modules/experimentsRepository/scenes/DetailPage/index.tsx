@@ -22,11 +22,14 @@ import { ExperimentComponentProps } from "..";
 import ExperimentValuesPage from "./ExperimentValuesPage";
 import ExperimentProtocolPage from "./ExperimentProtocolPage";
 import ExperimentChartPage from "./ExperimentChartPage";
+import { hasPermission } from "ApplicationSelectors";
+import Config from "config";
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
   loadExperiment: Function;
   loadExperiments: Function;
+  hasPermission: (permissionLevel: number) => boolean;
 }
 
 interface State {}
@@ -126,9 +129,11 @@ class DetailPage extends React.PureComponent<Props, State> {
             <h2 className="title is-2 is-pulled-left">
               {currentExperiment.name}
             </h2>
-            <button className="button is-rounded is-pulled-right">
-              Edit experiment
-            </button>
+            {this.props.hasPermission(Config.permissions.POWERUSER) && (
+              <button className="button is-rounded is-pulled-right">
+                Edit experiment
+              </button>
+            )}
           </div>
           <div className="container">
             <PageMenuPanel items={routes} basePath={routeLinkBase} />
@@ -152,6 +157,8 @@ class DetailPage extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   experimentsById: getExperimentsObject(state),
+  hasPermission: (permissionLevel: number) =>
+    hasPermission(state, permissionLevel),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

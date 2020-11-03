@@ -126,7 +126,7 @@ const Application = () => {
                       path={`${url + modelsNames.url}`}
                       component={ModelsModule}
                     />
-                    <PrivateRoute
+                    <Route
                       path={`${url + experimentsNames.url}`}
                       component={ExperimentsModule}
                     />
