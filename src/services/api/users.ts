@@ -12,6 +12,7 @@ const userService = {
   getCurrentUser,
   resendConfirmationMail,
   changeMail,
+  edit,
 };
 
 function login(
@@ -60,6 +61,14 @@ function register(values: RegisterPayload) {
   parsed.isPublic = values.isPublic ? 1 : 0;
   parsed.name = values.firstname;
   return dataService.post("/users", parsed);
+}
+
+function edit(values: RegisterPayload, id: number) {
+  let parsed: any = { ...values };
+  delete parsed.firstname;
+  parsed.isPublic = values.isPublic ? 1 : 0;
+  parsed.name = values.firstname;
+  return dataService.put(`/users/${id}`, parsed);
 }
 
 function confirmEmail(email: string, id: string) {

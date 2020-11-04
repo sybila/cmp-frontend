@@ -77,10 +77,13 @@ export const loadExperimentNotes = (id: number | string) => {
             });
           },
           (error) => {
-            const {
-              response: { data },
-            } = error;
-            reject({ experimentId: id, error: data });
+            reject({
+              experimentId: id,
+              error:
+                error && error.response && error.response.data
+                  ? error.response.data
+                  : { message: "Error has occurred" },
+            });
           }
         )
       ),

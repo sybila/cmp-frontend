@@ -1,12 +1,41 @@
 import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Form, Field } from "react-final-form";
 import validation from "utils/formValidators";
+import api from "services/api";
+import { useSelector } from "react-redux";
+import { getUser } from "ApplicationSelectors";
 
 const EditProfile = () => {
-  const handleSubmitClick = (payload) => {};
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const user = useSelector(getUser);
+
+  const handleSubmitClick = (payload) => {
+    setError("");
+
+    if (user) {
+      api.users.edit(payload, user.id).then(
+        () => {
+          setSuccess("User info was updated.");
+        },
+        (err) => {
+          setError(
+            err &&
+              err.response &&
+              err.response.data &&
+              err.response.data.message
+              ? err.response.data.message
+              : "Submission error has occured."
+          );
+        }
+      );
+    } else {
+      setError("User object is not defined.");
+    }
+  };
 
   return (
     <div>
@@ -23,7 +52,7 @@ const EditProfile = () => {
                 <div className="field-body">
                   {/* ----- First name ----- */}
 
-                  <Field name="firstname" validate={validation.basic.required}>
+                  <Field name="firstname">
                     {({ input, meta }) => (
                       <div className="field">
                         <label className="label">First name</label>
@@ -45,7 +74,7 @@ const EditProfile = () => {
                   </Field>
 
                   {/* ----- Last name ----- */}
-                  <Field name="surname" validate={validation.basic.required}>
+                  <Field name="surname">
                     {({ input, meta }) => (
                       <div className="field">
                         <label className="label">Last name</label>
@@ -71,10 +100,7 @@ const EditProfile = () => {
               {/* ----- Email ----- */}
               <Field
                 name="email"
-                validate={validation.composeValidators(
-                  validation.basic.required,
-                  validation.basic.email
-                )}
+                validate={validation.composeValidators(validation.basic.email)}
               >
                 {({ input, meta }) => (
                   <div className="field">
@@ -103,7 +129,7 @@ const EditProfile = () => {
               <div className={"field"}>
                 <div className="field-body">
                   {/* ----- Username ----- */}
-                  <Field name="username" validate={validation.basic.required}>
+                  <Field name="username">
                     {({ input, meta }) => (
                       <div className="field">
                         <label className="label">Username</label>
@@ -128,7 +154,7 @@ const EditProfile = () => {
                   </Field>
 
                   {/* ----- Password ----- */}
-                  <Field name="password" validate={validation.basic.required}>
+                  <Field name="password">
                     {({ input, meta }) => (
                       <div className="field">
                         <label className="label">Password</label>
@@ -163,6 +189,20 @@ const EditProfile = () => {
                   Edit profile
                 </button>
               </div>
+              {error && (
+                <article className="message is-danger mt-4">
+                  <div className="message-body" role="alert">
+                    {error}
+                  </div>
+                </article>
+              )}
+              {success && (
+                <article className="message is-success mt-4">
+                  <div className="message-body" role="alert">
+                    {success}
+                  </div>
+                </article>
+              )}
             </form>
           )}
         />
