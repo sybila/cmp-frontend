@@ -5,7 +5,7 @@ import LoginForm, { Values } from "./LoginForm";
 import { login } from "ApplicationActions";
 import { getAuthError } from "ApplicationSelectors";
 import { history } from "../../Application";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTokenLogin } from "hooks/useTokenLogin";
 
 interface LocationState {
@@ -27,7 +27,7 @@ const LoginPage = () => {
           ? location.state.from.pathname
           : "/";
 
-      await dispatch(login(payload.username, payload.password));
+      dispatch(login(payload.username, payload.password));
       history.push(from);
     },
     [location, dispatch]

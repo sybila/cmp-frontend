@@ -35,6 +35,8 @@ import { useTokenLogin } from "hooks/useTokenLogin";
 import { useSelector } from "react-redux";
 import { getUser } from "ApplicationSelectors";
 import GlobalNotice from "components/GlobalNotice";
+import PasswordRenewal from "scenes/PasswordRenewal";
+import RenewalPage from "scenes/PasswordRenewal/RenewalPage";
 
 /**
  * Master Page
@@ -114,6 +116,16 @@ const Application = () => {
                       exact
                       path={`${url}email-confirm/:email/:id`}
                       component={EmailConfirm}
+                    />
+                    <Route
+                      exact
+                      path={`${url}password-renewal`}
+                      component={PasswordRenewal}
+                    />
+                    <Route
+                      exact
+                      path={`${url}email-confirm/:email/pswRenew/:hash`}
+                      component={RenewalPage}
                     />
                     <Route
                       exact

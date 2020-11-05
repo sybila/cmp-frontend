@@ -13,6 +13,8 @@ const userService = {
   resendConfirmationMail,
   changeMail,
   edit,
+  sendPasswordRenewal,
+  submitRenewal,
 };
 
 function login(
@@ -84,4 +86,12 @@ function resendConfirmationMail() {
 
 function changeMail(data: { email: string }) {
   return dataService.put("/user/resendConfirmation", data);
+}
+
+function sendPasswordRenewal(email: string) {
+  return dataService.post("/users/passwordRenewal", { email });
+}
+
+function submitRenewal(email: string, hash: string, password: string) {
+  return dataService.put(`/users/${email}/pswRenew/${hash}`, { password });
 }

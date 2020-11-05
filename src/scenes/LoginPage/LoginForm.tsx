@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
+import { Link } from "react-router-dom";
 
 export interface Values {
   password: string;
@@ -45,6 +46,9 @@ const LoginForm = (props: Props) => (
                 className="input"
               />
             </div>
+          </div>
+          <div className="m-b-20">
+            <Link to="/password-renewal">Forgot password?</Link>
           </div>
           <div className="control">
             <button
