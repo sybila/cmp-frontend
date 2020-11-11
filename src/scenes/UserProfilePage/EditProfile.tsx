@@ -100,7 +100,10 @@ const EditProfile = () => {
               {/* ----- Email ----- */}
               <Field
                 name="email"
-                validate={validation.composeValidators(validation.basic.email)}
+                validate={validation.composeValidators(
+                  validation.basic.email,
+                  validation.basic.notSameAs(user ? user.email : undefined)
+                )}
               >
                 {({ input, meta }) => (
                   <div className="field">
@@ -129,7 +132,12 @@ const EditProfile = () => {
               <div className={"field"}>
                 <div className="field-body">
                   {/* ----- Username ----- */}
-                  <Field name="username">
+                  <Field
+                    name="username"
+                    validate={validation.basic.notSameAs(
+                      user ? user.username : undefined
+                    )}
+                  >
                     {({ input, meta }) => (
                       <div className="field">
                         <label className="label">Username</label>
