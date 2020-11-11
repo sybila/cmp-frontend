@@ -8,24 +8,33 @@ export interface Values {
   username: string;
 }
 
+const INITIAL_MSG = { error: "", success: "" };
+
 interface Props {}
 
 const SendRenewalForm = (props: Props) => {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [{ error, success }, setMsg] = useState<{
+    error?: string;
+    success?: string;
+  }>(INITIAL_MSG);
 
   const handleSubmitRenewal = (payload) => {
-    setError("");
+    setMsg(INITIAL_MSG);
+
     api.users.sendPasswordRenewal(payload.email).then(
       () => {
-        setSuccess("Renewal email was sent.");
+        setMsg({ success: "Renewal email was sent." });
       },
       (err) => {
-        setError(
-          err && err.response && err.response.data && err.response.data.message
-            ? err.response.data.message
-            : "Submission error has occured."
-        );
+        setMsg({
+          error:
+            err &&
+            err.response &&
+            err.response.data &&
+            err.response.data.message
+              ? err.response.data.message
+              : "Submission error has occured.",
+        });
       }
     );
   };

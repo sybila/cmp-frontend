@@ -18,16 +18,20 @@ interface RouteParams {
   hash: string;
 }
 
+const INITIAL_MSG = { error: "", success: "" };
+
 const RenewalForm = (props: Props) => {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [{ error, success }, setMsg] = useState<{
+    error?: string;
+    success?: string;
+  }>(INITIAL_MSG);
   const match = useRouteMatch<RouteParams>();
 
   const handleSubmitRenewal = (payload) => {
-    setError("");
+    setMsg(INITIAL_MSG);
 
     if (payload.password !== payload["password-again"]) {
-      setError("Passwords do not match.");
+      setMsg({ error: "Passwords do not match." });
       return;
     }
 
@@ -35,17 +39,18 @@ const RenewalForm = (props: Props) => {
       .submitRenewal(match.params.email, match.params.hash, payload.password)
       .then(
         () => {
-          setSuccess("Password was successfully changed.");
+          setMsg({ success: "Password was successfully changed." });
         },
         (err) => {
-          setError(
-            err &&
+          setMsg({
+            error:
+              err &&
               err.response &&
               err.response.data &&
               err.response.data.message
-              ? err.response.data.message
-              : "Submission error has occured."
-          );
+                ? err.response.data.message
+                : "Submission error has occured.",
+          });
         }
       );
   };

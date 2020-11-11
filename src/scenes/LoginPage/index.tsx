@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import LoginForm, { Values } from "./LoginForm";
+import LoginForm from "./LoginForm";
 import { login } from "ApplicationActions";
 import { getAuthError } from "ApplicationSelectors";
 import { history } from "../../Application";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTokenLogin } from "hooks/useTokenLogin";
 
 interface LocationState {
@@ -17,7 +17,7 @@ interface LocationState {
 const LoginPage = () => {
   const location = useLocation<LocationState>();
   const error = useSelector(getAuthError);
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   useTokenLogin(location);
 
   const handleSubmitLogin = useCallback(
@@ -27,7 +27,7 @@ const LoginPage = () => {
           ? location.state.from.pathname
           : "/";
 
-      dispatch(login(payload.username, payload.password));
+      await dispatch(login(payload.username, payload.password));
       history.push(from);
     },
     [location, dispatch]
