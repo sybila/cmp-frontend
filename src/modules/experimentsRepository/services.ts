@@ -1,4 +1,5 @@
 import dataService from "services/dataService";
+import { data } from "./scenes/DetailPage/ExperimentChartPage/data";
 const service = {
   fetchExperiments,
   fetchExperiment,
@@ -6,6 +7,7 @@ const service = {
   fetchExperimentVars,
   fetchExperimentVariable,
   fetchExperimentVariableDetailed,
+  fetchExperimentVisualizerData,
 };
 
 function fetchExperiments(): Promise<any> {
@@ -45,6 +47,17 @@ function fetchExperimentVariableDetailed(id: number | string): Promise<any> {
   return dataService.get(`/experimentvalues/${id}`).then(({ data }) => {
     return data.data.variables;
   });
+}
+
+function fetchExperimentVisualizerData(id: number | string): Promise<any> {
+  // TEMP: Do globall dataservice for service api
+
+  return dataService
+    .get(`https://service.e-cyanobacterium.org/visualizer/0/${id}`)
+    .then(({ data }) => {
+      console.log(data);
+      return data;
+    });
 }
 
 export default service;
