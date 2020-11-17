@@ -15,12 +15,15 @@ export interface Model {
 
 export const modelNormalize = (models: any[]) => {
   const modelsSchema = new schema.Entity("models", undefined, {
-    idAttribute: "id"
+    idAttribute: "id",
   });
 
-  let normalized = normalize(models.map(i => i as Model), [modelsSchema]);
+  let normalized = normalize(
+    models.map((i) => i as Model),
+    [modelsSchema]
+  );
   return {
     byId: normalized.entities.models,
-    all: normalized.result
+    all: normalized.result,
   };
 };

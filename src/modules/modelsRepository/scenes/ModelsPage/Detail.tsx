@@ -24,7 +24,7 @@ const Detail = (props: Props) => {
       </table>
       <p>{model.description}</p>
       <Link
-        to={`/${modelsNames.url}/repository/detail/${model.id}`}
+        to={`/${modelsNames.url}/model-detail/${model.id}`}
         className="button is-primary m-t-20"
       >
         View detail

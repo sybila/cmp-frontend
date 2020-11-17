@@ -30,12 +30,6 @@ const MainPage = () => {
     [setDisplayId]
   );
 
-  const accordionItems = models.map((model: Model) => ({
-    id: model.id,
-    heading: model.name,
-    body: model.description,
-  }));
-
   return (
     <>
       <BreadcrumbsItem to={`/${modelsNames.url}/published-models`}>
@@ -52,7 +46,7 @@ const MainPage = () => {
             <div className="column is-4">
               <div className="box">
                 <PanelBlock
-                  items={accordionItems}
+                  items={models}
                   activeId={displayId}
                   itemClick={handleModelClick}
                   search={setSearchQuery}
