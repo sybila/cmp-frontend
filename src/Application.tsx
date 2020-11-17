@@ -134,7 +134,7 @@ const Application = () => {
                     />
                     <Route path={`${url}page`} component={Pages} />
 
-                    <PrivateRoute
+                    <Route
                       path={`${url + modelsNames.url}`}
                       component={ModelsModule}
                     />

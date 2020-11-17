@@ -8,10 +8,10 @@ import { AppState } from "reducers/GlobalReducer";
 import { loadExperiments } from "modules/experimentsRepository/actions";
 import {
   getAllExperiments,
-  getExperimentsObject
+  getExperimentsObject,
 } from "modules/experimentsRepository/selectors";
 import { ExperimentPartial } from "models/Experiment";
-import PanelBlock from "./PanelBlock";
+import PanelBlock from "components/PanelBlock";
 import ExperimentDetail from "./ExperimentDetail";
 import { ByIdObject } from "models/GenericTypes";
 
@@ -36,7 +36,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 
     this.state = {
       activeId: null,
-      searchQuery: ""
+      searchQuery: "",
     };
   }
 
@@ -49,7 +49,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
     const { experiments } = this.props;
     if (prevProps.experiments !== experiments && experiments.length) {
       this.setState({
-        activeId: experiments[0].id
+        activeId: experiments[0].id,
       });
     }
   }
@@ -67,7 +67,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
     const { activeId, searchQuery } = this.state;
 
     const experiment = experimentsById[activeId];
-    const filteredExperiments = experiments.filter(experiment =>
+    const filteredExperiments = experiments.filter((experiment) =>
       experiment.name.includes(searchQuery)
     );
     return (
@@ -86,11 +86,13 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
               <div className="column is-4">
                 <div className="box">
                   <PanelBlock
-                    experiments={filteredExperiments}
+                    items={filteredExperiments}
                     activeId={activeId}
                     itemClick={this.panelClickHandle}
                     search={this.searchHandle}
                     searchQuery={searchQuery}
+                    title={"Experiments"}
+                    emptyMsg={"No experiments found."}
                   />
                 </div>
               </div>
@@ -108,12 +110,12 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadExperiments: bindActionCreators(loadExperiments, dispatch)
+  loadExperiments: bindActionCreators(loadExperiments, dispatch),
 });
 
 const mapStateToProps = (state: AppState) => ({
   experiments: getAllExperiments(state),
-  experimentsById: getExperimentsObject(state)
+  experimentsById: getExperimentsObject(state),
 });
 
 export default connect(
