@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Link, useRouteMatch } from "react-router-dom";
 
+import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import services from "../../services";
 import { mockDataDetails } from "../mockData";
 
@@ -18,12 +20,17 @@ const BioQuantityDetail = () => {
   }, [match.params.detailId]);
 
   return detail ? (
-    <div className="section">
-      <div className="container">
-        <h2 className="title is-2">Detail of {detail.name}</h2>
-        <div className="box"></div>
+    <>
+      <BreadcrumbsItem to={`/${bioQuantitiesNames.url}/detail/${detail.id}`}>
+        {detail.name}
+      </BreadcrumbsItem>
+      <div className="section">
+        <div className="container">
+          <h2 className="title is-2">Detail of {detail.name}</h2>
+          <div className="box"></div>
+        </div>
       </div>
-    </div>
+    </>
   ) : (
     <section className="section p-b-0">
       <div className="container">
