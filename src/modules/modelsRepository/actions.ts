@@ -9,10 +9,10 @@ export const loadModels = () => {
     dispatch({
       type: MainActionTypes.LOAD_MODELS,
       payload: new Promise((resolve, reject) =>
-        service.load().then(models => {
+        service.load().then((models) => {
           resolve(modelNormalize(models));
         })
-      )
+      ),
     });
 };
 
@@ -21,7 +21,7 @@ export const loadModel = (id: number) => {
     dispatch({
       type: MainActionTypes.LOAD_MODEL,
       payload: new Promise((resolve, reject) =>
-        service.loadModel(id).then(model => resolve(model[0]))
-      )
+        service.loadModel(id).then((model) => resolve(model))
+      ),
     });
 };
