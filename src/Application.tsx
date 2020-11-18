@@ -15,11 +15,14 @@ import NotFoundPage from "scenes/NotFoundPage/";
 import UserProfilePage from "scenes/UserProfilePage";
 import Pages from "scenes/Pages";
 
-import ModelsModule from "./modules/modelsRepository/scenes/";
-import { moduleNames as modelsNames } from "./modules/modelsRepository/reducers/MainReducer";
+import ModelsModule from "modules/modelsRepository/scenes/";
+import { moduleNames as modelsNames } from "modules/modelsRepository/reducers/MainReducer";
 
-import ExperimentsModule from "./modules/experimentsRepository/scenes/";
-import { moduleNames as experimentsNames } from "./modules/experimentsRepository/reducers/MainReducer";
+import ExperimentsModule from "modules/experimentsRepository/scenes/";
+import { moduleNames as experimentsNames } from "modules/experimentsRepository/reducers/MainReducer";
+
+import BioQuantitiesModule from "modules/bioQuantities/routes";
+import { moduleNames as bioQuantitiesNames } from "modules/bioQuantities/reducers/MainReducer";
 
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
@@ -141,6 +144,11 @@ const Application = () => {
                     <Route
                       path={`${url + experimentsNames.url}`}
                       component={ExperimentsModule}
+                    />
+
+                    <Route
+                      path={`${url + bioQuantitiesNames.url}`}
+                      component={BioQuantitiesModule}
                     />
 
                     <PrivateRoute
