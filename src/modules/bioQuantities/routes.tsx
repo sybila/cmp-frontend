@@ -4,6 +4,8 @@ import { Route, Switch, RouteComponentProps } from "react-router-dom";
 import { moduleNames as bioQuantitiesNames } from "./reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
+import BioQuantitiesList from "./scenes/BioQuantitiesList";
+
 import PublicRoute from "components/PublicRoute";
 
 const BioQuantitiesRoutes = () => {
@@ -12,7 +14,12 @@ const BioQuantitiesRoutes = () => {
       <BreadcrumbsItem to={`/${bioQuantitiesNames.url}`}>
         BioQuantities
       </BreadcrumbsItem>
-      <Switch></Switch>
+      <Switch>
+        <PublicRoute
+          component={BioQuantitiesList}
+          fallback={`/${bioQuantitiesNames.url}/repository`}
+        />
+      </Switch>
     </>
   );
 };
