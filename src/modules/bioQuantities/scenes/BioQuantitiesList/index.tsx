@@ -1,5 +1,9 @@
+import Pager from "components/Pager";
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import service from "../../services";
+
+import { mockData } from "./mockData";
 
 const BioQuantitiesList = () => {
   useEffect(() => {
@@ -9,22 +13,20 @@ const BioQuantitiesList = () => {
   return (
     <div className="section">
       <div className="container">
-        <h2 className="title is-2">Experiments</h2>
-        <div className="box">
-          <p>
-            Model repository contains computational models of selected
-            biological processes relevant for cyanobacteria. Models implemented
-            on this website are manually curated, integrated within the
-            e-cyanobacterium formal Biochemical Space, and associated with
-            cross-references.{" "}
-          </p>
-
-          <p>
-            Most of the implemented models are already published, though some of
-            the models present fresh work which might be yet unpublished. All of
-            the models are available in public domain.
-          </p>
-        </div>
+        <h2 className="title is-2">List of BioQuantities</h2>
+        <Pager countOnPage={5}>
+          {mockData &&
+            mockData.map((item, i) => (
+              <div className="box variable-item" key={`note-${i}`}>
+                <strong className="m-r-5">{item.name}</strong>
+                <span className="m-r-5">({item.valueStep})</span>
+                <span>| {item.organismId}</span>
+                <Link className="button is-primary" to={`/detail`}>
+                  View data
+                </Link>
+              </div>
+            ))}
+        </Pager>
       </div>
     </div>
   );
