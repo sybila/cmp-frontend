@@ -1,5 +1,5 @@
 import React from "react";
-import profilePlaceholder from "../../assets/profile-placeholder.png";
+import Jdenticon from "react-jdenticon";
 
 import Dropdown, { Item } from "../Dropdown";
 import { UserModel } from "../../models/User";
@@ -36,15 +36,16 @@ class User extends React.PureComponent<Props, State> {
     return (
       <div className={"user-menu-item"} onClick={this.handleClick}>
         <Dropdown items={userDropdownItems}>
-          <img
-            src={user.picture ? user.picture : profilePlaceholder}
-            alt="avatar"
-          />
+          {user.picture ? (
+            <img src={user.picture} alt="avatar" />
+          ) : (
+            <Jdenticon size="48" value={`${user.name} ${user.surname}`} />
+          )}
           <div className={"info-column"}>
             <span className={"user-name"}>
               {user.name} {user.surname}
             </span>
-            <span className={"user-role"}>{/* TODO: Permissions */}</span>
+            <span className={"user-role"}>{user.type.name}</span>
           </div>
           <div className={`arrow ${isOpen ? "up" : "down"}`}></div>
         </Dropdown>
