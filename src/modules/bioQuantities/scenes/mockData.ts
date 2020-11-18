@@ -1,5 +1,5 @@
 import moment from "moment";
-import { BioQuantity } from "../../../../models/BioQuantities";
+import { BioQuantity, BioQuantityDetail } from "../../../models/BioQuantities";
 
 export const mockData: BioQuantity[] = [
   {
@@ -115,3 +115,21 @@ export const mockData: BioQuantity[] = [
     valueStep: 3,
   },
 ];
+
+export const mockDataDetails: BioQuantityDetail = {
+  id: 4,
+  name: "Testing quantity",
+  isValid: true,
+  link: "/somewhere",
+  userId: 1,
+  organismId: 2,
+  unitId: 123,
+  timeTo: moment.utc().toISOString(),
+  timeFrom: moment.utc().add(1, "hour").toISOString(),
+  valueTo: 2,
+  valueFrom: 33,
+  valueStep: 3,
+  modelUnits: [],
+  attributes: [],
+  variableValues: [],
+};
