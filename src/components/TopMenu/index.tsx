@@ -79,15 +79,15 @@ class UserUtils extends React.Component<Props> {
       // },
       {
         text: "Models",
-        to: modelsNames.url,
+        to: `/${modelsNames.url}`,
       },
       {
         text: "Experiments",
-        to: experimentsNames.url,
+        to: `/${experimentsNames.url}`,
       },
       {
         text: "BioQuantities",
-        to: bioQuantitiesNames.url,
+        to: `/${bioQuantitiesNames.url}`,
       },
       {
         text: "Support",
