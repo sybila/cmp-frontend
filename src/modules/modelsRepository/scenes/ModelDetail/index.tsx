@@ -2,7 +2,7 @@ import React from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import { RouteComponentProps, Route, Switch } from "react-router-dom";
+import { RouteComponentProps, Route, Switch, Link } from "react-router-dom";
 import PageMenuPanel from "components/PageMenuPanel";
 
 import { AppState } from "reducers/GlobalReducer";
@@ -109,7 +109,17 @@ class ModelDetail extends React.Component<Props> {
         </Switch>
       </>
     ) : (
-      <div></div>
+      <section className="section p-b-0">
+        <div className="container">
+          <div className="box ">
+            <h4 className="title is-4 m-b-10">Error</h4>
+            <div className="notification is-danger is-light">
+              <strong>Error: </strong>selected model was not found.
+            </div>
+            <Link to="/models">Return to repository</Link>
+          </div>
+        </div>
+      </section>
     );
   }
 }
