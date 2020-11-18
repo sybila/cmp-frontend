@@ -20,6 +20,10 @@ import { getUser } from "ApplicationSelectors";
 import logo from "assets/logo.svg";
 import { logout } from "ApplicationActions";
 
+import { moduleNames as bioQuantitiesNames } from "modules/bioQuantities/reducers/MainReducer";
+import { moduleNames as modelsNames } from "modules/modelsRepository/reducers/MainReducer";
+import { moduleNames as experimentsNames } from "modules/experimentsRepository/reducers/MainReducer";
+
 interface Props {
   user: UserModel;
   toggleInbox?: () => void;
@@ -75,15 +79,15 @@ class UserUtils extends React.Component<Props> {
       // },
       {
         text: "Models",
-        to: "/models",
+        to: modelsNames.url,
       },
       {
         text: "Experiments",
-        to: "/experiments",
+        to: experimentsNames.url,
       },
       {
         text: "BioQuantities",
-        to: "/numbers",
+        to: bioQuantitiesNames.url,
       },
       {
         text: "Support",
