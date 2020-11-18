@@ -5,6 +5,7 @@ import service from "../../services";
 
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import { mockData } from "../mockData";
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 const BioQuantitiesList = () => {
   useEffect(() => {
@@ -12,27 +13,32 @@ const BioQuantitiesList = () => {
   }, []);
 
   return (
-    <div className="section">
-      <div className="container">
-        <h2 className="title is-2">List of BioQuantities</h2>
-        <Pager countOnPage={5}>
-          {mockData &&
-            mockData.map((item, i) => (
-              <div className="box variable-item" key={`note-${i}`}>
-                <strong className="m-r-5">{item.name}</strong>
-                <span className="m-r-5">({item.valueStep})</span>
-                <span>| {item.organismId}</span>
-                <Link
-                  className="button is-primary"
-                  to={`/${bioQuantitiesNames.url}/detail/4`}
-                >
-                  View data
-                </Link>
-              </div>
-            ))}
-        </Pager>
+    <>
+      <BreadcrumbsItem to={`/${bioQuantitiesNames.url}/`}>
+        BioQuantities List
+      </BreadcrumbsItem>
+      <div className="section">
+        <div className="container">
+          <h2 className="title is-2">List of BioQuantities</h2>
+          <Pager countOnPage={5}>
+            {mockData &&
+              mockData.map((item, i) => (
+                <div className="box variable-item" key={`note-${i}`}>
+                  <strong className="m-r-5">{item.name}</strong>
+                  <span className="m-r-5">({item.valueStep})</span>
+                  <span>| {item.organismId}</span>
+                  <Link
+                    className="button is-primary"
+                    to={`/${bioQuantitiesNames.url}/detail/4`}
+                  >
+                    View data
+                  </Link>
+                </div>
+              ))}
+          </Pager>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
