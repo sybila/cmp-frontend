@@ -34,3 +34,9 @@ export const genericNormalize = (item: any[]) => {
     all: normalized.result,
   };
 };
+
+export interface ApiResponse<T> {
+  status: "ok" | "error";
+  code: number;
+  data: T;
+}
