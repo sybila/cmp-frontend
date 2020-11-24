@@ -1,7 +1,7 @@
 import Pager from "components/Pager";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import service from "../../services";
+import Table from "components/TableWithPagination";
 
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import { mockData } from "../mockData";
@@ -12,6 +12,34 @@ const BioQuantitiesList = () => {
     service.fetchAllBioNumbers(1, 2, 0);
   }, []);
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Organism",
+        accessor: "organism",
+      },
+      {
+        Header: "Value",
+        accessor: "value",
+      },
+    ],
+    []
+  );
+
+  const data = React.useMemo(
+    () =>
+      mockData.map((item, i) => ({
+        name: item.name,
+        value: item.valueStep,
+        organism: item.organismId,
+      })),
+    []
+  );
+
   return (
     <>
       <BreadcrumbsItem to={`/${bioQuantitiesNames.url}/`}>
@@ -20,22 +48,13 @@ const BioQuantitiesList = () => {
       <div className="section">
         <div className="container">
           <h2 className="title is-2">List of BioQuantities</h2>
-          <Pager countOnPage={5}>
-            {mockData &&
-              mockData.map((item, i) => (
-                <div className="box variable-item" key={`note-${i}`}>
-                  <strong className="m-r-5">{item.name}</strong>
-                  <span className="m-r-5">({item.valueStep})</span>
-                  <span>| {item.organismId}</span>
-                  <Link
-                    className="button is-primary"
-                    to={`/${bioQuantitiesNames.url}/detail/4`}
-                  >
-                    View data
-                  </Link>
-                </div>
-              ))}
-          </Pager>
+          <div className="columns is-full-height">
+            <div className="column">
+              <div className="box is-full-height is-padding-extended">
+                <Table data={data} columns={columns} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

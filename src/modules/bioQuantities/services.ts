@@ -30,13 +30,13 @@ const fetchAllBioNumbers = (
     });
   }
 
-  return dataService.get(`/bioquantity`, { params });
+  return dataService.get(`/bioquantities`, { params });
 };
 
 const fetchBioNumber = (
   id: number
 ): AxiosPromise<ApiResponse<BioQuantityDetail>> => {
-  return dataService.get(`/bioquantity/${id}`);
+  return dataService.get(`/bioquantities/${id}`);
 };
 
 export default {
