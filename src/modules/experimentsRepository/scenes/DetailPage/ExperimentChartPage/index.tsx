@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Visualizer from "cmp-visualizer";
 
@@ -11,11 +11,14 @@ interface RouteParams {
 }
 
 const ExperimentChartPage = () => {
+  const [inputData, setInputData] = useState<any>({});
   const params = useParams<RouteParams>();
 
   useEffect(() => {
     params.experimentId &&
-      service.fetchExperimentVisualizerData(params.experimentId);
+      service
+        .fetchExperimentVisualizerData(params.experimentId)
+        .then((data) => setInputData(data.data));
   }, [params.experimentId]);
 
   return (
@@ -29,7 +32,7 @@ const ExperimentChartPage = () => {
             <div className="column">
               <div className="box is-full-height is-padding-extended">
                 <Visualizer
-                  inputData={{}}
+                  inputData={inputData}
                   models={[{ model: true, id: "anotherModel" }]}
                   width="50%"
                 />

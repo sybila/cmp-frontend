@@ -1,5 +1,5 @@
 import dataService from "services/dataService";
-import { data } from "./scenes/DetailPage/ExperimentChartPage/data";
+
 const service = {
   fetchExperiments,
   fetchExperiment,
@@ -55,7 +55,6 @@ function fetchExperimentVisualizerData(id: number | string): Promise<any> {
   return dataService
     .get(`https://service.e-cyanobacterium.org/visualizer/0/${id}`)
     .then(({ data }) => {
-      console.log(data);
       return data;
     });
 }
