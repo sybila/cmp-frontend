@@ -67,9 +67,7 @@ const base = `/${modelsNames.url}/model-detail`;
 class ModelDetail extends React.Component<Props> {
   componentDidMount() {
     const { match } = this.props;
-    if (!this.props.getModelById((match.params as any).modelId)) {
-      this.props.loadModel((match.params as any).modelId);
-    }
+    this.props.loadModel((match.params as any).modelId);
   }
 
   render() {
