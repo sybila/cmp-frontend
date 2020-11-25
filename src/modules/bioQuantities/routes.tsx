@@ -20,11 +20,7 @@ const BioQuantitiesRoutes = () => {
           component={BioQuantitiesDetail}
           path={`/${bioQuantitiesNames.url}/detail/:detailId`}
         />
-        <PublicRoute
-          component={BioQuantitiesList}
-          alia
-          fallback={`/${bioQuantitiesNames.url}/repository`}
-        />
+        <Route component={BioQuantitiesList} />
       </Switch>
     </>
   );
