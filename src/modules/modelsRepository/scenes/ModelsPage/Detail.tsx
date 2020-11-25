@@ -22,7 +22,7 @@ const Detail = (props: Props) => {
           </tr>
         </tbody>
       </table>
-      <p>{model.description}</p>
+      <p dangerouslySetInnerHTML={{ __html: model.notes }} />
       <Link
         to={`/${modelsNames.url}/model-detail/${model.id}`}
         className="button is-primary m-t-20"
