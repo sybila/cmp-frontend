@@ -11,6 +11,7 @@ const url = Config.apiDomain;
 const dataService = axios.create({
   baseURL: url,
   timeout: 10000,
+  headers: { "Access-Control-Allow-Origin": "*" },
 });
 
 /**
