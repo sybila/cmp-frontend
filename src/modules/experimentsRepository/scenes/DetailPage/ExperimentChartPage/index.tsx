@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Visualizer from "cmp-visualizer";
 
 import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { useParams } from "react-router-dom";
 import service from "modules/experimentsRepository/services";
+import { data as mockData } from "./data";
 
 interface RouteParams {
   experimentId: string;
@@ -18,8 +19,17 @@ const ExperimentChartPage = () => {
     params.experimentId &&
       service
         .fetchExperimentVisualizerData(params.experimentId)
-        .then((data) => setInputData(data.data));
+        .then((data) =>
+          setInputData({ ...inputData, [data.data.id]: data.data })
+        );
   }, [params.experimentId]);
+
+  const models = useMemo(() => {
+    return Object.keys(inputData).map((key) => ({
+      model: inputData[key].model,
+      id: key,
+    }));
+  }, [inputData]);
 
   return (
     <>
@@ -31,11 +41,17 @@ const ExperimentChartPage = () => {
           <div className="columns is-full-height">
             <div className="column">
               <div className="box is-full-height is-padding-extended">
-                <Visualizer
-                  inputData={inputData}
-                  models={[{ model: true, id: "anotherModel" }]}
-                  width="50%"
-                />
+                {Object.keys(inputData).length ? (
+                  <Visualizer
+                    inputData={inputData}
+                    models={models}
+                    width="50%"
+                  />
+                ) : (
+                  <progress className="progress is-primary" max="100">
+                    30%
+                  </progress>
+                )}
               </div>
             </div>
           </div>
