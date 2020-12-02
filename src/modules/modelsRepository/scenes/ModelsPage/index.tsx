@@ -53,7 +53,8 @@ const MainPage = () => {
   const filters = useMemo(
     () =>
       FILTERS.filter(
-        (filter) => !filter.permission || filter.permission >= user.type.tier
+        (filter) =>
+          !filter.permission || (user && filter.permission >= user.type.tier)
       ),
     [user]
   );
