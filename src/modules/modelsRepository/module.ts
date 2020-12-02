@@ -4,7 +4,7 @@ import MainReducer, { moduleNames } from "./reducers/MainReducer";
 import { addToolbarItems } from "../administration/actions";
 
 export const Reducer = combineReducers({
-  models: MainReducer
+  models: MainReducer,
 });
 
 export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
@@ -14,25 +14,20 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
     /* Init module toolbar */
     addToolbarItems(moduleNames.url, [
       {
-        text: "Published models",
-        icon: "globe",
-        to: "/published-models"
+        text: "Models repository",
+        icon: "book",
+        to: "/",
       },
       {
-        text: "Unpublished models",
-        icon: "lock",
-        to: "/unpublished-models"
+        text: "Models info",
+        icon: "info-circle",
+        to: "/info",
       },
       {
-        text: "Your models",
-        icon: "user",
-        to: "/your-models"
+        text: "Add new model",
+        icon: "plus",
+        to: "/new",
       },
-      {
-        text: "Group models",
-        icon: "user-friends",
-        to: "/group-models"
-      }
     ])
   );
 };

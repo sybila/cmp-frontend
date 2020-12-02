@@ -19,16 +19,16 @@ class ModelScenes extends React.Component {
         </BreadcrumbsItem>
         <Switch>
           <Route
-            path={`/${modelsNames.url}/published-models`}
-            component={PublishedModelsPage}
-          />
-          <Route
             path={`/${modelsNames.url}/model-detail/:modelId`}
             component={ModelDetail}
           />
-          <PublicRoute
-            fallback={`/${modelsNames.url}/published-models`}
+          <Route
+            path={`/${modelsNames.url}/info`}
             component={ModulesMainPage}
+          />
+          <Route
+            path={`/${modelsNames.url}/`}
+            component={PublishedModelsPage}
           />
         </Switch>
       </React.Fragment>

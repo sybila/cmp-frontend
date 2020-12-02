@@ -32,7 +32,7 @@ const MainPage = () => {
 
   return (
     <>
-      <BreadcrumbsItem to={`/${modelsNames.url}/published-models`}>
+      <BreadcrumbsItem to={`/${modelsNames.url}/`}>
         Published Models
       </BreadcrumbsItem>
       <section className="section">
