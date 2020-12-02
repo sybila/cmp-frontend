@@ -62,11 +62,12 @@ const MainPage = () => {
     () =>
       models.filter(
         (model) =>
-          !selectedFilter ||
-          !selectedFilter.status ||
-          model.status === selectedFilter.status
+          model.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+          (!selectedFilter ||
+            !selectedFilter.status ||
+            model.status === selectedFilter.status)
       ),
-    [selectedFilter, models]
+    [selectedFilter, models, searchQuery]
   );
 
   const handleModelClick = useCallback(

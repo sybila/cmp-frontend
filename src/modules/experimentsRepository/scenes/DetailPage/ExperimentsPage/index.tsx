@@ -68,7 +68,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
 
     const experiment = experimentsById[activeId];
     const filteredExperiments = experiments.filter((experiment) =>
-      experiment.name.includes(searchQuery)
+      experiment.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
       <>

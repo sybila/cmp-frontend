@@ -70,6 +70,7 @@ const PanelBlock = (props: Props) => {
         <p className="panel-tabs">
           {tabs.map((tab, index) => (
             <a
+              key={"panel-tab-" + index}
               className={activePanel === index ? "is-active" : ""}
               onClick={() => handlePanelClick(tab.id, index)}
             >
