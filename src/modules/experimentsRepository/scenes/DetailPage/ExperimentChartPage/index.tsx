@@ -3,7 +3,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Visualizer from "cmp-visualizer";
 
 import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams, useRouteMatch } from "react-router-dom";
 import service from "modules/experimentsRepository/services";
 import { data as mockData } from "./data";
 
@@ -14,14 +14,21 @@ interface RouteParams {
 const ExperimentChartPage = () => {
   const [inputData, setInputData] = useState<any>({});
   const params = useParams<RouteParams>();
+  const match = useRouteMatch();
+  const location = useLocation<any>();
+
+  console.log(match, location);
 
   useEffect(() => {
     params.experimentId &&
       service
         .fetchExperimentVisualizerData(params.experimentId)
-        .then((data) =>
-          setInputData({ ...inputData, [data.data.id]: data.data })
-        );
+        .then(({ data }) => {
+          const { state } = location;
+          if (state && state.graphset && params.experimentId === data.id)
+            data.graphsets.unshift(state.graphset);
+          setInputData({ ...inputData, [data.id]: data });
+        });
   }, [params.experimentId]);
 
   const models = useMemo(() => {

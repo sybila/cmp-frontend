@@ -34,11 +34,12 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
       times: [],
       hiddenVars: [],
       minTime: 0,
-      maxTime: 0
+      maxTime: 0,
     };
 
     this.handleVarToggle = this.handleVarToggle.bind(this);
     this.handleRangeUpdate = this.handleRangeUpdate.bind(this);
+    this.handleToggleAllVars = this.handleToggleAllVars.bind(this);
   }
 
   componentDidMount() {
@@ -51,7 +52,7 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
       const times = this.getTimes;
       this.setState({
         times,
-        maxTime: times.length > 0 ? times[times.length - 1] : 0
+        maxTime: times.length > 0 ? times[times.length - 1] : 0,
       });
     }
   }
@@ -61,7 +62,7 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
       const times = this.getTimes;
       this.setState({
         times,
-        maxTime: times.length > 0 ? times[times.length - 1] : 0
+        maxTime: times.length > 0 ? times[times.length - 1] : 0,
       });
     }
   }
@@ -73,20 +74,39 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
     index === -1 ? hiddenVars.push(id) : hiddenVars.splice(index, 1);
 
     this.setState({
-      hiddenVars
+      hiddenVars,
     });
+  }
+
+  handleToggleAllVars() {
+    if (this.state.hiddenVars.length) {
+      this.setState({ hiddenVars: [] });
+    } else {
+      this.setState({
+        hiddenVars: this.props.variables.map((variable) => variable.id),
+      });
+    }
   }
 
   get getTimes() {
     return this.props.variables
-      .filter(variable => variable.values)
-      .flatMap(variable =>
-        variable.values ? variable.values.map(value => value.time) : []
+      .filter((variable) => variable.values)
+      .flatMap((variable) =>
+        variable.values ? variable.values.map((value) => value.time) : []
       )
       .sort((a, b) => a - b)
       .filter((item, pos, ary) => {
         return !pos || item != ary[pos - 1];
       });
+  }
+
+  get graphset() {
+    return {
+      name: "Selected vriables",
+      datasets: this.props.variables.map(
+        (variable) => !this.state.hiddenVars.includes(variable.id)
+      ),
+    };
   }
 
   public handleRangeUpdate(ranges) {
@@ -96,9 +116,10 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
   render() {
     const { variables } = this.props;
     const { hiddenVars, times, maxTime, minTime } = this.state;
+    const { experimentId } = this.props.match.params;
 
     const displayedVars = variables
-      ? variables.filter(variable => hiddenVars.indexOf(variable.id) === -1)
+      ? variables.filter((variable) => hiddenVars.indexOf(variable.id) === -1)
       : [];
     const lastTimeStamp = times.length > 0 ? times[times.length - 1] : 0;
 
@@ -135,12 +156,32 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
                     {variable.name}
                   </span>
                 ))}
+                {variables && variables.length ? (
+                  <span
+                    className={`tag is-rounded${
+                      hiddenVars.length ? " is-primary" : ""
+                    }`}
+                    onClick={this.handleToggleAllVars}
+                  >
+                    Toggle All
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
               <Sheet
                 vars={displayedVars}
-                times={times.filter(time => time >= minTime && time <= maxTime)}
+                times={times.filter(
+                  (time) => time >= minTime && time <= maxTime
+                )}
               />
-              <Link to="" className="button is-rounded is-light is-link m-t-20">
+              <Link
+                to={{
+                  pathname: `/experiments/repository/detail/${experimentId}/chart`,
+                  state: { graphset: this.graphset },
+                }}
+                className="button is-rounded is-light is-link m-t-20"
+              >
                 View chart for selected variables
               </Link>
             </div>
@@ -153,14 +194,14 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: AppState, ownProps) => ({
   variables: getVarsById(state, ownProps.match.params.experimentId),
-  hasValues: state.module_experiments.variables.hasValues
+  hasValues: state.module_experiments.variables.hasValues,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadVariablesDetails: bindActionCreators(
     loadExperimentVariablesValues,
     dispatch
-  )
+  ),
 });
 
 export default connect(
