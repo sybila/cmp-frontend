@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,6 +8,11 @@ type Item = {
   [key: string]: any;
 };
 
+export interface PanelTab {
+  id: number;
+  caption: string;
+}
+
 interface Props {
   items: Item[];
   activeId?: number;
@@ -16,9 +21,14 @@ interface Props {
   searchQuery: string;
   title: string;
   emptyMsg?: string;
+
+  tabs?: PanelTab[];
+  onTabClick?: (id: number) => void;
 }
 
 const PanelBlock = (props: Props) => {
+  const [activePanel, setActivePanel] = useState(0);
+
   const {
     title,
     emptyMsg,
@@ -27,7 +37,17 @@ const PanelBlock = (props: Props) => {
     itemClick,
     search,
     searchQuery,
+    tabs,
+    onTabClick,
   } = props;
+
+  const handlePanelClick = useCallback(
+    (id: number, i: number) => {
+      onTabClick && onTabClick(id);
+      setActivePanel(i);
+    },
+    [onTabClick]
+  );
 
   return (
     <nav className="panel is-primary">
@@ -46,6 +66,20 @@ const PanelBlock = (props: Props) => {
           </span>
         </p>
       </div>
+      {tabs && tabs.length ? (
+        <p className="panel-tabs">
+          {tabs.map((tab, index) => (
+            <a
+              className={activePanel === index ? "is-active" : ""}
+              onClick={() => handlePanelClick(tab.id, index)}
+            >
+              {tab.caption}
+            </a>
+          ))}
+        </p>
+      ) : (
+        ""
+      )}
       <div className="panel-items-block">
         {items && items.length ? (
           items.map((item: Item) => (
