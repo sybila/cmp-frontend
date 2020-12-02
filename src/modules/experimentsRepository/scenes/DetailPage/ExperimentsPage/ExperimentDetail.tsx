@@ -33,7 +33,7 @@ const ExperimentDetail = (props: Props) => {
       </table>
       <p>{experiment.description}</p>
       <Link
-        to={`/${experimentsNames.url}/repository/detail/${experiment.id}`}
+        to={`/${experimentsNames.url}/detail/${experiment.id}`}
         className="button is-primary m-t-20"
       >
         View detail

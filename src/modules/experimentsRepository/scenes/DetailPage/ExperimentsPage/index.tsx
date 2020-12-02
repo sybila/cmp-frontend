@@ -72,7 +72,7 @@ class ExperimentsRepository extends React.PureComponent<Props, State> {
     );
     return (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
+        <BreadcrumbsItem to={`/${experimentsNames.url}/`}>
           Repository
         </BreadcrumbsItem>
         <section className="section">

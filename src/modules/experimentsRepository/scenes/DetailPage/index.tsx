@@ -74,7 +74,7 @@ class DetailPage extends React.PureComponent<Props, State> {
     const { experimentsById, match } = this.props;
     const currentExperiment = experimentsById[match.params.experimentId];
 
-    const base = `/${experimentsNames.url}/repository/detail`;
+    const base = `/${experimentsNames.url}/detail`;
     const routeLinkBase = `${base}${
       currentExperiment ? `/${currentExperiment.id}` : ""
     }`;
@@ -121,7 +121,7 @@ class DetailPage extends React.PureComponent<Props, State> {
 
     return currentExperiment ? (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
+        <BreadcrumbsItem to={`/${experimentsNames.url}/detail`}>
           {currentExperiment.name}
         </BreadcrumbsItem>
         <section className="section p-b-0">

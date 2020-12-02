@@ -8,7 +8,7 @@ class AddExperiment extends React.PureComponent {
   render() {
     return (
       <>
-        <BreadcrumbsItem to={`/${experimentsNames.url}/repository/detail`}>
+        <BreadcrumbsItem to={`/${experimentsNames.url}/detail`}>
           New experiment
         </BreadcrumbsItem>
         <div className="section">

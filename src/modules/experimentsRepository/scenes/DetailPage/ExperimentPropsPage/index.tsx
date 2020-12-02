@@ -33,7 +33,7 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
     return currentExperiment ? (
       <>
         <BreadcrumbsItem
-          to={`/${experimentsNames.url}/repository/detail/${currentExperiment.id}`}
+          to={`/${experimentsNames.url}/detail/${currentExperiment.id}`}
         >
           Properties
         </BreadcrumbsItem>
@@ -84,7 +84,7 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
                               key={`${index}-exp-in-relation`}
                             >
                               <Link
-                                to={`/${experimentsNames.url}/repository/detail/${experiment.id}`}
+                                to={`/${experimentsNames.url}/detail/${experiment.id}`}
                               >
                                 {experiment.name}
                               </Link>
@@ -121,7 +121,7 @@ class ExperimentPropsPage extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  experimentsById: getExperimentsObject(state)
+  experimentsById: getExperimentsObject(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({});

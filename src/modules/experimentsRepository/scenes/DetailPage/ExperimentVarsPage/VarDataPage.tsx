@@ -39,7 +39,7 @@ class VarDataPage extends React.PureComponent<Props> {
     return (
       <>
         <BreadcrumbsItem
-          to={`/${experimentsNames.url}/repository/detail/:experimentId/variables/:variableId/data`}
+          to={`/${experimentsNames.url}/detail/:experimentId/variables/:variableId/data`}
         >
           {currentVar.name}
         </BreadcrumbsItem>
@@ -61,11 +61,11 @@ class VarDataPage extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: AppState, ownProps) => ({
-  variables: getVarsByIdObject(state, ownProps.match.params.experimentId)
+  variables: getVarsByIdObject(state, ownProps.match.params.experimentId),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadVariableDetails: bindActionCreators(loadExperimentVariable, dispatch)
+  loadVariableDetails: bindActionCreators(loadExperimentVariable, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VarDataPage);

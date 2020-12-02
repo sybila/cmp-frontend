@@ -26,12 +26,8 @@ class ExperimentsScenes extends React.Component {
         </BreadcrumbsItem>
         <Switch>
           <Route
-            path={`/${experimentsNames.url}/repository/detail/:experimentId`}
+            path={`/${experimentsNames.url}/detail/:experimentId`}
             component={DetailPage}
-          />
-          <Route
-            path={`/${experimentsNames.url}/repository`}
-            component={ExperimentsRepository}
           />
           <Route
             path={`/${experimentsNames.url}/new`}
@@ -39,7 +35,12 @@ class ExperimentsScenes extends React.Component {
           />
           <PublicRoute
             component={ExperimentsMainPage}
-            fallback={`/${experimentsNames.url}/repository`}
+            path={`/${experimentsNames.url}/info`}
+            fallback={`/${experimentsNames.url}/`}
+          />
+          <Route
+            path={`/${experimentsNames.url}/`}
+            component={ExperimentsRepository}
           />
         </Switch>
       </React.Fragment>

@@ -49,7 +49,7 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
                   <span>| {item.type}</span>
                   <Link
                     className="button is-primary"
-                    to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/variables/${item.id}/data`}
+                    to={`/${experimentsNames.url}/detail/${match.params.experimentId}/variables/${item.id}/data`}
                   >
                     View data
                   </Link>
@@ -63,13 +63,13 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
     return (
       <>
         <BreadcrumbsItem
-          to={`/${experimentsNames.url}/repository/detail/${match.params.experimentId}/variables`}
+          to={`/${experimentsNames.url}/detail/${match.params.experimentId}/variables`}
         >
           Variables
         </BreadcrumbsItem>
         <Switch>
           <Route
-            path={`/${experimentsNames.url}/repository/detail/:experimentId/variables/:variableId/data`}
+            path={`/${experimentsNames.url}/detail/:experimentId/variables/:variableId/data`}
             component={VarDataPage}
           />
 
@@ -82,12 +82,12 @@ class ExperimentVarsPage extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: AppState, ownProps) => {
   return {
-    variables: getVarsById(state, ownProps.match.params.experimentId)
+    variables: getVarsById(state, ownProps.match.params.experimentId),
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadVariables: bindActionCreators(loadExperimentVars, dispatch)
+  loadVariables: bindActionCreators(loadExperimentVars, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExperimentVarsPage);

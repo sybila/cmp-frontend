@@ -40,7 +40,7 @@ const ExperimentChartPage = () => {
 
   return (
     <>
-      <BreadcrumbsItem to={`/${experimentsNames.url}/repository`}>
+      <BreadcrumbsItem to={`/${experimentsNames.url}/`}>
         View chart
       </BreadcrumbsItem>
       <section className="section">

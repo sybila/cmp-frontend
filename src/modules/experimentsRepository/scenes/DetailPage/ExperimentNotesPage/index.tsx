@@ -93,7 +93,7 @@ const ExperimentNotesPage = (props: Props) => {
   return (
     <>
       <BreadcrumbsItem
-        to={`/${experimentsNames.url}/repository/detail/${params.experimentId}/notes`}
+        to={`/${experimentsNames.url}/detail/${params.experimentId}/notes`}
       >
         Notes
       </BreadcrumbsItem>

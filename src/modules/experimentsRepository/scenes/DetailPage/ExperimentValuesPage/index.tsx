@@ -126,7 +126,7 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
     return (
       <>
         <BreadcrumbsItem
-          to={`/${experimentsNames.url}/repository/detail/:experimentId/variables/:variableId/data`}
+          to={`/${experimentsNames.url}/detail/:experimentId/variables/:variableId/data`}
         >
           Values
         </BreadcrumbsItem>
@@ -177,7 +177,7 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
               />
               <Link
                 to={{
-                  pathname: `/experiments/repository/detail/${experimentId}/chart`,
+                  pathname: `/experiments/detail/${experimentId}/chart`,
                   state: { graphset: this.graphset },
                 }}
                 className="button is-rounded is-light is-link m-t-20"

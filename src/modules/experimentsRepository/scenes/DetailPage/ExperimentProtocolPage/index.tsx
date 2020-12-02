@@ -34,7 +34,7 @@ class ExperimentProtocolPage extends React.PureComponent<Props, State> {
     return currentExperiment ? (
       <>
         <BreadcrumbsItem
-          to={`/${experimentsNames.url}/repository/detail/${currentExperiment.id}`}
+          to={`/${experimentsNames.url}/detail/${currentExperiment.id}`}
         >
           Protocol
         </BreadcrumbsItem>
@@ -58,7 +58,7 @@ class ExperimentProtocolPage extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  experimentsById: getExperimentsObject(state)
+  experimentsById: getExperimentsObject(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({});
