@@ -15,7 +15,17 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
       {
         text: "BioQuantities list",
         icon: "list",
-        to: "/",
+        to: "/list",
+      },
+      {
+        text: "BioQuantities dashboard",
+        icon: "th-large",
+        to: "/dashboard",
+      },
+      {
+        text: "BioQuantities info",
+        icon: "info-circle",
+        to: "/info",
       },
     ])
   );

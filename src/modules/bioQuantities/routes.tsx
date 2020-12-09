@@ -8,6 +8,7 @@ import BioQuantitiesList from "./scenes/BioQuantitiesList";
 import BioQuantitiesDetail from "./scenes/BioQuantityDetail";
 
 import PublicRoute from "components/PublicRoute";
+import ModuleInfo from "./scenes/ModuleInfo";
 
 const BioQuantitiesRoutes = () => {
   return (
@@ -20,7 +21,20 @@ const BioQuantitiesRoutes = () => {
           component={BioQuantitiesDetail}
           path={`/${bioQuantitiesNames.url}/detail/:detailId`}
         />
-        <Route component={BioQuantitiesList} />
+        <Route
+          component={ModuleInfo}
+          path={`/${bioQuantitiesNames.url}/info`}
+        />
+        <Route
+          component={BioQuantitiesList}
+          path={`/${bioQuantitiesNames.url}/list`}
+        />
+
+        <PublicRoute
+          path={`/${bioQuantitiesNames.url}/`}
+          to={`/${bioQuantitiesNames.url}/list`}
+          fallback={`/${bioQuantitiesNames.url}/info`}
+        />
       </Switch>
     </>
   );
