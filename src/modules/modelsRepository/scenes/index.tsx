@@ -27,8 +27,13 @@ class ModelScenes extends React.Component {
             component={ModulesMainPage}
           />
           <Route
-            path={`/${modelsNames.url}/`}
+            path={`/${modelsNames.url}/repository`}
             component={PublishedModelsPage}
+          />
+          <PublicRoute
+            path={`/${modelsNames.url}/`}
+            to={`/${modelsNames.url}/repository`}
+            fallback={`/${modelsNames.url}/info`}
           />
         </Switch>
       </React.Fragment>

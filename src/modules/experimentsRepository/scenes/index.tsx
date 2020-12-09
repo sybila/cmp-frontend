@@ -33,14 +33,18 @@ class ExperimentsScenes extends React.Component {
             path={`/${experimentsNames.url}/new`}
             component={AddExperiment}
           />
-          <PublicRoute
+          <Route
             component={ExperimentsMainPage}
             path={`/${experimentsNames.url}/info`}
-            fallback={`/${experimentsNames.url}/`}
           />
           <Route
-            path={`/${experimentsNames.url}/`}
+            path={`/${experimentsNames.url}/repository`}
             component={ExperimentsRepository}
+          />
+          <PublicRoute
+            path={`/${experimentsNames.url}/`}
+            to={`/${experimentsNames.url}/repository`}
+            fallback={`/${experimentsNames.url}/info`}
           />
         </Switch>
       </React.Fragment>

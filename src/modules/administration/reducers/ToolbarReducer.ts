@@ -8,6 +8,7 @@ export interface ToolbarItem {
   text: string;
   icon: string;
   to: string;
+  permission?: number;
 }
 
 export interface ToolbarAction extends Action {
@@ -23,7 +24,7 @@ interface ToolbarState {
 }
 
 export const ActionTypes = {
-  MERGE_TOOLBAR_ITEMS: typeGenerator(actionsPrefix, "MERGE_TOOLBAR_ITEMS")
+  MERGE_TOOLBAR_ITEMS: typeGenerator(actionsPrefix, "MERGE_TOOLBAR_ITEMS"),
 };
 
 const initialState: ToolbarState = {};
@@ -36,9 +37,9 @@ const actionHandler = {
     ...state,
     [`${action.id}`]: {
       id: action.id,
-      items: action.items
-    }
-  })
+      items: action.items,
+    },
+  }),
 };
 
 const ToolbarReducer = reducerGenerator(

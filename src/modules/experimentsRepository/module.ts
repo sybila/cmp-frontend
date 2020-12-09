@@ -4,6 +4,7 @@ import MainReducer, { moduleNames } from "./reducers/MainReducer";
 import NotesReducer from "./reducers/NotesReducer";
 import VarsReducer from "./reducers/VarsReducer";
 import { addToolbarItems } from "../administration/actions";
+import config from "config";
 
 export const Reducer = combineReducers({
   experiments: MainReducer,
@@ -19,7 +20,12 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
       {
         text: "Experiments repository",
         icon: "book",
-        to: "/",
+        to: "/repository",
+      },
+      {
+        text: "Experiments dashboard",
+        icon: "th-large",
+        to: "/dashboard",
       },
       {
         text: "Experiments info",
@@ -30,6 +36,7 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
         text: "Add new experiment",
         icon: "plus",
         to: "/new",
+        permission: config.permissions.REGISTERED,
       },
     ])
   );

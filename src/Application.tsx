@@ -53,14 +53,12 @@ const MasterPage = (props: any) => {
   const user = useSelector(getUser, isEqual);
 
   return (
-    <div className={`theme-default app-wrapper${user ? " logged-in" : ""}`}>
+    <div className={`theme-default app-wrapper logged-in`}>
       <PrivateComponent>
         <Inbox />
       </PrivateComponent>
       <Portal>
-        <PrivateComponent>
-          <Toolbar />
-        </PrivateComponent>
+        <Toolbar />
       </Portal>
 
       <div className="columns is-mobile is-gapless">

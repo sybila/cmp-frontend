@@ -6,16 +6,18 @@ import { AppState } from "reducers/GlobalReducer";
 
 class PublicRoute extends React.Component<any> {
   render() {
-    const { component, fallback, user, ...rest } = this.props;
-    const Component = component;
+    const { fallback, user, to, path } = this.props;
 
     return (
       <React.Fragment>
         <Route
-          {...rest}
+          path={path}
+          exact
           render={(props) =>
             user ? (
-              <Component {...props} />
+              <Redirect
+                to={{ pathname: to, state: { from: props.location } }}
+              />
             ) : (
               <Redirect
                 to={{ pathname: fallback, state: { from: props.location } }}
