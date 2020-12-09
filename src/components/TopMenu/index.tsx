@@ -90,10 +90,6 @@ class UserUtils extends React.Component<Props> {
         to: `/${bioQuantitiesNames.url}`,
       },
       {
-        text: "Support",
-        to: "/page/support",
-      },
-      {
         text: "About us",
         to: "/page/about-us",
       },
