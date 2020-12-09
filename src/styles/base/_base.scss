@@ -96,12 +96,30 @@ h2 {
 // TODO: move to hero styles
 
 .landing-hero {
-  padding-top: 8rem;
+  padding-top: 4rem;
+
+  p {
+    width: 50%;
+  }
 
   .lead {
     font-size: 1.4rem;
-    width: 50%;
     margin: 2rem 0;
+  }
+
+  .image {
+    float: right;
+    max-width: 460px;
+    width: 40%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .cta {
+    margin-top: 2rem;
   }
 }
 
