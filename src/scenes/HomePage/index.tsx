@@ -8,6 +8,7 @@ import { AppState } from "reducers/GlobalReducer";
 import Dashboard from "modules/administration/scenes/Dashboard";
 
 import HeroImg from "assets/cmp-hero-img.png";
+import { Link } from "react-router-dom";
 
 interface Props {
   user: UserModel;
@@ -47,9 +48,13 @@ class LoginPage extends React.Component<Props> {
             communicate with each other in specific ways concerning their
             competence defined by their functionalities.
           </p>
-          <a className={"btn btn-primary btn-lg cta"} href="/" role="button">
+          <Link
+            className={"btn btn-primary btn-lg cta"}
+            to="/page/about-us"
+            role="button"
+          >
             About us
-          </a>
+          </Link>
         </div>
       </div>
     ) : (
