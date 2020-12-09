@@ -48,7 +48,7 @@ class LoginPage extends React.Component<Props> {
             competence defined by their functionalities.
           </p>
           <a className={"btn btn-primary btn-lg cta"} href="/" role="button">
-            Learn more
+            About us
           </a>
         </div>
       </div>

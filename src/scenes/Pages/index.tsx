@@ -1,8 +1,10 @@
 import React, { Suspense } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import NotFoundPage from "scenes/NotFoundPage";
 
 const DataUsePolicy = React.lazy(() => import("./DataUsePolicy"));
 const TermsAndConditions = React.lazy(() => import("./TermsAndConditions"));
+const AboutUs = React.lazy(() => import("./AboutUs"));
 
 const Pages = () => {
   const match = useRouteMatch();
@@ -21,6 +23,8 @@ const Pages = () => {
                 path={`${match.url}/terms-and-conditions`}
                 component={TermsAndConditions}
               />
+              <Route path={`${match.url}/about-us`} component={AboutUs} />
+              <Route component={NotFoundPage} />
             </Switch>
           </Suspense>
         </div>

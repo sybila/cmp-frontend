@@ -91,11 +91,11 @@ class UserUtils extends React.Component<Props> {
       },
       {
         text: "Support",
-        to: "/support",
+        to: "/page/support",
       },
       {
         text: "About us",
-        to: "/about-us",
+        to: "/page/about-us",
       },
     ];
 
