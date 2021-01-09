@@ -3,6 +3,7 @@ import { userCookies } from "../cookies";
 import { LoginResponse, RegisterPayload, UserModel } from "models/User";
 import { AxiosResponse, AxiosPromise } from "axios";
 import Config from "../../config";
+import { ApiResponse } from "models/GenericTypes";
 
 const userService = {
   login,
@@ -15,6 +16,8 @@ const userService = {
   edit,
   sendPasswordRenewal,
   submitRenewal,
+  getAllUsers,
+  getUser,
 };
 
 function login(
@@ -76,8 +79,17 @@ function edit(values: RegisterPayload, id: number) {
 function confirmEmail(email: string, id: string) {
   return dataService.get(`/users/${email}/${id}`);
 }
+
 function getCurrentUser(): AxiosPromise<AxiosResponse<UserModel>> {
   return dataService.get("/user");
+}
+
+function getUser(id: number): AxiosPromise<ApiResponse<UserModel>> {
+  return dataService.get(`/users/${id}`);
+}
+
+function getAllUsers(): AxiosPromise<UserModel[]> {
+  return dataService.get("/users");
 }
 
 function resendConfirmationMail() {
