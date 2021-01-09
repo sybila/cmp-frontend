@@ -1,0 +1,14 @@
+.cards-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.cards-list {
+  a:hover {
+    text-decoration: none;
+    & > .card {
+      background-color: #f9f9f9;
+      cursor: pointer;
+    }
+  }
+}
