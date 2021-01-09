@@ -10,7 +10,9 @@ import { loadModel } from "../../actions";
 import { getModelById } from "../../selectors";
 import { Model as ModelType } from "models/Model";
 import { moduleNames as modelsNames } from "../../reducers/MainReducer";
+
 import Model from "./Model";
+import Components from "./Components";
 
 import { hasPermission } from "ApplicationSelectors";
 import Config from "config";
@@ -33,6 +35,7 @@ const routes = [
   {
     caption: "Components",
     to: "/components",
+    component: Components,
     order: 5,
     exact: true,
   },
@@ -102,6 +105,7 @@ class ModelDetail extends React.Component<Props> {
               path={`${routeBase}${route.to}`}
               component={route.component}
               key={`model-detail-${i}`}
+              exact
             />
           ))}
         </Switch>
