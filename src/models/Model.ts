@@ -13,6 +13,20 @@ export interface Model {
   description: string;
 }
 
+export interface ModelCompartmentPartial {
+  id: number;
+  name: string;
+}
+export interface ModelCompartment extends ModelCompartmentPartial {
+  sbmlId: string;
+  sboTerm: string;
+  notes: string;
+  annotation: string;
+  spatialDimensions: number;
+  size: number;
+  isConstant: number;
+}
+
 export const modelNormalize = (models: any[]) => {
   const modelsSchema = new schema.Entity("models", undefined, {
     idAttribute: "id",
