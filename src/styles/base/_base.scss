@@ -319,19 +319,6 @@ h2.module-heading {
     }
   }
 
-  .card-header {
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0.75rem 0.25rem;
-    font-weight: bold;
-
-    .arrow {
-      float: right;
-      border-width: 0 3px 3px 0;
-    }
-  }
-
   .show {
     .arrow {
       transform: rotate(-135deg) translate(-7px, -7px);
