@@ -37,31 +37,26 @@ const routes = [
     to: "/components",
     component: Components,
     order: 5,
-    exact: true,
   },
   {
     caption: "Reactions",
     to: "/reactions",
     order: 5,
-    exact: true,
   },
   {
     caption: "Parameters",
     to: "/parameters",
     order: 5,
-    exact: true,
   },
   {
     caption: "Simulation",
     to: "/simulation",
     order: 5,
-    exact: true,
   },
   {
     caption: "Analysis",
     to: "/analysis",
     order: 5,
-    exact: true,
   },
 ];
 
@@ -105,7 +100,7 @@ class ModelDetail extends React.Component<Props> {
               path={`${routeBase}${route.to}`}
               component={route.component}
               key={`model-detail-${i}`}
-              exact
+              exact={route.exact}
             />
           ))}
         </Switch>
