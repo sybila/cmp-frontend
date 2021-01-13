@@ -1,5 +1,5 @@
 import { useApi } from "hooks/useApi";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Link, useRouteMatch } from "react-router-dom";
 
@@ -17,8 +17,22 @@ const Components = () => {
     [modelId]
   );
 
+  const [species, setSpecies] = useState({});
+
   const [compartmentsList] = useApi(
     useCallback(() => api.loadCompartments(parseInt(modelId, 10)), [modelId])
+  );
+
+  const handleOpen = useCallback(
+    (id: number, open: boolean) => {
+      console.log(true);
+      if (open && !species[id]) {
+        api.loadCompartmentDetail(modelId, id).then(({ data: { data } }) => {
+          setSpecies({ ...species, [id]: data.species });
+        });
+      }
+    },
+    [species]
   );
 
   return (
@@ -28,7 +42,7 @@ const Components = () => {
           <div className="columns">
             <div className="column">
               <p className="subtitle is-6 is-uppercase">Compartments</p>
-              <List>
+              <List isTree>
                 {compartmentsList &&
                   compartmentsList.map((compartment) => (
                     <Card
@@ -37,18 +51,22 @@ const Components = () => {
                           {compartment.name}
                         </Link>
                       }
+                      onOpen={(state) => handleOpen(compartment.id, state)}
                     >
-                      {/* <List>
-                        {compartment.species.map((compartment) => (
-                          <Card
-                            headerTitle={
-                              <Link to={`${url}/compartment/${compartment.id}`}>
-                                {compartment.name}
-                              </Link>
-                            }
-                          />
-                        ))}
-                      </List> */}
+                      {species[compartment.id] && (
+                        <List>
+                          {species[compartment.id].map((specie) => (
+                            <Card
+                              disableToggle
+                              headerTitle={
+                                <Link to={`${url}/specie/${specie.id}`}>
+                                  {specie.name}
+                                </Link>
+                              }
+                            />
+                          ))}
+                        </List>
+                      )}
                     </Card>
                   ))}
               </List>
