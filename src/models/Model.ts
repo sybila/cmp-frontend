@@ -13,7 +13,7 @@ export interface Model {
   description: string;
 }
 
-export interface SpeciesPartial {
+export interface EntityPartial {
   id: number;
   name: string;
 }
@@ -23,10 +23,7 @@ export interface RulePartial {
   equation: string;
 }
 
-export interface ModelCompartmentPartial {
-  id: number;
-  name: string;
-}
+export interface ModelCompartmentPartial extends EntityPartial {}
 export interface ModelCompartment extends ModelCompartmentPartial {
   sbmlId: string;
   sboTerm: string;
@@ -42,6 +39,24 @@ export interface ModelCompartmentExtended extends ModelCompartment {
   reactions: any[]; // TODO: Add interface for Reaction
   rules: RulePartial[];
   unitDefinitions: any[]; // TODO: Add interface for UnitDefinition
+}
+
+export interface ReactionItemPartial extends EntityPartial {}
+export interface SpeciesPartial extends EntityPartial {}
+export interface Species {
+  id: number;
+  name: string;
+  metaId: string;
+  sbmlId: string;
+  sboTerm: string;
+  annotation: string;
+  notes: string;
+  initialExpression: string;
+  hasOnlySubstanceUnits: boolean;
+  isConstant: boolean;
+  boundaryCondition: string;
+  reactionItems: ReactionItemPartial[];
+  rules: RulePartial[];
 }
 
 export const modelNormalize = (models: any[]) => {
