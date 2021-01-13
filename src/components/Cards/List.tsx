@@ -1,7 +1,17 @@
 import React from "react";
+import clsx from "clsx";
 
-const List = ({ children }) => {
-  return <div className="cards-list">{children}</div>;
+interface Props {
+  children?: React.ReactNode;
+  isTree?: boolean;
+}
+
+const List = ({ children, isTree }: Props) => {
+  return (
+    <div className={clsx({ "cards-list": true, "cards-tree": isTree })}>
+      {children}
+    </div>
+  );
 };
 
 export default List;
