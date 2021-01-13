@@ -25,13 +25,15 @@ const Model = (props: Props) => {
       <section className="section p-b-0">
         <div className="container">
           <div className="box ">
-            {author && (
-              <p>
-                Author: {author.name} {author.surname}
-              </p>
-            )}
             <p>{model.description}</p>
             <p dangerouslySetInnerHTML={{ __html: model.notes }} />
+            {author && (
+              <p>
+                <strong>
+                  Author: {author.name} {author.surname}
+                </strong>
+              </p>
+            )}
           </div>
         </div>
       </section>

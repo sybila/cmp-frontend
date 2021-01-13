@@ -13,6 +13,18 @@ export interface Model {
   description: string;
 }
 
+export interface ModelDetail extends Model {
+  compartments: ModelCompartmentPartial[];
+  constraints: any[]; // TODO: add proper type
+  events: any[]; // TODO: add proper type
+  functionDefinitions: any[]; // TODO: add proper type
+  initialAssignments: any[]; // TODO: add proper type
+  parameters: any[]; // TODO: add proper type
+  reactions: ReactionItemPartial[];
+  rules: RulePartial[];
+  unitDefinition: UnitDefinitionPartial[];
+}
+
 export interface EntityPartial {
   id: number;
   name: string;
@@ -43,6 +55,7 @@ export interface ModelCompartmentExtended extends ModelCompartment {
 
 export interface ReactionItemPartial extends EntityPartial {}
 export interface SpeciesPartial extends EntityPartial {}
+export interface UnitDefinitionPartial extends EntityPartial {}
 export interface Species {
   id: number;
   name: string;
