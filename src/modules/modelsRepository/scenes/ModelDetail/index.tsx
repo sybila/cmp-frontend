@@ -17,6 +17,7 @@ import Components from "./Components";
 import { hasPermission } from "ApplicationSelectors";
 import Config from "config";
 import { sortBy } from "lodash";
+import Parameters from "./Parameters";
 
 interface Props extends RouteComponentProps {
   loadModel: typeof loadModel;
@@ -29,29 +30,30 @@ const routes = [
     caption: "Model",
     to: "",
     component: Model,
-    order: 5,
+    order: 0,
     exact: true,
   },
   {
     caption: "Components",
     to: "/components",
     component: Components,
-    order: 5,
-  },
-  {
-    caption: "Reactions",
-    to: "/reactions",
-    order: 5,
+    order: 1,
   },
   {
     caption: "Parameters",
     to: "/parameters",
-    order: 5,
+    order: 2,
+    component: Parameters,
+  },
+  {
+    caption: "Reactions",
+    to: "/reactions",
+    order: 3,
   },
   {
     caption: "Simulation",
     to: "/simulation",
-    order: 5,
+    order: 4,
   },
   {
     caption: "Analysis",
