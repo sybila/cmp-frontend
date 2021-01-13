@@ -1,5 +1,5 @@
 .cards-list {
-  max-height: 600px;
+  max-height: 430px;
   overflow-y: auto;
 }
 
@@ -10,5 +10,15 @@
       background-color: #f9f9f9;
       cursor: pointer;
     }
+  }
+}
+
+.cards-tree {
+  .card-content {
+    padding: 0 0 0 1.5rem;
+  }
+
+  .cards-list {
+    max-height: initial;
   }
 }
