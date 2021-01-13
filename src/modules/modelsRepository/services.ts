@@ -1,6 +1,10 @@
 import { AxiosPromise } from "axios";
 import { ApiResponse } from "models/GenericTypes";
-import { ModelCompartment, ModelCompartmentExtended } from "models/Model";
+import {
+  ModelCompartment,
+  ModelCompartmentExtended,
+  Species,
+} from "models/Model";
 import dataService from "services/dataService";
 
 const service = {
@@ -8,6 +12,7 @@ const service = {
   loadModel,
   loadCompartments,
   loadCompartmentDetail,
+  loadSpecieDetail,
 };
 
 // REVIEW: Refactor based on API
@@ -30,6 +35,16 @@ function loadCompartmentDetail(
   compartmentId: number | string
 ): AxiosPromise<ApiResponse<ModelCompartmentExtended>> {
   return dataService.get(`/models/${modelId}/compartments/${compartmentId}`);
+}
+
+function loadSpecieDetail(
+  modelId: number | string,
+  compartmentId: number | string,
+  specieId: number | string
+): AxiosPromise<ApiResponse<Species>> {
+  return dataService.get(
+    `/models/${modelId}/compartments/${compartmentId}/species/${specieId}`
+  );
 }
 
 export default service;
