@@ -59,7 +59,9 @@ const Components = () => {
                             <Card
                               disableToggle
                               headerTitle={
-                                <Link to={`${url}/specie/${specie.id}`}>
+                                <Link
+                                  to={`${url}/compartment/${compartment.id}/species/${specie.id}`}
+                                >
                                   {specie.name}
                                 </Link>
                               }
