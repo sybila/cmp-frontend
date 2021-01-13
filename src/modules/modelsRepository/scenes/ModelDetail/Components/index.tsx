@@ -5,6 +5,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { moduleNames } from "../../../reducers/MainReducer";
 import { default as Main } from "./Components";
 import Compartment from "./Compartment";
+import Species from "./Species";
 
 const Components = () => {
   const {
@@ -20,6 +21,10 @@ const Components = () => {
     <>
       <BreadcrumbsItem to={url}>Components</BreadcrumbsItem>
       <Switch>
+        <Route
+          path={`${path}/compartment/:compartmentId/species/:speciesId`}
+          component={Species}
+        />
         <Route
           path={`${path}/compartment/:compartmentId`}
           component={Compartment}
