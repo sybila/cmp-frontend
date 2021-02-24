@@ -44,7 +44,7 @@ const BioQuantitiesList = () => {
       sort?: sortType,
       overwrite = false
     ) => {
-      service
+      return service
         .fetchAllBioNumbers(page, pageSize, 0, search, sort)
         .then(({ data: { data } }) => {
           if (overwrite) {
@@ -56,10 +56,6 @@ const BioQuantitiesList = () => {
     },
     [setBioQuantities]
   );
-
-  useEffect(() => {
-    handleFetch(1);
-  }, []);
 
   const handleRefetch: Refetch = useCallback(
     (page, pageSize, search, sort) => {
