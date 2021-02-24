@@ -22,7 +22,7 @@ type Props = {
   data: object[];
   columns: Column[];
   pageSize?: number; // default: 10
-  fetchNext?: (page: number) => void;
+  fetchNext?: (page: number) => Promise<void>;
   refetch: Refetch;
 };
 
@@ -153,7 +153,9 @@ const Table = ({ columns, data, pageSize = 10, fetchNext, refetch }: Props) => {
         <a
           className="pagination-next"
           onClick={() =>
-            canNextPage ? nextPage() : fetchNext && fetchNext(pageIndex + 1)
+            canNextPage
+              ? nextPage()
+              : fetchNext && fetchNext(pageIndex + 2).then(nextPage)
           }
         >
           Next
