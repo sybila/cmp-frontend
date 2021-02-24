@@ -4,6 +4,7 @@ import Table, { Refetch } from "components/TableWithPagination";
 
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import { Link } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 const COLUMNS = [
@@ -12,6 +13,9 @@ const COLUMNS = [
     accessor: "name",
     search: true,
     sort: true,
+    Cell: ({ value, row }) => (
+      <Link to={`/${bioQuantitiesNames.url}/detail/${row.id}`}>{value}</Link>
+    ),
   },
   {
     Header: "Organism ID",
