@@ -16,6 +16,7 @@ type Column = {
   accessor: string;
   search?: boolean;
   sort?: boolean;
+  Cell?: Function;
 };
 
 type Props = {
