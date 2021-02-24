@@ -1,4 +1,3 @@
-import Pager from "components/Pager";
 import React, { useEffect } from "react";
 import service from "../../services";
 import Table from "components/TableWithPagination";

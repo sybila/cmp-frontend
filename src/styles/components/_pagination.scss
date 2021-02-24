@@ -1,43 +1,46 @@
 .pagination-wrapper {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 
-    .pagination {
-        width: 40%;
+  .pagination {
+    width: 40%;
 
-        ul.pagination-list {
-            margin: 0;
-        }
+    ul.pagination-list {
+      margin: 0;
     }
+  }
 }
 
 .content {
-    .pagination-wrapper {
-        li + li {
-            margin-top: 0;
-        }
+  .pagination-wrapper {
+    li + li {
+      margin-top: 0;
     }
+  }
 }
 
 .pagination {
-    ul.pagination-list {
-        li {
-            list-style: none;
-        }
-
-        .pagination-link {
-            background-color: $white-color;
-            border: none;
-
-            &.is-current {
-                color: $white-color;
-                background-color: $main-color;
-            }
-        }
+  ul.pagination-list {
+    li {
+      list-style: none;
     }
 
-    .pagination-previous, .pagination-next {
-        background-color: $white-color;
-        border: none;
+    .pagination-link {
+      background-color: $white-color;
+
+      &.is-current {
+        color: $white-color;
+        background-color: $main-color;
+      }
     }
+  }
+
+  .pagination-previous,
+  .pagination-next {
+    background-color: $white-color;
+  }
+}
+
+.no-border {
+  border: none;
 }
