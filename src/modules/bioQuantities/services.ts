@@ -3,8 +3,8 @@ import { BioQuantity, BioQuantityDetail } from "models/BioQuantities";
 import { ApiResponse } from "models/GenericTypes";
 import dataService from "services/dataService";
 
-type sortType = { [key: string]: "asc" | "desc" };
-type searchType = { [key: string]: string | number };
+export type sortType = { [key: string]: "asc" | "desc" };
+export type searchType = { [key: string]: string | number };
 
 const fetchAllBioNumbers = (
   page: number,
@@ -13,10 +13,9 @@ const fetchAllBioNumbers = (
   /* How many items to skip */
   skip: number,
   search: searchType = {},
-  sort: sortType = {},
-  perPage = 10
+  sort: sortType = {}
 ): AxiosPromise<ApiResponse<BioQuantity[]>> => {
-  let params: object = { page, take, skip, perPage };
+  let params: object = { page, take, skip, perPage: take };
 
   if (Object.keys(sort).length > 0) {
     Object.keys(sort).forEach((key) => {

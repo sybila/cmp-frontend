@@ -1,42 +1,65 @@
-import React, { useEffect } from "react";
-import service from "../../services";
-import Table from "components/TableWithPagination";
+import React, { useCallback, useEffect, useState } from "react";
+import service, { sortType, searchType } from "../../services";
+import Table, { Refetch } from "components/TableWithPagination";
 
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
-import { mockData } from "../mockData";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
-const BioQuantitiesList = () => {
-  useEffect(() => {
-    service.fetchAllBioNumbers(1, 2, 0);
-  }, []);
+const PAGE_SIZE = 10;
+const COLUMNS = [
+  {
+    Header: "Name",
+    accessor: "name",
+    search: true,
+    sort: true,
+  },
+  {
+    Header: "Organism ID",
+    accessor: "organismId",
+    search: true,
+    sort: true,
+  },
+  {
+    Header: "Value",
+    accessor: "valueStep",
+    search: true,
+    sort: true,
+  },
+];
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Organism",
-        accessor: "organism",
-      },
-      {
-        Header: "Value",
-        accessor: "value",
-      },
-    ],
-    []
+const BioQuantitiesList = () => {
+  const [bioQuantities, setBioQuantities] = useState<object[]>([]);
+
+  const handleFetch = useCallback(
+    (
+      page: number,
+      pageSize = PAGE_SIZE,
+      search?: searchType,
+      sort?: sortType,
+      overwrite = false
+    ) => {
+      service
+        .fetchAllBioNumbers(page, pageSize, 0, search, sort)
+        .then(({ data: { data } }) => {
+          if (overwrite) {
+            setBioQuantities(data);
+          } else {
+            setBioQuantities((prevState) => [...prevState, ...data]);
+          }
+        });
+    },
+    [setBioQuantities]
   );
 
-  const data = React.useMemo(
-    () =>
-      mockData.map((item, i) => ({
-        name: item.name,
-        value: item.valueStep,
-        organism: item.organismId,
-      })),
-    []
+  useEffect(() => {
+    handleFetch(1);
+  }, []);
+
+  const handleRefetch: Refetch = useCallback(
+    (page, pageSize, search, sort) => {
+      handleFetch(1, page * pageSize, search, sort, true);
+    },
+    [handleFetch]
   );
 
   return (
@@ -50,7 +73,13 @@ const BioQuantitiesList = () => {
           <div className="columns is-full-height">
             <div className="column">
               <div className="box is-full-height is-padding-extended">
-                <Table data={data} columns={columns} />
+                <Table
+                  data={bioQuantities}
+                  columns={COLUMNS}
+                  pageSize={PAGE_SIZE}
+                  fetchNext={handleFetch}
+                  refetch={handleRefetch}
+                />
               </div>
             </div>
           </div>
