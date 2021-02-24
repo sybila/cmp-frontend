@@ -15,7 +15,7 @@ class Pager extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       page: 0,
-      paginationNumbers: []
+      paginationNumbers: [],
     };
 
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -45,16 +45,14 @@ class Pager extends React.PureComponent<Props, State> {
     let paginationNumbers = [];
 
     if (this.getNumberOfPages < 9) {
-      paginationNumbers = Array.from(
-        new Array(this.getNumberOfPages).keys()
-      );
+      paginationNumbers = Array.from(new Array(this.getNumberOfPages).keys());
     } else {
-      // TODO: review functionality 
+      // TODO: review functionality
       paginationNumbers.push(1);
       const mid = Math.ceil(this.getNumberOfPages / 2);
       paginationNumbers.push(mid - 1);
       paginationNumbers.push(mid);
-      paginationNumbers.push(mid + 1) ;
+      paginationNumbers.push(mid + 1);
       paginationNumbers.push(this.getNumberOfPages);
     }
 
@@ -63,7 +61,7 @@ class Pager extends React.PureComponent<Props, State> {
 
   handlePageClick(page: number) {
     this.setState({
-      page
+      page,
     });
   }
 
@@ -96,7 +94,7 @@ class Pager extends React.PureComponent<Props, State> {
       return (
         <li key={`pagination-${i}`}>
           <a
-            className={`pagination-link${isCurrent}`}
+            className={`pagination-link no-border${isCurrent}`}
             onClick={() => this.handlePageClick(i)}
             aria-label={`Goto page ${pageNumber}`}
           >
@@ -116,12 +114,15 @@ class Pager extends React.PureComponent<Props, State> {
             aria-label="pagination"
           >
             <a
-              className="pagination-previous"
+              className="pagination-previous no-border"
               onClick={this.handlePrevPageClick}
             >
               Previous
             </a>
-            <a className="pagination-next" onClick={this.handleNextPageClick}>
+            <a
+              className="pagination-next no-border"
+              onClick={this.handleNextPageClick}
+            >
               Next page
             </a>
             <ul className="pagination-list">{paginationItems}</ul>

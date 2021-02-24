@@ -13,9 +13,6 @@ const Table = ({ columns, data }) => {
     // The rest of these things are super handy, too ;)
     canPreviousPage,
     canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
     nextPage,
     previousPage,
     state: { pageIndex },
@@ -55,48 +52,22 @@ const Table = ({ columns, data }) => {
           })}
         </tbody>
       </table>
-      <nav
-        className="pagination is-centered"
-        role="navigation"
-        aria-label="pagination"
-      >
-        <ul className="pagination-list">
-          <li>
-            <a className="pagination-link" aria-label="Goto page 1">
-              1
-            </a>
-          </li>
-          <li>
-            <span className="pagination-ellipsis">&hellip;</span>
-          </li>
-          <li>
-            <a className="pagination-link" aria-label="Goto page 45">
-              45
-            </a>
-          </li>
-          <li>
-            <a
-              className="pagination-link is-current"
-              aria-label="Page 46"
-              aria-current="page"
-            >
-              46
-            </a>
-          </li>
-          <li>
-            <a className="pagination-link" aria-label="Goto page 47">
-              47
-            </a>
-          </li>
-          <li>
-            <span className="pagination-ellipsis">&hellip;</span>
-          </li>
-          <li>
-            <a className="pagination-link" aria-label="Goto page 86">
-              86
-            </a>
-          </li>
-        </ul>
+      <nav className="pagination" role="navigation" aria-label="pagination">
+        {canPreviousPage && (
+          <a
+            className="pagination-previous"
+            title="This is the first page"
+            onClick={previousPage}
+          >
+            Previous
+          </a>
+        )}
+        {canNextPage && (
+          <a className="pagination-next" onClick={nextPage}>
+            Next page
+          </a>
+        )}
+        <ul className="pagination-list"></ul>
       </nav>
     </div>
   );
