@@ -1,16 +1,46 @@
-import React from "react";
-import { useTable, usePagination } from "react-table";
+import React, { useCallback, useEffect, useState } from "react";
+import { useTable, usePagination, Column } from "react-table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { debounce } from "lodash";
 
-const Table = ({ columns, data }) => {
+export type Refetch = (
+  page: number,
+  pageSize: number,
+  search: searchType,
+  sort: sortType
+) => void;
+
+type Column = {
+  Header: string;
+  accessor: string;
+  search?: boolean;
+  sort?: boolean;
+};
+
+type Props = {
+  data: object[];
+  columns: Column[];
+  pageSize?: number; // default: 10
+  fetchNext?: (page: number) => void;
+  refetch: Refetch;
+};
+
+type searchType = { [key: string]: string | number };
+type sortType = {
+  [key: string]: "asc" | "desc";
+};
+
+const Table = ({ columns, data, pageSize = 10, fetchNext, refetch }: Props) => {
+  const [search, setSearch] = useState<searchType>({});
+  const [sort, setSort] = useState<sortType>({});
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
-
-    // The rest of these things are super handy, too ;)
+    page,
     canPreviousPage,
     canNextPage,
     nextPage,
@@ -20,10 +50,39 @@ const Table = ({ columns, data }) => {
     {
       columns,
       data,
-      initialState: { pageSize: 5 },
+      initialState: { pageSize },
     },
     usePagination
   );
+
+  const handleSearch = useCallback(
+    (id: string, value: string) => {
+      setSearch((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
+    },
+    [setSearch]
+  );
+
+  const handleSort = useCallback(
+    (id: string) => {
+      setSort((prevState) => {
+        return {
+          ...prevState,
+          [id]: prevState[id] === "asc" ? "desc" : "asc",
+        };
+      });
+    },
+    [setSort]
+  );
+
+  const handleRefetch = useCallback(debounce(refetch, 200), [refetch]);
+
+  useEffect(() => {
+    console.log(pageIndex, pageSize);
+    handleRefetch(pageIndex + 1, pageSize, search, sort);
+  }, [handleRefetch, sort, search]);
 
   return (
     <div>
@@ -32,7 +91,36 @@ const Table = ({ columns, data }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps()}>
+                  <div className="is-flex">
+                    {column.sort && (
+                      <button
+                        className="button is-white"
+                        onClick={() => handleSort(column.id)}
+                      >
+                        <FontAwesomeIcon
+                          icon={
+                            sort[column.id] === "asc" ? faCaretUp : faCaretDown
+                          }
+                        />
+                      </button>
+                    )}
+                    {column.search ? (
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder={column.render("Header")}
+                        onChange={(e) =>
+                          handleSearch(column.id, e.currentTarget.value)
+                        }
+                        name={column.id}
+                        value={search[column.id]}
+                      />
+                    ) : (
+                      column.render("Header")
+                    )}
+                  </div>
+                </th>
               ))}
             </tr>
           ))}
@@ -62,11 +150,14 @@ const Table = ({ columns, data }) => {
             Previous
           </a>
         )}
-        {canNextPage && (
-          <a className="pagination-next" onClick={nextPage}>
-            Next page
-          </a>
-        )}
+        <a
+          className="pagination-next"
+          onClick={() =>
+            canNextPage ? nextPage() : fetchNext && fetchNext(pageIndex + 1)
+          }
+        >
+          Next
+        </a>
         <ul className="pagination-list"></ul>
       </nav>
     </div>
