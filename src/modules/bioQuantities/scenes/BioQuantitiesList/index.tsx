@@ -20,8 +20,14 @@ const COLUMNS = [
     sort: true,
   },
   {
+    Header: "ID",
+    accessor: "id",
+    search: true,
+    sort: true,
+  },
+  {
     Header: "Value",
-    accessor: "valueStep",
+    accessor: "value",
     search: true,
     sort: true,
   },
