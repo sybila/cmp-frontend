@@ -5,6 +5,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router-dom";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
+import Annotations from "components/Annotations";
 
 const Compartment = () => {
   const {
@@ -25,7 +26,12 @@ const Compartment = () => {
       >
         {compartment ? compartment.name : "Compartment"}
       </BreadcrumbsItem>
-      {compartment && <DetailSection title={compartment.name}></DetailSection>}
+      {compartment && (
+        <DetailSection title={compartment.name}>
+          {compartment.notes && <p>{compartment.notes}</p>}
+          <Annotations list={compartment.annotations} />
+        </DetailSection>
+      )}
     </>
   );
 };

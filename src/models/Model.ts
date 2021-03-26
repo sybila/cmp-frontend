@@ -1,4 +1,5 @@
 import { schema, normalize } from "normalizr";
+import { Annotation } from "./GenericTypes";
 
 export interface Model {
   id: number;
@@ -40,7 +41,7 @@ export interface ModelCompartment extends ModelCompartmentPartial {
   sbmlId: string;
   sboTerm: string;
   notes: string;
-  annotation: string;
+  annotations: Annotation[];
   spatialDimensions: number;
   size: number;
   isConstant: number;

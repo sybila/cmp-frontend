@@ -40,3 +40,8 @@ export interface ApiResponse<T> {
   code: number;
   data: T;
 }
+
+export interface Annotation {
+  id: number;
+  link: string;
+}
