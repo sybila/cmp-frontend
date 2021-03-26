@@ -5,6 +5,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router-dom";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
+import Annotations from "components/Annotations";
 
 const Species = () => {
   const {
@@ -30,7 +31,12 @@ const Species = () => {
       >
         {species ? species.name : "Species"}
       </BreadcrumbsItem>
-      {species && <DetailSection title={species.name}></DetailSection>}
+      {species && (
+        <DetailSection title={species.name}>
+          {species.notes && <p>{species.notes}</p>}
+          <Annotations list={species.annotations} />
+        </DetailSection>
+      )}
     </>
   );
 };

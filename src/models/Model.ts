@@ -63,7 +63,7 @@ export interface Species {
   metaId: string;
   sbmlId: string;
   sboTerm: string;
-  annotation: string;
+  annotations: Annotation[];
   notes: string;
   initialExpression: string;
   hasOnlySubstanceUnits: boolean;

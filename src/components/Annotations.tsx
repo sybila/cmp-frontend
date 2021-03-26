@@ -49,10 +49,21 @@ const AnnotationLink = styled.a`
   display: flex;
 `;
 
+const NoAnnotationsMsg = styled.span`
+  color: rgb(153, 153, 153);
+  display: flex;
+  margin-right: ${rem(8)};
+`;
+
 const Annotations = ({ list }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
-  if (!list.length) return;
+  if (!list.length)
+    return (
+      <ButtonWrapper>
+        <NoAnnotationsMsg>This item has no annotations.</NoAnnotationsMsg>
+      </ButtonWrapper>
+    );
 
   return (
     <div>
