@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { rem } from "polished";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -14,13 +14,15 @@ const ButtonWrapper = styled.div`
   align-items: center;
 `;
 
-const ToggleButton = styled.button`
-  background: none;
-  border: none;
-  display: flex;
-  margin-right: ${rem(12)};
-  align-items: center;
-`;
+const ToggleButton = styled.button(
+  ({ theme }) => css`
+    background: none;
+    border: none;
+    display: flex;
+    margin-right: ${rem(theme.sizes["size-1"])};
+    align-items: center;
+  `
+);
 
 const Line = styled.div`
   background: #43c6ac;
@@ -28,32 +30,41 @@ const Line = styled.div`
   width: 40%;
 `;
 
-const AnnotationsList = styled.div.attrs<{ show?: boolean }>(({ show }) => ({
+type AnnotationsListProps = { show?: boolean };
+const AnnotationsList = styled.div.attrs<AnnotationsListProps>(({ show }) => ({
   style: { display: show ? "flex" : "none" },
-}))`
-  flex-direction: column;
-  padding-left: ${rem(26)};
-`;
+}))<AnnotationsListProps>(
+  ({ theme }) => css`
+    flex-direction: column;
+    padding-left: ${rem(theme.sizes["size-1"] * 3.25)};
+  `
+);
 
-const AnnotationItem = styled.div`
-  display: flex;
-  margin: ${rem(12)} 0;
-`;
+const AnnotationItem = styled.div(
+  ({ theme }) => css`
+    display: flex;
+    margin: ${rem(theme.sizes["size-1.5"])} 0;
+  `
+);
 
-const AnnotationName = styled.span`
-  display: flex;
-  margin-right: ${rem(8)};
-`;
+const AnnotationName = styled.div(
+  ({ theme }) => css`
+    display: flex;
+    margin-right: ${rem(theme.sizes["size-1"])};
+  `
+);
 
 const AnnotationLink = styled.a`
   display: flex;
 `;
 
-const NoAnnotationsMsg = styled.span`
-  color: rgb(153, 153, 153);
-  display: flex;
-  margin-right: ${rem(8)};
-`;
+const NoAnnotationsMsg = styled.span(
+  ({ theme }) => css`
+    color: rgb(153, 153, 153);
+    display: flex;
+    margin-right: ${rem(theme.sizes["size-1"])};
+  `
+);
 
 const Annotations = ({ list }: Props) => {
   const [isOpen, setOpen] = useState(false);
