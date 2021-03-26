@@ -6,6 +6,12 @@ import { useRouteMatch } from "react-router-dom";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
 import Annotations from "components/Annotations";
+import {
+  Table,
+  TableBody,
+  TableDataCell,
+  TableRow,
+} from "components/primitives/Table";
 
 const Compartment = () => {
   const {
@@ -29,6 +35,16 @@ const Compartment = () => {
       {compartment && (
         <DetailSection title={compartment.name}>
           {compartment.notes && <p>{compartment.notes}</p>}
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableDataCell>Alias</TableDataCell>
+                <TableDataCell>
+                  <TableDataCell>{compartment.alias}</TableDataCell>
+                </TableDataCell>
+              </TableRow>
+            </TableBody>
+          </Table>
           <Annotations list={compartment.annotations} />
         </DetailSection>
       )}

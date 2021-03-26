@@ -19,7 +19,7 @@ const ToggleButton = styled.button(
     background: none;
     border: none;
     display: flex;
-    margin-right: ${rem(theme.sizes["size-1"])};
+    margin-right: ${rem(theme.custom.sizes["size-1"])};
     align-items: center;
   `
 );
@@ -36,21 +36,21 @@ const AnnotationsList = styled.div.attrs<AnnotationsListProps>(({ show }) => ({
 }))<AnnotationsListProps>(
   ({ theme }) => css`
     flex-direction: column;
-    padding-left: ${rem(theme.sizes["size-1"] * 3.25)};
+    padding-left: ${rem(theme.custom.sizes["size-1"] * 3.25)};
   `
 );
 
 const AnnotationItem = styled.div(
   ({ theme }) => css`
     display: flex;
-    margin: ${rem(theme.sizes["size-1.5"])} 0;
+    margin: ${rem(theme.custom.sizes["size-1.5"])} 0;
   `
 );
 
 const AnnotationName = styled.div(
   ({ theme }) => css`
     display: flex;
-    margin-right: ${rem(theme.sizes["size-1"])};
+    margin-right: ${rem(theme.custom.sizes["size-1"])};
   `
 );
 
@@ -62,7 +62,7 @@ const NoAnnotationsMsg = styled.span(
   ({ theme }) => css`
     color: rgb(153, 153, 153);
     display: flex;
-    margin-right: ${rem(theme.sizes["size-1"])};
+    margin-right: ${rem(theme.custom.sizes["size-1"])};
   `
 );
 

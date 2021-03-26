@@ -44,6 +44,7 @@ export interface ModelCompartment extends ModelCompartmentPartial {
   annotations: Annotation[];
   spatialDimensions: number;
   size: number;
+  alias: string;
   isConstant: number;
 }
 

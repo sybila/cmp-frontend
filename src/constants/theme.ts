@@ -1,8 +1,10 @@
 import { rem, shade, tint } from "polished";
 import { DefaultTheme } from "styled-components/macro";
+import { default as bulmaTheme } from "@theme-ui/preset-bulma";
 
 const primary = "#43c6ac";
 const secondary = "#ffc801";
+const text = "#444";
 
 const colors = {
   primary: {
@@ -36,7 +38,7 @@ const colors = {
   },
   white: "#FFFFFF",
   black: "#000000",
-  text: "#444",
+  text,
 } as const;
 
 const fonts = {
@@ -70,20 +72,44 @@ const bp = {
   large: 1024,
 } as const;
 
-declare module "styled-components" {
-  export interface DefaultTheme {
-    colors: typeof colors;
-    fonts: typeof fonts;
-    sizes: typeof sizes;
-    zIndex: typeof zIndex;
-    bp: typeof bp;
-  }
-}
-
-export const theme: DefaultTheme = {
+const custom = {
   colors,
   fonts,
   sizes,
   zIndex,
   bp,
+};
+
+const buttons = {
+  primary: {
+    bg: primary,
+    color: colors.white,
+    rounded: {
+      borderRadius: 9999,
+    },
+  },
+};
+
+declare module "styled-components" {
+  export interface DefaultTheme {
+    custom: typeof custom;
+    colors: typeof bulmaTheme.colors;
+    fonts: typeof bulmaTheme.fonts;
+    fontSizes: typeof bulmaTheme.fontSizes;
+    fontWeights: typeof bulmaTheme.fontWeights;
+    space: typeof bulmaTheme.space;
+    styles: typeof bulmaTheme.styles;
+    buttons: typeof buttons;
+  }
+}
+
+export const theme: DefaultTheme = {
+  ...bulmaTheme,
+  colors: {
+    ...bulmaTheme.colors,
+    primary,
+    text,
+  },
+  buttons,
+  custom,
 };
