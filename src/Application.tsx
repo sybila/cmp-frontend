@@ -3,10 +3,16 @@ import { Router, Route, NavLink, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { ThemeProvider } from "styled-components";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { isEqual } from "lodash";
 
+/**
+ * Old styles, will migrate in the future to styled-components
+ */
 import "./styles/main.scss";
+
+import theme from "./constants/theme";
 
 import LoginPage from "scenes/LoginPage/";
 import RegistrationPage from "scenes/RegistrationPage";
@@ -91,77 +97,79 @@ const Application = () => {
   useTokenLogin("/");
 
   return (
-    <React.Fragment>
-      {/* Portal block, for components with absolute positioning */}
-      <Portal>
-        <PrivateComponent>
-          <NotificationsProvider />
-        </PrivateComponent>
-        <Loader />
-      </Portal>
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        {/* Portal block, for components with absolute positioning */}
+        <Portal>
+          <PrivateComponent>
+            <NotificationsProvider />
+          </PrivateComponent>
+          <Loader />
+        </Portal>
 
-      {/* Application routing (with root master page defining basic layout)*/}
-      <BreadcrumbsProvider>
-        <Router history={history}>
-          {/* Portal block for components which need access to Router */}
+        {/* Application routing (with root master page defining basic layout)*/}
+        <BreadcrumbsProvider>
+          <Router history={history}>
+            {/* Portal block for components which need access to Router */}
 
-          <Route
-            path="/"
-            render={({ match: { url } }) => (
-              <Switch>
-                <MasterPage>
-                  <Switch>
-                    <Route exact path={`${url}`} component={HomePage} />
-                    <Route exact path={`${url}login`} component={LoginPage} />
-                    <Route
-                      exact
-                      path={`${url}email-confirm/:email/:id`}
-                      component={EmailConfirm}
-                    />
-                    <Route
-                      exact
-                      path={`${url}password-renewal`}
-                      component={PasswordRenewal}
-                    />
-                    <Route
-                      exact
-                      path={`${url}email-confirm/:email/pswRenew/:hash`}
-                      component={RenewalPage}
-                    />
-                    <Route
-                      exact
-                      path={`${url}register`}
-                      component={RegistrationPage}
-                    />
-                    <Route path={`${url}page`} component={Pages} />
+            <Route
+              path="/"
+              render={({ match: { url } }) => (
+                <Switch>
+                  <MasterPage>
+                    <Switch>
+                      <Route exact path={`${url}`} component={HomePage} />
+                      <Route exact path={`${url}login`} component={LoginPage} />
+                      <Route
+                        exact
+                        path={`${url}email-confirm/:email/:id`}
+                        component={EmailConfirm}
+                      />
+                      <Route
+                        exact
+                        path={`${url}password-renewal`}
+                        component={PasswordRenewal}
+                      />
+                      <Route
+                        exact
+                        path={`${url}email-confirm/:email/pswRenew/:hash`}
+                        component={RenewalPage}
+                      />
+                      <Route
+                        exact
+                        path={`${url}register`}
+                        component={RegistrationPage}
+                      />
+                      <Route path={`${url}page`} component={Pages} />
 
-                    <Route
-                      path={`${url + modelsNames.url}`}
-                      component={ModelsModule}
-                    />
-                    <Route
-                      path={`${url + experimentsNames.url}`}
-                      component={ExperimentsModule}
-                    />
+                      <Route
+                        path={`${url + modelsNames.url}`}
+                        component={ModelsModule}
+                      />
+                      <Route
+                        path={`${url + experimentsNames.url}`}
+                        component={ExperimentsModule}
+                      />
 
-                    <Route
-                      path={`${url + bioQuantitiesNames.url}`}
-                      component={BioQuantitiesModule}
-                    />
+                      <Route
+                        path={`${url + bioQuantitiesNames.url}`}
+                        component={BioQuantitiesModule}
+                      />
 
-                    <PrivateRoute
-                      path={`${url}profile/:subPage?`}
-                      component={UserProfilePage}
-                    />
-                    <Route component={NotFoundPage} />
-                  </Switch>
-                </MasterPage>
-              </Switch>
-            )}
-          />
-        </Router>
-      </BreadcrumbsProvider>
-    </React.Fragment>
+                      <PrivateRoute
+                        path={`${url}profile/:subPage?`}
+                        component={UserProfilePage}
+                      />
+                      <Route component={NotFoundPage} />
+                    </Switch>
+                  </MasterPage>
+                </Switch>
+              )}
+            />
+          </Router>
+        </BreadcrumbsProvider>
+      </React.Fragment>
+    </ThemeProvider>
   );
 };
 
