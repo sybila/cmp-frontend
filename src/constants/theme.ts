@@ -1,4 +1,5 @@
 import { rem, shade, tint } from "polished";
+import { DefaultTheme } from "styled-components/macro";
 
 const primary = "#43c6ac";
 const secondary = "#ffc801";
@@ -69,7 +70,17 @@ const bp = {
   large: 1024,
 } as const;
 
-export default {
+declare module "styled-components" {
+  export interface DefaultTheme {
+    colors: typeof colors;
+    fonts: typeof fonts;
+    sizes: typeof sizes;
+    zIndex: typeof zIndex;
+    bp: typeof bp;
+  }
+}
+
+export const theme: DefaultTheme = {
   colors,
   fonts,
   sizes,

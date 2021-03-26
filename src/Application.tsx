@@ -12,7 +12,7 @@ import { isEqual } from "lodash";
  */
 import "./styles/main.scss";
 
-import theme from "./constants/theme";
+import { theme } from "./constants/theme";
 
 import LoginPage from "scenes/LoginPage/";
 import RegistrationPage from "scenes/RegistrationPage";
