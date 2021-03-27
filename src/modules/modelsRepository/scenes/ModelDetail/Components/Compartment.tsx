@@ -1,8 +1,10 @@
 import { useApi } from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router-dom";
+import { Tiles } from "@rebass/layout";
+import { Box, Text } from "rebass/styled-components";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
 import Annotations from "components/Annotations";
@@ -12,6 +14,16 @@ import {
   TableDataCell,
   TableRow,
 } from "components/primitives/Table";
+import { intToBoolean } from "services/dataTransform";
+import Tree, { TreeItem } from "components/Tree";
+import { Species } from "models/Model";
+
+const speciesToTreeItem = (species: Species): TreeItem => {
+  return {
+    id: species.id,
+    caption: species.name,
+  };
+};
 
 const Compartment = () => {
   const {
@@ -25,6 +37,10 @@ const Compartment = () => {
     ])
   );
 
+  const species = useMemo(() => compartment?.species?.map(speciesToTreeItem), [
+    compartment,
+  ]);
+
   return (
     <>
       <BreadcrumbsItem
@@ -35,16 +51,58 @@ const Compartment = () => {
       {compartment && (
         <DetailSection title={compartment.name}>
           {compartment.notes && <p>{compartment.notes}</p>}
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableDataCell>Alias</TableDataCell>
-                <TableDataCell>
-                  <TableDataCell>{compartment.alias}</TableDataCell>
-                </TableDataCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+            <Table>
+              <TableBody>
+                {compartment.alias && (
+                  <TableRow>
+                    <TableDataCell as="th">Alias</TableDataCell>
+                    <TableDataCell>{compartment.alias}</TableDataCell>
+                  </TableRow>
+                )}
+                {compartment.id && (
+                  <TableRow>
+                    <TableDataCell as="th">ID</TableDataCell>
+                    <TableDataCell>{compartment.id}</TableDataCell>
+                  </TableRow>
+                )}
+                {compartment.isConstant !== null && (
+                  <TableRow>
+                    <TableDataCell as="th">Constant</TableDataCell>
+                    <TableDataCell>
+                      {intToBoolean(compartment.isConstant).toString()}
+                    </TableDataCell>
+                  </TableRow>
+                )}
+                {compartment.sboTerm && (
+                  <TableRow>
+                    <TableDataCell as="th">SBO term</TableDataCell>
+                    <TableDataCell>{compartment.sboTerm}</TableDataCell>
+                  </TableRow>
+                )}
+                {compartment.size !== null && (
+                  <TableRow>
+                    <TableDataCell as="th">Size</TableDataCell>
+                    <TableDataCell>{compartment.size}</TableDataCell>
+                  </TableRow>
+                )}
+                {compartment.spatialDimensions !== null && (
+                  <TableRow>
+                    <TableDataCell as="th">Spatial dimensions</TableDataCell>
+                    <TableDataCell>
+                      {compartment.spatialDimensions}
+                    </TableDataCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+            <Box>
+              <Text fontWeight="bold" mb={2}>
+                Species
+              </Text>
+              <Tree data={species} />
+            </Box>
+          </Tiles>
           <Annotations list={compartment.annotations} />
         </DetailSection>
       )}
