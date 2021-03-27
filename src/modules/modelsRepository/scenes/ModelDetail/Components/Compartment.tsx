@@ -2,7 +2,7 @@ import { useApi } from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import { useRouteMatch } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { Tiles } from "@rebass/layout";
 import { Box, Text } from "rebass/styled-components";
 import api from "../../../services";
@@ -29,6 +29,8 @@ const Compartment = () => {
   const {
     params: { modelId, compartmentId },
   } = useRouteMatch<{ modelId: string; compartmentId: string }>();
+
+  const history = useHistory();
 
   const [compartment] = useApi(
     useCallback(() => api.loadCompartmentDetail(modelId, compartmentId), [
@@ -100,7 +102,12 @@ const Compartment = () => {
               <Text fontWeight="bold" mb={2}>
                 Species
               </Text>
-              <Tree data={species} />
+              <Tree
+                data={species}
+                onNodeClick={(id: number) =>
+                  history.push(`${compartmentId}/species/${id}`)
+                }
+              />
             </Box>
           </Tiles>
           <Annotations list={compartment.annotations} />

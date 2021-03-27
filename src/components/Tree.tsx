@@ -18,6 +18,7 @@ export type TreeItem = {
 export type TreeProps = {
   data: TreeItem[];
   defaultExpanded?: Set<number>;
+  onNodeClick?: (id: number) => void;
 };
 
 export type TreeNodeProps = {
@@ -27,6 +28,7 @@ export type TreeNodeProps = {
 type TreeContextType = {
   expanded: Set<number>;
   toggleExpand: (id: number) => void;
+  onClick: (id: number) => void;
 };
 
 const TreeContext = React.createContext<TreeContextType>(null);
@@ -50,14 +52,34 @@ const NodeExpand = styled.span(
 );
 
 const TreeNode = ({ caption, icon, children, id }: TreeNodeProps) => {
-  const { toggleExpand, expanded } = useContext(TreeContext);
+  const { toggleExpand, expanded, onClick } = useContext(TreeContext);
   const isLeaf = !children;
   const isExpanded = expanded.has(id);
   return (
     <Box as="div">
-      <Flex as="div" pr={2} pl={isLeaf ? 2 : 4}>
+      <Flex
+        as="div"
+        alignItems="center"
+        sx={{
+          ":hover": {
+            backgroundColor: "muted",
+          },
+          borderBottomWidth: "1px",
+          borderBottomStyle: "solid",
+          borderBottomColor: "whiteTer",
+          cursor: onClick ? "pointer" : "initial",
+        }}
+        onClick={() => {
+          toggleExpand(id);
+          onClick && onClick(id);
+        }}
+        pr={2}
+        height={4}
+        py={2}
+        pl={isLeaf ? 2 : 4}
+      >
         {!isLeaf && (
-          <NodeExpand onClick={() => toggleExpand(id)}>
+          <NodeExpand>
             <FontAwesomeIcon icon={isExpanded ? faAngleDown : faAngleRight} />
           </NodeExpand>
         )}
@@ -71,7 +93,7 @@ const TreeNode = ({ caption, icon, children, id }: TreeNodeProps) => {
   );
 };
 
-const Tree = ({ data, defaultExpanded }: TreeProps) => {
+const Tree = ({ data, defaultExpanded, onNodeClick }: TreeProps) => {
   const [expanded, setExpanded] = useState(
     defaultExpanded ? defaultExpanded : new Set<number>()
   );
@@ -88,7 +110,11 @@ const Tree = ({ data, defaultExpanded }: TreeProps) => {
 
   return (
     <TreeContext.Provider
-      value={{ expanded, toggleExpand: handleToggleExpand }}
+      value={{
+        expanded,
+        toggleExpand: handleToggleExpand,
+        onClick: onNodeClick,
+      }}
     >
       <Box>{data.map((node) => constructBranch(node))}</Box>
     </TreeContext.Provider>
