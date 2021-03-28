@@ -4,10 +4,10 @@ import React, { useCallback, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Tiles } from "@rebass/layout";
-import { Box, Text } from "rebass/styled-components";
+import { Box, Text, Flex } from "rebass/styled-components";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
-import Annotations from "components/Annotations";
+import Disclosure from "components/Disclosure";
 import {
   Table,
   TableBody,
@@ -110,7 +110,21 @@ const Compartment = () => {
               />
             </Box>
           </Tiles>
-          <Annotations list={compartment.annotations} />
+          <Disclosure
+            caption="Annotations"
+            noContent="This item has no annotations."
+          >
+            {compartment.annotations?.map((annotation) => {
+              return (
+                <Flex my={1}>
+                  <Box mr={2}>{annotation.id}</Box>
+                  <Box as="a" mr={2} href={annotation.link} target="_blank">
+                    {annotation.link}
+                  </Box>
+                </Flex>
+              );
+            })}
+          </Disclosure>
         </DetailSection>
       )}
     </>

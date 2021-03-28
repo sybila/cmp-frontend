@@ -3,9 +3,10 @@ import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router-dom";
+import { Box, Flex } from "rebass/styled-components";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
-import Annotations from "components/Annotations";
+import Disclosure from "components/Disclosure";
 
 const Species = () => {
   const {
@@ -34,7 +35,21 @@ const Species = () => {
       {species && (
         <DetailSection title={species.name}>
           {species.notes && <p>{species.notes}</p>}
-          <Annotations list={species.annotations} />
+          <Disclosure
+            caption="Annotations"
+            noContent="This item has no annotations."
+          >
+            {species.annotations?.map((annotation) => {
+              return (
+                <Flex my={1}>
+                  <Box mr={2}>{annotation.id}</Box>
+                  <Box as="a" mr={2} href={annotation.link} target="_blank">
+                    {annotation.link}
+                  </Box>
+                </Flex>
+              );
+            })}
+          </Disclosure>
         </DetailSection>
       )}
     </>
