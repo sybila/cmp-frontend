@@ -7,7 +7,7 @@ export interface Model {
   sbmlId: string;
   sboTerm: string;
   notes: string;
-  annotation: string;
+  annotations: Annotation[];
   userId: number;
   approvedId: number;
   status: string;
@@ -50,12 +50,46 @@ export interface ModelCompartment extends ModelCompartmentPartial {
 
 export interface ModelCompartmentExtended extends ModelCompartment {
   species: SpeciesPartial[];
-  reactions: any[]; // TODO: Add interface for Reaction
+  reactions: ReactionPartial[];
   rules: RulePartial[];
   unitDefinitions: any[]; // TODO: Add interface for UnitDefinition
 }
 
 export interface ReactionItemPartial extends EntityPartial {}
+export interface ReactionItem extends ReactionItemPartial {
+  sbmlId: string;
+  sboTerm: string;
+  notes: string;
+  type: string;
+  value?: number;
+  stoichiometry: number;
+}
+
+export interface ReactionItemExtended extends ReactionItem {
+  alias: string;
+  annotations: Annotation[];
+  reactionId?: number;
+  specieId?: number;
+  parameterId?: number;
+}
+
+export interface ReactionPartial extends EntityPartial {
+  sbmlId?: string;
+  sboTerm?: string;
+  notes?: string;
+  isReversible: number;
+  rate: string;
+}
+export interface Reaction extends ReactionPartial {
+  alias?: string;
+  annotations: Annotation[];
+  modelId: number;
+  compartmentId?: number;
+  reactionItems: ReactionItemPartial[];
+  functions: any[];
+  parameters: any[];
+}
+
 export interface SpeciesPartial extends EntityPartial {}
 export interface UnitDefinitionPartial extends EntityPartial {}
 export interface Species {

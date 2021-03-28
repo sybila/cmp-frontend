@@ -81,36 +81,6 @@ const Components = () => {
                 <p className="subtitle is-6 is-uppercase">Compartments</p>
                 <Tree data={components} onNodeClick={handleNodeClick} />
               </Box>
-              {/* <List isTree>
-                {compartmentsList &&
-                  compartmentsList.map((compartment) => (
-                    <Card
-                      headerTitle={
-                        <Link to={`${url}/compartment/${compartment.id}`}>
-                          {compartment.name}
-                        </Link>
-                      }
-                      onOpen={(state) => handleOpen(compartment.id, state)}
-                    >
-                      {species[compartment.id] && (
-                        <List>
-                          {species[compartment.id].map((specie) => (
-                            <Card
-                              disableToggle
-                              headerTitle={
-                                <Link
-                                  to={`${url}/compartment/${compartment.id}/species/${specie.id}`}
-                                >
-                                  {specie.name}
-                                </Link>
-                              }
-                            />
-                          ))}
-                        </List>
-                      )}
-                    </Card>
-                  ))}
-              </List> */}
             </div>
             <div className="column"></div>
           </div>

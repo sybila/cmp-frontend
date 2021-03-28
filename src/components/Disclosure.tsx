@@ -53,8 +53,7 @@ const NoDisclosureMsg = styled.span(
 
 const Disclosure = ({ children, noContent, caption }: Props) => {
   const [isOpen, setOpen] = useState(false);
-
-  if (!children)
+  if (!React.Children.count(children))
     return (
       <ButtonWrapper>
         {noContent && <NoDisclosureMsg>{noContent}</NoDisclosureMsg>}
