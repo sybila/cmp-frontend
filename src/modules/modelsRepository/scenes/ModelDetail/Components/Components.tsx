@@ -1,12 +1,13 @@
 import { useApi } from "hooks/useApi";
 import React, { useCallback, useMemo, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import { Link, useRouteMatch } from "react-router-dom";
-
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Box, Text } from "rebass/styled-components";
+import Tree from "components/Tree";
 import { Card, List } from "components/Cards";
-
 import { moduleNames } from "../../../reducers/MainReducer";
 import api from "../../../services";
+import { transformCompartmentToTreeItem, TreeItemComponent } from ".";
 
 const Components = () => {
   const {
@@ -16,6 +17,7 @@ const Components = () => {
     () => `/${moduleNames.url}/model-detail/${modelId}/components`,
     [modelId]
   );
+  const history = useHistory();
 
   const [species, setSpecies] = useState({});
 
@@ -23,10 +25,44 @@ const Components = () => {
     useCallback(() => api.loadCompartments(parseInt(modelId, 10)), [modelId])
   );
 
-  const handleOpen = useCallback(
-    (id: number, open: boolean) => {
-      console.log(true);
-      if (open && !species[id]) {
+  const components = useMemo(
+    () =>
+      compartmentsList
+        ? compartmentsList
+            .map((comp) =>
+              transformCompartmentToTreeItem(comp, species[comp.id])
+            )
+            .map((item) => ({
+              ...item,
+              actions: [
+                {
+                  caption: "Detail",
+                  callback: () => {
+                    history.push(`${url}/compartment/${item.id}`);
+                  },
+                },
+              ],
+              children: item.children?.map((child) => ({
+                ...child,
+                actions: [
+                  {
+                    caption: "Detail",
+                    callback: () => {
+                      history.push(
+                        `${url}/compartment/${item.id}/species/${child.id}`
+                      );
+                    },
+                  },
+                ],
+              })),
+            }))
+        : [],
+    [compartmentsList, species]
+  );
+
+  const handleNodeClick = useCallback(
+    (id: number, meta: any) => {
+      if (meta === TreeItemComponent.Compartment && !species[id]) {
         api.loadCompartmentDetail(modelId, id).then(({ data: { data } }) => {
           setSpecies({ ...species, [id]: data.species });
         });
@@ -41,8 +77,11 @@ const Components = () => {
         <div className="box is-padding-extended">
           <div className="columns">
             <div className="column">
-              <p className="subtitle is-6 is-uppercase">Compartments</p>
-              <List isTree>
+              <Box>
+                <p className="subtitle is-6 is-uppercase">Compartments</p>
+                <Tree data={components} onNodeClick={handleNodeClick} />
+              </Box>
+              {/* <List isTree>
                 {compartmentsList &&
                   compartmentsList.map((compartment) => (
                     <Card
@@ -71,7 +110,7 @@ const Components = () => {
                       )}
                     </Card>
                   ))}
-              </List>
+              </List> */}
             </div>
             <div className="column"></div>
           </div>

@@ -16,14 +16,7 @@ import {
 } from "components/primitives/Table";
 import { intToBoolean } from "services/dataTransform";
 import Tree, { TreeItem } from "components/Tree";
-import { Species } from "models/Model";
-
-const speciesToTreeItem = (species: Species): TreeItem => {
-  return {
-    id: species.id,
-    caption: species.name,
-  };
-};
+import { speciesToTreeItem } from ".";
 
 const Compartment = () => {
   const {

@@ -10,7 +10,10 @@ export type TreeItemBase = {
   id: number;
   caption: string;
   icon?: IconProp;
+  meta?: any;
+  actions?: Array<{ callback: () => void; caption: string }>;
 };
+
 export type TreeItem = {
   children?: TreeItem[];
 } & TreeItemBase;
@@ -18,28 +21,30 @@ export type TreeItem = {
 export type TreeProps = {
   data: TreeItem[];
   defaultExpanded?: Set<number>;
-  onNodeClick?: (id: number) => void;
+  onNodeClick?: (id: number, meta: any) => void;
 };
 
 export type TreeNodeProps = {
   children?: React.ReactNode;
+  depth?: number;
 } & TreeItemBase;
 
 type TreeContextType = {
   expanded: Set<number>;
   toggleExpand: (id: number) => void;
-  onClick: (id: number) => void;
+  onClick: (id: number, meta: any) => void;
 };
 
 const TreeContext = React.createContext<TreeContextType>(null);
 
-// const getTreePath = () => {};
-
-const constructBranch = ({ children, ...node }: TreeItem) => {
+const constructBranch = (
+  { children, ...node }: TreeItem,
+  depth: number = 0
+) => {
   return (
-    <TreeNode {...node}>
+    <TreeNode {...node} depth={depth}>
       {children?.map((child) => {
-        return constructBranch(child);
+        return constructBranch(child, depth + 1);
       })}
     </TreeNode>
   );
@@ -51,12 +56,20 @@ const NodeExpand = styled.span(
   `
 );
 
-const TreeNode = ({ caption, icon, children, id }: TreeNodeProps) => {
+const TreeNode = ({
+  caption,
+  icon,
+  children,
+  id,
+  meta,
+  actions,
+  depth = 0,
+}: TreeNodeProps) => {
   const { toggleExpand, expanded, onClick } = useContext(TreeContext);
   const isLeaf = !children;
   const isExpanded = expanded.has(id);
   return (
-    <Box as="div">
+    <Box as="div" pl={depth === 0 ? 0 : 4}>
       <Flex
         as="div"
         alignItems="center"
@@ -67,26 +80,45 @@ const TreeNode = ({ caption, icon, children, id }: TreeNodeProps) => {
           borderBottomWidth: "1px",
           borderBottomStyle: "solid",
           borderBottomColor: "whiteTer",
-          cursor: onClick ? "pointer" : "initial",
-        }}
-        onClick={() => {
-          toggleExpand(id);
-          onClick && onClick(id);
         }}
         pr={2}
         height={4}
         py={2}
-        pl={isLeaf ? 2 : 4}
+        pl={!isLeaf ? 2 : 4}
       >
-        {!isLeaf && (
-          <NodeExpand>
-            <FontAwesomeIcon icon={isExpanded ? faAngleDown : faAngleRight} />
-          </NodeExpand>
+        <Flex
+          as="span"
+          onClick={() => {
+            toggleExpand(id);
+            onClick && onClick(id, meta);
+          }}
+          sx={{ cursor: onClick ? "pointer" : "initial" }}
+        >
+          {!isLeaf && (
+            <NodeExpand>
+              <FontAwesomeIcon icon={isExpanded ? faAngleDown : faAngleRight} />
+            </NodeExpand>
+          )}
+          {icon && <FontAwesomeIcon icon={icon} />}
+          <Text color="text" fontSize={2}>
+            {caption}
+          </Text>
+        </Flex>
+        {actions && (
+          <Box ml="auto">
+            {actions.map(({ caption, callback }) => (
+              <Text
+                fontSize={1}
+                key={`actions-caption-${id}-${caption}`}
+                color="cyan"
+                sx={{ textDecoration: "underline", cursor: "pointer" }}
+                onClick={callback}
+              >
+                {caption}
+              </Text>
+            ))}
+          </Box>
         )}
-        <Text color="text" fontSize={1}>
-          {caption}
-        </Text>
-        {icon && <FontAwesomeIcon icon={icon} />}
       </Flex>
       {isExpanded ? children : null}
     </Box>
