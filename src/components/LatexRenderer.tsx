@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef } from "react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { Box } from "rebass/styled-components";
+import styled, { css } from "styled-components";
+import { rem } from "polished";
 
 type Props = {
   children: string;
@@ -19,6 +21,16 @@ const stripMathMode = (expression: string) => {
   return result;
 };
 
+export const LatexWrapper = styled.div(
+  ({ theme }) => css`
+    display: inline-block;
+    box-shadow: ${theme.custom.boxShadow.strong};
+    border-radius: ${theme.custom.borderRadius.normal.px};
+    padding: ${rem(theme.custom.sizes["size-2"])};
+    margin: ${rem(theme.custom.sizes["size-2"])} 0;
+  `
+);
+
 const LatexRenderer = ({ children: rawExpression, options }: Props) => {
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +46,7 @@ const LatexRenderer = ({ children: rawExpression, options }: Props) => {
     });
   }, [expression]);
 
-  return <Box as="div" ref={boxRef} />;
+  return <Box as="span" ref={boxRef} />;
 };
 
 export default LatexRenderer;

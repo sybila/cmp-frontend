@@ -14,6 +14,8 @@ import LatexRenderer from "components/LatexRenderer";
 import api from "../../../services";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
+import { makeReactionEquation } from "modules/modelsRepository/helpers";
+import { intToBoolean } from "services/dataTransform";
 
 const Reactions = () => {
   const {
@@ -36,7 +38,8 @@ const Reactions = () => {
               <TableSection as="thead">
                 <TableRow>
                   <TableDataCell as="th">Name</TableDataCell>
-                  <TableDataCell as="th">Expression</TableDataCell>
+                  <TableDataCell as="th">Reaction</TableDataCell>
+                  <TableDataCell as="th">Kinetic law</TableDataCell>
                 </TableRow>
               </TableSection>
               <TableSection as="tbody">
@@ -50,8 +53,14 @@ const Reactions = () => {
                       </TableDataCell>
                       <TableDataCell>
                         <LatexRenderer>
-                          {reaction.expression.latex}
+                          {makeReactionEquation(
+                            reaction.reactionItems,
+                            intToBoolean(reaction.isReversible)
+                          )}
                         </LatexRenderer>
+                      </TableDataCell>
+                      <TableDataCell>
+                        <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
                       </TableDataCell>
                     </TableRow>
                   );

@@ -55,14 +55,16 @@ export interface ModelCompartmentExtended extends ModelCompartment {
   unitDefinitions: any[]; // TODO: Add interface for UnitDefinition
 }
 
-export interface ReactionItemPartial extends EntityPartial {}
+export interface ReactionItemPartial extends EntityPartial {
+  alias: string;
+  stoichiometry: number;
+  type: "reactant" | "product" | "modifier";
+}
 export interface ReactionItem extends ReactionItemPartial {
   sbmlId: string;
   sboTerm: string;
   notes: string;
-  type: string;
   value?: number;
-  stoichiometry: number;
 }
 
 export interface ReactionItemExtended extends ReactionItem {
@@ -79,15 +81,17 @@ export interface ReactionPartial extends EntityPartial {
   notes?: string;
   ontologyTerm?: string | null;
   isReversible: number;
-  expression: Expression;
+  rate: Expression;
+  reactionItems: ReactionItemPartial[];
 }
 
-export interface Reaction extends ReactionPartial {
+export interface Reaction extends Omit<ReactionPartial, "expression"> {
   alias?: string;
   annotations: Annotation[];
   modelId: number;
   compartmentId?: number;
   reactionItems: ReactionItemPartial[];
+  rate: Expression;
   functions: any[];
   parameters: any[];
 }
