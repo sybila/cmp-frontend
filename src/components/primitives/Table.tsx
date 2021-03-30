@@ -14,11 +14,11 @@ export const Table: React.ComponentType<TableProps> = React.forwardRef(
   (props, ref) => <Box ref={ref} as="table" variant="table" {...props} />
 );
 
-export interface TableBodyProps
+export interface TableSectionProps
   extends BoxProps,
     Omit<React.HTMLAttributes<HTMLTableSectionElement>, keyof BoxProps> {}
 
-export const TableBody: React.ComponentType<TableBodyProps> = React.forwardRef(
+export const TableSection: React.ComponentType<TableSectionProps> = React.forwardRef(
   (props, ref) => <Box ref={ref} as="tbody" variant="tbody" {...props} />
 );
 

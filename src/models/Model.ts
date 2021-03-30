@@ -1,5 +1,5 @@
 import { schema, normalize } from "normalizr";
-import { Annotation } from "./GenericTypes";
+import { Annotation, Expression } from "./GenericTypes";
 
 export interface Model {
   id: number;
@@ -77,9 +77,11 @@ export interface ReactionPartial extends EntityPartial {
   sbmlId?: string;
   sboTerm?: string;
   notes?: string;
+  ontologyTerm?: string | null;
   isReversible: number;
-  rate: string;
+  expression: Expression;
 }
+
 export interface Reaction extends ReactionPartial {
   alias?: string;
   annotations: Annotation[];

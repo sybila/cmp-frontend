@@ -10,7 +10,7 @@ import DetailSection from "components/DetailSection";
 import Disclosure from "components/Disclosure";
 import {
   Table,
-  TableBody,
+  TableSection,
   TableDataCell,
   TableRow,
 } from "components/primitives/Table";
@@ -45,10 +45,12 @@ const Compartment = () => {
       </BreadcrumbsItem>
       {compartment && (
         <DetailSection title={compartment.name}>
-          {compartment.notes && <p>{compartment.notes}</p>}
+          {compartment.notes && (
+            <p dangerouslySetInnerHTML={{ __html: compartment.notes }} />
+          )}
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
             <Table>
-              <TableBody>
+              <TableSection>
                 {compartment.alias && (
                   <TableRow>
                     <TableDataCell as="th">Alias</TableDataCell>
@@ -89,7 +91,7 @@ const Compartment = () => {
                     </TableDataCell>
                   </TableRow>
                 )}
-              </TableBody>
+              </TableSection>
             </Table>
             <Box>
               <Text fontWeight="bold" mb={2}>

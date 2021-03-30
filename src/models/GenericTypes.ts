@@ -45,3 +45,8 @@ export interface Annotation {
   id: number;
   link: string;
 }
+
+export interface Expression {
+  latex: string;
+  cmml: string;
+}

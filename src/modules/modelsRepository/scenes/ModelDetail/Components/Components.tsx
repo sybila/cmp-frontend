@@ -1,10 +1,8 @@
 import { useApi } from "hooks/useApi";
 import React, { useCallback, useMemo, useState } from "react";
-import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
-import { Box, Text } from "rebass/styled-components";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { Box } from "rebass/styled-components";
 import Tree from "components/Tree";
-import { Card, List } from "components/Cards";
 import { moduleNames } from "../../../reducers/MainReducer";
 import api from "../../../services";
 import { transformCompartmentToTreeItem, TreeItemComponent } from ".";

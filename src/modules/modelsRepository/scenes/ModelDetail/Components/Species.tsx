@@ -34,7 +34,9 @@ const Species = () => {
       </BreadcrumbsItem>
       {species && (
         <DetailSection title={species.name}>
-          {species.notes && <p>{species.notes}</p>}
+          {species.notes && (
+            <p dangerouslySetInnerHTML={{ __html: species.notes }} />
+          )}
           <Disclosure
             caption="Annotations"
             noContent="This item has no annotations."
