@@ -8,10 +8,17 @@ import api from "../../../services";
 import DetailSection from "components/DetailSection";
 import Disclosure from "components/Disclosure";
 import LatexRenderer, { LatexWrapper } from "components/LatexRenderer";
+import {
+  Table,
+  TableSection,
+  TableDataCell,
+  TableRow,
+} from "components/primitives/Table";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
 import { makeReactionEquation } from "modules/modelsRepository/helpers";
 import { intToBoolean } from "services/dataTransform";
+import { Tiles } from "@rebass/layout";
 
 const EquationsWrapper = styled.div(
   ({ theme }) => css`
@@ -64,6 +71,51 @@ const Reaction = () => {
           {reaction.notes && (
             <p dangerouslySetInnerHTML={{ __html: reaction.notes }} />
           )}
+
+          <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+            <Table>
+              <TableSection>
+                {reaction.alias && (
+                  <TableRow>
+                    <TableDataCell as="th">Alias</TableDataCell>
+                    <TableDataCell>{reaction.alias}</TableDataCell>
+                  </TableRow>
+                )}
+                {reaction.id && (
+                  <TableRow>
+                    <TableDataCell as="th">ID</TableDataCell>
+                    <TableDataCell>{reaction.id}</TableDataCell>
+                  </TableRow>
+                )}
+                {reaction.modelId && (
+                  <TableRow>
+                    <TableDataCell as="th">Model ID</TableDataCell>
+                    <TableDataCell>{reaction.modelId}</TableDataCell>
+                  </TableRow>
+                )}
+                {reaction.compartmentId && (
+                  <TableRow>
+                    <TableDataCell as="th">Compartment ID</TableDataCell>
+                    <TableDataCell>{reaction.compartmentId}</TableDataCell>
+                  </TableRow>
+                )}
+                {reaction.sboTerm && (
+                  <TableRow>
+                    <TableDataCell as="th">SBO term</TableDataCell>
+                    <TableDataCell>{reaction.sboTerm}</TableDataCell>
+                  </TableRow>
+                )}
+                {reaction.isReversible !== null && (
+                  <TableRow>
+                    <TableDataCell as="th">Reversible</TableDataCell>
+                    <TableDataCell>
+                      {intToBoolean(reaction.isReversible).toString()}
+                    </TableDataCell>
+                  </TableRow>
+                )}
+              </TableSection>
+            </Table>
+          </Tiles>
 
           <EquationsWrapper>
             <LatexWrapper>
