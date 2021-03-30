@@ -5,7 +5,10 @@ import { Box } from "rebass/styled-components";
 import Tree from "components/Tree";
 import { moduleNames } from "../../../reducers/MainReducer";
 import api from "../../../services";
-import { transformCompartmentToTreeItem, TreeItemComponent } from ".";
+import {
+  transformCompartmentToTreeItem,
+  TreeItemComponent,
+} from "../../../helpers";
 
 const Components = () => {
   const {

@@ -5,6 +5,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { moduleNames } from "../../../reducers/MainReducer";
 import { default as Main } from "./Reactions";
 import Reaction from "./Reaction";
+import ReactionItem from "./ReactionItem";
 
 const Reactions = () => {
   const {
@@ -20,6 +21,10 @@ const Reactions = () => {
     <>
       <BreadcrumbsItem to={url}>Reactions</BreadcrumbsItem>
       <Switch>
+        <Route
+          path={`${path}/reaction/:reactionId/reactionItem/:reactionItemId`}
+          component={ReactionItem}
+        />
         <Route path={`${path}/reaction/:reactionId`} component={Reaction} />
         <Route component={Main} />
       </Switch>

@@ -15,8 +15,9 @@ import {
   TableRow,
 } from "components/primitives/Table";
 import { intToBoolean } from "services/dataTransform";
-import Tree, { TreeItem } from "components/Tree";
-import { speciesToTreeItem } from ".";
+import Tree from "components/Tree";
+import { speciesToTreeItem } from "../../../helpers";
+import DetailTableRow from "../../../components/DetailTableRow";
 
 const Compartment = () => {
   const {
@@ -46,53 +47,32 @@ const Compartment = () => {
       {compartment && (
         <DetailSection title={compartment.name}>
           {compartment.notes && (
-            <p dangerouslySetInnerHTML={{ __html: compartment.notes }} />
+            <Box mb={6}>
+              <p dangerouslySetInnerHTML={{ __html: compartment.notes }} />
+            </Box>
           )}
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
-            <Table>
-              <TableSection>
-                {compartment.alias && (
-                  <TableRow>
-                    <TableDataCell as="th">Alias</TableDataCell>
-                    <TableDataCell>{compartment.alias}</TableDataCell>
-                  </TableRow>
-                )}
-                {compartment.id && (
-                  <TableRow>
-                    <TableDataCell as="th">ID</TableDataCell>
-                    <TableDataCell>{compartment.id}</TableDataCell>
-                  </TableRow>
-                )}
-                {compartment.isConstant !== null && (
-                  <TableRow>
-                    <TableDataCell as="th">Constant</TableDataCell>
-                    <TableDataCell>
-                      {intToBoolean(compartment.isConstant).toString()}
-                    </TableDataCell>
-                  </TableRow>
-                )}
-                {compartment.sboTerm && (
-                  <TableRow>
-                    <TableDataCell as="th">SBO term</TableDataCell>
-                    <TableDataCell>{compartment.sboTerm}</TableDataCell>
-                  </TableRow>
-                )}
-                {compartment.size !== null && (
-                  <TableRow>
-                    <TableDataCell as="th">Size</TableDataCell>
-                    <TableDataCell>{compartment.size}</TableDataCell>
-                  </TableRow>
-                )}
-                {compartment.spatialDimensions !== null && (
-                  <TableRow>
-                    <TableDataCell as="th">Spatial dimensions</TableDataCell>
-                    <TableDataCell>
-                      {compartment.spatialDimensions}
-                    </TableDataCell>
-                  </TableRow>
-                )}
-              </TableSection>
-            </Table>
+            <Box>
+              <Text fontWeight="bold" mb={2}>
+                Details
+              </Text>
+              <Table>
+                <TableSection>
+                  <DetailTableRow name="Alias" value={compartment.alias} />
+                  <DetailTableRow name="ID" value={compartment.id} />
+                  <DetailTableRow
+                    name="Constant"
+                    value={compartment.isConstant}
+                  />
+                  <DetailTableRow name="SBO term" value={compartment.sboTerm} />
+                  <DetailTableRow name="Size" value={compartment.size} />
+                  <DetailTableRow
+                    name="Spatial dimensions"
+                    value={compartment.spatialDimensions}
+                  />
+                </TableSection>
+              </Table>
+            </Box>
             <Box>
               <Text fontWeight="bold" mb={2}>
                 Species

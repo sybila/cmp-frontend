@@ -1,4 +1,6 @@
 import { ReactionItemPartial } from "models/Model";
+import { ModelCompartment, Species as SpeciesModel } from "models/Model";
+import { TreeItem } from "components/Tree";
 
 export const sortReactionItems = (reactionItems: ReactionItemPartial[]) =>
   reactionItems.reduce<
@@ -32,4 +34,36 @@ export const makeReactionEquation = (
   return `${leftSide} ${
     isReversible ? "\\longleftrightarrow" : "\\longrightarrow"
   } ${rightSide}`;
+};
+
+export const reactionItemToTreeItem = (item: ReactionItemPartial): TreeItem => {
+  return {
+    id: item.id,
+    caption: item.alias,
+  };
+};
+
+export enum TreeItemComponent {
+  Specie,
+  Compartment,
+}
+
+export const speciesToTreeItem = (species: SpeciesModel): TreeItem => {
+  return {
+    id: species.id,
+    caption: species.name,
+    meta: TreeItemComponent.Specie,
+  };
+};
+
+export const transformCompartmentToTreeItem = (
+  compartment: ModelCompartment,
+  species: SpeciesModel[]
+): TreeItem => {
+  return {
+    id: compartment.id,
+    caption: compartment.name,
+    children: species ? species.map(speciesToTreeItem) : [],
+    meta: TreeItemComponent.Compartment,
+  };
 };

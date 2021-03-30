@@ -6,33 +6,6 @@ import { moduleNames } from "../../../reducers/MainReducer";
 import { default as Main } from "./Components";
 import Compartment from "./Compartment";
 import Species from "./Species";
-import { ModelCompartment, Species as SpeciesModel } from "models/Model";
-import { TreeItem } from "components/Tree";
-
-export enum TreeItemComponent {
-  Specie,
-  Compartment,
-}
-
-export const speciesToTreeItem = (species: SpeciesModel): TreeItem => {
-  return {
-    id: species.id,
-    caption: species.name,
-    meta: TreeItemComponent.Specie,
-  };
-};
-
-export const transformCompartmentToTreeItem = (
-  compartment: ModelCompartment,
-  species: SpeciesModel[]
-): TreeItem => {
-  return {
-    id: compartment.id,
-    caption: compartment.name,
-    children: species ? species.map(speciesToTreeItem) : [],
-    meta: TreeItemComponent.Compartment,
-  };
-};
 
 const Components = () => {
   const {
