@@ -2,7 +2,7 @@ import { Model as ModelInterface } from "models/Model";
 import { getModelById } from "modules/modelsRepository/selectors";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { useApi } from "hooks/useApi";
 import {
   Table,
@@ -10,18 +10,21 @@ import {
   TableDataCell,
   TableRow,
 } from "components/primitives/Table";
-import api from "../../services";
+import LatexRenderer from "components/LatexRenderer";
+import api from "../../../services";
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 
 const Reactions = () => {
-  const match = useRouteMatch<{ modelId: string }>();
+  const {
+    params: { modelId },
+  } = useRouteMatch<{ modelId: string }>();
   const getModel = useSelector(getModelById);
 
-  const model: ModelInterface = getModel(parseInt(match.params.modelId, 10));
+  const model: ModelInterface = getModel(parseInt(modelId, 10));
 
   const [reactionsList] = useApi(
-    useCallback(() => api.loadReactions(parseInt(match.params.modelId, 10)), [
-      match.params.modelId,
-    ])
+    useCallback(() => api.loadReactions(parseInt(modelId, 10)), [modelId])
   );
 
   return (
@@ -40,9 +43,15 @@ const Reactions = () => {
                 {reactionsList.map((reaction) => {
                   return (
                     <TableRow>
-                      <TableDataCell>{reaction.name}</TableDataCell>
                       <TableDataCell>
-                        {reaction.expression?.latex}
+                        <Link to={`reactions/reaction/${reaction.id}`}>
+                          {reaction.name}
+                        </Link>
+                      </TableDataCell>
+                      <TableDataCell>
+                        <LatexRenderer>
+                          {reaction.expression.latex}
+                        </LatexRenderer>
                       </TableDataCell>
                     </TableRow>
                   );
