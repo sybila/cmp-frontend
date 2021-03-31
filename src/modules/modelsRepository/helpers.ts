@@ -57,13 +57,14 @@ export const speciesToTreeItem = (species: SpeciesModel): TreeItem => {
 };
 
 export const transformCompartmentToTreeItem = (
-  compartment: ModelCompartment,
-  species: SpeciesModel[]
+  compartment: ModelCompartment
 ): TreeItem => {
   return {
     id: compartment.id,
     caption: compartment.name,
-    children: species ? species.map(speciesToTreeItem) : [],
+    children: compartment.species
+      ? compartment.species.map(speciesToTreeItem)
+      : [],
     meta: TreeItemComponent.Compartment,
   };
 };

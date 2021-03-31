@@ -43,9 +43,11 @@ const constructBranch = (
 ) => {
   return (
     <TreeNode {...node} depth={depth}>
-      {children?.map((child) => {
-        return constructBranch(child, depth + 1);
-      })}
+      {children?.length > 0
+        ? children?.map((child) => {
+            return constructBranch(child, depth + 1);
+          })
+        : null}
     </TreeNode>
   );
 };

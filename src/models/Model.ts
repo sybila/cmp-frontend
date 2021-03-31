@@ -46,6 +46,7 @@ export interface ModelCompartment extends ModelCompartmentPartial {
   size: number;
   alias: string;
   isConstant: number;
+  species: SpeciesPartial[];
 }
 
 export interface ModelCompartmentExtended extends ModelCompartment {

@@ -20,8 +20,6 @@ const Components = () => {
   );
   const history = useHistory();
 
-  const [species, setSpecies] = useState({});
-
   const [compartmentsList] = useApi(
     useCallback(() => api.loadCompartments(parseInt(modelId, 10)), [modelId])
   );
@@ -30,9 +28,7 @@ const Components = () => {
     () =>
       compartmentsList
         ? compartmentsList
-            .map((comp) =>
-              transformCompartmentToTreeItem(comp, species[comp.id])
-            )
+            .map((comp) => transformCompartmentToTreeItem(comp))
             .map((item) => ({
               ...item,
               actions: [
@@ -58,18 +54,7 @@ const Components = () => {
               })),
             }))
         : [],
-    [compartmentsList, species]
-  );
-
-  const handleNodeClick = useCallback(
-    (id: number, meta: any) => {
-      if (meta === TreeItemComponent.Compartment && !species[id]) {
-        api.loadCompartmentDetail(modelId, id).then(({ data: { data } }) => {
-          setSpecies({ ...species, [id]: data.species });
-        });
-      }
-    },
-    [species]
+    [compartmentsList]
   );
 
   return (
@@ -80,7 +65,7 @@ const Components = () => {
             <div className="column">
               <Box>
                 <p className="subtitle is-6 is-uppercase">Compartments</p>
-                <Tree data={components} onNodeClick={handleNodeClick} />
+                <Tree data={components} />
               </Box>
             </div>
             <div className="column"></div>
