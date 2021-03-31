@@ -18,6 +18,9 @@ import { intToBoolean } from "services/dataTransform";
 import Tree from "components/Tree";
 import { speciesToTreeItem } from "../../../helpers";
 import DetailTableRow from "../../../components/DetailTableRow";
+import RuleComponent, {
+  EquationsWrapper,
+} from "modules/modelsRepository/components/RuleComponent";
 
 const Compartment = () => {
   const {
@@ -62,7 +65,7 @@ const Compartment = () => {
                   <DetailTableRow name="ID" value={compartment.id} />
                   <DetailTableRow
                     name="Constant"
-                    value={compartment.isConstant}
+                    value={intToBoolean(compartment.isConstant).toString()}
                   />
                   <DetailTableRow name="SBO term" value={compartment.sboTerm} />
                   <DetailTableRow name="Size" value={compartment.size} />
@@ -73,18 +76,29 @@ const Compartment = () => {
                 </TableSection>
               </Table>
             </Box>
-            <Box>
-              <Text fontWeight="bold" mb={2}>
-                Species
-              </Text>
-              <Tree
-                data={species}
-                onNodeClick={(id: number) =>
-                  history.push(`${compartmentId}/species/${id}`)
-                }
-              />
-            </Box>
+            {species.length > 0 && (
+              <Box>
+                <Text fontWeight="bold" mb={2}>
+                  Species
+                </Text>
+                <Tree
+                  data={species}
+                  onNodeClick={(id: number) =>
+                    history.push(`${compartmentId}/species/${id}`)
+                  }
+                />
+              </Box>
+            )}
           </Tiles>
+          {compartment.rules && compartment.rules.length ? (
+            <EquationsWrapper>
+              {compartment.rules.map((rule) => (
+                <RuleComponent key={`rule-${rule.id}`} rule={rule} />
+              ))}
+            </EquationsWrapper>
+          ) : (
+            ""
+          )}
           <Disclosure
             caption="Annotations"
             noContent="This item has no annotations."

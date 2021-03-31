@@ -7,7 +7,7 @@ type Props = {
 };
 
 const DetailTableRow = ({ value, name }: Props) => {
-  return value ? (
+  return value !== null ? (
     <TableRow>
       <TableDataCell as="th">{name}</TableDataCell>
       <TableDataCell>{value}</TableDataCell>

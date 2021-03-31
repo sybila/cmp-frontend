@@ -33,7 +33,7 @@ export interface EntityPartial {
 
 export interface RulePartial {
   id: number;
-  equation: string;
+  equation: Expression;
 }
 
 export interface ModelCompartmentPartial extends EntityPartial {}
@@ -99,19 +99,18 @@ export interface Reaction extends Omit<ReactionPartial, "expression"> {
 
 export interface SpeciesPartial extends EntityPartial {}
 export interface UnitDefinitionPartial extends EntityPartial {}
-export interface Species {
+export interface Species extends SpeciesPartial {
+  alias: string;
   id: number;
   name: string;
-  metaId: string;
-  sbmlId: string;
-  sboTerm: string;
+  sboTerm?: string;
   annotations: Annotation[];
-  notes: string;
-  initialExpression: string;
-  hasOnlySubstanceUnits: boolean;
-  isConstant: boolean;
-  boundaryCondition: string;
-  reactionItems: ReactionItemPartial[];
+  notes?: string;
+  initialExpression?: string;
+  hasOnlySubstanceUnits: number;
+  constant: number;
+  boundaryCondition: number;
+  reactionItems: { id: number; name: string }[];
   rules: RulePartial[];
 }
 

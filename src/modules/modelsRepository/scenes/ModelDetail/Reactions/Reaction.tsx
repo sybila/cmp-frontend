@@ -8,12 +8,7 @@ import api from "../../../services";
 import DetailSection from "components/DetailSection";
 import Disclosure from "components/Disclosure";
 import LatexRenderer, { LatexWrapper } from "components/LatexRenderer";
-import {
-  Table,
-  TableSection,
-  TableDataCell,
-  TableRow,
-} from "components/primitives/Table";
+import { Table, TableSection } from "components/primitives/Table";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
 import {
