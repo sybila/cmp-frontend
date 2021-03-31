@@ -10,6 +10,7 @@ import { Card, List } from "components/Cards";
 import { moduleNames } from "../../reducers/MainReducer";
 import api from "../../services";
 import { getModelById } from "modules/modelsRepository/selectors";
+import Pager from "components/Pager";
 
 const Parameters = () => {
   const {
@@ -28,22 +29,24 @@ const Parameters = () => {
       </BreadcrumbsItem>
       <section className="section p-b-0">
         <div className="container">
-          <div className="box is-padding-extended">
-            {model &&
-              (model.parameters.length ? (
-                <List>
-                  {model.parameters.map((compartment) => (
-                    <Card headerTitle={compartment.name}></Card>
-                  ))}
-                </List>
+          {model && (
+            <Pager countOnPage={5}>
+              {model.parameters && model.parameters.length ? (
+                model.parameters.map((item, i) => (
+                  <div className="box variable-item" key={`note-${i}`}>
+                    <span>{item.id} |</span>
+                    <strong className="m-r-5">{item.name}</strong>
+                  </div>
+                ))
               ) : (
                 <article className="message is-danger mt-4">
                   <div className="message-body" role="alert">
                     No parameters found for selected model.
                   </div>
                 </article>
-              ))}
-          </div>
+              )}
+            </Pager>
+          )}
         </div>
       </section>
     </>
