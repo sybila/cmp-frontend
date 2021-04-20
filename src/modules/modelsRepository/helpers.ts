@@ -18,7 +18,7 @@ export const createEquationSide = (reactionItems: ReactionItemPartial[]) => {
   return reactionItems
     .map(
       ({ alias, stoichiometry }) =>
-        `${alias}${stoichiometry > 1 ? `\\times${stoichiometry}` : ""}`
+        `${stoichiometry > 1 ? `\\mathit{${stoichiometry}}` : ""}${alias}`
     )
     .join(" + ");
 };
