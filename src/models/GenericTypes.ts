@@ -46,7 +46,8 @@ export interface Annotation {
   link: string;
 }
 
-export interface Expression {
+export interface Expression<T = unknown> {
   latex: string;
   cmml: string;
+  detail?: T;
 }

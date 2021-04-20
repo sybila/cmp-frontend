@@ -7,7 +7,10 @@ import { Box, Flex, Text } from "rebass/styled-components";
 import api from "../../../services";
 import DetailSection from "components/DetailSection";
 import Disclosure from "components/Disclosure";
-import LatexRenderer, { LatexWrapper } from "components/LatexRenderer";
+import LatexRenderer, {
+  LatexWithExpand,
+  LatexWrapper,
+} from "components/LatexRenderer";
 import { Table, TableSection } from "components/primitives/Table";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
@@ -106,7 +109,17 @@ const Reaction = () => {
                 <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
                   Kinetic law
                 </p>
-                <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
+                {Object.keys(
+                  reaction.rate.detail.components.functionDefinitions
+                ).length ? (
+                  <LatexWithExpand
+                    expanded={reaction.rate.detail.expandedLatex}
+                  >
+                    {reaction.rate.latex}
+                  </LatexWithExpand>
+                ) : (
+                  <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
+                )}
               </LatexWrapper>
             </Box>
           </Tiles>

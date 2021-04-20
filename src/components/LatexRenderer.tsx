@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import katex from "katex";
 import "katex/dist/katex.min.css";
-import { Box } from "rebass/styled-components";
+import { Box, Button, Flex } from "rebass/styled-components";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
 
@@ -34,6 +34,25 @@ export const LatexWrapper = styled.div<{ fullwidth?: boolean }>(
     `}
   `
 );
+
+export const LatexWithExpand = ({
+  children: rawExpression,
+  options,
+  expanded,
+}: Props & { expanded: string }) => {
+  const [isExpanded, setExpanded] = useState(false);
+
+  return (
+    <Flex alignItems="center">
+      <LatexRenderer options={options}>
+        {isExpanded ? expanded : rawExpression}
+      </LatexRenderer>
+      <Button type="button" onClick={() => setExpanded(!isExpanded)} ml={2}>
+        {isExpanded ? "Collapse" : "Expand"} all functions
+      </Button>
+    </Flex>
+  );
+};
 
 const LatexRenderer = ({ children: rawExpression, options }: Props) => {
   const boxRef = useRef<HTMLDivElement>(null);

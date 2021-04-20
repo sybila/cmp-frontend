@@ -76,6 +76,22 @@ export interface ReactionItemExtended extends ReactionItem {
   parameterId?: number;
 }
 
+type FunctionDefinitions = {
+  alias: string;
+  args: string[];
+  function: string;
+  id: number;
+};
+
+type ReactionExpressionDetail = {
+  components: {
+    compartments: { alias: string; id: number; size: number }[];
+    functionDefinitions: Record<string, FunctionDefinitions>;
+    parametes: Record<string, { alias: string; id: number; value: number }>;
+  };
+  expandedLatex: string;
+};
+
 export interface ReactionPartial extends EntityPartial {
   sbmlId?: string;
   sboTerm?: string;
@@ -92,7 +108,7 @@ export interface Reaction extends Omit<ReactionPartial, "expression"> {
   modelId: number;
   compartmentId?: number;
   reactionItems: ReactionItemPartial[];
-  rate: Expression;
+  rate: Expression<ReactionExpressionDetail>;
   functions: any[];
   parameters: any[];
 }
