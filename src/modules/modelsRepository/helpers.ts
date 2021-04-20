@@ -1,4 +1,4 @@
-import { ReactionItemPartial } from "models/Model";
+import { ReactionItemPartial, SpeciesPartial } from "models/Model";
 import { ModelCompartment, Species as SpeciesModel } from "models/Model";
 import { TreeItem } from "components/Tree";
 
@@ -48,11 +48,14 @@ export enum TreeItemComponent {
   Compartment,
 }
 
-export const speciesToTreeItem = (species: SpeciesModel): TreeItem => {
+export const speciesToTreeItem = (
+  species: SpeciesPartial,
+  parentId: number
+): TreeItem => {
   return {
     id: species.id,
     caption: species.name,
-    meta: TreeItemComponent.Specie,
+    meta: { type: TreeItemComponent.Specie, parentId },
   };
 };
 
@@ -63,8 +66,10 @@ export const transformCompartmentToTreeItem = (
     id: compartment.id,
     caption: compartment.name,
     children: compartment.species
-      ? compartment.species.map(speciesToTreeItem)
+      ? compartment.species.map((specie) =>
+          speciesToTreeItem(specie, compartment.id)
+        )
       : [],
-    meta: TreeItemComponent.Compartment,
+    meta: { type: TreeItemComponent.Compartment },
   };
 };

@@ -92,9 +92,7 @@ const TreeNode = ({
           as="span"
           onClick={() => {
             toggleExpand(id);
-            onClick && onClick(id, meta);
           }}
-          sx={{ cursor: onClick ? "pointer" : "initial" }}
         >
           {!isLeaf && (
             <NodeExpand>
@@ -102,7 +100,14 @@ const TreeNode = ({
             </NodeExpand>
           )}
           {icon && <FontAwesomeIcon icon={icon} />}
-          <Text color="text" fontSize={2}>
+          <Text
+            color="text"
+            fontSize={2}
+            onClick={() => {
+              onClick && onClick(id, meta);
+            }}
+            sx={{ cursor: onClick ? "pointer" : "initial" }}
+          >
             {caption}
           </Text>
         </Flex>

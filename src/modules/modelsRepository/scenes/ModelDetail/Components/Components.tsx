@@ -27,34 +27,18 @@ const Components = () => {
   const components = useMemo(
     () =>
       compartmentsList
-        ? compartmentsList
-            .map((comp) => transformCompartmentToTreeItem(comp))
-            .map((item) => ({
-              ...item,
-              actions: [
-                {
-                  caption: "Detail",
-                  callback: () => {
-                    history.push(`${url}/compartment/${item.id}`);
-                  },
-                },
-              ],
-              children: item.children?.map((child) => ({
-                ...child,
-                actions: [
-                  {
-                    caption: "Detail",
-                    callback: () => {
-                      history.push(
-                        `${url}/compartment/${item.id}/species/${child.id}`
-                      );
-                    },
-                  },
-                ],
-              })),
-            }))
+        ? compartmentsList.map((comp) => transformCompartmentToTreeItem(comp))
         : [],
     [compartmentsList]
+  );
+
+  const handleNodeClick = useCallback(
+    (id: number, meta: { type: TreeItemComponent; parentId?: number }) => {
+      if (meta.type === TreeItemComponent.Compartment)
+        history.push(`${url}/compartment/${id}`);
+      else history.push(`${url}/compartment/${meta.parentId}/species/${id}`);
+    },
+    []
   );
 
   return (
@@ -65,7 +49,7 @@ const Components = () => {
             <div className="column">
               <Box>
                 <p className="subtitle is-6 is-uppercase">Compartments</p>
-                <Tree data={components} />
+                <Tree data={components} onNodeClick={handleNodeClick} />
               </Box>
             </div>
             <div className="column"></div>
