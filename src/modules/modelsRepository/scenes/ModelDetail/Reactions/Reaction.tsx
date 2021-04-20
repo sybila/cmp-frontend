@@ -11,7 +11,12 @@ import LatexRenderer, {
   LatexWithExpand,
   LatexWrapper,
 } from "components/LatexRenderer";
-import { Table, TableSection } from "components/primitives/Table";
+import {
+  Table,
+  TableDataCell,
+  TableRow,
+  TableSection,
+} from "components/primitives/Table";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
 import {
@@ -122,6 +127,37 @@ const Reaction = () => {
                 )}
               </LatexWrapper>
             </Box>
+            <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+              <Box>
+                <Text fontWeight="bold" mb={2}>
+                  Parameters
+                </Text>
+                <Table>
+                  <TableSection as="thead">
+                    <TableRow>
+                      <TableDataCell as="th">Alias</TableDataCell>
+                      <TableDataCell as="th">Value</TableDataCell>
+                    </TableRow>
+                  </TableSection>
+                  <TableSection as="tbody">
+                    {Object.keys(reaction.rate.detail.components.parametes).map(
+                      (parameterKey) => {
+                        const parameter =
+                          reaction.rate.detail.components.parametes[
+                            parameterKey
+                          ];
+                        return (
+                          <TableRow>
+                            <TableDataCell>{parameter.alias}</TableDataCell>
+                            <TableDataCell>{parameter.value}</TableDataCell>
+                          </TableRow>
+                        );
+                      }
+                    )}
+                  </TableSection>
+                </Table>
+              </Box>
+            </Tiles>
           </Tiles>
 
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
