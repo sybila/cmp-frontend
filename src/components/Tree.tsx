@@ -93,6 +93,7 @@ const TreeNode = ({
           onClick={() => {
             toggleExpand(id);
           }}
+          sx={{ width: "100%" }}
         >
           {!isLeaf && (
             <NodeExpand>
@@ -106,7 +107,7 @@ const TreeNode = ({
             onClick={() => {
               onClick && onClick(id, meta);
             }}
-            sx={{ cursor: onClick ? "pointer" : "initial" }}
+            sx={{ cursor: onClick ? "pointer" : "initial", width: "100%" }}
           >
             {caption}
           </Text>

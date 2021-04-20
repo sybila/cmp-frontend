@@ -38,7 +38,7 @@ const Components = () => {
         history.push(`${url}/compartment/${id}`);
       else history.push(`${url}/compartment/${meta.parentId}/species/${id}`);
     },
-    []
+    [history]
   );
 
   return (

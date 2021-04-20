@@ -21,13 +21,17 @@ const stripMathMode = (expression: string) => {
   return result;
 };
 
-export const LatexWrapper = styled.div(
-  ({ theme }) => css`
+export const LatexWrapper = styled.div<{ fullwidth?: boolean }>(
+  ({ theme, fullwidth }) => css`
     display: inline-block;
     box-shadow: ${theme.custom.boxShadow.strong};
     border-radius: ${theme.custom.borderRadius.normal.px};
     padding: ${rem(theme.custom.sizes["size-2"])};
     margin: ${rem(theme.custom.sizes["size-2"])} 0;
+    ${fullwidth &&
+    css`
+      width: 100%;
+    `}
   `
 );
 

@@ -65,21 +65,16 @@ const Reaction = () => {
   const reactionItemsTree = useMemo(
     () =>
       reaction
-        ? reaction.reactionItems
-            .map((comp) => reactionItemToTreeItem(comp))
-            .map((item) => ({
-              ...item,
-              actions: [
-                {
-                  caption: "Detail",
-                  callback: () => {
-                    history.push(`${url}/reactionItem/${item.id}`);
-                  },
-                },
-              ],
-            }))
+        ? reaction.reactionItems.map((comp) => reactionItemToTreeItem(comp))
         : [],
     [reaction]
+  );
+
+  const handleNodeClick = useCallback(
+    (id: number) => {
+      history.push(`${url}/reactionItem/${id}`);
+    },
+    [history]
   );
 
   return (
@@ -89,11 +84,32 @@ const Reaction = () => {
       </BreadcrumbsItem>
       {reaction && (
         <DetailSection title={reaction.name}>
-          {reaction.notes && (
-            <Box mb={6}>
-              <p dangerouslySetInnerHTML={{ __html: reaction.notes }} />
+          <Tiles mb={4} columns={[1, null, 1]} gap={36}>
+            <Box>
+              <LatexWrapper fullwidth>
+                <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
+                  Reaction
+                </p>
+                <LatexRenderer>{reactionEquation}</LatexRenderer>
+              </LatexWrapper>
             </Box>
-          )}
+            <Box>
+              <Text fontWeight="bold" mb={2}>
+                Reaction items
+              </Text>
+              <Tree data={reactionItemsTree} onNodeClick={handleNodeClick} />
+            </Box>
+          </Tiles>
+          <Tiles mb={4} columns={[1, null, 1]} gap={36}>
+            <Box>
+              <LatexWrapper fullwidth>
+                <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
+                  Kinetic law
+                </p>
+                <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
+              </LatexWrapper>
+            </Box>
+          </Tiles>
 
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
             <Box>
@@ -117,29 +133,12 @@ const Reaction = () => {
                 </TableSection>
               </Table>
             </Box>
-            <Box>
-              <Text fontWeight="bold" mb={2}>
-                Reaction items
-              </Text>
-              <Tree data={reactionItemsTree} />
-            </Box>
+            {reaction.notes && (
+              <Box mb={6}>
+                <p dangerouslySetInnerHTML={{ __html: reaction.notes }} />
+              </Box>
+            )}
           </Tiles>
-
-          <EquationsWrapper>
-            <LatexWrapper>
-              <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-                Kinetic law
-              </p>
-              <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
-            </LatexWrapper>
-
-            <LatexWrapper>
-              <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-                Reaction
-              </p>
-              <LatexRenderer>{reactionEquation}</LatexRenderer>
-            </LatexWrapper>
-          </EquationsWrapper>
 
           <Disclosure
             caption="Annotations"
