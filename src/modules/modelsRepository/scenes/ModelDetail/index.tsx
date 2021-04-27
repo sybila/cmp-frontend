@@ -19,6 +19,7 @@ import Config from "config";
 import { sortBy } from "lodash";
 import Parameters from "./Parameters";
 import Reactions from "./Reactions";
+import Simulation from "./Simulation";
 
 interface Props extends RouteComponentProps {
   loadModel: typeof loadModel;
@@ -56,6 +57,7 @@ const routes = [
     caption: "Simulation",
     to: "/simulation",
     order: 4,
+    component: Simulation,
   },
   {
     caption: "Analysis",
