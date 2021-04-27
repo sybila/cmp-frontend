@@ -85,9 +85,13 @@ type FunctionDefinitions = {
 
 type ReactionExpressionDetail = {
   components: {
-    compartments: { alias: string; id: number; size: number }[];
+    compartments: Record<string, { alias: string; id: number; size: number }>;
     functionDefinitions: Record<string, FunctionDefinitions>;
     parametes: Record<string, { alias: string; id: number; value: number }>;
+    species: Record<
+      string,
+      { id: number; alias: string; "initial amount": string }
+    >;
   };
   expandedLatex: string;
 };

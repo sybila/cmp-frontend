@@ -92,43 +92,43 @@ const Reaction = () => {
       </BreadcrumbsItem>
       {reaction && (
         <DetailSection title={reaction.name}>
-          <Tiles mb={4} columns={[1, null, 1]} gap={36}>
-            <Box>
-              <LatexWrapper fullwidth>
-                <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-                  Reaction
-                </p>
-                <LatexRenderer>{reactionEquation}</LatexRenderer>
-              </LatexWrapper>
-            </Box>
-            <Box>
-              <Text fontWeight="bold" mb={2}>
-                Reaction items
-              </Text>
-              <Tree data={reactionItemsTree} onNodeClick={handleNodeClick} />
-            </Box>
-          </Tiles>
-          <Tiles mb={4} columns={[1, null, 1]} gap={36}>
-            <Box>
-              <LatexWrapper fullwidth>
-                <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-                  Kinetic law
-                </p>
-                {Object.keys(
-                  reaction.rate.detail.components.functionDefinitions
-                ).length ? (
-                  <LatexWithExpand
-                    expanded={reaction.rate.detail.expandedLatex}
-                  >
-                    {reaction.rate.latex}
-                  </LatexWithExpand>
-                ) : (
-                  <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
-                )}
-              </LatexWrapper>
-            </Box>
-            <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+          <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+            <Flex mb={4} flexDirection="column">
+              <Box mb={16}>
+                <LatexWrapper fullwidth>
+                  <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
+                    Reaction
+                  </p>
+                  <LatexRenderer>{reactionEquation}</LatexRenderer>
+                </LatexWrapper>
+              </Box>
               <Box>
+                <Text fontWeight="bold" mb={2}>
+                  Reaction items
+                </Text>
+                <Tree data={reactionItemsTree} onNodeClick={handleNodeClick} />
+              </Box>
+            </Flex>
+            <Flex mb={4} flexDirection="column">
+              <Box mb={16}>
+                <LatexWrapper fullwidth>
+                  <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
+                    Kinetic law
+                  </p>
+                  {Object.keys(
+                    reaction.rate.detail.components.functionDefinitions
+                  ).length ? (
+                    <LatexWithExpand
+                      expanded={reaction.rate.detail.expandedLatex}
+                    >
+                      {reaction.rate.latex}
+                    </LatexWithExpand>
+                  ) : (
+                    <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
+                  )}
+                </LatexWrapper>
+              </Box>
+              <Box mb={16}>
                 <Text fontWeight="bold" mb={2}>
                   Parameters
                 </Text>
@@ -157,9 +157,64 @@ const Reaction = () => {
                   </TableSection>
                 </Table>
               </Box>
-            </Tiles>
+              <Box mb={16}>
+                <Text fontWeight="bold" mb={2}>
+                  Compartments
+                </Text>
+                <Table>
+                  <TableSection as="thead">
+                    <TableRow>
+                      <TableDataCell as="th">Alias</TableDataCell>
+                      <TableDataCell as="th">Size</TableDataCell>
+                    </TableRow>
+                  </TableSection>
+                  <TableSection as="tbody">
+                    {Object.keys(
+                      reaction.rate.detail.components.compartments
+                    ).map((key) => {
+                      const item =
+                        reaction.rate.detail.components.compartments[key];
+                      return (
+                        <TableRow>
+                          <TableDataCell>{item.alias}</TableDataCell>
+                          <TableDataCell>{item.size}</TableDataCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableSection>
+                </Table>
+              </Box>
+              <Box mb={16}>
+                <Text fontWeight="bold" mb={2}>
+                  Species
+                </Text>
+                <Table>
+                  <TableSection as="thead">
+                    <TableRow>
+                      <TableDataCell as="th">Alias</TableDataCell>
+                      <TableDataCell as="th">Size</TableDataCell>
+                    </TableRow>
+                  </TableSection>
+                  <TableSection as="tbody">
+                    {Object.keys(reaction.rate.detail.components.species).map(
+                      (key) => {
+                        const item =
+                          reaction.rate.detail.components.species[key];
+                        return (
+                          <TableRow>
+                            <TableDataCell>{item.alias}</TableDataCell>
+                            <TableDataCell>
+                              {item["initial amount"]}
+                            </TableDataCell>
+                          </TableRow>
+                        );
+                      }
+                    )}
+                  </TableSection>
+                </Table>
+              </Box>
+            </Flex>
           </Tiles>
-
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
             <Box>
               <Text fontWeight="bold" mb={2}>
