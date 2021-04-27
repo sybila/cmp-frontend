@@ -52,11 +52,10 @@ const Species = () => {
               <Table>
                 <TableSection>
                   <DetailTableRow name="Alias" value={species.alias} />
-                  <DetailTableRow name="ID" value={species.id} />
                   <DetailTableRow name="SBO term" value={species.sboTerm} />
                   <DetailTableRow
                     name="Boundary condition"
-                    value={species.boundaryCondition}
+                    value={intToBoolean(species.boundaryCondition).toString()}
                   />
                   <DetailTableRow
                     name="Constant"

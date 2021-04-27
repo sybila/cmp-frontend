@@ -62,7 +62,6 @@ const Compartment = () => {
               <Table>
                 <TableSection>
                   <DetailTableRow name="Alias" value={compartment.alias} />
-                  <DetailTableRow name="ID" value={compartment.id} />
                   <DetailTableRow
                     name="Constant"
                     value={intToBoolean(compartment.isConstant).toString()}

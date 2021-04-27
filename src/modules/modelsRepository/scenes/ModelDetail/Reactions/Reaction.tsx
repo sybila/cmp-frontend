@@ -223,12 +223,6 @@ const Reaction = () => {
               <Table>
                 <TableSection>
                   <DetailTableRow name="Alias" value={reaction.alias} />
-                  <DetailTableRow name="ID" value={reaction.id} />
-                  <DetailTableRow name="Model ID" value={reaction.modelId} />
-                  <DetailTableRow
-                    name="Compartment ID"
-                    value={reaction.compartmentId}
-                  />
                   <DetailTableRow name="SBO term" value={reaction.sboTerm} />
                   <DetailTableRow
                     name="Reversible"

@@ -61,19 +61,6 @@ const ReactionItem = () => {
             <Table>
               <TableSection>
                 <DetailTableRow name="Alias" value={reactionItem.alias} />
-                <DetailTableRow name="ID" value={reactionItem.id} />
-                <DetailTableRow
-                  name="Parameter ID"
-                  value={reactionItem.parameterId}
-                />
-                <DetailTableRow
-                  name="Reaction ID"
-                  value={reactionItem.reactionId}
-                />
-                <DetailTableRow
-                  name="Specie ID"
-                  value={reactionItem.specieId}
-                />
                 <DetailTableRow name="SBO term" value={reactionItem.sboTerm} />
                 <DetailTableRow
                   name="Stochiometry"
