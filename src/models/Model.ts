@@ -146,6 +146,26 @@ export interface Dataset extends DatasetPartial {
   };
 }
 
+export interface EventPartial extends EntityPartial {
+  alias: string;
+  delay: Expression;
+  trigger: Expression;
+  priority: Expression;
+  eventAssignment: {
+    variableType: string;
+    variableId: number;
+    variable: string;
+    formula: Expression;
+  };
+}
+
+export interface EventDetail extends EventPartial {
+  sboTerm?: string | null;
+  notes?: string | null;
+  annotations?: Annotation[];
+  evaluateOnTrigger?: string | null;
+}
+
 export const modelNormalize = (models: any[]) => {
   const modelsSchema = new schema.Entity("models", undefined, {
     idAttribute: "id",
