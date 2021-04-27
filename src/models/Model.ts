@@ -134,6 +134,18 @@ export interface Species extends SpeciesPartial {
   rules: RulePartial[];
 }
 
+export interface DatasetPartial extends EntityPartial {}
+
+type InitialValue = { id: number; alias: string; initialValue: string };
+export interface Dataset extends DatasetPartial {
+  default: boolean;
+  initialValues: {
+    compartments: InitialValue[];
+    species: InitialValue[];
+    parameters: InitialValue[];
+  };
+}
+
 export const modelNormalize = (models: any[]) => {
   const modelsSchema = new schema.Entity("models", undefined, {
     idAttribute: "id",

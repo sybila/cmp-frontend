@@ -1,6 +1,7 @@
 import { AxiosPromise } from "axios";
 import { ApiResponse } from "models/GenericTypes";
 import {
+  DatasetPartial,
   ModelCompartment,
   ModelCompartmentExtended,
   Reaction,
@@ -21,6 +22,8 @@ const service = {
   loadReactionDetail,
   loadReactionItems,
   loadReactionItemDetail,
+  loadDatasets,
+  loadDatasetDetail,
 };
 
 // REVIEW: Refactor based on API
@@ -83,6 +86,16 @@ function loadReactionItemDetail(
   return dataService.get(
     `/models/${modelId}/reactions/${reactionId}/reactionItems/${id}`
   );
+}
+
+function loadDatasets(
+  modelId: number
+): AxiosPromise<ApiResponse<DatasetPartial[]>> {
+  return dataService.get(`/models/${modelId}/datasets`);
+}
+
+function loadDatasetDetail(modelId: number, datasetId: number) {
+  return dataService.get(`/models/${modelId}/${datasetId}`);
 }
 
 export default service;
