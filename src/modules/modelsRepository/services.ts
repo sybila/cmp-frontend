@@ -2,10 +2,12 @@ import { AxiosPromise } from "axios";
 import { ApiResponse } from "models/GenericTypes";
 import {
   Dataset,
-  DatasetPartial,
+  EventDetail,
   EventPartial,
   ModelCompartment,
   ModelCompartmentExtended,
+  Parameter,
+  ParameterDetail,
   Reaction,
   ReactionItem,
   ReactionItemExtended,
@@ -28,9 +30,10 @@ const service = {
   loadDatasetDetail,
   loadEvents,
   loadEventDetail,
+  loadParameters,
+  loadParameterDetail,
 };
 
-// REVIEW: Refactor based on API
 function load(): Promise<any> {
   return dataService.get("/models").then((models: any) => models.data.data);
 }
@@ -92,9 +95,7 @@ function loadReactionItemDetail(
   );
 }
 
-function loadDatasets(
-  modelId: number
-): AxiosPromise<ApiResponse<DatasetPartial[]>> {
+function loadDatasets(modelId: number): AxiosPromise<ApiResponse<Dataset[]>> {
   return dataService.get(`/models/${modelId}/datasets`);
 }
 
@@ -114,8 +115,21 @@ function loadEvents(
 function loadEventDetail(
   modelId: number,
   eventId: number
-): AxiosPromise<ApiResponse<EventPartial[]>> {
+): AxiosPromise<ApiResponse<EventDetail[]>> {
   return dataService.get(`/models/${modelId}/events/${eventId}`);
+}
+
+function loadParameters(
+  modelId: number
+): AxiosPromise<ApiResponse<Parameter[]>> {
+  return dataService.get(`/models/${modelId}/parameters`);
+}
+
+function loadParameterDetail(
+  modelId: number,
+  parameterId: number
+): AxiosPromise<ApiResponse<ParameterDetail>> {
+  return dataService.get(`/models/${modelId}/parameters/${parameterId}`);
 }
 
 export default service;

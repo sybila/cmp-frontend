@@ -134,10 +134,8 @@ export interface Species extends SpeciesPartial {
   rules: RulePartial[];
 }
 
-export interface DatasetPartial extends EntityPartial {}
-
 type InitialValue = { id: number; alias: string; initialValue: string };
-export interface Dataset extends DatasetPartial {
+export interface Dataset extends EntityPartial {
   default: boolean;
   initialValues: {
     compartments: InitialValue[];
@@ -164,6 +162,24 @@ export interface EventDetail extends EventPartial {
   notes?: string | null;
   annotations?: Annotation[];
   evaluateOnTrigger?: string | null;
+}
+
+export interface Parameter extends EntityPartial {
+  alias: string;
+  value: string;
+  constant: number;
+  ontologyTerm?: string | null;
+}
+
+export interface ParameterDetail extends Omit<Parameter, "ontologyTerm"> {
+  sboTerm?: string;
+  notes?: string;
+  annotations?: Annotation[];
+  reactionItems?: ReactionItemPartial[];
+  rule?: {
+    id: number;
+    expression: Expression;
+  };
 }
 
 export const modelNormalize = (models: any[]) => {
