@@ -22,6 +22,7 @@ import { ExperimentComponentProps } from "..";
 import ExperimentValuesPage from "./ExperimentValuesPage";
 import ExperimentProtocolPage from "./ExperimentProtocolPage";
 import ExperimentChartPage from "./ExperimentChartPage";
+import ExperimentAnalysisPage from "./ExperimentAnalysis";
 import { hasPermission } from "ApplicationSelectors";
 import Config from "config";
 
@@ -32,7 +33,7 @@ interface Props extends ExperimentComponentProps {
   hasPermission: (permissionLevel: number) => boolean;
 }
 
-interface State {}
+interface State { }
 
 class DetailPage extends React.PureComponent<Props, State> {
   constructor(props) {
@@ -75,9 +76,8 @@ class DetailPage extends React.PureComponent<Props, State> {
     const currentExperiment = experimentsById[match.params.experimentId];
 
     const base = `/${experimentsNames.url}/detail`;
-    const routeLinkBase = `${base}${
-      currentExperiment ? `/${currentExperiment.id}` : ""
-    }`;
+    const routeLinkBase = `${base}${currentExperiment ? `/${currentExperiment.id}` : ""
+      }`;
     const routeBase = `${base}/:experimentId`;
     const routes = [
       {
@@ -117,6 +117,12 @@ class DetailPage extends React.PureComponent<Props, State> {
         component: ExperimentChartPage,
         order: 4,
       },
+      {
+        caption: "Analysis",
+        to: "/analysis",
+        component: ExperimentAnalysisPage,
+        order: 4,
+      },
     ];
 
     return currentExperiment ? (
@@ -150,8 +156,8 @@ class DetailPage extends React.PureComponent<Props, State> {
         </Switch>
       </>
     ) : (
-      <></>
-    );
+        <></>
+      );
   }
 }
 

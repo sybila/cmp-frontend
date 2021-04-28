@@ -8,6 +8,9 @@ const service = {
   fetchExperimentVariable,
   fetchExperimentVariableDetailed,
   fetchExperimentVisualizerData,
+  fetchAnalysis,
+  fetchAnalysePrescription,
+  fetchRunAnalyse
 };
 
 function fetchExperiments(): Promise<any> {
@@ -57,6 +60,24 @@ function fetchExperimentVisualizerData(id: number | string): Promise<any> {
     .then(({ data }) => {
       return data;
     });
+}
+
+function fetchAnalysis(): Promise<any> {
+  return dataService
+    .get(`https://service.e-cyanobacterium.org/analysis`)
+    .then((analysis: any) => analysis.data.data.analysis);
+}
+
+function fetchAnalysePrescription(name: string): Promise<any> {
+  return dataService
+    .get(`https://service.e-cyanobacterium.org/analysisPrescription/${name}`)
+    .then((analysis: any) => analysis.data.data);
+}
+
+function fetchRunAnalyse(name: string, body: any): Promise<any> {
+  return dataService
+    .post(`https://service.e-cyanobacterium.org/runAnalysis/${name}`, body)
+    .then((analysis: any) => analysis.data.data);
 }
 
 export default service;
