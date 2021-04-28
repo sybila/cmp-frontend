@@ -64,7 +64,7 @@ const ParameterDetail = () => {
               </Table>
             </Box>
           </Tiles>
-          {parameter.rule ? (
+          {parameter?.rule?.expression?.latex ? (
             <EquationsWrapper>
               <RuleComponent
                 rule={{
