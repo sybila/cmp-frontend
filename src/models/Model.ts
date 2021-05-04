@@ -134,7 +134,7 @@ export interface Species extends SpeciesPartial {
   rules: RulePartial[];
 }
 
-type InitialValue = { id: number; alias: string; initialValue: string };
+export type InitialValue = { id: number; alias: string; initialValue: string };
 export interface Dataset extends EntityPartial {
   default: boolean;
   initialValues: {
