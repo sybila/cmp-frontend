@@ -1,4 +1,8 @@
 import { AxiosPromise } from "axios";
+import {
+  AnalysisPrescription,
+  AnalysisTypesEnumeration,
+} from "models/Analysis";
 import { ApiResponse } from "models/GenericTypes";
 import {
   Dataset,
@@ -14,7 +18,7 @@ import {
   ReactionPartial,
   Species,
 } from "models/Model";
-import dataService from "services/dataService";
+import dataService, { apiService } from "services/dataService";
 
 const service = {
   load,
@@ -32,6 +36,9 @@ const service = {
   loadEventDetail,
   loadParameters,
   loadParameterDetail,
+  loadAnalysisOptions,
+  loadAnalysisPrescription,
+  executeAnalysis,
 };
 
 function load(): Promise<any> {
@@ -130,6 +137,26 @@ function loadParameterDetail(
   parameterId: number
 ): AxiosPromise<ApiResponse<ParameterDetail>> {
   return dataService.get(`/models/${modelId}/parameters/${parameterId}`);
+}
+
+function loadAnalysisOptions(): AxiosPromise<
+  ApiResponse<AnalysisTypesEnumeration>
+> {
+  return apiService.get(`/models/copasi/analysis`);
+}
+
+function loadAnalysisPrescription(
+  analysis: string
+): AxiosPromise<ApiResponse<AnalysisPrescription>> {
+  return apiService.get(`/models/copasi/analysisPrescription/${analysis}`);
+}
+
+// TODO: Add type for simulation result
+function executeAnalysis(
+  analysis: string,
+  inputs: Array<Record<string, unknown>>
+): AxiosPromise<ApiResponse<any>> {
+  return apiService.post(`/models/copasi/runAnalysis/${analysis}`, { inputs });
 }
 
 export default service;
