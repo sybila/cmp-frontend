@@ -7,8 +7,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@rebass/layout": "^4.0.6",
     "@rebass/forms": "^4.0.6",
+    "@rebass/layout": "^4.0.6",
     "@theme-ui/preset-bulma": "^0.6.0",
     "@types/katex": "^0.11.0",
     "axios": "^0.21.1",
@@ -41,7 +41,8 @@
     "redux-promise-middleware": "^6.1.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
