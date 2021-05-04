@@ -7,11 +7,11 @@ import { Box, Button, Flex, Text } from "rebass";
 import { Label, Select } from "@rebass/forms";
 import Visualizer from "cmp-visualizer";
 import styled, { css } from "styled-components/macro";
-import api from "../../services";
-import { moduleNames } from "../../reducers/MainReducer";
+import api from "../../../services";
+import { moduleNames } from "../../../reducers/MainReducer";
 import { Dataset } from "models/Model";
-import { data as simulationMockData } from "./simulationMockData";
 import LatexRenderer from "components/LatexRenderer";
+import Settings from "./Settings";
 
 const WhiteBox = styled(Box).attrs({
   className: "box is-padding-extended",
@@ -23,6 +23,9 @@ const WhiteBox = styled(Box).attrs({
   `
 );
 
+const loadSimulationPrescription = () =>
+  api.loadAnalysisPrescription("Simulation");
+
 const getDefaultDataset = (datasets: Dataset[]) =>
   datasets.find(({ default: d }) => d);
 
@@ -33,9 +36,6 @@ const getModels = (inputData: any) => {
   }));
 };
 
-// TEMP: Temporary until visualizer endpoint is known.
-const models = getModels(simulationMockData);
-
 const Simulation = () => {
   const {
     params: { modelId },
@@ -43,6 +43,11 @@ const Simulation = () => {
   const [selectedDatasetID, setSelectedDatasetID] = useState<
     number | undefined
   >();
+  const [simulationData, setSimulationData] = useState<any>(); // TODO: create simulation data type
+  const models = useMemo(
+    () => (simulationData ? getModels(simulationData) : undefined),
+    [simulationData]
+  );
 
   const [datasets] = useApi(
     useCallback(
@@ -59,10 +64,18 @@ const Simulation = () => {
     useCallback(() => api.loadEvents(parseInt(modelId, 10)), [modelId])
   );
 
+  const [prescription] = useApi(loadSimulationPrescription);
+
   const selectedDataset = useMemo(
     () => datasets?.find(({ id }) => id === selectedDatasetID),
     [selectedDatasetID, datasets]
   );
+
+  const handleExecute = useCallback((vals: Record<string, unknown>) => {
+    api
+      .executeAnalysis("Simulation", [vals])
+      .then(({ data: { data } }) => setSimulationData(data));
+  }, []);
 
   return (
     <>
@@ -73,12 +86,25 @@ const Simulation = () => {
       </BreadcrumbsItem>
       <section className="section p-b-0">
         <div className="container">
-          <Flex mx={-3} className="container">
+          {simulationData && models && (
+            <Box className="container">
+              <WhiteBox>
+                <Visualizer
+                  inputData={simulationData}
+                  models={models}
+                  width="100%"
+                />
+              </WhiteBox>
+            </Box>
+          )}
+          <Flex mx={-2} className="container">
             <WhiteBox width={1 / 2} px={2}>
               <Box mb={24}>
                 {datasets && (
                   <Box mb={16}>
-                    <Label htmlFor="dataset">Dataset</Label>
+                    <Label htmlFor="dataset" mb={10}>
+                      Dataset
+                    </Label>
                     <Select
                       id="dataset-select"
                       name="dataset"
@@ -95,26 +121,17 @@ const Simulation = () => {
                     </Select>
                   </Box>
                 )}
-                <Box>
-                  <Label htmlFor="graphset">Graphset</Label>
-                  <Select id="graphset-select" name="graphset"></Select>
-                </Box>
               </Box>
-              <Visualizer
-                inputData={simulationMockData}
-                models={models}
-                width="100%"
-              />
-              <Flex justifyContent="flex-end">
-                <Button
-                  type="button"
-                  onClick={() => console.log("executing simulation")}
-                >
-                  Execute
-                </Button>
-              </Flex>
+              {prescription && (
+                <Settings
+                  modelId={parseInt(modelId, 10)}
+                  dataset={selectedDataset}
+                  inputs={prescription.inputs}
+                  onSubmit={handleExecute}
+                />
+              )}
             </WhiteBox>
-            <WhiteBox width={1 / 4} px={2}>
+            <WhiteBox width={1 / 2} px={2}>
               {selectedDataset && (
                 <>
                   <Text fontWeight="bold" fontSize={18}>
@@ -169,24 +186,6 @@ const Simulation = () => {
                   </Box>
                 </>
               )}
-            </WhiteBox>
-            <WhiteBox width={1 / 4} px={2}>
-              <Text fontWeight="bold" fontSize={18}>
-                Events
-              </Text>
-              <Box pl={12} mt={12}>
-                {events && (
-                  <Box>
-                    {events.map((event) => (
-                      <Box key={`event-${event.id}`}>
-                        <Text fontSize={16} sx={{ textTransform: "uppercase" }}>
-                          {event.alias}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Box>
-                )}
-              </Box>
             </WhiteBox>
           </Flex>
         </div>
