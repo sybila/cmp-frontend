@@ -1,4 +1,4 @@
-import dataService from "services/dataService";
+import dataService, { apiService } from "services/dataService";
 
 const service = {
   fetchExperiments,
@@ -50,13 +50,9 @@ function fetchExperimentVariableDetailed(id: number | string): Promise<any> {
 }
 
 function fetchExperimentVisualizerData(id: number | string): Promise<any> {
-  // TEMP: Do globall dataservice for service api
-
-  return dataService
-    .get(`https://service.e-cyanobacterium.org/visualizer/0/${id}`)
-    .then(({ data }) => {
-      return data;
-    });
+  return apiService.get(`/visualizer/0/${id}`).then(({ data }) => {
+    return data;
+  });
 }
 
 export default service;
