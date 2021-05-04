@@ -6,10 +6,14 @@ import { userCookies } from "./cookies";
 import ApplicationStore from "../ApplicationStore";
 import { logout, setTokens } from "ApplicationActions";
 
-const url = Config.apiDomain;
-
 const dataService = axios.create({
-  baseURL: url,
+  baseURL: Config.apiDomain,
+  timeout: 10000,
+  headers: { "Access-Control-Allow-Origin": "*" },
+});
+
+const apiService = axios.create({
+  baseURL: Config.serviceApiDomain,
   timeout: 10000,
   headers: { "Access-Control-Allow-Origin": "*" },
 });
@@ -84,4 +88,7 @@ const onRrefreshed = (token: string) => {
 dataService.interceptors.request.use(accessTokenInterceptor);
 dataService.interceptors.response.use(null, refreshTokenInterceptor);
 
-export default dataService;
+apiService.interceptors.request.use(accessTokenInterceptor);
+apiService.interceptors.response.use(null, refreshTokenInterceptor);
+
+export { dataService as default, apiService };
