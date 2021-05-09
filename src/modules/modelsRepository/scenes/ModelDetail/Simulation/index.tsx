@@ -126,7 +126,7 @@ const Simulation = () => {
                 <Settings
                   modelId={parseInt(modelId, 10)}
                   dataset={selectedDataset}
-                  inputs={prescription.inputs}
+                  inputGroups={prescription.inputGroups}
                   onSubmit={handleExecute}
                 />
               )}
