@@ -12,6 +12,7 @@ import { moduleNames } from "../../../reducers/MainReducer";
 import { Dataset } from "models/Model";
 import LatexRenderer from "components/LatexRenderer";
 import Settings from "./Settings";
+import InitialValues from "./InitialValues";
 
 const WhiteBox = styled(Box).attrs({
   className: "box is-padding-extended",
@@ -135,58 +136,7 @@ const Simulation = () => {
             </WhiteBox>
             <WhiteBox width={1 / 2} px={2}>
               {selectedDataset && (
-                <>
-                  <Text fontWeight="bold" fontSize={18}>
-                    Initial values
-                  </Text>
-                  <Box pl={12} mt={12}>
-                    <Text fontSize={16} sx={{ textTransform: "uppercase" }}>
-                      Compartments
-                    </Text>
-                    <Box pl={12}>
-                      {selectedDataset.initialValues.compartments.map(
-                        (item) => (
-                          <Text fontSize={14} key={`initial-comp-${item.id}`}>
-                            <Text as="span" fontWeight="bold">
-                              {item.alias}
-                            </Text>{" "}
-                            = {item.initialValue}
-                          </Text>
-                        )
-                      )}
-                    </Box>
-                  </Box>
-                  <Box pl={12} mt={12}>
-                    <Text fontSize={16} sx={{ textTransform: "uppercase" }}>
-                      Species
-                    </Text>
-                    <Box pl={12}>
-                      {selectedDataset.initialValues.species.map((item) => (
-                        <Text fontSize={14} key={`initial-spec-${item.id}`}>
-                          <Text as="span" fontWeight="bold">
-                            {item.alias}
-                          </Text>{" "}
-                          = {item.initialValue}
-                        </Text>
-                      ))}
-                    </Box>
-                  </Box>
-                  <Box pl={12} mt={12}>
-                    <Text fontSize={16} sx={{ textTransform: "uppercase" }}>
-                      Parameters
-                    </Text>
-                    <Box pl={12}>
-                      {selectedDataset.initialValues.parameters.map((item) => (
-                        <Text fontSize={14} key={`initial-param-${item.id}`}>
-                          <Text as="span" fontWeight="bold">
-                            {item.alias}
-                          </Text>{" "}
-                          = {item.initialValue}
-                        </Text>
-                      ))}
-                    </Box>
-                  </Box>
-                </>
+                <InitialValues selectedDataset={selectedDataset} />
               )}
             </WhiteBox>
           </Flex>

@@ -8,6 +8,7 @@ type Props = {
   children?: React.ReactNode;
   noContent?: string;
   caption: string;
+  defaultExpanded?: boolean;
 };
 
 const ButtonWrapper = styled.div`
@@ -51,8 +52,13 @@ const NoDisclosureMsg = styled.span(
   `
 );
 
-const Disclosure = ({ children, noContent, caption }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+const Disclosure = ({
+  children,
+  noContent,
+  caption,
+  defaultExpanded,
+}: Props) => {
+  const [isOpen, setOpen] = useState(defaultExpanded ?? false);
   if (!React.Children.count(children))
     return (
       <ButtonWrapper>
