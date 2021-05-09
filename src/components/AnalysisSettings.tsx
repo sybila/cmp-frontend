@@ -102,21 +102,20 @@ const AnalysisInput = ({
 };
 
 const Group = ({ inputs, expandable, name }: AnalysisInputGroup) => {
+  const renderedInputs = inputs.map((input, i) => (
+    <AnalysisInput key={input.key + i} input={input} />
+  ));
+
   if (expandable)
     return (
-      <Disclosure caption={name} noContent="There are no inputs in this group.">
-        {inputs.map((input, i) => (
-          <AnalysisInput key={input.key + i} input={input} />
-        ))}
+      <Disclosure
+        caption={name.toUpperCase()}
+        noContent="There are no inputs in this group."
+      >
+        <Box mt={10}>{renderedInputs}</Box>
       </Disclosure>
     );
-  return (
-    <Box>
-      {inputs.map((input, i) => (
-        <AnalysisInput key={input.key + i} input={input} />
-      ))}
-    </Box>
-  );
+  return <Box>{renderedInputs}</Box>;
 };
 
 const AnalysisSettings = ({ inputGroups, onSubmit }: Props) => {

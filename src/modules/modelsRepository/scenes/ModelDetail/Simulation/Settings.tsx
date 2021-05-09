@@ -1,19 +1,19 @@
 import AnalysisSettings from "components/AnalysisSettings";
-import { AnalysisInput } from "models/Analysis";
+import { AnalysisInput, AnalysisInputGroup } from "models/Analysis";
 import { Dataset, InitialValue } from "models/Model";
 import React, { useCallback, useMemo } from "react";
 
 type Props = {
-  inputs: AnalysisInput[];
+  inputGroups: AnalysisInputGroup[];
   modelId: number;
   dataset: Dataset;
   onSubmit: (vals: Record<string, unknown>) => void;
 };
 
-const Settings = ({ inputs, modelId, dataset, onSubmit }: Props) => {
-  const strippedInputs = useMemo(
-    () => inputs.filter(({ key }) => key !== "modelId" && key !== "dataset"),
-    [inputs]
+const Settings = ({ inputGroups, modelId, dataset, onSubmit }: Props) => {
+  const strippedinputGroups = useMemo(
+    () => inputGroups.filter(({ name }) => name !== "automatic"),
+    [inputGroups]
   );
 
   const handleSubmit = useCallback(
@@ -33,7 +33,12 @@ const Settings = ({ inputs, modelId, dataset, onSubmit }: Props) => {
     [modelId, dataset]
   );
 
-  return <AnalysisSettings inputs={strippedInputs} onSubmit={handleSubmit} />;
+  return (
+    <AnalysisSettings
+      inputGroups={strippedinputGroups}
+      onSubmit={handleSubmit}
+    />
+  );
 };
 
 export default Settings;
