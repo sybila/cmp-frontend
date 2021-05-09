@@ -12,7 +12,13 @@ type Props = {
 
 const Settings = ({ inputGroups, modelId, dataset, onSubmit }: Props) => {
   const strippedinputGroups = useMemo(
-    () => inputGroups.filter(({ name }) => name !== "automatic"),
+    () =>
+      inputGroups
+        .filter(({ name }) => name !== "automatic")
+        .map((group) => ({
+          ...group,
+          inputs: group.inputs.filter(({ name }) => name !== "dataset"),
+        })),
     [inputGroups]
   );
 

@@ -74,7 +74,9 @@ const Simulation = () => {
   const handleExecute = useCallback((vals: Record<string, unknown>) => {
     api
       .executeAnalysis("Simulation", [vals])
-      .then(({ data: { data } }) => setSimulationData(data));
+      .then(({ data: { data } }) =>
+        setSimulationData({ simulation: data.result })
+      );
   }, []);
 
   return (
@@ -87,7 +89,7 @@ const Simulation = () => {
       <section className="section p-b-0">
         <div className="container">
           {simulationData && models && (
-            <Box className="container">
+            <Box mx={-2} mb={4} className="container">
               <WhiteBox>
                 <Visualizer
                   inputData={simulationData}
