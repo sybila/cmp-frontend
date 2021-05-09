@@ -7,6 +7,15 @@ export type AnalysisInput = {
   name: string;
   type: AnalysisInputType;
   description: string;
+  required?: boolean;
+  defaultValue?: string | number | boolean;
+  unsigned?: boolean;
+};
+
+export type AnalysisInputGroup = {
+  name: string;
+  expandable?: boolean;
+  inputs: AnalysisInput[];
 };
 
 export type AnalysisOutput = {
@@ -17,7 +26,7 @@ export type AnalysisOutput = {
 export interface AnalysisPrescription {
   name: string;
   description: string;
-  inputs: AnalysisInput[];
+  inputGroups: AnalysisInputGroup[];
   output: Partial<AnalysisOutput>;
 }
 

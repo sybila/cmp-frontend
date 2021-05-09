@@ -1,13 +1,17 @@
 import React, { useCallback, useMemo } from "react";
-import { AnalysisInput as AnalysisInputType } from "models/Analysis";
+import {
+  AnalysisInput as AnalysisInputType,
+  AnalysisInputGroup,
+} from "models/Analysis";
 import { Form, Field, useField } from "react-final-form";
 import { Box, Button, Flex, Text } from "rebass/styled-components";
 import { Input, Label, Checkbox } from "@rebass/forms";
 import * as Yup from "yup";
 import { validateFormValues } from "utils/formValidators";
+import Disclosure from "./Disclosure";
 
 type Props = {
-  inputs: AnalysisInputType[];
+  inputGroups: AnalysisInputGroup[];
   onSubmit: (vals: FormValues) => void;
 };
 
@@ -17,12 +21,16 @@ type AnalysisInputProps = {
   input: AnalysisInputType;
 };
 
+const isNumberType = (type: AnalysisInputType["type"]) => {
+  return type === "int" || type === "float";
+};
+
 const validationFactory = (inputs: AnalysisInputType[]) => {
   return validateFormValues(
-    inputs.reduce((schema, { name, type }) => {
+    inputs.reduce((schema, { name, type, unsigned, required }) => {
       let validationType: string;
 
-      if (type === "int" || type === "float") validationType = "number";
+      if (isNumberType(type)) validationType = "number";
       else if (type === "bool") validationType = "boolean";
       else if (type === "string") validationType = "string";
       else {
@@ -30,9 +38,13 @@ const validationFactory = (inputs: AnalysisInputType[]) => {
         return schema;
       }
 
-      return schema.concat(
-        Yup.object().shape({ [name]: Yup[validationType]() })
-      );
+      let inputSchema: Yup.AnySchema = Yup[validationType]();
+      if (isNumberType(type) && unsigned)
+        inputSchema = (inputSchema as Yup.NumberSchema).positive();
+
+      if (required) inputSchema = inputSchema.required();
+
+      return schema.concat(Yup.object().shape({ [name]: inputSchema }));
     }, Yup.object().shape({}))
   );
 };
@@ -89,15 +101,60 @@ const AnalysisInput = ({
   return null;
 };
 
-const AnalysisSettings = ({ inputs, onSubmit }: Props) => {
-  const validationSchema = useMemo(() => validationFactory(inputs), [inputs]);
+const Group = ({ inputs, expandable, name }: AnalysisInputGroup) => {
+  if (expandable)
+    return (
+      <Disclosure caption={name} noContent="There are no inputs in this group.">
+        {inputs.map((input, i) => (
+          <AnalysisInput key={input.key + i} input={input} />
+        ))}
+      </Disclosure>
+    );
+  return (
+    <Box>
+      {inputs.map((input, i) => (
+        <AnalysisInput key={input.key + i} input={input} />
+      ))}
+    </Box>
+  );
+};
+
+const AnalysisSettings = ({ inputGroups, onSubmit }: Props) => {
+  const flattenedInputs = useMemo(
+    () =>
+      inputGroups.reduce<AnalysisInputType[]>(
+        (acc, { inputs }) => [...acc, ...inputs],
+        []
+      ),
+    [inputGroups]
+  );
+
+  const initialValues = useMemo(() => {
+    return flattenedInputs.reduce<Record<string, string | number | boolean>>(
+      (acc, { defaultValue, name }) => ({ ...acc, [name]: defaultValue }),
+      {}
+    );
+  }, [flattenedInputs]);
+
+  const validationSchema = useMemo(() => validationFactory(flattenedInputs), [
+    flattenedInputs,
+  ]);
 
   return (
-    <Form onSubmit={onSubmit} validate={validationSchema}>
+    <Form
+      onSubmit={onSubmit}
+      validate={validationSchema}
+      initialValues={initialValues}
+    >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          {inputs.map((input, i) => (
-            <AnalysisInput key={input.key + i} input={input} />
+          {inputGroups.map(({ name, expandable, inputs }, i) => (
+            <Group
+              key={name + i}
+              inputs={inputs}
+              expandable={expandable}
+              name={name}
+            />
           ))}
           <Flex justifyContent="flex-end">
             <Button type="submit">Execute</Button>
