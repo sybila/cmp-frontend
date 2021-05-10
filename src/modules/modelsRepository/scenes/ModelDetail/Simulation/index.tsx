@@ -45,6 +45,7 @@ const Simulation = () => {
     number | undefined
   >();
   const [simulationData, setSimulationData] = useState<any>(); // TODO: create simulation data type
+  const [modifiedDataset, setModifiedDataset] = useState<Dataset>();
   const models = useMemo(
     () => (simulationData ? getModels(simulationData) : undefined),
     [simulationData]
@@ -68,8 +69,9 @@ const Simulation = () => {
   const [prescription] = useApi(loadSimulationPrescription);
 
   const selectedDataset = useMemo(
-    () => datasets?.find(({ id }) => id === selectedDatasetID),
-    [selectedDatasetID, datasets]
+    () =>
+      modifiedDataset ?? datasets?.find(({ id }) => id === selectedDatasetID),
+    [selectedDatasetID, datasets, modifiedDataset]
   );
 
   const handleExecute = useCallback((vals: Record<string, unknown>) => {
@@ -79,6 +81,32 @@ const Simulation = () => {
         setSimulationData({ simulation: data.result })
       );
   }, []);
+
+  const handleDatasetEdit = useCallback(
+    (
+      values: Record<keyof Dataset["initialValues"], Record<string, string>>
+    ) => {
+      const mapValues = (k: keyof Dataset["initialValues"]) =>
+        Object.keys(values[k]).map((key) => {
+          const [alias, id] = key.split("-");
+          return {
+            alias,
+            id: parseInt(id, 10),
+            initialValue: values[k][key],
+          };
+        });
+
+      setModifiedDataset({
+        ...selectedDataset,
+        initialValues: {
+          compartments: mapValues("compartments"),
+          species: mapValues("species"),
+          parameters: mapValues("parameters"),
+        },
+      });
+    },
+    [selectedDataset]
+  );
 
   return (
     <>
@@ -136,7 +164,10 @@ const Simulation = () => {
             </WhiteBox>
             <WhiteBox width={1 / 2} px={2}>
               {selectedDataset && (
-                <InitialValues selectedDataset={selectedDataset} />
+                <InitialValues
+                  selectedDataset={selectedDataset}
+                  onChange={handleDatasetEdit}
+                />
               )}
             </WhiteBox>
           </Flex>
