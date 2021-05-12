@@ -41,9 +41,8 @@ const Simulation = () => {
   const {
     params: { modelId },
   } = useRouteMatch<{ modelId: string }>();
-  const [selectedDatasetID, setSelectedDatasetID] = useState<
-    number | undefined
-  >();
+  const [selectedDatasetID, setSelectedDatasetID] =
+    useState<number | undefined>();
   const [simulationData, setSimulationData] = useState<any>(); // TODO: create simulation data type
   const [modifiedDataset, setModifiedDataset] = useState<Dataset>();
   const models = useMemo(
@@ -68,10 +67,14 @@ const Simulation = () => {
 
   const [prescription] = useApi(loadSimulationPrescription);
 
+  const originalSelectedDataset = useMemo(
+    () => datasets?.find(({ id }) => id === selectedDatasetID),
+    [datasets, selectedDatasetID]
+  );
+
   const selectedDataset = useMemo(
-    () =>
-      modifiedDataset ?? datasets?.find(({ id }) => id === selectedDatasetID),
-    [selectedDatasetID, datasets, modifiedDataset]
+    () => modifiedDataset ?? originalSelectedDataset,
+    [originalSelectedDataset, modifiedDataset]
   );
 
   const handleExecute = useCallback((vals: Record<string, unknown>) => {
@@ -97,7 +100,7 @@ const Simulation = () => {
         });
 
       setModifiedDataset({
-        ...selectedDataset,
+        ...originalSelectedDataset,
         initialValues: {
           compartments: mapValues("compartments"),
           species: mapValues("species"),
@@ -105,7 +108,7 @@ const Simulation = () => {
         },
       });
     },
-    [selectedDataset]
+    [originalSelectedDataset]
   );
 
   return (
@@ -165,7 +168,7 @@ const Simulation = () => {
             <WhiteBox width={1 / 2} px={2}>
               {selectedDataset && (
                 <InitialValues
-                  selectedDataset={selectedDataset}
+                  selectedDataset={originalSelectedDataset}
                   onChange={handleDatasetEdit}
                 />
               )}
