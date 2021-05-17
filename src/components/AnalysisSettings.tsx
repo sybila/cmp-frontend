@@ -33,6 +33,8 @@ const validationFactory = (inputs: AnalysisInputType[]) => {
       if (isNumberType(type)) validationType = "number";
       else if (type === "bool") validationType = "boolean";
       else if (type === "string") validationType = "string";
+      else if (type == "ExperimentId") validationType = "number";
+      else if (type == "VariableId") validationType = "number";
       else {
         console.error(`Provided analysis input type does not exist: ${type}`);
         return schema;
@@ -88,6 +90,23 @@ const AnalysisInput = ({
         </Label>
         <Input
           type={type === "string" ? "text" : "number"}
+          name={name}
+          mb={10}
+          {...field.input}
+        />
+        {message}
+      </Box>
+    );
+  }
+
+  if (type === "ExperimentId" || type === "VariableId") {
+    return (
+      <Box mb={16}>
+        <Label htmlFor={name} mb={10}>
+          {name}
+        </Label>
+        <Input
+          type="number"
           name={name}
           mb={10}
           {...field.input}

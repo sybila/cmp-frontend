@@ -1,5 +1,11 @@
 import dataService, { apiService } from "services/dataService";
-
+import { AxiosPromise } from "axios";
+import {
+  AnalysisPrescription,
+  AnalysisResult,
+  AnalysisTypesEnumeration,
+} from "models/Analysis";
+import { ApiResponse } from "models/GenericTypes";
 const service = {
   fetchExperiments,
   fetchExperiment,
@@ -8,6 +14,9 @@ const service = {
   fetchExperimentVariable,
   fetchExperimentVariableDetailed,
   fetchExperimentVisualizerData,
+  fetchAnalysis,
+  fetchAnalysePrescription,
+  executeAnalysis
 };
 
 function fetchExperiments(): Promise<any> {
@@ -53,6 +62,22 @@ function fetchExperimentVisualizerData(id: number | string): Promise<any> {
   return apiService.get(`/visualizer/0/${id}`).then(({ data }) => {
     return data;
   });
+}
+
+function fetchAnalysis(): AxiosPromise<ApiResponse<AnalysisTypesEnumeration>> {
+  return apiService.get(`/analysis`);
+}
+
+function fetchAnalysePrescription(name: string): AxiosPromise<ApiResponse<AnalysisPrescription>> {
+  return apiService
+    .get(`/analysisPrescription/${name}`);
+}
+
+function executeAnalysis(
+  analysis: string,
+  inputs: Array<Record<string, unknown>>
+): AxiosPromise<ApiResponse<AnalysisResult>> {
+  return apiService.post(`/runAnalysis/${analysis}`, { inputs });
 }
 
 export default service;
