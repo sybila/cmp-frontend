@@ -1,4 +1,4 @@
-export type AnalysisInputType = "int" | "float" | "bool" | "array" | "string";
+export type AnalysisInputType = "int" | "float" | "bool" | "array" | "string" | "ExperimentId" | "VariableId";
 
 export type AnalysisOutputType = "";
 
@@ -28,6 +28,11 @@ export interface AnalysisPrescription {
   description: string;
   inputGroups: AnalysisInputGroup[];
   output: Partial<AnalysisOutput>;
+}
+
+export interface AnalysisResult {
+  result: any[] | number | string;
+  outputType: string;
 }
 
 export interface AnalysisTypesEnumeration {
