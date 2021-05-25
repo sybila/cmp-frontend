@@ -74,7 +74,7 @@ const AnalysisInput = ({
     return (
       <Box mb={16}>
         <Label mb={10}>
-          <Checkbox name={name} {...field.input} />
+          <Checkbox name={name} {...field.input} checked={field.input.value} />
           {name}
         </Label>
         {message}
@@ -105,12 +105,7 @@ const AnalysisInput = ({
         <Label htmlFor={name} mb={10}>
           {name}
         </Label>
-        <Input
-          type="number"
-          name={name}
-          mb={10}
-          {...field.input}
-        />
+        <Input type="number" name={name} mb={10} {...field.input} />
         {message}
       </Box>
     );
@@ -154,9 +149,10 @@ const AnalysisSettings = ({ inputGroups, onSubmit }: Props) => {
     );
   }, [flattenedInputs]);
 
-  const validationSchema = useMemo(() => validationFactory(flattenedInputs), [
-    flattenedInputs,
-  ]);
+  const validationSchema = useMemo(
+    () => validationFactory(flattenedInputs),
+    [flattenedInputs]
+  );
 
   return (
     <Form
