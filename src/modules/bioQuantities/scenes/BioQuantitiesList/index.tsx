@@ -18,22 +18,16 @@ const COLUMNS = [
     ),
   },
   {
-    Header: "Organism ID",
-    accessor: "organismId",
-    search: true,
-    sort: true,
-  },
-  {
-    Header: "ID",
-    accessor: "id",
+    Header: "Organism",
+    accessor: "organism",
     search: true,
     sort: true,
   },
   {
     Header: "Value",
     accessor: "value",
-    search: true,
-    sort: true,
+    search: false,
+    sort: false,
   },
 ];
 
@@ -49,7 +43,7 @@ const BioQuantitiesList = () => {
       overwrite = false
     ) => {
       return service
-        .fetchAllBioNumbers(page, pageSize, 0, search, sort)
+        .fetchAllBioNumbers(page, pageSize, search, sort)
         .then(({ data: { data } }) => {
           if (overwrite) {
             setBioQuantities(data);

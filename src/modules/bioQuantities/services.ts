@@ -8,14 +8,11 @@ export type searchType = { [key: string]: string | number };
 
 const fetchAllBioNumbers = (
   page: number,
-  /* How many items to return */
-  take: number,
-  /* How many items to skip */
-  skip: number,
+  perPage: number,
   search: searchType = {},
   sort: sortType = {}
 ): AxiosPromise<ApiResponse<BioQuantity[]>> => {
-  let params: object = { page, take, skip, perPage: take };
+  let params: object = { page, perPage };
 
   if (Object.keys(sort).length > 0) {
     Object.keys(sort).forEach((key) => {

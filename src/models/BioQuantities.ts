@@ -5,6 +5,7 @@ export interface BioQuantity {
   link: string;
   userId: number;
   organismId: number;
+  organism: string;
   unitId: number;
   timeTo: string;
   timeFrom: string;
