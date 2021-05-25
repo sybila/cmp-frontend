@@ -1,15 +1,15 @@
+import { BioQuantityDetail as BioQuantityDetailType } from "models/BioQuantities";
 import React, { useEffect, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Link, useRouteMatch } from "react-router-dom";
 
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import services from "../../services";
-import { mockDataDetails } from "../mockData";
 
 type Params = { detailId: string };
 
 const BioQuantityDetail = () => {
-  const [detail, setDetail] = useState(mockDataDetails);
+  const [detail, setDetail] = useState<BioQuantityDetailType>();
   const match = useRouteMatch<Params>();
 
   useEffect(() => {
