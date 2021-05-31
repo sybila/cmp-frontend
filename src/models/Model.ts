@@ -83,7 +83,7 @@ type FunctionDefinitions = {
   id: number;
 };
 
-type ReactionExpressionDetail = {
+export type ExpressionDetail = {
   components: {
     compartments: Record<string, { alias: string; id: number; size: number }>;
     functionDefinitions: Record<string, FunctionDefinitions>;
@@ -112,7 +112,7 @@ export interface Reaction extends Omit<ReactionPartial, "expression"> {
   modelId: number;
   compartmentId?: number;
   reactionItems: ReactionItemPartial[];
-  rate: Expression<ReactionExpressionDetail>;
+  rate: Expression<ExpressionDetail>;
   functions: any[];
   parameters: any[];
 }
@@ -145,23 +145,27 @@ export interface Dataset extends EntityPartial {
 }
 
 export interface EventPartial extends EntityPartial {
-  alias: string;
-  delay: Expression;
-  trigger: Expression;
-  priority: Expression;
-  eventAssignment: {
-    variableType: string;
-    variableId: number;
-    variable: string;
-    formula: Expression;
-  };
+  alias?: string;
+  delay?: Expression;
+  trigger?: Expression;
+  priority?: Expression;
+  eventAssignment?: {
+    variableType?: string;
+    variableId?: number;
+    variable?: string;
+    formula?: Expression;
+  }[];
 }
 
-export interface EventDetail extends EventPartial {
+export interface EventDetail extends Omit<EventPartial, "eventAssignment"> {
   sboTerm?: string | null;
   notes?: string | null;
   annotations?: Annotation[];
-  evaluateOnTrigger?: string | null;
+  evaluateOnTrigger?: number | null;
+  eventAssignments?: {
+    formula: Expression<ExpressionDetail>;
+    id: number;
+  }[];
 }
 
 export interface Parameter extends EntityPartial {
