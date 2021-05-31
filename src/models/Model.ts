@@ -166,6 +166,7 @@ export interface EventDetail extends Omit<EventPartial, "eventAssignment"> {
     formula: Expression<ExpressionDetail>;
     id: number;
   }[];
+  trigger?: Expression<ExpressionDetail>;
 }
 
 export interface Parameter extends EntityPartial {

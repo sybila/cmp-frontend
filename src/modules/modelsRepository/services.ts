@@ -122,7 +122,7 @@ function loadEvents(
 function loadEventDetail(
   modelId: number,
   eventId: number
-): AxiosPromise<ApiResponse<EventDetail[]>> {
+): AxiosPromise<ApiResponse<EventDetail>> {
   return dataService.get(`/models/${modelId}/events/${eventId}`);
 }
 

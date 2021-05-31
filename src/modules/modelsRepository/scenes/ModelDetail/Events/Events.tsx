@@ -40,15 +40,15 @@ const Events = () => {
                   return (
                     <TableRow>
                       <TableDataCell>
-                        <Link to={`reactions/reaction/${event.id}`}>
-                          {event.name}
-                        </Link>
+                        <Link to={`events/${event.id}`}>{event.alias}</Link>
                       </TableDataCell>
                       <TableDataCell>
-                        <LatexRenderer>{event.trigger.latex}</LatexRenderer>
+                        <LatexRenderer>{event.trigger?.latex}</LatexRenderer>
                       </TableDataCell>
                       <TableDataCell>
-                        {event.eventAssignment.formula.latex}
+                        <LatexRenderer>
+                          {(event.eventAssignment ?? [])[0]?.formula?.latex}
+                        </LatexRenderer>
                       </TableDataCell>
                     </TableRow>
                   );

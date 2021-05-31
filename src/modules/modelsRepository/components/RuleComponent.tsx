@@ -1,5 +1,8 @@
 import React from "react";
-import LatexRenderer, { LatexWrapper } from "components/LatexRenderer";
+import LatexRenderer, {
+  LatexWithExpand,
+  LatexWrapper,
+} from "components/LatexRenderer";
 import { RulePartial } from "models/Model";
 import styled, { css } from "styled-components";
 import { rem } from "polished";
@@ -19,15 +22,29 @@ export const EquationsWrapper = styled.div(
   `
 );
 
-const RuleComponent = ({ rule }: Props) => {
+export const EquationComponent = ({
+  latex,
+  name,
+  expandedLatex,
+}: {
+  latex: string;
+  expandedLatex?: string;
+  name: string;
+}) => {
   return (
     <LatexWrapper>
-      <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-        {rule.id}
-      </p>
-      <LatexRenderer>{rule.equation.latex}</LatexRenderer>
+      <p className="subtitle is-6 is-uppercase has-text-grey-lighter">{name}</p>
+      {expandedLatex ? (
+        <LatexWithExpand expanded={expandedLatex}>{latex}</LatexWithExpand>
+      ) : (
+        <LatexRenderer>{latex}</LatexRenderer>
+      )}
     </LatexWrapper>
   );
+};
+
+const RuleComponent = ({ rule }: Props) => {
+  return <EquationComponent latex={rule.equation.latex} name={`${rule.id}`} />;
 };
 
 export default RuleComponent;
