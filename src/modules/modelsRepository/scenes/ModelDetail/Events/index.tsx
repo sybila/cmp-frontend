@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { moduleNames } from "../../../reducers/MainReducer";
 import Main from "./Events";
+import Event from "./Event";
 
 const Events = () => {
   const {
@@ -19,6 +20,7 @@ const Events = () => {
     <>
       <BreadcrumbsItem to={url}>Events</BreadcrumbsItem>
       <Switch>
+        <Route path={`${path}/:eventId`} component={Event} />
         <Route component={Main} />
       </Switch>
     </>
