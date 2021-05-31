@@ -27,6 +27,7 @@ import { intToBoolean } from "services/dataTransform";
 import { Tiles } from "@rebass/layout";
 import Tree from "components/Tree";
 import DetailTableRow from "../../../components/DetailTableRow";
+import ExpressionDetail from "components/ExpressionDetail";
 
 const EquationsWrapper = styled.div(
   ({ theme }) => css`
@@ -109,111 +110,7 @@ const Reaction = () => {
                 <Tree data={reactionItemsTree} onNodeClick={handleNodeClick} />
               </Box>
             </Flex>
-            <Flex mb={4} flexDirection="column">
-              <Box mb={16}>
-                <LatexWrapper fullwidth>
-                  <p className="subtitle is-6 is-uppercase has-text-grey-lighter">
-                    Kinetic law
-                  </p>
-                  {Object.keys(
-                    reaction.rate.detail.components.functionDefinitions
-                  ).length ? (
-                    <LatexWithExpand
-                      expanded={reaction.rate.detail.expandedLatex}
-                    >
-                      {reaction.rate.latex}
-                    </LatexWithExpand>
-                  ) : (
-                    <LatexRenderer>{reaction.rate.latex}</LatexRenderer>
-                  )}
-                </LatexWrapper>
-              </Box>
-              <Box mb={16}>
-                <Text fontWeight="bold" mb={2}>
-                  Parameters
-                </Text>
-                <Table>
-                  <TableSection as="thead">
-                    <TableRow>
-                      <TableDataCell as="th">Alias</TableDataCell>
-                      <TableDataCell as="th">Value</TableDataCell>
-                    </TableRow>
-                  </TableSection>
-                  <TableSection as="tbody">
-                    {Object.keys(reaction.rate.detail.components.parametes).map(
-                      (parameterKey) => {
-                        const parameter =
-                          reaction.rate.detail.components.parametes[
-                            parameterKey
-                          ];
-                        return (
-                          <TableRow>
-                            <TableDataCell>{parameter.alias}</TableDataCell>
-                            <TableDataCell>{parameter.value}</TableDataCell>
-                          </TableRow>
-                        );
-                      }
-                    )}
-                  </TableSection>
-                </Table>
-              </Box>
-              <Box mb={16}>
-                <Text fontWeight="bold" mb={2}>
-                  Compartments
-                </Text>
-                <Table>
-                  <TableSection as="thead">
-                    <TableRow>
-                      <TableDataCell as="th">Alias</TableDataCell>
-                      <TableDataCell as="th">Size</TableDataCell>
-                    </TableRow>
-                  </TableSection>
-                  <TableSection as="tbody">
-                    {Object.keys(
-                      reaction.rate.detail.components.compartments
-                    ).map((key) => {
-                      const item =
-                        reaction.rate.detail.components.compartments[key];
-                      return (
-                        <TableRow>
-                          <TableDataCell>{item.alias}</TableDataCell>
-                          <TableDataCell>{item.size}</TableDataCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableSection>
-                </Table>
-              </Box>
-              <Box mb={16}>
-                <Text fontWeight="bold" mb={2}>
-                  Species
-                </Text>
-                <Table>
-                  <TableSection as="thead">
-                    <TableRow>
-                      <TableDataCell as="th">Alias</TableDataCell>
-                      <TableDataCell as="th">Size</TableDataCell>
-                    </TableRow>
-                  </TableSection>
-                  <TableSection as="tbody">
-                    {Object.keys(reaction.rate.detail.components.species).map(
-                      (key) => {
-                        const item =
-                          reaction.rate.detail.components.species[key];
-                        return (
-                          <TableRow>
-                            <TableDataCell>{item.alias}</TableDataCell>
-                            <TableDataCell>
-                              {item["initial amount"]}
-                            </TableDataCell>
-                          </TableRow>
-                        );
-                      }
-                    )}
-                  </TableSection>
-                </Table>
-              </Box>
-            </Flex>
+            <ExpressionDetail expression={reaction.rate} name="Kinetic law" />
           </Tiles>
           <Tiles mb={4} columns={[1, null, 2]} gap={36}>
             <Box>
