@@ -6,7 +6,7 @@ import React, { useCallback, useMemo } from "react";
 type Props = {
   inputGroups: AnalysisInputGroup[];
   modelId: number;
-  dataset: Dataset;
+  dataset?: Dataset;
   onSubmit: (vals: Record<string, unknown>) => void;
 };
 
@@ -24,19 +24,26 @@ const Settings = ({ inputGroups, modelId, dataset, onSubmit }: Props) => {
 
   const handleSubmit = useCallback(
     (values: Record<string, unknown>) => {
-      console.log(values);
-      onSubmit({
+      let result: Record<string, unknown> = {
         ...values,
         "Model Id": modelId,
-        Dataset: {
-          name: dataset.name,
-          initialValues: Object.keys(dataset.initialValues).reduce<
-            InitialValue[]
-          >((acc, key) => [...acc, ...dataset.initialValues[key]], []),
-        },
-      });
+      };
+
+      if (dataset) {
+        result = {
+          ...result,
+          Dataset: {
+            name: dataset.name,
+            initialValues: Object.keys(dataset.initialValues).reduce<
+              InitialValue[]
+            >((acc, key) => [...acc, ...dataset.initialValues[key]], []),
+          },
+        };
+      }
+
+      onSubmit(result);
     },
-    [modelId, dataset]
+    [modelId, dataset, onSubmit]
   );
 
   return (

@@ -13,6 +13,7 @@ import { Box, Button, Flex, Text } from "rebass";
 import { Label, Select } from "@rebass/forms";
 import { useRouteMatch } from "react-router";
 import styled, { css } from "styled-components/macro";
+import WhiteBox from "components/WhiteBox";
 import api from "../../../services";
 import { useApi } from "hooks/useApi";
 import InputForm from "./InputForm";
@@ -23,28 +24,17 @@ interface Props extends ExperimentComponentProps {
 }
 
 interface State {
-  selectOptions: [],
-  inputs: [],
-  analyse: "",
-  outputType: "",
+  selectOptions: [];
+  inputs: [];
+  analyse: "";
+  outputType: "";
 }
-
-const WhiteBox = styled(Box).attrs({
-  className: "box is-padding-extended",
-})(
-  ({ theme }) => css`
-    & + & {
-      margin-left: ${rem(theme.custom.sizes["size-2"])};
-    }
-  `
-);
 
 interface Props extends ExperimentComponentProps {
   experimentsById: ByIdObject<Experiment>;
 }
 
-const analysisLoaded = () =>
-  api.fetchAnalysis();
+const analysisLoaded = () => api.fetchAnalysis();
 
 const loadAnalysisPrescription = (analysisType) =>
   api.fetchAnalysePrescription(analysisType);
@@ -55,7 +45,8 @@ const ExperimentAnalysisPage = () => {
     params: { experimentId },
   } = useRouteMatch<{ experimentId: string }>();
 
-  const [analysisType, setSelectedAnalyseMethod] = useState<string | undefined>();
+  const [analysisType, setSelectedAnalyseMethod] =
+    useState<string | undefined>();
 
   const [prescription, setPrescription] = useState<any>();
 
@@ -74,15 +65,25 @@ const ExperimentAnalysisPage = () => {
     }
   }, [analysisType]);
 
-  const handleExecute = useCallback((vals: Record<string, unknown>) => {
-    api
-      .executeAnalysis(analysisType, [vals])
-      .then(({ data: { data } }) => (data.outputType === "array" ?
-        setResult({ resultData: { result: data.result }, outputType: data.outputType }) :
-        setResult({ resultData: data.result, outputType: data.outputType }))
-      )
-    console.log(resultData);
-  }, [analysisType]);
+  const handleExecute = useCallback(
+    (vals: Record<string, unknown>) => {
+      api
+        .executeAnalysis(analysisType, [vals])
+        .then(({ data: { data } }) =>
+          data.outputType === "array"
+            ? setResult({
+                resultData: { result: data.result },
+                outputType: data.outputType,
+              })
+            : setResult({
+                resultData: data.result,
+                outputType: data.outputType,
+              })
+        );
+      console.log(resultData);
+    },
+    [analysisType]
+  );
 
   return (
     <>
@@ -96,13 +97,11 @@ const ExperimentAnalysisPage = () => {
           <Box mb={16}>
             <Label htmlFor="analysis" mb={10}>
               Analysis Method
-                    </Label>
+            </Label>
             <Select
               id="analysis-select"
               name="analysis"
-              onChange={(d) =>
-                setSelectedAnalyseMethod(d.target.value)
-              }
+              onChange={(d) => setSelectedAnalyseMethod(d.target.value)}
             >
               {analysis?.analysis.map((name) => (
                 <option key={`analysis-${name}`} value={`${name}`}>
@@ -119,14 +118,12 @@ const ExperimentAnalysisPage = () => {
                 inputGroups={prescription.inputGroups}
                 onSubmit={handleExecute}
               />
-            </WhiteBox>)}
+            </WhiteBox>
+          )}
           {result && (
             <WhiteBox>
               <h5 className="title is-4 m-b-10">Result</h5>
-              <ResultComponent
-                result={resultData}
-                outputType={outputType}
-              />
+              <ResultComponent result={resultData} outputType={outputType} />
             </WhiteBox>
           )}
         </div>

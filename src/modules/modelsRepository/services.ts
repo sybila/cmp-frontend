@@ -2,6 +2,7 @@ import { AxiosPromise } from "axios";
 import {
   AnalysisPrescription,
   AnalysisTypesEnumeration,
+  AnalysisResult,
 } from "models/Analysis";
 import { ApiResponse } from "models/GenericTypes";
 import {
@@ -155,7 +156,7 @@ function loadAnalysisPrescription(
 function executeAnalysis(
   analysis: string,
   inputs: Array<Record<string, unknown>>
-): AxiosPromise<ApiResponse<any>> {
+): AxiosPromise<ApiResponse<AnalysisResult>> {
   return apiService.post(`/models/copasi/runAnalysis/${analysis}`, { inputs });
 }
 

@@ -3,26 +3,16 @@ import { rem } from "polished";
 import React, { useCallback, useState, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router";
-import { Box, Button, Flex, Text } from "rebass";
+import { Box, Flex } from "rebass";
 import { Label, Select } from "@rebass/forms";
 import Visualizer from "cmp-visualizer";
 import styled, { css } from "styled-components/macro";
 import api from "../../../services";
 import { moduleNames } from "../../../reducers/MainReducer";
 import { Dataset } from "models/Model";
-import LatexRenderer from "components/LatexRenderer";
-import Settings from "./Settings";
+import Settings from "../../../components/ModelAnalysisSettings";
 import InitialValues from "./InitialValues";
-
-const WhiteBox = styled(Box).attrs({
-  className: "box is-padding-extended",
-})(
-  ({ theme }) => css`
-    & + & {
-      margin-left: ${rem(theme.custom.sizes["size-2"])};
-    }
-  `
-);
+import WhiteBox from "components/WhiteBox";
 
 const loadSimulationPrescription = () =>
   api.loadAnalysisPrescription("Simulation");

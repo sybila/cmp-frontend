@@ -1,4 +1,13 @@
-export type AnalysisInputType = "int" | "float" | "bool" | "array" | "string" | "ExperimentId" | "VariableId";
+export type ChartData = object; // TODO:
+
+export type AnalysisInputType =
+  | "int"
+  | "float"
+  | "bool"
+  | "array"
+  | "string"
+  | "ExperimentId"
+  | "VariableId";
 
 export type AnalysisOutputType = "";
 
@@ -31,7 +40,7 @@ export interface AnalysisPrescription {
 }
 
 export interface AnalysisResult {
-  result: any[] | number | string;
+  result: any[] | number | string | ChartData;
   outputType: string;
 }
 
