@@ -21,6 +21,7 @@ import Parameters from "./Parameters";
 import Reactions from "./Reactions";
 import Simulation from "./Simulation/";
 import Events from "./Events";
+import Analysis from "./Analysis";
 
 interface Props extends RouteComponentProps {
   loadModel: typeof loadModel;
@@ -70,6 +71,7 @@ const routes = [
     caption: "Analysis",
     to: "/analysis",
     order: 5,
+    component: Analysis,
   },
 ];
 
