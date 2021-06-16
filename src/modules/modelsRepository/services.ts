@@ -40,6 +40,7 @@ const service = {
   loadAnalysisOptions,
   loadAnalysisPrescription,
   executeAnalysis,
+  importModel
 };
 
 function load(): Promise<any> {
@@ -159,5 +160,15 @@ function executeAnalysis(
 ): AxiosPromise<ApiResponse<AnalysisResult>> {
   return apiService.post(`/models/copasi/runAnalysis/${analysis}`, { inputs });
 }
+
+function importModel(
+    xml: string
+): AxiosPromise<ApiResponse<AnalysisResult>> {
+  return apiService.post(`/models/import/sbml`, { xml }, {
+    headers: {'Content-Type': 'text/xml'}
+  });
+}
+
+
 
 export default service;
