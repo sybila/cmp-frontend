@@ -32,7 +32,8 @@ const Events = () => {
                 <TableRow>
                   <TableDataCell as="th">Name</TableDataCell>
                   <TableDataCell as="th">Trigger</TableDataCell>
-                  <TableDataCell as="th">Event assignment</TableDataCell>
+                  <TableDataCell as="th">Assignee</TableDataCell>
+                  <TableDataCell as="th">Assignment</TableDataCell>
                 </TableRow>
               </TableSection>
               <TableSection as="tbody">
@@ -45,10 +46,19 @@ const Events = () => {
                       <TableDataCell>
                         <LatexRenderer>{event.trigger?.latex}</LatexRenderer>
                       </TableDataCell>
-                      <TableDataCell>
-                        <LatexRenderer>
-                          {(event.eventAssignment ?? [])[0]?.formula?.latex}
-                        </LatexRenderer>
+                      <TableDataCell>{
+                        event.eventAssignment.map(function(ass, index, array) {
+                          return (index === array.length-1
+                              ? <p><Link to={`${ass.variableType}s/${ass.variableId}`}>{ass.variable}</Link></p>
+                              : <Link to={`${ass.variableType}s/${ass.variableId}`}>{ass.variable}</Link>)})
+                      }</TableDataCell>
+                      <TableDataCell>{
+                        event.eventAssignment.map(function (ass, index, array) {
+                          return (index === array.length - 1
+                              ? <p><LatexRenderer>{ass.formula?.latex}</LatexRenderer></p>
+                              : <LatexRenderer>{ass.formula?.latex}</LatexRenderer>)
+                        })
+                      }
                       </TableDataCell>
                     </TableRow>
                   );

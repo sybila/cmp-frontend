@@ -163,6 +163,9 @@ export interface EventDetail extends Omit<EventPartial, "eventAssignment"> {
   annotations?: Annotation[];
   evaluateOnTrigger?: number | null;
   eventAssignments?: {
+    variableType: string;
+    variableId: number;
+    variable: string;
     formula: Expression<ExpressionDetail>;
     id: number;
   }[];

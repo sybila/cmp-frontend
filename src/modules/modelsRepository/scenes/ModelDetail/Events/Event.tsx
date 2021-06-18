@@ -65,6 +65,12 @@ const Event = () => {
                     name="Evaluate on trigger"
                     value={intToBoolean(detail.evaluateOnTrigger).toString()}
                   />
+                    {detail.trigger && (
+                        <ExpressionDetail
+                            expression={detail.trigger}
+                            name={`Trigger`}
+                        />
+                    )}
                 </TableSection>
               </Table>
             </Box>
@@ -75,22 +81,16 @@ const Event = () => {
                 </EquationsWrapper>
               )}
               {detail.eventAssignments &&
-                detail.eventAssignments.map(({ formula, id }) => (
-                  <ExpressionDetail
-                    expression={formula}
-                    name={`Event assignment - ${id}`}
-                  />
-                ))}
+              detail.eventAssignments.map(function (ass) {
+                return <ExpressionDetail
+                    expression={ass.formula}
+                    name={`Event assignment - ${ass.variableType} - ${ass.variable}`}
+                />
+              })}
               {detail.priority && detail.priority.latex && (
                 <EquationsWrapper>
                   <EquationComponent name="Delay" latex={detail.delay.latex} />
                 </EquationsWrapper>
-              )}
-              {detail.trigger && (
-                <ExpressionDetail
-                  expression={detail.trigger}
-                  name={`Trigger`}
-                />
               )}
             </Box>
           </Tiles>
