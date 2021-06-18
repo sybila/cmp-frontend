@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import { useApi, ApiStates } from "hooks/useApi";
 import React, { useCallback } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -25,7 +25,7 @@ const Parameters = () => {
     params: { modelId },
   } = useRouteMatch<{ modelId: string }>();
 
-  const [parameters] = useApi(
+  const [parameters, loadingState] = useApi(
     useCallback(() => api.loadParameters(parseInt(modelId, 10)), [modelId])
   );
 
@@ -39,42 +39,42 @@ const Parameters = () => {
       <section className="section p-b-0">
         <div className="container">
           <Pager countOnPage={5}>
-            {parameters && parameters.length ? (
-              parameters.map((item, i) => (
-                <BoxLink
-                  to={`/${moduleNames.url}/model-detail/${modelId}/parameters/${item.id}`}
-                  className="box variable-item"
-                  key={`note-${i}`}
-                >
-                  <Flex justifyContent="space-between" width="100%">
-                    <Flex>
-                      <Text fontWeight="bold">{item.alias}</Text>
-                    </Flex>
-                    <Flex>
-                      <Text>
-                        Is constant:{" "}
-                        <Text fontWeight="bold" as="span">
-                          {intToBoolean(item.constant).toString()}
+            {parameters && parameters.length
+              ? parameters.map((item, i) => (
+                  <BoxLink
+                    to={`/${moduleNames.url}/model-detail/${modelId}/parameters/${item.id}`}
+                    className="box variable-item"
+                    key={`note-${i}`}
+                  >
+                    <Flex justifyContent="space-between" width="100%">
+                      <Flex>
+                        <Text fontWeight="bold">{item.alias}</Text>
+                      </Flex>
+                      <Flex>
+                        <Text>
+                          Is constant:{" "}
+                          <Text fontWeight="bold" as="span">
+                            {intToBoolean(item.constant).toString()}
+                          </Text>
                         </Text>
-                      </Text>
-                      <Text mx={2}>|</Text>
-                      <Text>
-                        value:{" "}
-                        <Text fontWeight="bold" as="span">
-                          {item.value}
+                        <Text mx={2}>|</Text>
+                        <Text>
+                          value:{" "}
+                          <Text fontWeight="bold" as="span">
+                            {item.value}
+                          </Text>
                         </Text>
-                      </Text>
+                      </Flex>
                     </Flex>
-                  </Flex>
-                </BoxLink>
-              ))
-            ) : (
-              <article className="message is-danger mt-4">
-                <div className="message-body" role="alert">
-                  No parameters found for selected model.
-                </div>
-              </article>
-            )}
+                  </BoxLink>
+                ))
+              : loadingState === ApiStates.REJECTED && (
+                  <article className="message is-danger mt-4">
+                    <div className="message-body" role="alert">
+                      No parameters found for selected model.
+                    </div>
+                  </article>
+                )}
           </Pager>
         </div>
       </section>
