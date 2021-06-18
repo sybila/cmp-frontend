@@ -81,7 +81,6 @@ const Table = ({ columns, data, pageSize = 10, fetchNext, refetch }: Props) => {
   const handleRefetch = useCallback(debounce(refetch, 200), [refetch]);
 
   useEffect(() => {
-    console.log(pageIndex, pageSize);
     handleRefetch(pageIndex + 1, pageSize, search, sort);
   }, [handleRefetch, sort, search]);
 

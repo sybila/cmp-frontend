@@ -14,7 +14,9 @@ const COLUMNS = [
     search: true,
     sort: true,
     Cell: ({ value, row }) => (
-      <Link to={`/${bioQuantitiesNames.url}/detail/${row.id}`}>{value}</Link>
+      <Link to={`/${bioQuantitiesNames.url}/detail/${row.original.id}`}>
+        {value}
+      </Link>
     ),
   },
   {
