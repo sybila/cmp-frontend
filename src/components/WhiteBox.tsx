@@ -4,11 +4,14 @@ import styled, { css } from "styled-components/macro";
 
 const WhiteBox = styled(Box).attrs({
   className: "box is-padding-extended",
-})(
-  ({ theme }) => css`
-    & + & {
-      margin-left: ${rem(theme.custom.sizes["size-2"])};
-    }
+})<{ $isRow?: boolean }>(
+  ({ theme, $isRow = false }) => css`
+    ${!$isRow &&
+    css`
+      & + & {
+        margin-left: ${rem(theme.custom.sizes["size-2"])};
+      }
+    `}
   `
 );
 
