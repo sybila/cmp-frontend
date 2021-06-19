@@ -102,32 +102,33 @@ const ExperimentNotesPage = (props: Props) => {
           {error ? (
             <Message type="danger">{error.message}</Message>
           ) : (
-            <>
-              <div className="box">
-                <h4 className="title is-4 m-b-10">Timeline</h4>
-                <SelectableTimeline
-                  lastTimeStamp={last}
-                  onChange={handleRangeUpdate}
-                />
-              </div>
-              {notes &&
-                notes
-                  .filter(
-                    (item) => item.time >= minTime && item.time <= maxTime
-                  )
-                  .map((item, i) => (
-                    <div className="box" key={`note-${i}`}>
-                      <div>
-                        <strong>Time:</strong> {hhmmss(item.time)}
+              <>
+                <div className="box">
+                  <h4 className="title is-4 m-b-10">Timeline</h4>
+                  <SelectableTimeline
+                    lastTimeStamp={last}
+                    onChange={handleRangeUpdate}
+                  />
+                </div>
+                {notes &&
+                  notes
+                    .filter(
+                      (item) => item.time >= minTime && item.time <= maxTime
+                    )
+                    .map((item, i) => (
+                      <div className="box" key={`note-${i}`}>
+                        <div>
+                          {/*<strong>Time:</strong> {hhmmss(item.time)}*/}
+                          <strong>Day: {item.time}</strong>
+                        </div>
+                        <p>{item.note}</p>
+                        {item.imgLink && (
+                          <img src={item.imgLink} alt={item.note} />
+                        )}
                       </div>
-                      <p>{item.note}</p>
-                      {item.imgLink && (
-                        <img src={item.imgLink} alt={item.note} />
-                      )}
-                    </div>
-                  ))}
-            </>
-          )}
+                    ))}
+              </>
+            )}
         </div>
       </section>
     </>
