@@ -1,9 +1,14 @@
+@import "../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../node_modules/bulma/sass/utilities/functions";
+
 // The container horizontal gap, which acts as the offset for breakpoints
 $gap: 32px !default;
 
 $desktop: 1092px + (2 * $gap) !default;
 $widescreen: 1284px + (2 * $gap) !default;
 $fullhd: 1476px + (2 * $gap) !default;
+
+$primary: #00d1b2;
 
 @import "../../node_modules/bulma/bulma.sass";
 
