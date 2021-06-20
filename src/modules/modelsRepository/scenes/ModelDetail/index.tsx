@@ -99,11 +99,11 @@ class ModelDetail extends React.Component<Props> {
         <section className="section p-b-0">
           <div className="container is-clearfix">
             <h2 className="title is-2 is-pulled-left">{model.name}</h2>
-            {this.props.hasPermission(Config.permissions.POWERUSER) && (
-              <button className="button is-rounded is-pulled-right">
-                Edit experiment
-              </button>
-            )}
+            {/*{this.props.hasPermission(Config.permissions.POWERUSER) && (*/}
+            {/*  <button className="button is-rounded is-pulled-right">*/}
+            {/*    Edit experiment*/}
+            {/*  </button>*/}
+            {/*)}*/}
           </div>
           <div className="container">
             <PageMenuPanel items={routes} basePath={routeLinkBase} />

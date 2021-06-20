@@ -13,26 +13,16 @@ class ModuleInfo extends React.Component<Props, State> {
     return (
       <>
         <BreadcrumbsItem to={`/${quantityNames.url}/info`}>
-          About BioQuantities
+          About EpiQuantities
         </BreadcrumbsItem>
         <div className="section">
           <div className="container">
-            <h2 className="title is-2">About BioQuantities module</h2>
+            <h2 className="title is-2">About EpiQuantities module</h2>
             <div className="box">
               <p>
-                Bioquantities module provides a collection of numbers relevant
-                in biological processes and research.
-              </p>
-              <p>
-                Users can use numbers from the database or import their own
-                numbers. Bioquantities module communicates with BCS, Units and
-                Experiments module.
-              </p>
-              <p>
-                Currently we recognize 3 types of Bioquantities - scalar value,
-                time series and value intervals. Each Bioquantity is represented
-                by its id, name and value. If the Bioquantity has been currated,
-                attribute is_valid is set to true.{" "}
+                In general, BioQuantities module provides a collection of numbers relevant
+                in biological processes and research. In context of epidemics, it provides values relevant
+                  in the epidemiology.
               </p>
             </div>
           </div>

@@ -67,11 +67,11 @@ const BioQuantitiesList = () => {
   return (
     <>
       <BreadcrumbsItem to={`/${bioQuantitiesNames.url}/`}>
-        BioQuantities List
+        EpiQuantities List
       </BreadcrumbsItem>
       <div className="section">
         <div className="container">
-          <h2 className="title is-2">List of BioQuantities</h2>
+          <h2 className="title is-2">List of EpiQuantities</h2>
           <div className="columns is-full-height">
             <div className="column">
               <div className="box is-full-height is-padding-extended">
