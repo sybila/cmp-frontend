@@ -9,6 +9,11 @@ import Disclosure from "components/Disclosure";
 import { moduleNames as bioQuantitiesNames } from "../../reducers/MainReducer";
 import services from "../../services";
 import { useApi, ApiStates } from "hooks/useApi";
+import {Tiles} from "@rebass/layout";
+import {Text} from "rebass/styled-components";
+import {Table, TableSection} from "../../../../components/primitives/Table";
+import DetailTableRow from "../../../modelsRepository/components/DetailTableRow";
+import {intToBoolean} from "../../../../services/dataTransform";
 
 type Params = { detailId: string };
 
@@ -28,6 +33,21 @@ const BioQuantityDetail = () => {
         {detail.name}
       </BreadcrumbsItem>
       <DetailSection title={detail.name}>
+          <Tiles mb={4} columns={[1, null, 2]} gap={36}>
+              <Box>
+                  <Text fontWeight="bold" mb={2}>
+                      Details
+                  </Text>
+                  <Table>
+                      <TableSection>
+                          <DetailTableRow name="Organism" value={detail.organism['name']} />
+                          <DetailTableRow name="Value" value={detail['value']} />
+                          <DetailTableRow name="Range"
+                                          value={detail.valueFrom === null ? "undefined" : "[" + detail.valueFrom +', ' + detail.valueTo + "]"} />
+                      </TableSection>
+                  </Table>
+              </Box>
+          </Tiles>
         <Disclosure
           caption="Annotations"
           noContent="This item has no annotations."
