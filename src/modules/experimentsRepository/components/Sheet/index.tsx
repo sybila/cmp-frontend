@@ -33,14 +33,14 @@ class Sheet extends React.PureComponent<Props, State> {
     return this.props.times
       ? this.props.times
       : this.props.vars
-          .filter(variable => variable.values)
-          .flatMap(variable =>
-            variable.values ? variable.values.map(value => value.time) : []
-          )
-          .sort((a, b) => a - b)
-          .filter((item, pos, ary) => {
-            return !pos || item != ary[pos - 1];
-          });
+        .filter(variable => variable.values)
+        .flatMap(variable =>
+          variable.values ? variable.values.map(value => value.time) : []
+        )
+        .sort((a, b) => a - b)
+        .filter((item, pos, ary) => {
+          return !pos || item != ary[pos - 1];
+        });
   }
 
   get getMappedValues() {
@@ -94,22 +94,23 @@ class Sheet extends React.PureComponent<Props, State> {
 
     const columns = vars
       ? vars.map((_: ExperimentVariable, index) => (
-          <Column
-            key={index}
-            name={_.name}
-            cellRenderer={index => this.cellRenderer(index, _.id)}
-          />
-        ))
+        <Column
+          key={index}
+          name={_.name}
+          cellRenderer={index => this.cellRenderer(index, _.id)}
+        />
+      ))
       : [];
 
     columns.unshift(
       <Column
         key="time-column"
-        name="Time"
+        name="Day"
         cellRenderer={index => (
           <Cell>
             <>
-              <strong>{hhmmss(times[index])}</strong>
+              {/*<strong>{hhmmss(times[index])}</strong>*/}
+              <strong>{times[index]}</strong>
             </>
           </Cell>
         )}

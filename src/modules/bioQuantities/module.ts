@@ -13,17 +13,17 @@ export const AfterStoreConfiguration = (dispatch: Dispatch<any>, getState) => {
     /* Init module toolbar */
     addToolbarItems(moduleNames.url, [
       {
-        text: "BioQuantities list",
+        text: "EpiQuantities list",
         icon: "list",
         to: "/list",
       },
       {
-        text: "BioQuantities dashboard",
+        text: "EpiQuantities dashboard",
         icon: "th-large",
         to: "/dashboard",
       },
       {
-        text: "BioQuantities info",
+        text: "EpiQuantities info",
         icon: "info-circle",
         to: "/info",
       },

@@ -43,9 +43,12 @@ class ExperimentProtocolPage extends React.PureComponent<Props, State> {
             <div className="box ">
               <h4 className="title is-4 m-b-10">Protocol</h4>
               <p>
-                {currentExperiment.protocol
-                  ? currentExperiment.protocol
-                  : "Experiment doesn't have a protocol."}
+              {currentExperiment.protocol && (
+                <p dangerouslySetInnerHTML={{ __html: currentExperiment.protocol }} />
+              )}
+              {!currentExperiment.protocol && (
+                <p>Experiment doesn't have a protocol.</p>
+              )}
               </p>
             </div>
           </div>

@@ -17,7 +17,7 @@ import NotificationsBell from "./NotificationsBell";
 import User from "./User";
 import { hasNews } from "modules/administration/selectors";
 import { getUser } from "ApplicationSelectors";
-import logo from "assets/logo.svg";
+import logo from "assets/epiclogo.svg";
 import { logout } from "ApplicationActions";
 
 import { moduleNames as bioQuantitiesNames } from "modules/bioQuantities/reducers/MainReducer";

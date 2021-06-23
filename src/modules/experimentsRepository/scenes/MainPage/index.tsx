@@ -20,19 +20,11 @@ class MainPage extends React.Component<Props, State> {
             <h2 className="title is-2">About experiments module</h2>
             <div className="box">
               <p>
-                Main purpose of experiments in CMP is model validation.
                 Experiment repository is a tool for storage and presentation of
                 time-series data from wet-lab experiments. Every experiment
                 should be well described (device, medium, organism, etc.) and
-                annotated, so that will be possible to reproduce the result.
-                Experiment's variables might be related to Biochemical Space and
-                should have a set unit. Measured data can be imported from
-                specific formats and you can export the experiment to your local
-                device. There is also an option to add notes to experiment or
-                specific variables. Notes can be plain text or picture and are
-                assigned to particular time. Moreover, it is possible to
-                visualise the data in a table or chart, where you can compare
-                experiment data with models simulations.
+                annotated, so that will be possible to reproduce the result. Moreover, it is possible to
+                visualise the data in a table or chart.
               </p>
             </div>
           </div>

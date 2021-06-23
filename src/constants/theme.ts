@@ -2,7 +2,8 @@ import { rem, shade, tint } from "polished";
 import { DefaultTheme } from "styled-components/macro";
 import { default as bulmaTheme } from "@theme-ui/preset-bulma";
 
-const primary = "#43c6ac";
+//const primary = "#43c6ac";
+const primary = "rgb(255, 200, 0)";
 const secondary = "#ffc801";
 const text = "#444";
 

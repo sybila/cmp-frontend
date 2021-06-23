@@ -52,13 +52,13 @@ const ExperimentChartPage = () => {
                   <Visualizer
                     inputData={inputData}
                     models={models}
-                    width="50%"
+                    width="75%"
                   />
                 ) : (
-                  <progress className="progress is-primary" max="100">
-                    30%
-                  </progress>
-                )}
+                    <progress className="progress is-primary" max="100">
+                      30%
+                    </progress>
+                  )}
               </div>
             </div>
           </div>

@@ -20,22 +20,22 @@ class LoginPage extends React.Component<Props> {
   render() {
     return !this.props.user ? (
       <div className={"landing-hero section container"}>
-        <figure className="image">
-          <img
-            src={HeroImg}
-            title="Comprehensive Modelling Platform"
-            alt="Comprehensive Modelling Platform"
-          />
-        </figure>
+        {/*<figure className="image">*/}
+        {/*  <img*/}
+        {/*    src={HeroImg}*/}
+        {/*    title="Comprehensive Modelling Platform"*/}
+        {/*    alt="Comprehensive Modelling Platform"*/}
+        {/*  />*/}
+        {/*</figure>*/}
         <div>
-          <h1>Comprehensive Modelling Platform</h1>
+          <h1>Comprehensive Modelling Platform<br></br> for Epidemic Dynamics</h1>
           <p className={"lead"}>
             CMP is a general framework for public sharing, annotation, and
             visualisation of domain-specific dynamical models and wet-lab
             experiments.
           </p>
           <p>
-            The platform is unique in integrating abstract mathematical models
+            Originally, the platform was meant for integrating abstract mathematical models
             with a precise consortium-agreed bio-chemical description provided
             in a rule-based formalism. The general aim is to stimulate
             collaboration between experimental and computational systems
@@ -43,11 +43,15 @@ class LoginPage extends React.Component<Props> {
             system.
           </p>
           <p>
-            CMP is logically divided into 4 parts. Each of them has a specific
-            responsibility and works with a different database. Modules
-            communicate with each other in specific ways concerning their
-            competence defined by their functionalities.
+            Finally, this instance of CMP is focusing on epidemiological data and the platform is aimed at
+            epidemiologists and the public.
           </p>
+          {/*<p>*/}
+          {/*  CMP is logically divided into 4 parts. Each of them has a specific*/}
+          {/*  responsibility and works with a different database. Modules*/}
+          {/*  communicate with each other in specific ways concerning their*/}
+          {/*  competence defined by their functionalities.*/}
+          {/*</p>*/}
           <Link
             className={"btn btn-primary btn-lg cta"}
             to="/page/about-us"
