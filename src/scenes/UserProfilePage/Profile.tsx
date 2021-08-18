@@ -82,7 +82,7 @@ const Profile = (props: Props) => {
           <Modal
             title="Change e-mail"
             isOpen={changeEmail}
-            actions={
+            footer={
               <>
                 <button
                   type="submit"
@@ -93,7 +93,7 @@ const Profile = (props: Props) => {
                 </button>
               </>
             }
-            close={() => setChangeEmail(false)}
+            onDismiss={() => setChangeEmail(false)}
           >
             <form>
               <Field
