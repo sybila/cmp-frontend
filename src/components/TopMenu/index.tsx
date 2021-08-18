@@ -6,6 +6,7 @@ import {
   faSignOutAlt,
   faUserCircle,
   faTools,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { UserModel } from "../../models/User";
@@ -55,6 +56,11 @@ class UserUtils extends React.Component<Props> {
         text: "Profile",
         to: "/profile",
         icon: faUserCircle,
+      },
+      {
+        text: "Groups",
+        to: "/groups",
+        icon: faUsers,
       },
       {
         text: "Settings",

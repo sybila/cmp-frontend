@@ -46,6 +46,7 @@ import { getUser } from "ApplicationSelectors";
 import GlobalNotice from "components/GlobalNotice";
 import PasswordRenewal from "scenes/PasswordRenewal";
 import RenewalPage from "scenes/PasswordRenewal/RenewalPage";
+import GroupsPage from "scenes/GroupsPage";
 
 /**
  * Master Page
@@ -72,7 +73,6 @@ const MasterPage = (props: any) => {
           <div className="top-menu-container">
             <TopMenu />
           </div>
-
           <GlobalNotice />
           <div className="content">
             <section className="section bc-section p-b-0">
@@ -82,6 +82,7 @@ const MasterPage = (props: any) => {
             </section>
             {props.children}
           </div>
+          /userTypes
         </div>
       </div>
     </div>
@@ -159,6 +160,10 @@ const Application = () => {
                       <PrivateRoute
                         path={`${url}profile/:subPage?`}
                         component={UserProfilePage}
+                      />
+                      <PrivateRoute
+                        path={`${url}groups`}
+                        component={GroupsPage}
                       />
                       <Route component={NotFoundPage} />
                     </Switch>
