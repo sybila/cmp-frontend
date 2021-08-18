@@ -2,15 +2,32 @@ import InlineInput from "components/InlineInput";
 import Message from "components/Message";
 import Pager from "components/Pager";
 import { ApiStates, useApi } from "hooks/useApi";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Box, Flex, Heading } from "rebass/styled-components";
+import { debounce } from "lodash";
 import groupsApi from "services/api/groups";
 import Group from "./Group";
 
 const GroupsPage = () => {
-  const [groups, loadingState] = useApi<any[]>(
+  const [groups, loadingState] = useApi<any[]>( // TODO: type groups
     useCallback(() => groupsApi.getAllGroups(), [])
+  );
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredGroups = useMemo(
+    () =>
+      groups?.filter((group) =>
+        group.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [searchQuery, groups]
+  );
+
+  const onSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    },
+    []
   );
 
   return (
@@ -25,13 +42,15 @@ const GroupsPage = () => {
               placeholder="Search in groups"
               $size="normal"
               $fullWidth
+              value={searchQuery}
+              onChange={onSearchChange}
             />
           </Box>
         </Flex>
-        {groups && (
+        {filteredGroups && (
           <Pager countOnPage={6}>
-            {groups.map((group) => (
-              <Group name={group.name} />
+            {filteredGroups.map((group) => (
+              <Group key={`group-${group.id}`} name={group.name} />
             ))}
           </Pager>
         )}
