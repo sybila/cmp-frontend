@@ -1,10 +1,8 @@
-import { Input } from "@rebass/forms/styled-components";
+import InlineInput from "components/InlineInput";
 import { Dataset, InitialValue } from "models/Model";
-import { rem } from "polished";
 import React, { useEffect, useMemo } from "react";
 import { Field, Form, useForm, useFormState } from "react-final-form";
 import { Box, Flex, Text } from "rebass";
-import styled, { css } from "styled-components/macro";
 
 type Props = {
   selectedDataset: Dataset;
@@ -16,20 +14,6 @@ type SectionProps = {
   values: InitialValue[];
   id: string;
 };
-
-const InlineInput = styled(Input)(
-  ({ theme }) => css`
-  width: auto;
-  min-width: ${rem(theme.custom.sizes["size-2"] * 2)};
-  display: inline-block;
-  border: none;
-  border-bottom: 1px solid;
-  border-color: ${theme.custom.colors.gray[200]};
-  font-size: ${theme.custom.fonts["font-S"]};
-  line-height ${rem(theme.custom.sizes["size-2"] * 0.8)};
-  padding: ${rem(theme.custom.sizes["size-1"] * 0.25)};
-`
-);
 
 const ValuesSection = ({ name, id, values }: SectionProps) => {
   return (
