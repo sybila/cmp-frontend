@@ -58,8 +58,6 @@ function refreshAccessToken(): Promise<any> {
     });
 }
 
-export default userService;
-
 function register(values: RegisterPayload) {
   let parsed: any = { ...values };
   delete parsed.firstname;
@@ -107,3 +105,5 @@ function sendPasswordRenewal(email: string) {
 function submitRenewal(email: string, hash: string, password: string) {
   return dataService.put(`/users/${email}/pswRenew/${hash}`, { password });
 }
+
+export default userService;
