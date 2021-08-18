@@ -1,32 +1,31 @@
 import React from "react";
 import useClickOutside from "hooks/useClickOutside";
 
-interface Props {
+type Props = React.PropsWithChildren<{
   isOpen: boolean;
   title: string;
-  children?: any;
-  actions: any;
-  close: () => void;
-}
+  footer?: React.ReactNode;
+  onDismiss: () => void;
+}>;
 
-const Modal = (props: Props) => {
+const Modal = ({ footer, onDismiss, isOpen, children, title }: Props) => {
   const ref = React.useRef();
-  useClickOutside(ref, props.close);
+  useClickOutside(ref, onDismiss);
 
   return (
-    <div className={`modal${props.isOpen ? " is-active" : ""}`}>
+    <div className={`modal${isOpen ? " is-active" : ""}`}>
       <div className="modal-background"></div>
       <div ref={ref} className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">{props.title}</p>
+          <p className="modal-card-title">{title}</p>
           <button
             className="delete"
             aria-label="close"
-            onClick={props.close}
+            onClick={onDismiss}
           ></button>
         </header>
-        <section className="modal-card-body">{props.children}</section>
-        <footer className="modal-card-foot">{props.actions}</footer>
+        <section className="modal-card-body">{children}</section>
+        {footer && <footer className="modal-card-foot">{footer}</footer>}
       </div>
     </div>
   );
