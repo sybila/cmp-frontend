@@ -12,7 +12,7 @@ import {
 import { UserModel } from "../../models/User";
 import { AppState } from "reducers/GlobalReducer";
 import { ItemType } from "../Dropdown";
-import { ButtonLink } from "../Button";
+import { ButtonLink } from "../primitives/Button";
 import { toggleInbox, newNotifications } from "modules/administration/actions";
 import NotificationsBell from "./NotificationsBell";
 import User from "./User";
@@ -105,7 +105,7 @@ class UserUtils extends React.Component<Props> {
       <Link className={"nav-link"} to={"/login"}>
         Sign in
       </Link>,
-      <ButtonLink class={"nav-link"} to={"/register"}>
+      <ButtonLink className={"nav-link"} to={"/register"}>
         Sign up
       </ButtonLink>,
     ];

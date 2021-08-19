@@ -5,7 +5,8 @@ import {
 } from "models/Analysis";
 import { Form, Field, useField } from "react-final-form";
 import { Box, Button, Flex, Text } from "rebass/styled-components";
-import { Input, Label, Checkbox } from "@rebass/forms";
+import { Label, Checkbox } from "@rebass/forms";
+import Input from "components/primitives/Input";
 import * as Yup from "yup";
 import { validateFormValues } from "utils/formValidators";
 import Disclosure from "./Disclosure";
@@ -92,6 +93,7 @@ const AnalysisInput = ({
           type={type === "string" ? "text" : "number"}
           name={name}
           mb={10}
+          $fullWidth
           {...field.input}
         />
         {message}
@@ -105,7 +107,7 @@ const AnalysisInput = ({
         <Label htmlFor={name} mb={10}>
           {name}
         </Label>
-        <Input type="number" name={name} mb={10} {...field.input} />
+        <Input $fullWidth type="number" name={name} mb={10} {...field.input} />
         {message}
       </Box>
     );

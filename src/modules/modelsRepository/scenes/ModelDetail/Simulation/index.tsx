@@ -4,7 +4,7 @@ import React, { useCallback, useState, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { useRouteMatch } from "react-router";
 import { Box, Flex } from "rebass";
-import { Label, Select } from "@rebass/forms";
+import { Label } from "@rebass/forms";
 import Visualizer from "cmp-visualizer";
 import styled, { css } from "styled-components/macro";
 import api from "../../../services";
@@ -13,6 +13,7 @@ import { Dataset } from "models/Model";
 import Settings from "../../../components/ModelAnalysisSettings";
 import InitialValues from "./InitialValues";
 import WhiteBox from "components/WhiteBox";
+import Select from "components/primitives/Select";
 
 const loadSimulationPrescription = () =>
   api.loadAnalysisPrescription("Simulation");
@@ -31,8 +32,9 @@ const Simulation = () => {
   const {
     params: { modelId },
   } = useRouteMatch<{ modelId: string }>();
-  const [selectedDatasetID, setSelectedDatasetID] =
-    useState<number | undefined>();
+  const [selectedDatasetID, setSelectedDatasetID] = useState<
+    number | undefined
+  >();
   const [simulationData, setSimulationData] = useState<any>(); // TODO: create simulation data type
   const [modifiedDataset, setModifiedDataset] = useState<Dataset>();
   const models = useMemo(
