@@ -27,7 +27,6 @@ const RegistrationPage = () => {
       .then((e: AxiosResponse<any> | AxiosError<any>) => {
         if (isError(e)) {
           handleError(e);
-          console.log(e.toJSON());
         } else setSuccess(payload.email);
       }, handleError);
   };

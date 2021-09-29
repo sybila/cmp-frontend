@@ -15,23 +15,27 @@ import Group from "./Group";
 import { Label } from "@rebass/forms";
 import { validateFormValues } from "utils/formValidators";
 import { FormApi } from "final-form";
+import UsersPicker from "components/UsersPicker";
 
 const FORM_ADD_GROUP_ID = "add-group-form";
 
 type AddGroupFormValues = {
   name: string;
   description: string;
+  users: { value: number; label: string }[];
 };
 
 const addFormInitialValues: AddGroupFormValues = {
   name: "",
   description: "",
+  users: [],
 };
 
 const groupAddValidationSchema = validateFormValues(
   Yup.object().shape({
     name: Yup.string().required(),
     description: Yup.string().required(),
+    users: Yup.array(),
   })
 );
 
@@ -58,12 +62,17 @@ const GroupsPage = () => {
   );
 
   const onSubmit = useCallback(
-    (values: AddGroupFormValues, formApi: FormApi<any, AddGroupFormValues>) =>
-      groupsApi.addGroup(values).then((data) => {
-        formApi.reset();
-        refetchGroups();
-        return data;
-      }),
+    (
+      { users, ...rest }: AddGroupFormValues,
+      formApi: FormApi<any, AddGroupFormValues>
+    ) =>
+      groupsApi
+        .addGroup({ users: users.map(({ value }) => value), ...rest })
+        .then((data) => {
+          formApi.reset();
+          refetchGroups();
+          return data;
+        }),
     []
   );
   const [onSubmitCallback, , submitState] = useApi.usePost(onSubmit);
@@ -154,6 +163,12 @@ const GroupsPage = () => {
                     </Box>
                   )}
                 </Field>
+                <Box mb={16}>
+                  <Label htmlFor="users" mb={10}>
+                    Users
+                  </Label>
+                  <UsersPicker name="users" />
+                </Box>
               </form>
             )}
           </Form>

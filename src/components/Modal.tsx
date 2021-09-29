@@ -10,7 +10,9 @@ type Props = React.PropsWithChildren<{
 
 const Modal = ({ footer, onDismiss, isOpen, children, title }: Props) => {
   const ref = React.useRef();
-  useClickOutside(ref, onDismiss);
+  // FIX: MouseUp should not trigger click outside, also there are
+  // issues with portaled menus for example with UsersPicker
+  // useClickOutside(ref, onDismiss);
 
   return (
     <div className={`modal${isOpen ? " is-active" : ""}`}>
