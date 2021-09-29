@@ -91,4 +91,26 @@ dataService.interceptors.response.use(null, refreshTokenInterceptor);
 apiService.interceptors.request.use(accessTokenInterceptor);
 apiService.interceptors.response.use(null, refreshTokenInterceptor);
 
+// START DEBUG STUFF - attach services to window object for debug purposes
+(window as any).dataService = dataService;
+(window as any).apiService = apiService;
+
+const log = (payload: any) => {
+  console.dir(payload);
+  return payload;
+};
+
+const STORAGE_KEY_LOG_RESPONSES = "logServicesResponsesToConsole";
+
+(window as any).logServicesResponsesToConsole = () => {
+  window.sessionStorage.setItem(STORAGE_KEY_LOG_RESPONSES, "true");
+
+  apiService.interceptors.response.use(log, log);
+  dataService.interceptors.response.use(log, log);
+};
+
+if (window.sessionStorage.getItem(STORAGE_KEY_LOG_RESPONSES))
+  (window as any).logServicesResponsesToConsole();
+// END DEBUG STUFF
+
 export { dataService as default, apiService };
