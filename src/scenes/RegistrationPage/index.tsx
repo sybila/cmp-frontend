@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -6,24 +6,30 @@ import RegistrationForm from "./RegistrationForm";
 import { AppState } from "reducers/GlobalReducer";
 import { RegisterPayload } from "models/User";
 import api from "services/api";
+import { AxiosError, AxiosResponse } from "axios";
+
+const isError = (e: AxiosError | AxiosResponse): e is AxiosError => {
+  return (e as AxiosError).isAxiosError !== undefined;
+};
 
 const RegistrationPage = () => {
   const [successEmail, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const handleError = useCallback(({ response }) => {
+    const message = response?.data?.message;
+    setError(message ? message : "Submission error has occured.");
+  }, []);
+
   const handleSubmit = (payload: RegisterPayload) => {
-    return api.users.register(payload).then(
-      () => {
-        setSuccess(payload.email);
-      },
-      ({
-        response: {
-          data: { message },
-        },
-      }) => {
-        setError(message ? message : "Submission error has occured.");
-      }
-    );
+    return api.users
+      .register(payload)
+      .then((e: AxiosResponse<any> | AxiosError<any>) => {
+        if (isError(e)) {
+          handleError(e);
+          console.log(e.toJSON());
+        } else setSuccess(payload.email);
+      }, handleError);
   };
 
   return (
