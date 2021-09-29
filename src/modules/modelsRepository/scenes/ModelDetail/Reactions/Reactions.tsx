@@ -3,7 +3,7 @@ import { getModelById } from "modules/modelsRepository/selectors";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import {
   Table,
   TableSection,
@@ -25,7 +25,7 @@ const Reactions = () => {
 
   const model: ModelInterface = getModel(parseInt(modelId, 10));
 
-  const [reactionsList] = useApi(
+  const [reactionsList] = useApi.useGet(
     useCallback(() => api.loadReactions(parseInt(modelId, 10)), [modelId])
   );
 

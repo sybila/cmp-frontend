@@ -1,4 +1,4 @@
-import { useApi, ApiStates } from "hooks/useApi";
+import useApi, { ApiStates } from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -23,7 +23,7 @@ const ParameterDetail = () => {
     parameterId: string;
   }>();
 
-  const [parameter, state] = useApi(
+  const [parameter, state] = useApi.useGet(
     useCallback(
       () =>
         api.loadParameterDetail(

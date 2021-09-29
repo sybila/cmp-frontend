@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { rem } from "polished";
 import React, { useCallback, useState, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -42,7 +42,7 @@ const Simulation = () => {
     [simulationData]
   );
 
-  const [datasets] = useApi(
+  const [datasets] = useApi.useGet(
     useCallback(
       () =>
         api.loadDatasets(parseInt(modelId, 10)).then((payload) => {
@@ -53,11 +53,11 @@ const Simulation = () => {
     )
   );
 
-  const [events] = useApi(
+  const [events] = useApi.useGet(
     useCallback(() => api.loadEvents(parseInt(modelId, 10)), [modelId])
   );
 
-  const [prescription] = useApi(loadSimulationPrescription);
+  const [prescription] = useApi.useGet(loadSimulationPrescription);
 
   const originalSelectedDataset = useMemo(
     () => datasets?.find(({ id }) => id === selectedDatasetID),

@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { rem } from "polished";
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -25,12 +25,14 @@ const Analysis = () => {
     params: { modelId },
   } = useRouteMatch<{ modelId: string }>();
   const [analysisOption, setAnalysisOption] = useState(NOT_SELECTED);
-  const [analysisPrescription, setAnalysisPrescription] =
-    useState<AnalysisPrescription | undefined>();
-  const [analysisResult, setAnalysisResult] =
-    useState<AnalysisResultDataType | undefined>(); // TODO: create data type
+  const [analysisPrescription, setAnalysisPrescription] = useState<
+    AnalysisPrescription | undefined
+  >();
+  const [analysisResult, setAnalysisResult] = useState<
+    AnalysisResultDataType | undefined
+  >(); // TODO: create data type
 
-  const [analysisOptionsRaw] = useApi(
+  const [analysisOptionsRaw] = useApi.useGet(
     useCallback(() => api.loadAnalysisOptions(), [modelId])
   );
 

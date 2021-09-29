@@ -1,5 +1,5 @@
-import { ApiStates, useApi } from "hooks/useApi";
-import React, { useCallback, useMemo, useState } from "react";
+import useApi, { ApiStates } from "hooks/useApi";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { Box, Flex, Heading } from "rebass/styled-components";
 import * as Yup from "yup";
@@ -14,6 +14,7 @@ import TextArea from "components/primitives/TextArea";
 import Group from "./Group";
 import { Label } from "@rebass/forms";
 import { validateFormValues } from "utils/formValidators";
+import { FormApi } from "final-form";
 
 const FORM_ADD_GROUP_ID = "add-group-form";
 
@@ -35,7 +36,7 @@ const groupAddValidationSchema = validateFormValues(
 );
 
 const GroupsPage = () => {
-  const [groups, loadingState] = useApi<any[]>( // TODO: type groups
+  const [groups, loadingState, refetchGroups] = useApi.useGet<any[]>( // TODO: type groups
     useCallback(() => groupsApi.getAllGroups(), [])
   );
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -56,9 +57,20 @@ const GroupsPage = () => {
     []
   );
 
-  const onSubmit = useCallback((values: AddGroupFormValues) => {
-    groupsApi.addGroup(values);
-  }, []);
+  const onSubmit = useCallback(
+    (values: AddGroupFormValues, formApi: FormApi<any, AddGroupFormValues>) =>
+      groupsApi.addGroup(values).then((data) => {
+        formApi.reset();
+        refetchGroups();
+        return data;
+      }),
+    []
+  );
+  const [onSubmitCallback, , submitState] = useApi.usePost(onSubmit);
+
+  useEffect(() => {
+    if (submitState === ApiStates.FULFILLED) setAddModalOpen(false);
+  }, [submitState]);
 
   return (
     <section className="section p-b-0">
@@ -116,7 +128,7 @@ const GroupsPage = () => {
           }
         >
           <Form
-            onSubmit={onSubmit}
+            onSubmit={onSubmitCallback}
             validate={groupAddValidationSchema}
             initialValues={addFormInitialValues}
           >

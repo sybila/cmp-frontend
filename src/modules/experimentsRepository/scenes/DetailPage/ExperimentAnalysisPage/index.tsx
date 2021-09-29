@@ -15,7 +15,7 @@ import { useRouteMatch } from "react-router";
 import styled, { css } from "styled-components/macro";
 import WhiteBox from "components/WhiteBox";
 import api from "../../../services";
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import InputForm from "./InputForm";
 import ResultComponent from "./ResultComponent";
 
@@ -40,13 +40,14 @@ const loadAnalysisPrescription = (analysisType) =>
   api.fetchAnalysePrescription(analysisType);
 
 const ExperimentAnalysisPage = () => {
-  const [analysis] = useApi(analysisLoaded);
+  const [analysis] = useApi.useGet(analysisLoaded);
   const {
     params: { experimentId },
   } = useRouteMatch<{ experimentId: string }>();
 
-  const [analysisType, setSelectedAnalyseMethod] =
-    useState<string | undefined>();
+  const [analysisType, setSelectedAnalyseMethod] = useState<
+    string | undefined
+  >();
 
   const [prescription, setPrescription] = useState<any>();
 
@@ -67,19 +68,17 @@ const ExperimentAnalysisPage = () => {
 
   const handleExecute = useCallback(
     (vals: Record<string, unknown>) => {
-      api
-        .executeAnalysis(analysisType, [vals])
-        .then(({ data: { data } }) =>
-          data.outputType === "array"
-            ? setResult({
-                resultData: { result: data.result },
-                outputType: data.outputType,
-              })
-            : setResult({
-                resultData: data.result,
-                outputType: data.outputType,
-              })
-        );
+      api.executeAnalysis(analysisType, [vals]).then(({ data: { data } }) =>
+        data.outputType === "array"
+          ? setResult({
+              resultData: { result: data.result },
+              outputType: data.outputType,
+            })
+          : setResult({
+              resultData: data.result,
+              outputType: data.outputType,
+            })
+      );
       console.log(resultData);
     },
     [analysisType]
