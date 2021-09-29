@@ -81,6 +81,15 @@ const GroupsPage = () => {
     if (submitState === ApiStates.FULFILLED) setAddModalOpen(false);
   }, [submitState]);
 
+  const handleDelete = useCallback(
+    (id: number) => () =>
+      groupsApi.deleteGroup(id).then((data) => {
+        refetchGroups();
+        return data;
+      }),
+    []
+  );
+
   return (
     <section className="section p-b-0">
       <div className="container">
@@ -111,7 +120,12 @@ const GroupsPage = () => {
         {filteredGroups && (
           <Pager countOnPage={6}>
             {filteredGroups.map((group) => (
-              <Group key={`group-${group.id}`} name={group.name} />
+              <Group
+                id={group.id}
+                key={`group-${group.id}`}
+                name={group.name}
+                handleDelete={handleDelete(group.id)}
+              />
             ))}
           </Pager>
         )}
