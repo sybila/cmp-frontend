@@ -2,6 +2,7 @@ import useApi, { ApiStates } from "hooks/useApi";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, Field } from "react-final-form";
 import { Box, Flex, Heading } from "rebass/styled-components";
+import { useSnackbar } from "notistack";
 import * as Yup from "yup";
 import groupsApi from "services/api/groups";
 import Modal from "components/Modal";
@@ -46,6 +47,8 @@ const GroupsPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isAddModalOpen, setAddModalOpen] = useState(false);
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const filteredGroups = useMemo(
     () =>
       groups?.filter((group) =>
@@ -83,10 +86,19 @@ const GroupsPage = () => {
 
   const handleDelete = useCallback(
     (id: number) => () =>
-      groupsApi.deleteGroup(id).then((data) => {
-        refetchGroups();
-        return data;
-      }),
+      groupsApi
+        .deleteGroup(id)
+        .then((data) => {
+          enqueueSnackbar("Group was successfully deleted.", {
+            variant: "success",
+          });
+          refetchGroups();
+          return data;
+        })
+        .catch((e) => {
+          enqueueSnackbar("Failed to delete the group.", { variant: "error" });
+          return e;
+        }),
     []
   );
 

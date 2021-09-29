@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const modalRoot = document.getElementById("portal-root");
+export const modalRoot = document.getElementById("portal-root");
 
 /**
  * Creates React Portal, appends elements to different node

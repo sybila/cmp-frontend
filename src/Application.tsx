@@ -4,6 +4,7 @@ import { createBrowserHistory } from "history";
 import { BreadcrumbsProvider, Breadcrumbs } from "react-breadcrumbs-dynamic";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { ThemeProvider } from "styled-components";
+import { SnackbarProvider } from "notistack";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { isEqual } from "lodash";
 
@@ -33,7 +34,7 @@ import { moduleNames as bioQuantitiesNames } from "modules/bioQuantities/reducer
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateComponent from "./components/PrivateComponent";
-import Portal from "./components/Portal";
+import Portal, { modalRoot } from "./components/Portal";
 import NotificationsProvider from "./modules/administration/components/NotificationsProvider";
 import Toolbar from "modules/administration/components/Toolbar";
 import Inbox from "./modules//administration/components/Inbox";
@@ -98,7 +99,10 @@ const Application = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <React.Fragment>
+      <SnackbarProvider
+        domRoot={modalRoot}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+      >
         {/* Portal block, for components with absolute positioning */}
         <Portal>
           <PrivateComponent>
@@ -172,7 +176,7 @@ const Application = () => {
             />
           </Router>
         </BreadcrumbsProvider>
-      </React.Fragment>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };
