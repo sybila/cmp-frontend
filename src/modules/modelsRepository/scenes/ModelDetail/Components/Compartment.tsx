@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -29,16 +29,17 @@ const Compartment = () => {
 
   const history = useHistory();
 
-  const [compartment] = useApi(
-    useCallback(() => api.loadCompartmentDetail(modelId, compartmentId), [
-      modelId,
-      compartmentId,
-    ])
+  const [compartment] = useApi.useGet(
+    useCallback(
+      () => api.loadCompartmentDetail(modelId, compartmentId),
+      [modelId, compartmentId]
+    )
   );
 
-  const species = useMemo(() => compartment?.species?.map(speciesToTreeItem), [
-    compartment,
-  ]);
+  const species = useMemo(
+    () => compartment?.species?.map(speciesToTreeItem),
+    [compartment]
+  );
 
   return (
     <>

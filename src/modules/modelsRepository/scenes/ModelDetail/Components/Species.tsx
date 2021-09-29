@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -24,12 +24,11 @@ const Species = () => {
     speciesId: string;
   }>();
 
-  const [species] = useApi(
-    useCallback(() => api.loadSpecieDetail(modelId, compartmentId, speciesId), [
-      modelId,
-      compartmentId,
-      speciesId,
-    ])
+  const [species] = useApi.useGet(
+    useCallback(
+      () => api.loadSpecieDetail(modelId, compartmentId, speciesId),
+      [modelId, compartmentId, speciesId]
+    )
   );
 
   return (

@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import React, { useCallback, useMemo, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Box } from "rebass/styled-components";
@@ -20,7 +20,7 @@ const Components = () => {
   );
   const history = useHistory();
 
-  const [compartmentsList] = useApi(
+  const [compartmentsList] = useApi.useGet(
     useCallback(() => api.loadCompartments(parseInt(modelId, 10)), [modelId])
   );
 

@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { Model as ModelInterface } from "models/Model";
 import { getModelById } from "modules/modelsRepository/selectors";
 import React, { useCallback } from "react";
@@ -18,7 +18,7 @@ const Model = (props: Props) => {
   const getModel = useSelector(getModelById);
 
   const model: ModelInterface = getModel(parseInt(match.params.modelId, 10));
-  const [author] = useApi(
+  const [author] = useApi.useGet(
     useCallback(() => api.users.getUser(model.userId), [model])
   );
 

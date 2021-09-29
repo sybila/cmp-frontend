@@ -1,4 +1,4 @@
-import { useApi, ApiStates } from "hooks/useApi";
+import useApi, { ApiStates } from "hooks/useApi";
 import React, { useCallback } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -25,7 +25,7 @@ const Parameters = () => {
     params: { modelId },
   } = useRouteMatch<{ modelId: string }>();
 
-  const [parameters, loadingState] = useApi(
+  const [parameters, loadingState] = useApi.useGet(
     useCallback(() => api.loadParameters(parseInt(modelId, 10)), [modelId])
   );
 

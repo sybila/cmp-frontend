@@ -1,4 +1,4 @@
-import { AxiosPromise } from "axios";
+import { AxiosError, AxiosPromise } from "axios";
 import { ApiResponse } from "models/GenericTypes";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
@@ -8,9 +8,13 @@ export enum ApiStates {
   REJECTED = "REJECTED",
 }
 
-type CallbackType<T = any> = () => AxiosPromise<ApiResponse<T>>;
+type CallbackType<T = any, A extends unknown[] = []> = (
+  ...args: A
+) => AxiosPromise<ApiResponse<T>>;
 
-export const useApi = <T>(apiCallback: CallbackType<T>): [T, string] => {
+const useGet = <T>(
+  apiCallback: CallbackType<T, []>
+): [T, string, VoidFunction] => {
   const latestApiCallback = useRef<CallbackType>();
   const [result, setResult] = useState<T | undefined>();
   const [state, setState] = useState(ApiStates.PENDING);
@@ -30,7 +34,37 @@ export const useApi = <T>(apiCallback: CallbackType<T>): [T, string] => {
     latestApiCallback.current = apiCallback;
   });
 
-  useEffect(apiCall, []);
-
-  return [result, state];
+  return [result, state, apiCall];
 };
+
+const usePost = <T, A extends any[]>(
+  apiCallback: CallbackType<T, A>
+): [(...args: A) => Promise<T | AxiosError<T>>, T, string] => {
+  const [result, setResult] = useState<T | undefined>();
+  const [state, setState] = useState(ApiStates.PENDING);
+
+  const apiCall = useCallback(
+    (...args: A) => {
+      return apiCallback(...args)
+        .then(({ data: { data } }) => {
+          setState(ApiStates.FULFILLED);
+          setResult(data);
+          return data;
+        })
+        .catch((e: AxiosError<T>) => {
+          setState(ApiStates.REJECTED);
+          return e;
+        });
+    },
+    [apiCallback]
+  );
+
+  return [apiCall, result, state];
+};
+
+const useApi = {
+  useGet,
+  usePost,
+};
+
+export default useApi;

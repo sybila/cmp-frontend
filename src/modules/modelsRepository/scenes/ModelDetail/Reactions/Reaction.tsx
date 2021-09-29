@@ -1,4 +1,4 @@
-import { useApi } from "hooks/useApi";
+import useApi from "hooks/useApi";
 import { moduleNames } from "modules/modelsRepository/reducers/MainReducer";
 import React, { useCallback, useMemo } from "react";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
@@ -52,7 +52,7 @@ const Reaction = () => {
   );
   const history = useHistory();
 
-  const [reaction] = useApi(
+  const [reaction] = useApi.useGet(
     useCallback(
       () =>
         api.loadReactionDetail(parseInt(modelId, 10), parseInt(reactionId, 10)),
