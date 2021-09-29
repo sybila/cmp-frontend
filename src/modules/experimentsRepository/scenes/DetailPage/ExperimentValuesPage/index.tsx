@@ -9,7 +9,10 @@ import _ from "lodash";
 
 import { moduleNames as experimentsNames } from "../../../reducers/MainReducer";
 import { Dispatch, bindActionCreators } from "redux";
-import { loadExperimentVariablesValues } from "modules/experimentsRepository/actions";
+import {
+  loadExperimentVariablesValues,
+  loadExperimentVars,
+} from "modules/experimentsRepository/actions";
 import { ExperimentComponentProps } from "../..";
 import { Link } from "react-router-dom";
 import SelectableTimeline from "components/SelectableTimeline";
@@ -18,6 +21,7 @@ interface Props extends ExperimentComponentProps {
   variables: ExperimentVariable[];
   loadVariablesDetails: typeof loadExperimentVariablesValues;
   hasValues: boolean;
+  loadVariables: typeof loadExperimentVars;
 }
 
 interface State {
@@ -45,6 +49,9 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
   componentDidMount() {
     const { hasValues, match, loadVariablesDetails } = this.props;
     const { experimentId } = match.params;
+
+    !this.props.variables &&
+      this.props.loadVariables(parseInt(experimentId, 10));
 
     if (!hasValues) {
       loadVariablesDetails(experimentId);
@@ -143,19 +150,20 @@ class ExperimentValuesPage extends React.PureComponent<Props, State> {
               />
               <div className="m-b-10 m-t-20">Displayed variables</div>
               <div className="tags are-small variables-tags">
-                {variables.map((variable, i) => (
-                  <span
-                    key={`tags-vars-${i}`}
-                    className={`tag is-rounded${
-                      hiddenVars.indexOf(variable.id) === -1
-                        ? " is-primary"
-                        : ""
-                    }`}
-                    onClick={() => this.handleVarToggle(variable.id)}
-                  >
-                    {variable.name}
-                  </span>
-                ))}
+                {variables &&
+                  variables.map((variable, i) => (
+                    <span
+                      key={`tags-vars-${i}`}
+                      className={`tag is-rounded${
+                        hiddenVars.indexOf(variable.id) === -1
+                          ? " is-primary"
+                          : ""
+                      }`}
+                      onClick={() => this.handleVarToggle(variable.id)}
+                    >
+                      {variable.name}
+                    </span>
+                  ))}
                 {variables && variables.length ? (
                   <span
                     className={`tag is-rounded${
@@ -202,6 +210,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     loadExperimentVariablesValues,
     dispatch
   ),
+  loadVariables: bindActionCreators(loadExperimentVars, dispatch),
 });
 
 export default connect(
