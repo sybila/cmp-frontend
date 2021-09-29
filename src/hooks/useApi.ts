@@ -65,6 +65,8 @@ const usePost = <T, A extends any[]>(
 const useApi = {
   useGet,
   usePost,
+  usePut: usePost,
+  useDelete: usePost,
 };
 
 export default useApi;

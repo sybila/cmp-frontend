@@ -107,6 +107,10 @@ const buttons = {
       borderRadius: 9999,
     },
   },
+  icon: {
+    bg: "transparent",
+    padding: 0,
+  },
 };
 
 declare module "styled-components" {

@@ -14,7 +14,12 @@ const addGroup = ({
   return dataService.post(`/userGroups`, { type: type.toString(), ...rest });
 };
 
+const deleteGroup = (id: number): AxiosPromise<ApiResponse<void>> => {
+  return dataService.delete(`/userGroups/${id}`);
+};
+
 export default {
   getAllGroups,
   addGroup,
+  deleteGroup,
 };
