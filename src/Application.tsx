@@ -82,7 +82,6 @@ const MasterPage = (props: any) => {
             </section>
             {props.children}
           </div>
-          /userTypes
         </div>
       </div>
     </div>
